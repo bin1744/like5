@@ -1,4 +1,4 @@
-package com.kh.spring.common.interceptor;
+package com.kh.like5.common.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
