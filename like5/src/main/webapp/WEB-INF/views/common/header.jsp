@@ -97,29 +97,81 @@
 
         <!-- 로그인 -->
         <div id="header_user" style="text-align:center;">
-            <!-- 로그인 전
-            <div id="before_login">
-                <a href="">로그인&nbsp;</a> | <a href="">&nbsp;회원가입</a>
-            </div> -->
-
-            <!-- 로그인 후 -->
-            <div id="after_login">
-                <div class="w3-dropdown-hover w3-center">
-                    <!-- 사용자 닉네임 한글 기준 11자까지 배열에 딱 맞음 -->
-                    <button class="w3-button w3-white">사용자 닉네임</button>
-                    <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
-                    <a href="" class="w3-bar-item w3-button">마이페이지</a>
-                    <a href="" class="w3-bar-item w3-button">내 프로필 보기</a>
-                    <a href="" class="w3-bar-item w3-button">1:1문의</a>
-                    <a href="" class="w3-bar-item w3-button">로그아웃</a>
-                    </div>
-                </div>
-            </div>
+        	<c:choose>
+        		<c:when test="${ empty loginUser }">
+		            <!-- 로그인 전 -->
+		            <div id="before_login">
+		                <a data-toggle="modal" href="#myModal">로그인&nbsp;</a> | <a href="">&nbsp;회원가입</a>
+		            </div>
+            	</c:when>
+            	<c:otherwise>
+		            <!-- 로그인 후 -->
+		            <c:choose>
+		            	<c:when test="${ loginUser.userStatus eq 'N' }">
+				            <div id="after_login">
+				                <div class="w3-dropdown-hover w3-center">
+				                    <!-- 사용자 닉네임 한글 기준 11자까지 배열에 딱 맞음 -->
+				                    <button class="w3-button w3-white">${ loginUser.memName }</button>
+				                    <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+				                    <a href="" class="w3-bar-item w3-button">마이페이지</a>
+				                    <a href="" class="w3-bar-item w3-button">내 프로필 보기</a>
+				                    <a href="" class="w3-bar-item w3-button">1:1문의</a>
+				                    <a href="logout.me" class="w3-bar-item w3-button">로그아웃</a>
+				                    </div>
+				                </div>
+				            </div> 
+			        	</c:when>
+			        	<c:otherwise>
+			        		<div id="after_login">
+				                <div class="w3-dropdown-hover w3-center">
+				                    <!-- 사용자 닉네임 한글 기준 11자까지 배열에 딱 맞음 -->
+				                    <button class="w3-button w3-white">${ loginUser.memName }</button>
+				                    <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+				                    <a href="" class="w3-bar-item w3-button">통합관리</a>
+				                    <a href="logout.me" class="w3-bar-item w3-button">로그아웃</a>
+				                    </div>
+				                </div>
+				            </div>
+			            </c:otherwise>
+		        	</c:choose>
+	        	</c:otherwise>
+	    	</c:choose>
         </div>
 	    <!-- 메뉴바 아래 회색 밑줄 -->
 	    <div class="underline"></div>
     </div>
 
+	<div class="modal fade" id="myModal">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+           		<!-- Modal Header -->
+                <div class="modal-header">
+                	<img style="width:138px; height:70px;" src="https://i.imgur.com/5WiLp9Y.jpg" alt="">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+              	<form action="login.me" method="post">
+                    <!-- Modal body -->
+                    <div class="modal-body" >
+                    <div  style="margin-left:80px;">
+                        	이메일 :
+                        <input type="email" id="email" name="email" style="margin-left: 17px;"><br>
+                       		 비밀번호 :
+                        <input type="password" id="memPwd" name="memPwd" style="margin-left: 3px;">
+                        <button type="button" style="border: 0px solid white; background-color: white;"><img src="https://i.imgur.com/CsKaQmk.png" alt=""></button>
+                        <button type="button" style="border: 0px solid white; background-color: white;"><img src="https://i.imgur.com/X4fyiID.png" alt=""></button>
+                    </div>
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="border: 2px solid rgb(220, 53, 69); background-color: white; color: rgb(220, 53, 69);">취소</button>
+                    <button type="submit" class="btn btn-secondary"  style="background-color: rgb(220, 53, 69); color: white; margin-right: 170px;">로그인</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
 
 </body>
 </html>
