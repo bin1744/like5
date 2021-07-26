@@ -28,96 +28,36 @@
 
 <style>
 /* 세부 페이지마다 공통적으로 유지할 스타일 */
-.innerOuter {
-	width: 70%;
-	margin: auto;
-}
+.innerOuter{width: 70%; margin: auto;}
 
 /* 공통 폰트 */
-* {
-	font-family: 'Noto Sans KR', sans-serif;
-	color: #424242;
-}
-
-div {
-	box-sizing: border-box;
-}
+*{font-family: 'Noto Sans KR', sans-serif; color: #424242;}
+div{box-sizing: border-box; /*border:1px solid black;*/}
 
 /* 헤더 배열 */
-.header {
-	width: 70%;
-	height: 100%;
-	margin: auto;
-}
-
-.header>div {
-	width: 100%;
-	float: left;
-}
-
-#header_logo {
-	width: 10%;
-}
-
-#header_navi {
-	width: 75%;
-}
-
-#header_user {
-	width: 15%;
-	height: 50px;
-}
+.header{width:70%; height:100%; margin:auto; display:flex; border-bottom:2px solid #DEDEDE;}
+.header>div{width:100%; float:left; margin-bottom:-2px;}
+#header_logo{width:10%;}
+#header_navi{width:75%;}
+#header_user{width:15%; height:73px;}
 
 /* 메뉴바 배열 */
-#menu {
-	display: flex;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	height: 50px;
-}
-
-#menu>li {
-	float: left;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-}
+#menu{display:flex; list-style-type:none; margin:0; padding:0; height:50px;}
+#menu>li{float:left; width:100%; height:100%; text-align:center;}
 
 /* a태그 스타일 */
-#menu a {
-	text-decoration: none;
-	font-size: 1.1rem;
-	font-weight: 900;
-	height: 100%;
-	width: 100%;
-	display: block;
-	line-height: 50px;
-}
-
-#header_user a {
-	text-decoration: none;
-}
+#menu a{text-decoration:none; font-size:1.1rem; font-weight:900; height:100%; width:100%; display:block; line-height:50px;}
+#header_user a{text-decoration:none;}
+#header_user a:hover{color:rgb(220, 53, 69);}
+#menu>li a:hover{color:rgb(220, 53, 69); border-bottom:5px solid rgb(220, 53, 69);}
 
 /* 로고 이미지 */
-.headerImg {
-	width: 85px;
-	height: 50px;
-}
-
-.headerImg:hover {
-	opacity: 0.6;
-}
+.headerImg{width:85px; height:50px;}
+.headerImg:hover{opacity:0.6;}
 
 /* 로그인 배열 */
-div[id$=login] {
-	font-size: 13px;
-	margin: 13px 0px 5px 0px;
-}
-
-#after_login {
-	margin: 5px 10px 5px 10px;
-}
+#before_login{font-size:13px; margin-top:35px; text-align:center;}
+#after_login{font-size:13px; margin-top:30px; text-align:center;}
 
 /* 페이지 실제 연결 시 활성화시킬 코드 아직 사용X
 방문하지 않은 링크
@@ -127,37 +67,18 @@ div[id$=login] {
 링크를 활성화 할 때
 #menu>a:active{color: black;} */
 
-#menu>li a:hover {
-	color: rgb(220, 53, 69);
-	border-bottom: 5px solid rgb(220, 53, 69);
-}
-
-.underline {
-	border: 0;
-	height: 2px;
-	background: #ccc;
-}
-
 /* 바로가기버튼 마진 */
-#explanation {
-	margin:7% 0% 10% 0%;
-}
+#explanation{margin:7% 0% 10% 0%;}
 
 /* to the top */
-#toTheTop {
-	display:scroll;
-	position:fixed;
-	bottom:1.5rem;
-	right:2rem;
-	color:grey;
-}
+#toTheTop {display:scroll; position:fixed; bottom:1.5rem; right:2rem; color:grey;}
 </style>
 </head>
 
 <body>
 
 	<!-- [한솔] 메뉴바 : 헤더 스타일 및 배열 초기버전에서 일부 수정 -->
-	<nav class="header" id="header">
+	<div class="header" id="header">
 		<!-- 로고 -->
 		<div id="header_logo" align=center>
 			<br><a href=""> <img src="https://i.imgur.com/vhEZ5DJ.png" class="headerImg"></a>
@@ -167,7 +88,7 @@ div[id$=login] {
 		<div id="header_navi">
 			<br><ul id="menu">
 				<li><a href="">LIKE5?</a></li>
-				<li><a href="">QnA</a></li>
+				<li><a href="qList.bo">QnA</a></li>
 				<li><a href="bMain.bk">공간대여</a></li>
 				<li><a href="">커뮤니티</a></li>
 				<li><a href="">칼럼</a></li>
@@ -176,7 +97,7 @@ div[id$=login] {
 		</div>
 
 		<!-- 로그인 -->
-		<div id="header_user" style="text-align: center;">
+		<div id="header_user">
 			<c:choose>
 				<c:when test="${ empty loginUser }">
 					<!-- 로그인 전 -->
@@ -191,7 +112,7 @@ div[id$=login] {
 							<div id="after_login">
 								<div class="w3-dropdown-hover w3-center">
 									<button class="w3-button w3-white">${ loginUser.memName }</button>
-									<div class="w3-dropdown-content w3-bar-block w3-border" style="right: 0">
+									<div class="w3-dropdown-content w3-bar-block w3-border">
 										<a href="" class="w3-bar-item w3-button">마이페이지</a>
 										<a href="" class="w3-bar-item w3-button">내 프로필 보기</a>
 										<a href="" class="w3-bar-item w3-button">1:1문의</a>
@@ -205,7 +126,7 @@ div[id$=login] {
 							<div id="after_login">
 								<div class="w3-dropdown-hover w3-center">
 									<button class="w3-button w3-white">${ loginUser.memName }</button>
-									<div class="w3-dropdown-content w3-bar-block w3-border" style="right: 0">
+									<div class="w3-dropdown-content w3-bar-block w3-border">
 										<a href="member.ad" class="w3-bar-item w3-button">통합관리</a>
 										<a href="logout.me" class="w3-bar-item w3-button">로그아웃</a>
 									</div>
@@ -216,10 +137,8 @@ div[id$=login] {
 				</c:otherwise>
 			</c:choose>
 
-			<!-- 메뉴바 아래 회색 밑줄 -->
-			<div class="underline"></div>
 		</div>
-	</nav>
+	</div>
 	<!-- 메뉴바 끝 -->
 
 
