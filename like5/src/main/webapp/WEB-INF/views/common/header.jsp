@@ -127,7 +127,7 @@
 				                    <!-- 사용자 닉네임 한글 기준 11자까지 배열에 딱 맞음 -->
 				                    <button class="w3-button w3-white">${ loginUser.memName }</button>
 				                    <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
-				                    <a href="" class="w3-bar-item w3-button">통합관리</a>
+				                    <a href="member.ad" class="w3-bar-item w3-button">통합관리</a>
 				                    <a href="logout.me" class="w3-bar-item w3-button">로그아웃</a>
 				                    </div>
 				                </div>
