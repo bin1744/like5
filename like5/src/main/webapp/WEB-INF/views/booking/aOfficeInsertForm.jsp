@@ -145,6 +145,7 @@
                 </div>
                 <div class="office-content">
                     <div class="line1">
+                    <%-- 지점 어떻게 해? 1.셀렉트 2.그냥 텍스트  --%>
                         <ul>
                             <li>지점</li>
                             <li><input type="text" name="branch" id=""></li>

@@ -231,6 +231,11 @@
                         </ul>    
                     </div>
                     <div class="line2">
+                    <%-- 지점 어떻게 해? --%>
+                        <ul>
+                            <li>지점</li>
+                            <li><input type="text" name="branch" value="${ o.branch }"></li>
+                        </ul>
                         <ul>
                             <li>가격</li>
                             <li><input type="text" name="price" value="${ o.price }"></li>
