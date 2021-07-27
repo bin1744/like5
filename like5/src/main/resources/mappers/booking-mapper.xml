@@ -53,6 +53,7 @@
    where b.start_date  not in #{startDate}
 	 and b.end_date not in #{endDate}
 	 and branch like '%'||#{branch}||'%'
+	 or address like '%'||#{branch}||'%'
   </select>
   
   <select id="selectListCount" resultType="_int">
