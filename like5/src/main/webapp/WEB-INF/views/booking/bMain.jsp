@@ -14,7 +14,6 @@
 <style>
     .outerbox{
         position: relative;
-        margin-top:60px;
         background: linear-gradient(rgba(255,255,255, 0.5), rgba(255, 255, 255, 0.5)), url(resources/images/bg-1.jpg) center/cover no-repeat fixed;
         z-index: 0.8;
         height: 100vh;
@@ -115,9 +114,11 @@
         width: 48px;
         height:48px;
         background-color: #eb3e3e;
-        color: #ffff;
         border:none;
     }
+    .sicon button i{
+       color: #FFFFFF !important;
+       }
     .desc-wrapper-1{
         display: flex;
         margin:0 60px;
@@ -323,13 +324,6 @@ const bmodal = document.querySelector("#branch-modal"); //지점 모달
 let pp2 = document.querySelector("#num1");
 let regions = document.getElementsByClassName("region");
 
-
-for(let i=0; i<regions.length; i++){
-    regions[i].addEventListener('click', function(){
-        branch.value = regions[i].innerHTML
-    })
-}
-
 branch.onclick = () => {
     bmodal.classList.add('show-modal');
 }
@@ -341,9 +335,17 @@ pp.onclick = () =>{
 }
 window.onclick = (e) => {
     e.target === outerbox ? bmodal.classList.remove('show-modal') : false
-    e.target === pmodal ? pmodal.classList.remove('show-modal') : false
+    e.target === outerbox ? pmodal.classList.remove('show-modal') : false
 }
 
+<%-- 지역 선택 --%>
+for(let i=0; i<regions.length; i++){
+    regions[i].addEventListener('click', function(){
+        branch.value = regions[i].innerHTML
+    })
+}
+
+<%-- 인원수 선택 --%>
     function minus(){
         
         if(pp2.value > 0){

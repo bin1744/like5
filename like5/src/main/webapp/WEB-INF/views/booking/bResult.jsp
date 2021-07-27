@@ -8,6 +8,11 @@
 <title>Insert title here</title>
     <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f2e27dda5cfdc6659ff812c6b423f97a&libraries=services,clusterer,drawing"></script>
+    <!-- flatpickr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_red.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
 <style>
 	.innerOuter{
 		display:flex;
@@ -17,11 +22,10 @@
 	}
     .outcontainer{
         box-sizing: border-box;
-        margin:0 auto;
-        padding: 0 60px;
+        margin:0 60px;
         width: 100%;
-        /* max-width: 1440px; */
         display: flex;
+        border:1px solid blue;
     }
     .search-container{
         width: 100%;
@@ -45,14 +49,16 @@
     .input-container, .person{
         display: flex;
         height: 100%;
-        background-color: rgb(255, 255, 255);
+
         border-radius: 32px;
+
     }
-    .search-bar-container input{
+    .search-bar-container input[type=text]{
         height: 100%;
         padding: 0 30px;
         border:none;
         border-radius: 32px;
+        background-color: rgb(255, 255, 255);
     }
     .search-bar-container input:hover, .branch-select li:hover{
         background-color: #F7F7F7 !important;
@@ -65,8 +71,10 @@
         width: 48px;
         height:48px;
         background-color: #eb3e3e;
-        color:white;
         border:none;
+    }
+    .sicon i{
+    	color:#ffff;
     }
     .box{
         display: flex;
@@ -76,7 +84,7 @@
         padding: 16px 32px;
         border-radius: 32px;
         background-color: rgb(255, 255, 255);
-        z-index: 2;
+        z-index: 1;
         margin:12px 0 0 -153px;
         width: 330px;
         right: 0;
@@ -170,7 +178,7 @@
     .branch-select ul{
         position: relative;
         list-style: none;
-        width:500px;
+        width:300px;
         margin: 0 -32px -8px !important;
         padding:8px 0;
     }
@@ -203,15 +211,13 @@
         margin-top:12px;
         box-shadow: rgb(0 0 0 / 20%) 0px 6px 20px !important;
         padding: 30px 32px;
-        z-index: 2;
+        z-index: 1;
         border-radius: 32px;
         background-color: #ffff;
         border:1px solid rgb(221,221,221);
-        left:0;
     }
     #branch-modal{
         display: none;
-        position:relative !important;
     }
     #person-modal{
         display: none;
@@ -228,8 +234,8 @@
             <div class="search-bar-container">
                 <div class="input-container">
                     <input type="text" id="branch" name="branch" value="${ b.branch }">
-                    <input type="text" name="startDate" value="${ b.startDate }">
-                    <input type="text" name="endDate" value="${ b.endDate }">
+                    <input class="fcheckIn" type="text" name="startDate" value="${ b.startDate }">
+                    <input class="fcheckOut" type="text" name="endDate" value="${ b.endDate }">
                 </div>
                 <div class="person">
                     <input type="text" name="stp" id="pnum" value="${ b.person }">
@@ -280,13 +286,13 @@
                 </div>
             </div>
         </div>
-        <div class="innerOuter">
+        <div class="outcontainer">
             <div class="result-container">
                 <span>${ list.size() }개의 결과</span>
                 <c:forEach var="o" items="${ list }">
                 <div class="result-list">
                     <div class="search-card">
-                        <div class="card-img"><img src="resources/images/result-2.jpg" alt=""></div>
+                        <div class="card-img"><img src="${o.offImgPath }"></div>
                         <div class="card-content">
                             <h3>${ o.typeName }</h3>
                             <div class="address">${ o.address }</div>
@@ -301,7 +307,8 @@
         </div>
 <jsp:include page="../common/footer.jsp"/>
 <script>
-    const innerOuter = document.querySelector(".innerOuter");
+<%-- 모달 닫기 --%>
+    const outcontainer = document.querySelector(".outcontainer");
 	const pmodal = document.querySelector("#person-modal");//인원수 모달
     let branch = document.querySelector("#branch"); //지점 선택 input
     const bmodal = document.querySelector("#branch-modal"); //지점 모달
@@ -312,16 +319,22 @@
     branch.onclick = () => {
         bmodal.classList.add('show-modal');
     }
-    bmodal.onclick = () => {
-        bmodal.classList.remove('show-modal');
-    }
-    pp.onclick = () =>{
+    pp.onclick = () => {
         pmodal.classList.add('show-modal');
     }
-    window.onclick = (e) => {
-        e.target === innerOuter ? bmodal.classList.remove('show-modal') : false
-        e.target === innerOuter ? pmodal.classList.remove('show-modal') : false
+window.onclick = (e) => {
+        e.target === outcontainer ? bmodal.classList.remove('show-modal') : false
+        e.target === outcontainer ? pmodal.classList.remove('show-modal') : false
     }
+    
+<%-- 지역 선택 --%>
+    for(let i=0; i<regions.length; i++){
+        regions[i].addEventListener('click', function(){
+            branch.value = regions[i].innerHTML
+        })
+    }
+
+<%-- 인원수 선택 --%>
     function minus(){
         
         if(pp2.value > 0){
@@ -335,8 +348,31 @@
         pp2.value = Number(pp2.value)+1;
         pp.value = pp2.value;
     }
+    
+<%-- flatpickr --%>
 
-    // 지도
+	const checkIn = document.querySelector('.fcheckIn');
+	const checkOut = document.querySelector('.fcheckOut');
+	flatpickr(checkIn,{
+	    locale:"ko",
+	    altInput:true,
+	    altFormat:"Y F d\\일",
+	    minDate:"today",
+	    //mode: "range",
+	    dateFormat:"Y-m-d"
+	});
+	
+	flatpickr(".fcheckOut",{
+	    locale:"ko",
+	    altInput:true,
+	    altFormat:"Y F d\\일",
+	    minDate:"today",
+	    //mode: "range",
+	    dateFormat:"Y-m-d"
+	});
+	
+<%-- kakao map --%>
+
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
     				center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
