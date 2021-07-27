@@ -26,6 +26,7 @@ import com.kh.like5.common.model.vo.Attachment;
 import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.common.template.Pagination;
 
+
 @Controller
 public class BookingController {
 	
@@ -207,4 +208,21 @@ public class BookingController {
 			return "common/errorPage";
 		}
 	}
+	
+	/**
+	 * 추가부분 - 상세조회 클릭시 연동 페이지(officeDetail)
+	 */
+	/*첨부파일 조회 + 사진*/
+	@RequestMapping("detail.bo")
+    public String officeDetailPage(int ono, Model model) {
+
+		ArrayList<Attachment> at = bService.selectList(ono);
+		model.addAttribute("at", at);
+		model.addAttribute("ono", ono);
+		System.out.println(at);
+		
+        return "booking/officeDetail";
+    }
+	
+	
 }

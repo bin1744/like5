@@ -290,7 +290,7 @@
             <div class="result-container">
                 <span>${ list.size() }개의 결과</span>
                 <c:forEach var="o" items="${ list }">
-                <div class="result-list">
+                <div class="result-list" onclick="location.href='detail.bo?ono=${ o.officeNo }'">
                     <div class="search-card">
                         <div class="card-img"><img src="${o.offImgPath }"></div>
                         <div class="card-content">

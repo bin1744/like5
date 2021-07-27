@@ -66,4 +66,14 @@ public class BookingDao {
 		}
 		return result;
 	}
+	
+	/*추가 - 첨부파일 조회 + 사진*/
+	public ArrayList<Attachment> selectList(SqlSessionTemplate sqlSession, int refFno){
+		/*System.out.println(refFno);*/
+		ArrayList<Attachment> pics= (ArrayList)sqlSession.selectList("selectAtList", refFno);
+		/*System.out.println(pics);*/
+		return pics;
+		
+	}
+	
 }

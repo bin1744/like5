@@ -202,4 +202,15 @@
 	  and  status = 'Y' 
   </update>
   
+  <select id="selectAtList" resultMap="attachmentResultSet">
+  		select
+		       file_no
+		     , file_path
+		  from attachment
+		 where ref_bno = 9
+		   and ref_fno = #{refFno}
+		   and status = 'Y'
+  </select>
+  
+  
 </mapper>

@@ -35,4 +35,16 @@ public interface BookingService {
 	Office selectOffice(int officeNo);
 	ArrayList<Attachment> selectOfficeAtt(int officeNo);
 	
+	/**
+	 * 추가 부분 - 박정빈
+	 *
+	 */
+	//8. 첨부파일 조회(사진)
+	ArrayList<Attachment> selectList(int refFno);
+	
+	//9. 오피스 조회(내용 상세)
+	
+	//10. 리뷰 조회
+	
 }
+

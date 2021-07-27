@@ -98,5 +98,12 @@ public class BookingServiceImpl implements BookingService{
 	public ArrayList<Attachment> selectOfficeAtt(int officeNo) {
 		return bDao.selectOfficeAtt(sqlSession, officeNo);
 	}
+	
+	/*추가 - 첨부파일 조회(사진)*/
+	@Override
+	public ArrayList<Attachment> selectList(int refFno) {
+		/*System.out.println(refFno);*/
+		return bDao.selectList(sqlSession, refFno);
+	}
 
 }
