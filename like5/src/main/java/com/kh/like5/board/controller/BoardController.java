@@ -23,4 +23,15 @@ public class BoardController {
 		
 		return "board/qna/qnaEnrollForm";
 	}
+	
+	/**
+	 * [한솔] QnA 게시글 상세 페이지
+	 * 		 → 별도 가공처리 아직 X, 페이지 확인용으로 연결만 해둠
+	 */
+	
+	@RequestMapping("qDetail.bo")
+	public String qDetail() {
+		
+		return "board/qna/qnaDetailView";
+	}
 }
