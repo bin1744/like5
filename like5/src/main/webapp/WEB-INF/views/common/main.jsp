@@ -8,65 +8,37 @@
 <title>Insert title here</title>
 
 <style>
-.mainContent {
-	background: linear-gradient(to bottom, rgba(211, 211, 211, 0.6) 0%,
-				rgba(211, 211, 211, 0.6) 100%), url("https://bit.ly/3itAEbV");
-	background-position: center;
-	background-repeat: no-repeat;
-	background-attachment: scroll;
-	background-size: cover;
-	height: 100vh;
+.mainContent{
+	background:linear-gradient(to bottom, rgba(211, 211, 211, 0.6) 0%,
+			   rgba(211, 211, 211, 0.6) 100%), url("https://bit.ly/3itAEbV");
+	background-position:center;
+	background-repeat:no-repeat;
+	background-attachment:scroll;
+	background-size:cover;
+	height:100vh;
+	display:flex;
 }
 
-.innerOuter {
-	height: 80vh;
+#bigText{font-size:3rem;}
+#smallText{font-size:0.9rem;}
+
+@media(min-width:768px){
+	#bigText{font-size:4.6rem; font-weight:bold;}
+	#smallText{font-size:1.2rem;}
 }
 
-h1, .h1 {
-	font-size: calc(2.1rem + 1vw);
-	padding-top: 10%;
+.divider{height:0.3rem; max-width:9rem; margin:1.5rem auto; background-color:rgb(220, 53, 69); border:0;}
+
+.aboutSection{padding-bottom:5%;}
+
+@media(max-width:768px){
+	#main_bottom {padding-bottom:10%;}
 }
 
-#text1 {
-	font-size: 0.9rem;
-}
+#aboutUs{padding: 1% 3%; text-decoration:none;}
 
-@media ( min-width :768px) {
-	h1, .h1 {
-		font-size: 3.8rem;
-	}
-	#text1 {
-		font-size: 1.2rem;
-	}
-}
-
-hr.divider {
-	height: 0.3rem;
-	max-width: 9rem;
-	margin: 1.5rem auto;
-	background-color: rgb(220, 53, 69);
-	border: 0;
-}
-
-.aboutSection {
-	padding-bottom: 5%;
-}
-
-@media ( max-width :768px) {
-	#main_bottom {
-		padding-bottom: 10%;
-	}
-}
-
-#aboutUs {
-	padding: 1% 3%;
-	text-decoration: none;
-}
-
-@media ( prefers-reduced-motion : no-preference) {
-	:root {
-		scroll-behavior: smooth;
-	}
+@media(prefers-reduced-motion:no-preference){
+	:root{scroll-behavior:smooth;}
 }
 </style>
 </head>
@@ -83,11 +55,11 @@ hr.divider {
 			<div class="container px-4 px-lg-5 h-100 w3-animate-zoom">
 				<div class="row gx-4 gx-lg-5 h-100 justify-content-center text-center">
 					<div class="col-lg-8 align-self-end">
-						<h1 class="font-weight-bold">Explain Like I'm 5</h1>
+						<p class="font-weight-bold" id="bigText">Explain Like I'm 5</p>
 						<hr class="divider" />
 					</div>
 					<div class="col-lg-8 align-self-baseline">
-						<p class="mb-5"><b><i id="text1">주니어 개발자를 위한 질문&답변 위주의 개발 커뮤니티</i></b></p>
+						<p class="mb-5"><b><i id="smallText">주니어 개발자를 위한 질문&답변 위주의 개발 커뮤니티</i></b></p>
 						<a class="w3-button w3-red w3-round-xxlarge w3-hover-deep-orange" id="aboutUs" href="#about">About us</a>
 					</div>
 				</div>
@@ -111,7 +83,7 @@ hr.divider {
 							개발자들과 다양한 질문을<br>
 							자유롭게 주고 받아보세요
 						</p>
-						<a class="w3-button w3-red w3-round-xxlarge w3-hover-deep-orange" id="aboutUs" href="">
+						<a class="w3-button w3-red w3-round-xxlarge w3-hover-deep-orange" id="aboutUs" href="qList.bo">
 							&nbsp;&nbsp;바로가기&nbsp;&nbsp;
 						</a>
 						<br><br><br>
@@ -148,6 +120,7 @@ hr.divider {
 					</div>
 				</div>
 			</div>
+		</div>
 	</section>
 
 	<!-- 위로가기 아이콘 -->
