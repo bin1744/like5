@@ -72,15 +72,19 @@ public class BookingController {
 	@RequestMapping("detail.bk")
 	public ModelAndView selectOffice(int ono, ModelAndView mv) {
 		int officeNo = ono;
+		//attachment에도 접근해서 list로 가져와서 화면에 뿌려줘야함...
 		Office o = bService.selectOffice(officeNo);
+		ArrayList<Attachment> list = bService.selectOfficeAtt(officeNo);
+		System.out.println(list);
 		if(o != null) {
 			mv.addObject("o", o).setViewName("booking/aOfficeDetailView");
+			mv.addObject("list", list).setViewName("booking/aOfficeDetailView");
 		} else {
 			mv.addObject("errorMsg", "조회 실패").setViewName("common/errorPage");
 		}
 		return mv;
 	}
-	
+
 	@RequestMapping("insertForm.bk")
 	public String enrollForm() {
 		return "booking/aOfficeInsertForm";
@@ -99,15 +103,19 @@ public class BookingController {
 		for(int i=0; i< file.length; i++) {
 			if(!file[i].getOriginalFilename().equals("")) {
 				Attachment att = new Attachment();
-				String changeName = saveFile(file[i], session);
-				att.setFilePath("/resources/images/" + changeName);
-				att.setRefBno(9);
-				list.add(att);
+				if( i == 0) {
+					String changeName = saveFile(file[i], session);
+					o.setOffImgPath("resources/images/" + changeName);
+				} else {
+					String changeName = saveFile(file[i], session);
+					att.setFilePath("resources/images/" + changeName);
+					att.setRefBno(9);
+					list.add(att);
+				}
 			}
-			
 		}
 		//System.out.println(o);
-		System.out.println(list);
+		//System.out.println(list);
 		int result = bService.insertOffice(o, list);
 		
 		if(result > 0) {
@@ -137,5 +145,66 @@ public class BookingController {
 			e.printStackTrace();
 		}
 		return changeName;
-	}	
+	}
+	
+	@RequestMapping("updateOf.bk")
+	public String updateOffice(Office o, Attachment att, HttpServletRequest request, HttpSession session, MultipartFile[] refile, Model model) {
+		//facility 부분 가져오기
+		String[] facilityArr = request.getParameterValues("facility");
+		String facility ="";
+		if(facilityArr != null) {
+			facility = String.join(",", facilityArr);
+		}
+		o.setFacility(facility);
+		ArrayList<Attachment> list = new ArrayList<>();
+		
+		/*
+		if(o.getOffImgPath() != null) {
+			System.out.println(o.getOffImgPath());
+			new File(session.getServletContext().getRealPath(o.getOffImgPath())).delete();
+			String changeName = saveFile(file, session);
+			o.setOffImgPath("resources/images/" + changeName);
+		}
+		*/
+		
+		//새 첨부파일
+		for(int i=0; i<refile.length; i++) {
+			if(!refile[i].getOriginalFilename().equals("")) {
+				att = new Attachment();
+				if( i==0 ) {
+					//대표이미지 기존것  삭제 후 새로 저장
+					new File(session.getServletContext().getRealPath(o.getOffImgPath())).delete();
+					String changeName = saveFile(refile[i], session);
+					o.setOffImgPath("resources/images/" + changeName);
+				} else if(att.getFileNo() != 0) {//기존파일이 존재할경우
+					System.out.println(att.getFilePath());//왜 두개가 찍히니--> 배열로 안 가져오니까
+					String filePath[] = att.getFilePath().split(",");
+					//기존 것 삭제
+					new File(session.getServletContext().getRealPath(filePath[0])).delete();
+					String changeName = saveFile(refile[i], session);
+					//att에 저장
+					att.setFilePath("resources/images/" + changeName);
+					att.setRefFno(o.getOfficeNo());
+					att.setFileNo(att.getFileNo());
+				} else {
+					//기존 변경 없이 새파일을가져왔을경우
+					String changeName = saveFile(refile[i], session);
+					att.setFilePath("resources/images/" + changeName);
+					att.setRefFno(o.getOfficeNo());
+				}
+				list.add(att);
+				System.out.println(list);
+			}
+		}
+		
+		int result = bService.updateOffice(o, list);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "업데이트성공");
+			return "redirect:/detail.bk?ono="+ o.getOfficeNo();
+		} else {
+			model.addAttribute("errorMsg", "업데이트실패");
+			return "common/errorPage";
+		}
+	}
 }

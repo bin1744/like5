@@ -54,9 +54,21 @@ public class BookingServiceImpl implements BookingService{
 	}
 
 	@Override
-	public int updateOffice(Office o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateOffice(Office o, ArrayList<Attachment> list) {
+		int result1 = bDao.updateOffice(sqlSession, o);
+		int result2 = 1;
+		if(!list.isEmpty()) {
+			for(Attachment att : list) {
+				//기존파일이 있을 때
+				if(att.getFileNo() != 0) {
+					result2 = bDao.updateOfficeAtt(sqlSession, list);
+				} else if(att.getRefFno() != 0){
+					//새로 파일 추가할때
+					result2 = bDao.insertOfficeReAtt(sqlSession, list);
+				}
+			}
+		}
+		return result1*result2;
 	}
 
 	@Override
@@ -80,6 +92,11 @@ public class BookingServiceImpl implements BookingService{
 	@Override
 	public Office selectOffice(int officeNo) {
 		return bDao.selectOffice(sqlSession, officeNo);
+	}
+
+	@Override
+	public ArrayList<Attachment> selectOfficeAtt(int officeNo) {
+		return bDao.selectOfficeAtt(sqlSession, officeNo);
 	}
 
 }

@@ -34,6 +34,9 @@ public class BookingDao {
 		return sqlSession.selectOne("bookingMapper.selectOffice", officeNo);
 	}
 	
+	public ArrayList selectOfficeAtt(SqlSessionTemplate sqlSession, int officeNo) {
+		return (ArrayList)sqlSession.selectList("bookingMapper.selectOfficeAtt", officeNo);
+	}
 	public int insertOffice(SqlSessionTemplate sqlSession, Office o) {
 		return sqlSession.insert("bookingMapper.insertOffice", o);
 	}
@@ -42,6 +45,24 @@ public class BookingDao {
 		int result = 0;
 		for(Attachment att : list) {
 			result = sqlSession.insert("bookingMapper.insertOfficeAtt", att);
+		}
+		return result;
+	}
+	public int insertOfficeReAtt(SqlSessionTemplate sqlSession, ArrayList<Attachment> list) {
+		int result = 0;
+		for(Attachment att : list) {
+			result = sqlSession.insert("bookingMapper.insertOfficeReAtt", att);
+		}
+		return result;
+	}
+	public int updateOffice(SqlSessionTemplate sqlSession, Office o) {
+		return sqlSession.update("bookingMapper.updateOffice", o);
+	}
+	
+	public int updateOfficeAtt(SqlSessionTemplate sqlSession, ArrayList<Attachment> list) {
+		int result = 0;
+		for(Attachment att : list) {
+			result = sqlSession.update("bookingMapper.updateOfficeAtt", att);
 		}
 		return result;
 	}

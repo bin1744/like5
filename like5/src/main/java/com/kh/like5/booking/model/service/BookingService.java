@@ -22,7 +22,7 @@ public interface BookingService {
 	int insertOffice(Office o, ArrayList<Attachment> list);
 	
 	//4.오피스 수정(관리자)
-	int updateOffice(Office o);
+	int updateOffice(Office o, ArrayList<Attachment> list);
 	
 	//5.오피스 삭제(관리자)
 	int deleteOffice(Office o);
@@ -33,5 +33,6 @@ public interface BookingService {
 	
 	//7.오피스 상세 조회(관리자)
 	Office selectOffice(int officeNo);
+	ArrayList<Attachment> selectOfficeAtt(int officeNo);
 	
 }

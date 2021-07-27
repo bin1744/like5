@@ -15,6 +15,7 @@
 	  flex-direction: column;
 	  border: 1px solid black;
 	  min-width: 80%;
+      color:rgb(34,34,34);
 	}
 	.button-box {
 	  float: right;
@@ -23,54 +24,55 @@
 	  margin: 32px 0;
 	  min-width: 100%;
 	}
-	.top-imgs {
+	.top-img {
 	  display: flex;
+      justify-content: space-around;
+      border:none;
 	}
-	.top-imgs .img1,
-	.img2 {
-	  height: 300px;
-	  margin: 0 10px;
+	.top-img .img1{
+	  height: 220px;
+      width: 400px;
 	  overflow: hidden;
 	}
 	.below-imgs {
 	  display: flex;
-	  justify-content: space-between;
+	  justify-content: space-around;
 	  margin-top: 20px;
 	}
-	.img3,
-	.img4,
-	.img5 {
-	  height: 150px;
+	.img2 {
+	  height: 100px;
+      width:160px;
 	  margin: 0 10px;
 	}
 	.office-imgs img {
-	  height: 100%;
-	  width:150px;
-	  border: 1px solid black;
+    border: 1px solid rgb(221,221,221);
+    border-radius: 8px;
+    height: 100%;
+    width: 100%;
 	}
-	
-	.line1,
-	.line2,
-	.line3,
-	.line4 {
+	.line1,	.line2,	.line3,	.line4 {
 	  display: flex;
-	  justify-content: space-between;
+	  justify-content: space-evenly;
 	}
-	.line1 ul,
-	.line2 ul,
-	.line3 ul {
-	  list-style-type: none;
-	  margin: 10px;
-	  padding: 0;
-	  width: 100%;
+	.line1 ul,.line2 ul,.line3 ul {
+	    list-style-type: none;
+	    margin: 10px;
+	    padding: 0;
+	    width: 100%;
 	}
+    .office-content option, .office-content select{
+        border: 1px solid rgb(221,221,221);
+        border-radius: 8px;
+        width:100%;
+        height: 30px;
+    }
 	.office-content ul li input {
-	  width: 100%;
-	  height: 30px;
+	width: 100%;
+	height: 30px;
+    border: 1px solid rgb(221,221,221);
+    border-radius: 8px;
 	}
-	.linecheck1,
-	.linecheck2,
-	.linecheck3 {
+	.linecheck1,.linecheck2,.linecheck3 {
 	  display: flex;
 	  justify-content: space-around;
 	  text-align: center;
@@ -120,14 +122,14 @@
                 </div>
                 <hr>
                 <div class="office-imgs">
-                    <div class="top-imgs">
+                    <div class="top-img">
                         <div class="img1"><img id="img1"></div>
-                        <div class="img2"><img id="img2"></div>
                     </div>
                     <div class="below-imgs">
-                        <div class="img3"><img id="img3"></div>
-                        <div class="img4"><img id="img4"></div>
-                        <div class="img5"><img id="img5"></div>
+                        <div class="img2"><img id="img2"></div>
+                        <div class="img2"><img id="img3"></div>
+                        <div class="img2"><img id="img4"></div>
+                        <div class="img2"><img id="img5"></div>
                     </div>
                 </div>
                 <div id="file-area">
@@ -144,13 +146,31 @@
                 <div class="office-content">
                     <div class="line1">
                         <ul>
-                            <li>오피스번호</li>
-                            <li><input type="text" name="sth" readonly></li>
+                            <li>지점</li>
+                            <li><input type="text" name="branch" id=""></li>
                         </ul>
                         <ul>
                             <li>오피스타입</li>
-                            <li><input type="text" name="typeName"></li>
-                        </ul>    
+                            <li>
+                                <select name="typeName" id="">
+                                    <option value="프라이빗">프라이빗</option>
+                                    <option value="전용데스크">전용데스크</option>
+                                    <option value="공용데스크">공용데스크</option>
+                                </select>
+                            </li>
+                        </ul> 
+                        <ul>
+                            <li>수용인원</li>
+                            <li>
+                                <select name="person" id="">
+                                    <option value="1">1 인</option>
+                                    <option value="2">2 인</option>
+                                    <option value="3">3 인</option>
+                                    <option value="4">4 인</option>
+                                    <option value="5">5 인이상</option>
+                                </select>
+                            </li>
+                        </ul>   
                     </div>
                     <div class="line2">
                         <ul>
@@ -158,12 +178,14 @@
                             <li><input type="text" name="price"></li>
                         </ul>
                         <ul>
+                            <!-- 여기를 어떻게 하지?? -->
                             <li>매니저</li>
                             <li><input type="text" name="manager"></li>
                         </ul>
                     </div>
                     <div class="line3">
                         <ul>
+                            <!-- 다음 주소 api 연결 예정 -->
                             <li>주소</li>
                             <li><input type="text" name="address"></li>
                         </ul>
@@ -219,7 +241,7 @@
                 <hr>
                 <div class="button-box">
                     <button type="submit">작성하기</button>
-                    <button type="button">수정하기</button>
+                    <button type="button"><a href="#">목록으로</a></button>
                 </div>
             </form>
         </div>
