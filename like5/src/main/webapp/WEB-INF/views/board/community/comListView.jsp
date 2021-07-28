@@ -8,104 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community</title>
-	  <style>
-	      
-	      a { text-decoration:none !important } a:hover { text-decoration:none !important }
-	  
-	      .main{
-	          height: 60em;
-	          width: 55em;
-	          margin-top: 100px;;
-	      }
-	      
-	      .community-header{
-	          display: inline;
-	      }
-	  
-	      .aTags>*, .aTags{text-decoration: none;color: black;}
-	  
-	      .aTags :hover{
-	          color: rgb(220, 53, 69);
-	      }
-	  
-	      #searchForm >*{
-	              float:left;
-	              margin:5px;
-	      }
-	      
-	      .form-control{width: 300px; height: 30px;}
-	      
-	      .select-area{float: right;}
-	      .select-area>*{margin: 4px;}
-	      #communityList>*{margin: auto;}
-	  
-	      .TalkBoxItem .talk-box-wrapper{
-	          padding:10px 10px 5px 10px;
-	          display: flex;
-	      }
+    
+<!-- comListView.css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/comListView.css" />
 	
-	      .talk-box-wrapper:hover{cursor: pointer; background-color: rgba(224, 224, 224, 0.3);}
-	      .TalkBoxItem .talk-box-col__content{
-	          width:100%;
-	      }
-	  
-	  
-	      .TalkBoxItem .talk-box-col__thumbnail>img{
-	          margin-left: 5px;
-	          width : 100px;
-	          height:100px;
-	          overflow: hidden;
-	      }
-	      
-	      .TalkPageHeaderModule .talk-filter-box-wrapper .talk-filter-box-inner{
-	          display: flex;
-	          border:1px solid #d3d3d3;
-	          border-radius:5px;
-	          width:93%;
-	      }
-	      
-	      .talk-filter-box-inner>div{
-	          padding:5px 20px;
-	          text-align: center;
-	          cursor: pointer;
-	      }
-	  
-	  
-	      .talk-filter-box-inner .on{
-	          background-color: rgb(220, 53, 69);
-	          color: white;
-	      }
-	  
-	      .talk-filter-box-inner {
-	          color: black;
-	      }
-	  
-	      .talk-box-row__info{margin-top: 30px;}
-	      
-	      
-	      .category-tag-header-wrapper {
-	          margin-bottom: 1%;
-	          margin-left: 30px
-	      }
-	  
-	      .sidebar-item-wrapper {
-	          float: right;
-	      }
-	      .category-list-wrapper>*{
-	          margin: 5px;
-	          padding-left:30px;
-	      }
-	
-	      .search-item-wrapper {display: flex; justify-content: space-between;}
-	
-	      .search-item-wrapper>*{margin-left: 10px;}
-	  
-	      textarea.form-control:focus, input:focus, input[type]:focus, .uneditable-input:focus {
-	            border-color: rgba(224, 224, 224, 0.3);
-	            box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset, 0 0 8px rgba(224, 224, 224, 0.3);
-	            outline: 0 none;
-	        }
-	  </style>
 </head>
 <body>
 
@@ -114,7 +20,7 @@
    
 
     <!--전체 감싸는 div-->
-    <div class="innerOuter" style="padding:5% 10%;">
+    <div class="innerOuter" style="margin-top:50px">
 
            
         <!--카테고리 시작-->
@@ -142,7 +48,7 @@
         <!--카테고리 끝--> 
         </div>
 
-        <div class="TalkPageHeaderModule header">
+        <div class="TalkPageHeaderModule">
             <div class="talk-filter-box-wrapper"  style="width: 280px;" >
                 <div><h2 class="content-header"><b>전체</b> &nbsp;&nbsp;</h2></div>
                 <div class="talk-filter-box-inner" id="selectOption">
@@ -237,22 +143,22 @@
         </script>
 
      
-        <div style="display: inline-block; margin-left: 20%;" >
+        <div style="display: inline-block; margin-left: 25%;" >
             <div id="search-area" >
                 <!--키워드 검색-->
                 <form id="searchForm" action="" method="Get">
                     <!--카테고리 시작-->
                     <div class="community-header" > 
                         <div class="search-item-wrapper">
-                            <div class="category-tag-header-wrapper"  >
+                            <div class="category-tag-header-wrapper"  style="margin-top:5px">
                                 <select class="selectpicker radius">
                                     <option>제목+내용</option>
                                     <option>제목만</option>
                                     <option>글작성자</option>
                                 </select>
                             </div>
-                            <input type="search" class="form-control" name="keyword"  placeholder="원하는 정렬 기준으로 검색해보세요!">
-                            <a><i class="fas fa-search"></i></a>
+                            <input type="search" class="form-control" name="keyword"  placeholder="원하는 정렬 기준으로 검색해보세요!" style="width:300px">
+                            <i class="fas fa-search" style="margin-top:10px"><a></a></i>
                             
                         </div>
                     <!--카테고리 끝--> 
@@ -260,8 +166,8 @@
                 </form>
                 <!--검색 끝-->
             </div>
-            <div style="display:inline-block; margin-left: 150px; margin-top: 50px;">
-                <!--🔥페이징바 컬러 변경 예정🔥-->
+            <div style="display:inline-block; margin-left: 30%; margin-top: 50px;">
+                <!--페이징바 컬러 변경 예정-->
                 <!--페이징 시작-->
                 <div id="pagingArea">
                     <nav aria-label="Page navigation">
@@ -288,17 +194,13 @@
             </div>
         </div>
         
-
-
-
-
     <!--전체 감싸는 div-->
     </div>
 
      
 
     <!--푸터바 들어올 자리 -->
-
+	<jsp:include page="../../common/footer.jsp" />
 
 </body>
 </html>
