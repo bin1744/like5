@@ -28,14 +28,14 @@
 
 <style>
 /* 세부 페이지마다 공통적으로 유지할 스타일 */
-.innerOuter{width: 70%; margin: auto;}
+.innerOuter{width:70%; margin:auto;}
 
 /* 공통 폰트 */
-*{font-family: 'Noto Sans KR', sans-serif; color: #424242;}
-div{box-sizing: border-box; /*border:1px solid black;*/}
+*{font-family:'Noto Sans KR', sans-serif; color:#424242;}
+div{box-sizing:border-box;}
 
 /* 헤더 배열 */
-.header{width:70%; height:100%; margin:auto; display:flex; border-bottom:2px solid #DEDEDE;}
+.header{width:70%; margin:auto; display:flex; border-bottom:2px solid #DEDEDE;}
 .header>div{width:100%; float:left; margin-bottom:-2px;}
 #header_logo{width:10%;}
 #header_navi{width:75%;}
@@ -71,7 +71,7 @@ div{box-sizing: border-box; /*border:1px solid black;*/}
 #explanation{margin:7% 0% 10% 0%;}
 
 /* to the top */
-#toTheTop {display:scroll; position:fixed; bottom:1.5rem; right:2rem; color:grey;}
+#toTheTop{display:scroll; position:fixed; bottom:1.5rem; right:2rem; color:grey;}
 </style>
 </head>
 
@@ -81,7 +81,7 @@ div{box-sizing: border-box; /*border:1px solid black;*/}
 	<div class="header" id="header">
 		<!-- 로고 -->
 		<div id="header_logo" align=center>
-			<br><a href=""> <img src="https://i.imgur.com/vhEZ5DJ.png" class="headerImg"></a>
+			<br><a href=""><img src="https://i.imgur.com/vhEZ5DJ.png" class="headerImg"></a>
 		</div>
 
 		<!-- 메뉴 -->
@@ -136,7 +136,6 @@ div{box-sizing: border-box; /*border:1px solid black;*/}
 					</c:choose>
 				</c:otherwise>
 			</c:choose>
-
 		</div>
 	</div>
 	<!-- 메뉴바 끝 -->
@@ -148,8 +147,7 @@ div{box-sizing: border-box; /*border:1px solid black;*/}
 			<div class="modal-content">
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<img style="width: 138px; height: 70px;"
-						src="https://i.imgur.com/5WiLp9Y.jpg" alt="">
+					<img style="width: 138px; height: 70px;" src="https://i.imgur.com/5WiLp9Y.jpg" alt="">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 
@@ -157,16 +155,12 @@ div{box-sizing: border-box; /*border:1px solid black;*/}
 					<!-- Modal body -->
 					<div class="modal-body">
 						<div style="margin-left: 80px;">
-							이메일 : <input type="email" id="email" name="email"
-								style="margin-left: 17px;"><br> 비밀번호 : <input
-								type="password" id="memPwd" name="memPwd"
-								style="margin-left: 3px;">
-							<button type="button"
-								style="border: 0px solid white; background-color: white;">
+							이메일 : <input type="email" id="email" name="email" style="margin-left: 17px;"><br>
+							비밀번호 : <input type="password" id="memPwd" name="memPwd" style="margin-left: 3px;">
+							<button type="button" style="border: 0px solid white; background-color: white;">
 								<img src="https://i.imgur.com/CsKaQmk.png" alt="">
 							</button>
-							<button type="button"
-								style="border: 0px solid white; background-color: white;">
+							<button type="button" style="border: 0px solid white; background-color: white;">
 								<img src="https://i.imgur.com/X4fyiID.png" alt="">
 							</button>
 						</div>
@@ -174,8 +168,7 @@ div{box-sizing: border-box; /*border:1px solid black;*/}
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal"
+						<button type="button" class="btn btn-secondary" data-dismiss="modal"
 							style="border: 2px solid rgb(220, 53, 69); background-color: white; color: rgb(220, 53, 69);">취소</button>
 						<button type="submit" class="btn btn-secondary"
 							style="background-color: rgb(220, 53, 69); color: white; margin-right: 170px;">로그인</button>
