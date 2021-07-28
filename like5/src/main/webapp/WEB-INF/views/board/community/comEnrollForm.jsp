@@ -8,32 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community</title>
-    <link href="../../resources/css/styles.css" rel="stylesheet">
-    
-    <!-- jQuery 라이브러리 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-    <!-- 부트스트랩 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <!-- W3.CSS -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-    <!-- 폰트어썸 -->
-    <script src="https://kit.fontawesome.com/1e56433357.js" crossorigin="anonymous"></script>
-
-    <!-- 공통 폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-
-    <!-- 메인페이지 폰트 -->
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-  
     
     <style>
 
@@ -177,53 +151,7 @@
 </head>
 <body>
 
-    
-    <div class="header">
-        <!-- 로고 -->
-        <div id="header_logo" align=center>
-            <a href="">
-                <img src="https://i.imgur.com/5WiLp9Y.jpg" style="width:85px; height:50px;">
-            </a>
-        </div>
-
-        <!-- 메뉴 -->
-        <div id="header_navi">
-            <ul id="menu">
-                <li><a href="">LIKE5?</a></li>
-                <li><a href="">QnA</a></li>
-                <li><a href="">공간대여</a></li>
-                <li><a href="">커뮤니티</a></li>
-                <li><a href="">칼럼</a></li>
-                <li><a href="">IT뉴스</a></li>
-            </ul>
-        </div>
-
-        <!-- 로그인 -->
-        <div id="header_user" style="text-align:center;">
-            <!-- 로그인 전
-            <div id="before_login">
-                <a href="">로그인&nbsp;</a> | <a href="">&nbsp;회원가입</a>
-            </div> -->
-
-            <!-- 로그인 후 -->
-            <div id="after_login">
-                <div class="w3-dropdown-hover w3-center">
-                    <!-- 사용자 닉네임 한글 기준 11자까지 배열에 딱 맞음 -->
-                    <button class="w3-button w3-white">사용자 닉네임</button>
-                    <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
-                    <a href="" class="w3-bar-item w3-button">마이페이지</a>
-                    <a href="" class="w3-bar-item w3-button">내 프로필 보기</a>
-                    <a href="" class="w3-bar-item w3-button">1:1문의</a>
-                    <a href="" class="w3-bar-item w3-button">로그아웃</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- 메뉴바 아래 회색 밑줄 -->
-        <div class="underline"></div>
-    </div>
-    
-
+    <jsp:include page="../../common/header.jsp" /> 
 
 
     <div class="innerOuter">

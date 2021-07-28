@@ -2,6 +2,7 @@ package com.kh.like5.board.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class BoardController {
@@ -34,4 +35,35 @@ public class BoardController {
 		
 		return "board/qna/qnaDetailView";
 	}
+	
+	
+	
+	
+	
+	//-------------------성은-------------------------
+	
+	
+	/**
+	 * 커뮤니티 전체 리스트
+	 * @author seong 
+	 */
+	@RequestMapping("comList.bo")
+	public ModelAndView comList(ModelAndView mv){
+		mv.setViewName("board/community/comListView");
+		return mv;
+	}
+	
+	/**
+	 * 커뮤니티 글 작성 페이지
+	 * @author seong 
+	 */
+	@RequestMapping("comEnrollForm.bo")
+	public ModelAndView comEnrollForm(ModelAndView mv) {
+		mv.setViewName("board/community/comEnrollForm");
+		return mv;
+	}
+	
+	
+	
+	
 }
