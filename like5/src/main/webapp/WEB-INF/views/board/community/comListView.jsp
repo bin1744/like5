@@ -20,7 +20,7 @@
    
 
     <!--전체 감싸는 div-->
-    <div class="innerOuter" style="margin-top:50px">
+    <div class="innerOuter" style="margin-top:50px;padding-left:50px">
 
            
         <!--카테고리 시작-->

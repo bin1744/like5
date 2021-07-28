@@ -18,7 +18,7 @@
 	 <!--메뉴바-->
     <jsp:include page="../../common/header.jsp" /> 
 
-    <div class="innerOuter"style="margin-top:50px">
+    <div class="innerOuter"style="margin-top:50px;padding-left:50px">
         <div class="flex-box">
             <h2><b>커뮤니티</b></h2>
             <h6><b>질문은 QnA게시판을 이용해주세요.</b> </h6>
