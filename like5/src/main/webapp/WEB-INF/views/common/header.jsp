@@ -90,7 +90,7 @@ div{box-sizing:border-box;}
 				<li><a href="">LIKE5?</a></li>
 				<li><a href="qList.bo">QnA</a></li>
 				<li><a href="bMain.bk">공간대여</a></li>
-				<li><a href="">커뮤니티</a></li>
+				<li><a href="comList.bo">커뮤니티</a></li>
 				<li><a href="">칼럼</a></li>
 				<li><a href="">IT뉴스</a></li>
 			</ul>

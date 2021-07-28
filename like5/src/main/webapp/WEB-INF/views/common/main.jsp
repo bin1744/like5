@@ -113,7 +113,7 @@
 							같이 스터디를 꾸리거나,<br>
 							함께 이야기를 나눠보세요
 						</p>
-						<a class="w3-button w3-red w3-round-xxlarge w3-hover-deep-orange" id="aboutUs" href="">
+						<a class="w3-button w3-red w3-round-xxlarge w3-hover-deep-orange" id="aboutUs" href="comList.bo">
 							&nbsp;&nbsp;바로가기&nbsp;&nbsp;
 						</a>
 						<br><br><br>
