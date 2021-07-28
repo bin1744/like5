@@ -113,7 +113,7 @@ div{box-sizing:border-box;}
 								<div class="w3-dropdown-hover w3-center">
 									<button class="w3-button w3-white">${ loginUser.memName }</button>
 									<div class="w3-dropdown-content w3-bar-block w3-border">
-										<a href="" class="w3-bar-item w3-button">마이페이지</a>
+										<a href="myPage.me?memNo=${ loginUser.memNo }" class="w3-bar-item w3-button">마이페이지</a>
 										<a href="" class="w3-bar-item w3-button">내 프로필 보기</a>
 										<a href="" class="w3-bar-item w3-button">1:1문의</a>
 										<a href="logout.me" class="w3-bar-item w3-button">로그아웃</a>
