@@ -3,6 +3,7 @@ package com.kh.like5.admin.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.like5.board.model.vo.Board;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,26 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public ArrayList<Member> selectSearchMemList(PageInfo pi, HashMap<String, String> map) {
 		return adDao.selectSearchMemList(sqlSession, pi, map);
+	}
+
+	@Override
+	public int getBoardCount() {
+		return adDao.getBoardCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Board> getBoardList(PageInfo pi) {
+		return adDao.getBoardList(sqlSession, pi);
+	}
+
+	@Override
+	public int getSearchBoardCount(HashMap<String, String> map) {
+		return adDao.getSearchBoardCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Board> getSearchBoardList(PageInfo pi, HashMap<String, String> map) {
+		return adDao.getSearchBoardList(sqlSession, pi, map);
 	}
 
 

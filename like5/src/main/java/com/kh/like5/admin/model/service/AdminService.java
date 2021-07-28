@@ -3,6 +3,7 @@ package com.kh.like5.admin.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.member.model.vo.Member;
 
@@ -39,6 +40,14 @@ public interface AdminService {
 	// tag 조회 페이지 select문-게시글불러오기
 	// tag 수정페이지(관리자용) select문
 	// tag 수정페이지 Modal update문
+
+	// 게시글 리스트 조회
+	int getBoardCount();
+	ArrayList<Board> getBoardList(PageInfo pi);
+
+	// 게시글 검색 리스트 조회
+	int getSearchBoardCount(HashMap<String, String> map);
+	ArrayList<Board> getSearchBoardList(PageInfo pi, HashMap<String, String> map);
 	
 	
 	

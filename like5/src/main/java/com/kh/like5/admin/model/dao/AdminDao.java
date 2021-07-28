@@ -3,6 +3,7 @@ package com.kh.like5.admin.model.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.like5.board.model.vo.Board;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -37,8 +38,34 @@ public class AdminDao {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectSearchMemList", map, rowBounds);
 	}
-	
-	
+
+	// 게시글 리스트 조회
+	public int getBoardCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("boardMapper.getBoardCount");
+	}
+
+	public ArrayList<Board> getBoardList(SqlSessionTemplate sqlSession, PageInfo pi) {
+
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+		return (ArrayList)sqlSession.selectList("boardMapper.getBoardList", null, rowBounds);
+
+	}
+
+	// 게시글 검색 리스트 조회
+	public int getSearchBoardCount(SqlSessionTemplate sqlSession, HashMap<String, String>map) {
+		return sqlSession.selectOne("boardMapper.getSearchBoardCount", map);
+	}
+
+	public ArrayList<Board> getSearchBoardList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String>map){
+
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+		return (ArrayList)sqlSession.selectList("boardMapper.getSearchBoardList", map, rowBounds);
+
+	}
 	
 	
 	
