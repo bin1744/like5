@@ -7,10 +7,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    .outer{
-        width: 1200px;
-        margin: auto;
-    }
     aside{
         float: left;
         margin-right: 50px;
@@ -95,7 +91,7 @@
 	
 	<br>
 	<!-- 해당 페이지는 관리자로 로그인 한 경우만 보여지고  -->
-    <div class="outer">
+    <div class="innerOuter">
 	
 		<c:if test="${ !empty loginUser && (loginUser.userStatus == 'Y') }">
 	        <div class="aside-title">
