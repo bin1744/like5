@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Community</title>
   
-<!-- comEnrolllView.css -->
+<!-- comDetailView.css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/comDetailView.css" />   
  
 </head>
@@ -56,12 +56,29 @@
                             <div>내용이 보여지는 영역</div>
                           
                         </div>
-                        <!--글작성자에게만 보여지는 버튼
-                        <div class="content-footer" align="center">
-                            <button type="button" class="btn btn-outline-danger btn-sm">수정</button>
-                            <button type="button" class="btn btn-danger btn-sm">삭제</button>
-                        </div>
-                        -->
+                        <!--글작성자에게만 보여지는 버튼-->
+                        <%-- <c:if test="${loginUser.userId != null}"></c:if>--%>
+	                        <div class="content-footer" align="center">
+	                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="postFormSubmit(1)">수정</button>
+	                            <button type="button" class="btn btn-danger btn-sm" onclick="postFormSubmit(2)">삭제</button>
+	                        </div>
+	                        
+	                        <form id="postForm" action="" method="post">
+								<input type="hidden" name="bno" value="${b.boardNo}">
+								<input type="hidden" name="filePath" value="${b.changeName}">
+							</form>
+							
+							<script>
+								function postFormSubmit(num){
+									if(num==1){ // 수정하기
+										$("#postForm").attr("action","comUpdateForm.bo").submit();
+									 	// 선택된 요소에 액션값 부여하고, 바로 submit 시키기 == 메소드 체이닝
+									}else{ // 삭제하기
+										$("#postForm").attr("action","comDelete.bo").submit();
+									}
+								}
+							</script>
+                        
                         <hr>
                     </div>
                 </div>

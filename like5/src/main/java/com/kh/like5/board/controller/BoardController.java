@@ -77,4 +77,18 @@ public class BoardController {
 	}
 	
 	
+	/**
+	 * [커뮤니티] - 글 수정 Form
+	 * @author seong
+	 */
+	
+	@RequestMapping("comUpdateForm.bo")
+	public ModelAndView comUpdateForm(ModelAndView mv) {
+		mv.setViewName("board/community/comUpdateForm");
+		return mv;
+	}
+	
+	
+	
+	
 }

@@ -9,16 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community</title>
     
-<!-- comEnrolllView.css -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/comEnrolllView.css" />  
+<!-- comEnrollForm.css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/comEnrollForm.css" />  
 
 </head>
 <body>
 
+  	<!--메뉴바-->
     <jsp:include page="../../common/header.jsp" /> 
 
 
-    <div class="innerOuter">
+    <div class="innerOuter"style="margin-top:50px">
         <div class="flex-box">
             <h2><b>커뮤니티</b></h2>
             <h6><b>질문은 QnA게시판을 이용해주세요.</b> </h6>
@@ -57,6 +58,7 @@
                 </div>
             </div>
             <div class="file-upload" style="padding: 0px;">
+              
                 <!--<button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">첨부파일 등록하기</button>-->
             
                 <div class="image-upload-wrap">
@@ -78,13 +80,13 @@
             <div class="content-footer">
                 <div class="container-fluid" style="background-color: rgba(224, 224, 224, 0.3);">
                         Like5에 멋진 글을 작성해주셔서 감사드립니다 🧡<br>
-                        청결한 게시판을 위해 
-                        욕설이나 비방, 모욕, 선정성이 존재하는 사진이나 게시글은 업로드하지 말아주세요.
+				                        청결한 게시판을 위해 
+				                        욕설이나 비방, 모욕, 선정성이 존재하는 사진이나 게시글은 업로드하지 말아주세요.
                 </div>
             </div>
             <br><br>
 
-            <div style="display: flex; justify-content: space-between;">
+            <div style="display: flex;  justify-content: space-between; margin-bottom:50px;"  >
                 <button type="reset" class="btn btn-outline-danger">취소</button>
                 <button type="submit" class="btn btn-danger">등록</button>
             </div>
@@ -148,11 +150,12 @@
             });
 
 
-
-
         </script>
 
     </div>
+    
+    <!--푸터바-->
+	<jsp:include page="../../common/footer.jsp" />
 
 </body>
 </html>
