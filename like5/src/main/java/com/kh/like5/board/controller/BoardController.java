@@ -135,6 +135,17 @@ public class BoardController {
 		return mv;
 	}
 	
+	/**
+	 * [칼럼] - 글 상세보기
+	 * @author seong
+	 */
+
+	@RequestMapping("colDetail.bo")
+	public ModelAndView colDetail(ModelAndView mv) {
+		mv.setViewName("board/column/colDetailView");
+		return mv;
+	}
+	
 	
 	
 }
