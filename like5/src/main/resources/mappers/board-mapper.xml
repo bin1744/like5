@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardMapper">
+
+    <resultMap id="board" type="Board">
+        <result column="boa_no" property="bno" />
+        <result column="mem_no" property="mno" />
+        <result column="boa_category" property="category" />
+        <result column="boa_status" property="status" />
+        <result column="boa_title" property="title" />
+        <result column="boa_content" property="content" />
+        <result column="boa_enroll_date" property="enrollDate" />
+        <result column="boa_update_date" property="updateDate" />
+        <result column="boa_count" property="count" />
+        <result column="boa_like" property="like" />
+        <result column="boa_scrap" property="scrap" />
+        <result column="tag_name" property="tag" />
+        <result column="boa_img_path" property="imgPath" />
+    </resultMap>
+
+    <!-- [재환] 관리자단 게시글 개수 조회 -->
+    <select id="getBoardCount" resultType="_int">
+        select count(*) from board where boa_status = 'Y'
+    </select>
+
+    <!-- [재환] 관리자단 게시글 리스트 조회 -->
+    <select id="getBoardList" resultMap="board">
+        select * from board where boa_status = 'Y' order by boa_no desc
+    </select>
+
+    <!-- [재환] 관리자단 검색된 게시글 개수 조회 -->
+    <select id="getSearchBoardCount" resultType="_int">
+        select count(*)
+        from board
+        where boa_status = 'Y'
+        <choose>
+            <when test="condition == 'title'">
+                and boa_title
+            </when>
+            <otherwise>
+                and boa_category
+            </otherwise>
+        </choose>
+        like '%' || #{keyword} || '%'
+    </select>
+
+    <!-- [재환] 관리자단 검색된 게시글 리스트 조회 -->
+    <select id="getSearchBoardList" resultMap="board">
+        select *
+        from board
+        where boa_status = 'Y'
+        <choose>
+            <when test="condition == 'title'">
+                and boa_title
+            </when>
+            <otherwise>
+                and boa_category
+            </otherwise>
+        </choose>
+        like '%' || #{keyword} || '%'
+        order
+        by boa_no desc
+    </select>
+
+
+</mapper>
