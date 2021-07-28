@@ -77,6 +77,13 @@ div{box-sizing:border-box;}
 
 <body>
 
+	<c:if test="${ !empty alertMsg }">
+		<script>
+			alertify.alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if>
+	
 	<!-- [한솔] 메뉴바 : 헤더 스타일 및 배열 초기버전에서 일부 수정 -->
 	<div class="header" id="header">
 		<!-- 로고 -->
