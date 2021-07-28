@@ -40,7 +40,7 @@
 			<!-- 페이지 상단 회원 정보 영역 끝 -->
 
 			<!-- 페이지 하단 전체 영역 -->
-			<div class="profileBottom"">
+			<div class="profileBottom">
 				<!-- 글/댓글/스크랩 카테고리 선택 영역 -->
 				<div class="pickCategory">
 					<div class="myContent"><a href="">작성 글</a></div>
