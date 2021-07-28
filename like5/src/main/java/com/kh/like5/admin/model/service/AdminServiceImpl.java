@@ -39,5 +39,10 @@ public class AdminServiceImpl implements AdminService{
 		return adDao.selectSearchMemList(sqlSession, pi, map);
 	}
 
+	@Override
+	public int deleteMem(int mno) {
+		return adDao.deleteMem(sqlSession, mno);
+	}
+
 
 }

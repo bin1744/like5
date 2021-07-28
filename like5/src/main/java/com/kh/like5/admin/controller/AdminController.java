@@ -37,6 +37,7 @@ public class AdminController {
         return mv;
     }
     
+    // 회원관리-검색기능
     @RequestMapping("searchMem.ad")
     public ModelAndView searchMemList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, String condition , String keyword) {
     	
@@ -59,7 +60,16 @@ public class AdminController {
     	
     }
     
-    
-    
+    // 회원탈퇴 처리 기능 
+    @RequestMapping("deleteMem.ad")
+    public String  deleteMem(int mno, ModelAndView mv,@RequestParam(value="currentPage", defaultValue="1") int currentPage ) {
+    	
+    	// 회원의 탈퇴 상태를 'Y'로 업데이트 해주기
+    	int result= adService.deleteMember(mno);
+    	// 기존의 페이지로 돌아갈 수 있게 해주기
+    	
+    	
+    	return "admin/adminMember";
+    }
 
 }

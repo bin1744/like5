@@ -80,6 +80,7 @@
 	 		</otherwise>
 	 	</choose>
 	 	like '%' || #{keyword} || '%'
+	 	order by mem_no
 	</select>
 	
 	<select id="selectSearchMemList" resultMap="memberResult">
@@ -108,8 +109,14 @@
 	 		</otherwise>
 		 	</choose>
 		 	like '%' || #{keyword} || '%'
+		 	order by mem_no
 			
 	</select>
-	
+	<update id="deleteMem">
+		update 
+				member
+		   set ent_yn ='Y'
+		   where mem_no = #{mno}
+	</update>
 	
 </mapper>

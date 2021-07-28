@@ -38,7 +38,9 @@ public class AdminDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectSearchMemList", map, rowBounds);
 	}
 	
-	
+	public int deleteMem(SqlSessionTemplate sqlSession, int mno) {
+		return sqlSession.update("memberMapper.deleteMem", mno);
+	}
 	
 	
 	
