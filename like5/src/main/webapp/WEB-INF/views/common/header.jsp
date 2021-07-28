@@ -87,7 +87,7 @@ div{box-sizing:border-box;}
 		<!-- 메뉴 -->
 		<div id="header_navi">
 			<br><ul id="menu">
-				<li><a href="">LIKE5?</a></li>
+				<li><a href="about.ad">LIKE5?</a></li>
 				<li><a href="qList.bo">QnA</a></li>
 				<li><a href="bMain.bk">공간대여</a></li>
 				<li><a href="comList.bo">커뮤니티</a></li>
