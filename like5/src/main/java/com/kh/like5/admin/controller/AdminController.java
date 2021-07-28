@@ -2,7 +2,10 @@ package com.kh.like5.admin.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.function.Supplier;
 
+import com.kh.like5.board.model.vo.Board;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,13 +18,31 @@ import com.kh.like5.common.template.Pagination;
 import com.kh.like5.member.model.vo.Member;
 
 @Controller
+@Log
 public class AdminController {
 	
 	@Autowired
 	private AdminService adService;
-    /**
-     *  회원관리 페이지
-     */
+
+	// about 페이지
+	@RequestMapping("about.ad")
+	public String about() {
+		return "admin/about";
+	}
+
+	// faq 페이지
+	@RequestMapping("faq.ad")
+	public String faq() {
+		return "admin/faq";
+	}
+
+	// tags 페이지
+	@RequestMapping("tags.ad")
+	public String tag() {
+		return "admin/tags";
+	}
+
+	// 회원관리 페이지
     @RequestMapping("member.ad")
     public  ModelAndView memberPage(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
     	
@@ -59,6 +80,47 @@ public class AdminController {
     	return mv;
     	
     }
+
+    // 게시글 관리 페이지
+	@RequestMapping("board.ad")
+	public ModelAndView boardList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+
+		int listCount = adService.getBoardCount();
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 15);
+		ArrayList<Board> list = adService.getBoardList(pi);
+
+		mv.addObject("pi", pi)
+				.addObject("list", list)
+				.setViewName("admin/adminBoard");
+
+		adService.getBoardList(pi).forEach(board -> log.info("list: " + board));
+
+		return mv;
+	}
+
+	// 게시글 관리 페이지 검색 기능
+	@RequestMapping("searchBoard.ad")
+	public ModelAndView boardSearchList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, String condition , String keyword) {
+
+		HashMap<String,String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+
+		int listCount = adService.getSearchBoardCount(map);
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
+		ArrayList<Board> list = adService.getSearchBoardList(pi,map);
+
+		mv.addObject("pi",pi)
+				.addObject("list",list)
+				.addObject("condition", condition)
+				.addObject("keyword", keyword)
+				.setViewName("admin/adminBoard");
+
+		return mv;
+
+	}
     
     // 회원탈퇴 처리 기능 
     @RequestMapping("deleteMem.ad")
