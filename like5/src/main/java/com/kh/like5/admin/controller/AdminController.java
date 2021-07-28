@@ -2,20 +2,23 @@ package com.kh.like5.admin.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.function.Supplier;
 
-import com.kh.like5.board.model.vo.Board;
-import lombok.extern.java.Log;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.like5.admin.model.service.AdminService;
+import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.common.template.Pagination;
 import com.kh.like5.member.model.vo.Member;
+
+import lombok.extern.java.Log;
 
 @Controller
 @Log
@@ -124,14 +127,20 @@ public class AdminController {
     
     // 회원탈퇴 처리 기능 
     @RequestMapping("deleteMem.ad")
-    public String  deleteMem(int mno, ModelAndView mv,@RequestParam(value="currentPage", defaultValue="1") int currentPage ) {
+    public String  deleteMem(int memNo, Model model, HttpSession session ) {
     	
     	// 회원의 탈퇴 상태를 'Y'로 업데이트 해주기
-    	int result= adService.deleteMember(mno);
+    	int result= adService.deleteMem(memNo);
     	// 기존의 페이지로 돌아갈 수 있게 해주기
+    	if(result>0) { //제대로 삭제된 경우 
+    		session.setAttribute("alertMsg", "해당 회원이 성공적으로 탈퇴 처리 되었습니다!");
+    		return "redirect:member.ad";
+    	}else {
+    		model.addAttribute("errorMsg", "게시글 삭제 실패");
+    		return "common/errorPage";
+    	}
     	
     	
-    	return "admin/adminMember";
     }
 
 }

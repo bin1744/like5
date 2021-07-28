@@ -39,8 +39,8 @@ public class AdminDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectSearchMemList", map, rowBounds);
 	}
 	
-	public int deleteMem(SqlSessionTemplate sqlSession, int mno) {
-		return sqlSession.update("memberMapper.deleteMem", mno);
+	public int deleteMem(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.update("memberMapper.deleteMem", memNo);
 	}
 
 	// 게시글 리스트 조회

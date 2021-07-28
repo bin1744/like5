@@ -18,7 +18,7 @@ public interface AdminService {
 	public ArrayList<Member> selectSearchMemList(PageInfo pi, HashMap<String, String> map);
 	
 	// 회원관리-회원삭제기능(update혹은 delete구문)
-	int deleteMem(int mno);
+	int deleteMem(int memNo);
 	
 	
 	

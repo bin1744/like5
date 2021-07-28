@@ -38,6 +38,7 @@
           and mem_pwd = #{memPwd}
 				
 	</select>
+	<!-- [지현]회원관리 맴버 전체 조회 -->
 	<select id="selectMemCount" resultType="_int">
 		select 
 			count(*)
@@ -62,6 +63,7 @@
 			by mem_no
 	</select>
 	
+	<!-- [지현]회원관리 맴버 키워드 조회-->
 	<select id="selectSearchMemCount" resultType="_int">
 		select
 		       count(*)
@@ -116,7 +118,7 @@
 		update 
 				member
 		   set ent_yn ='Y'
-		   where mem_no = #{mno}
+		   where mem_no = #{memNo}
 	</update>
 	
 </mapper>

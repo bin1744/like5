@@ -230,32 +230,7 @@
 	            <br><br>
 	        </article>
 	        
-	        <!-- 
-	        <div class="modal" id="deleteMem">
-		        <div class="modal-dialog">
-		            <div class="modal-content">
-		        
-		                <!-- Modal Header -->
-		                <div class="modal-header">
-		                <h4 class="modal-title">삭제하기</h4>
-		                <button type="button" class="close" data-dismiss="modal">&times;</button>
-		                </div>
-		                <form action="">
-		                    <!-- Modal body -->
-		                    <div class="modal-body">
-		                        	선택하신 회원을 탈퇴처리 하시겠습니까?
-		                    </div>
-		            
-		                    <!-- Modal footer -->
-		                    <div class="modal-footer">
-		                        <button type="submit" class="btn btn-danger" data-dismiss="modal">삭제하기</button>
-		                         <button type="button" class="btn btn-second" data-dismiss="modal">취소하기</button>
-		                    </div>
-		                </form>
-		            </div>
-		        </div>
-		    </div>
-		    -->
+	        
 	        <script>
 	        	$(function(){
 	        		if("$(condition)" != ""){
@@ -274,7 +249,7 @@
 	        		if(!confirm("해당 회원을 정말로 탈퇴처리 하시겠습니까?")){
 	        			alert("취소하셨습니다.")
 	        		}else{
-	        			location.href="deleteMem.ad?mno="+memNo;
+	        			location.href="deleteMem.ad?memNo="+memNo;
 	        			// 이렇게 넘겨준 다음에 원래 페이지로 돌아가게 해줘야함
 	        		}
 	        		//location.href="deleteMem.ad?mno="+memNo;

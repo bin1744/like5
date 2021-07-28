@@ -160,14 +160,14 @@
     <ul class="pagination justify-content-center">
         <c:choose>
             <c:when test="${pi.currentPage eq 1}">
-                <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+                <li class="page-item disabled"><a class="page-link">이전</a></li>
             </c:when>
             <c:otherwise>
                 <c:when test="${!empty condition}">
-                    <li class="page-item"><a class="page-link" href="searchBoard.ad?currentPage=${pi.currentPage - 1}&condition=${condition}&keyword=${keyword}">&laquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="searchBoard.ad?currentPage=${pi.currentPage - 1}&condition=${condition}&keyword=${keyword}">이전</a></li>
                 </c:when>
                 <c:otherwise>
-                    <li class="page-item"><a class="page-link" href="board.ad?currentPage=${pi.currentPage - 1}">&laquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="board.ad?currentPage=${pi.currentPage - 1}">이전</a></li>
                 </c:otherwise>
             </c:otherwise>
         </c:choose>
@@ -175,27 +175,17 @@
         <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
             <c:choose>
                 <c:when test="${!empty condition}">
-<%--                    <c:when test="${pi.currentPage eq p}">--%>
-<%--                        <li class="page-item active"><a class="page-link" href="searchBoard.ad?currentPage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>--%>
-<%--                    </c:when>--%>
-<%--                    <c:otherwise>--%>
                         <li class="page-item"><a class="page-link" href="searchBoard.ad?currentPage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>
-<%--                    </c:otherwise>--%>
                 </c:when>
                 <c:otherwise>
-<%--                    <c:when test="${pi.currentPage eq p}">--%>
-<%--                        <li class="page-item active"><a class="page-link" href="board.ad?currentPage=${p}">${p}</a></li>--%>
-<%--                    </c:when>--%>
-<%--                    <c:otherwise>--%>
                         <li class="page-item"><a class="page-link" href="board.ad?currentPage=${p}">${p}</a></li>
-<%--                    </c:otherwise>--%>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
 
         <c:choose>
             <c:when test="${ pi.currentPage eq pi.maxPage }">
-                <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+                <li class="page-item disabled"><a class="page-link">다음</a></li>
             </c:when>
             <c:otherwise>
                 <c:choose>
@@ -203,17 +193,11 @@
                         <li class="page-item"><a class="page-link" href="searchBoard.ad?currentPage=${pi.currentPage + 1}&condition=${condition}&keyword=${keyword}">&raquo;</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li class="page-item"><a class="page-link" href="board.ad?currentPage=${pi.currentPage + 1}">&raquo;</a></li>
+                        <li class="page-item"><a class="page-link" href="board.ad?currentPage=${pi.currentPage + 1}">다음</a></li>
                     </c:otherwise>
                 </c:choose>
             </c:otherwise>
         </c:choose>
-
-<%--        <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>--%>
-<%--        <li class="page-item active"><a class="page-link" href="#">1</a></li>--%>
-<%--        <li class="page-item"><a class="page-link" href="#">2</a></li>--%>
-<%--        <li class="page-item"><a class="page-link" href="#">3</a></li>--%>
-<%--        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>--%>
     </ul>
 
     <br><br>
