@@ -127,7 +127,7 @@ public class AdminController {
     public String  deleteMem(int mno, ModelAndView mv,@RequestParam(value="currentPage", defaultValue="1") int currentPage ) {
     	
     	// 회원의 탈퇴 상태를 'Y'로 업데이트 해주기
-    	int result= adService.deleteMember(mno);
+//    	int result= adService.deleteMember(mno);
     	// 기존의 페이지로 돌아갈 수 있게 해주기
     	
     	
