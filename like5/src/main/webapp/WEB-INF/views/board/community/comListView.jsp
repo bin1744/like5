@@ -27,11 +27,11 @@
         <div class="community-header"> 
             <div class="sidebar-item-wrapper">
                 <div class="category-tag-header-wrapper" align="center">
-                    <button class="btn btn-danger" style="width: 100%;margin-bottom: 15px;" onclick="test1();">글작성</button>
+                    <button class="btn btn-danger" style="width: 100%;margin-bottom: 15px;" onclick="comEnrollForm();">글작성</button>
                     <h4 class="item-header">카테고리 📚</h4>
                     
                     <script>
-                    	function test1(){
+                    	function comEnrollForm(){
                     		location.href="comEnrollForm.bo";
                     	}
                     
@@ -68,8 +68,8 @@
             </div>
 
             <!--반복적으로 생성될 요소들-->
-            <div class="TalkBoxItem" id="test1">
-                <input type="hidden" value="test1">
+            <div class="TalkBoxItem" id="com-bno">
+                <input type="hidden" value="1"> <!-- 명시적으로 value의 값은 1 - 수정 예정 -->
                 <hr>
                 <!--하나의 컨텐츠 감쌀 영역-->
                 <div class="talk-box-wrapper">
@@ -95,34 +95,6 @@
             
             </div>
 
-            <!--샘플-->
-            <!--반복적으로 생성될 요소들-->
-            <div class="TalkBoxItem">
-                <hr>
-                <!--하나의 컨텐츠 감쌀 영역-->
-                <div class="talk-box-wrapper">
-                    <!--content 영역-->
-                    <div class="talk-box-col__content">
-                        <a href="" class="aTags">
-                            <div class="talk-box-row__title">
-                                <h5 class="post-title">안녕하세요
-                                    <label class="post-commentcount">[0]</label>
-                                </h5>
-                            </div>
-                        </a>
-                        <!--게시글 정보 (카테고리, 작성일, 작성자)-->
-                        <div class="talk-box-row__info">
-                            <label class="talk-box-label">일상 | </label>
-                            <label class="talk-box-label">2021 - 07 - 12 | </label>
-                            <label class="talk-box-label">작성자 닉네임</label>
-                        </div>
-                    </div>
-                    <!--thumbnail영역-->
-                    <div class="talk-box-col__thumbnail">
-                        <img src="">
-                    </div>
-                </div>
-            </div>
             <!--메인 끝-->
         </div>
 
@@ -134,10 +106,15 @@
             })  
             
             $(function(){
-                $("#test1").click(function(){
-                    //console.log($(this).children("input[type=hidden]").val());
+                $("#com-bno").click(function(){
+                    
                     // 반복문으로 생성된 게시글의 글 번호 받아오기 (ex.bno)
-                    location.href="?="+$(this).children("input[type=hidden]").val();
+                    
+                    // [Test] 화면 확인 용 코드
+                    location.href="comDetail.bo";
+                    
+                    //location.href="comDetail.bo?bno="+$(this).children("input[type=hidden]").val();
+                    //console.log($(this).children("input[type=hidden]").val());
                 })
             })
         </script>
@@ -166,7 +143,7 @@
                 </form>
                 <!--검색 끝-->
             </div>
-            <div style="display:inline-block; margin-left: 30%; margin-top: 50px;">
+            <div style="display:inline-block; margin-left: 30%;margin-bottom:50px; margin-top: 30px;">
                 <!--페이징바 컬러 변경 예정-->
                 <!--페이징 시작-->
                 <div id="pagingArea">
@@ -199,7 +176,7 @@
 
      
 
-    <!--푸터바 들어올 자리 -->
+    <!--푸터바-->
 	<jsp:include page="../../common/footer.jsp" />
 
 </body>

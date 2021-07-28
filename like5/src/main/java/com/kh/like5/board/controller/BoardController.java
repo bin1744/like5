@@ -44,7 +44,7 @@ public class BoardController {
 	
 	
 	/**
-	 * 커뮤니티 전체 리스트
+	 * [커뮤니티] - 전체 목록 리스트 조회
 	 * @author seong 
 	 */
 	@RequestMapping("comList.bo")
@@ -54,7 +54,7 @@ public class BoardController {
 	}
 	
 	/**
-	 * 커뮤니티 글 작성 페이지
+	 * [커뮤니티] - 글 작성 Form
 	 * @author seong 
 	 */
 	@RequestMapping("comEnrollForm.bo")
@@ -63,7 +63,18 @@ public class BoardController {
 		return mv;
 	}
 	
+	/**
+	 * [커뮤니티] - 글 상세보기
+	 * @author seong
+	 * 			
+	 * 			->int bno 받아오기
+	 */
 	
+	@RequestMapping("comDetail.bo")
+	public ModelAndView comDetail(ModelAndView mv) {
+		mv.setViewName("board/community/comDetailView");
+		return mv;
+	}
 	
 	
 }
