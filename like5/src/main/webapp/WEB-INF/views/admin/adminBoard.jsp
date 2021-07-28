@@ -163,22 +163,38 @@
                 <li class="page-item disabled"><a class="page-link">이전</a></li>
             </c:when>
             <c:otherwise>
-                <c:when test="${!empty condition}">
-                    <li class="page-item"><a class="page-link" href="searchBoard.ad?currentPage=${pi.currentPage - 1}&condition=${condition}&keyword=${keyword}">이전</a></li>
-                </c:when>
-                <c:otherwise>
-                    <li class="page-item"><a class="page-link" href="board.ad?currentPage=${pi.currentPage - 1}">이전</a></li>
-                </c:otherwise>
+                <c:choose>
+                    <c:when test="${!empty condition}">
+                        <li class="page-item"><a class="page-link" href="searchBoard.ad?currentPage=${pi.currentPage - 1}&condition=${condition}&keyword=${keyword}">&laquo;</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item"><a class="page-link" href="board.ad?currentPage=${pi.currentPage - 1}">&laquo;</a></li>
+                    </c:otherwise>
+                </c:choose>
             </c:otherwise>
         </c:choose>
 
         <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
             <c:choose>
                 <c:when test="${!empty condition}">
-                        <li class="page-item"><a class="page-link" href="searchBoard.ad?currentPage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>
+                    <c:choose>
+                        <c:when test="${pi.currentPage eq p}">
+                            <li class="page-item active"><a class="page-link" href="searchBoard.ad?currentPage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item"><a class="page-link" href="searchBoard.ad?currentPage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </c:when>
                 <c:otherwise>
-                        <li class="page-item"><a class="page-link" href="board.ad?currentPage=${p}">${p}</a></li>
+                    <c:choose>
+                        <c:when test="${pi.currentPage eq p}">
+                            <li class="page-item active"><a class="page-link" href="board.ad?currentPage=${p}">${p}</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item"><a class="page-link" href="board.ad?currentPage=${p}">${p}</a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </c:otherwise>
             </c:choose>
         </c:forEach>

@@ -45,6 +45,7 @@ public class AdminServiceImpl implements AdminService{
 		return adDao.deleteMem(sqlSession, memNo);
 	}
 	
+
 	@Override
 	public int getBoardCount() {
 		return adDao.getBoardCount(sqlSession);

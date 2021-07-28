@@ -7,6 +7,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class BoardController {
 	
+	
+	//------------------ 한솔-------------------------
+	
 	/**
 	 * [한솔] QnA 게시글 리스트 페이지 
 	 */
@@ -35,6 +38,28 @@ public class BoardController {
 		
 		return "board/qna/qnaDetailView";
 	}
+	
+	
+	//-------------------동규-------------------------
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -88,6 +113,27 @@ public class BoardController {
 		return mv;
 	}
 	
+	/**
+	 * [칼럼] - 전체 목록 리스트 조회
+	 * @author seong
+	 */
+	
+	@RequestMapping("colList.bo")
+	public ModelAndView colList(ModelAndView mv) {
+		mv.setViewName("board/column/colListView");
+		return mv;
+	}
+	
+	/**
+	 * [칼럼] - 글 작성 Form
+	 * @author seong
+	 */
+	
+	@RequestMapping("colEnrollForm.bo")
+	public ModelAndView colEnrollForm(ModelAndView mv) {
+		mv.setViewName("board/column/colEnrollForm");
+		return mv;
+	}
 	
 	
 	
