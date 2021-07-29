@@ -160,7 +160,7 @@
     <ul class="pagination justify-content-center">
         <c:choose>
             <c:when test="${pi.currentPage eq 1}">
-                <li class="page-item disabled"><a class="page-link">이전</a></li>
+                <li class="page-item disabled"><a class="page-link">&laquo;</a></li>
             </c:when>
             <c:otherwise>
                 <c:choose>
@@ -201,7 +201,7 @@
 
         <c:choose>
             <c:when test="${ pi.currentPage eq pi.maxPage }">
-                <li class="page-item disabled"><a class="page-link">다음</a></li>
+                <li class="page-item disabled"><a class="page-link">&raquo;</a></li>
             </c:when>
             <c:otherwise>
                 <c:choose>
@@ -209,7 +209,7 @@
                         <li class="page-item"><a class="page-link" href="searchBoard.ad?currentPage=${pi.currentPage + 1}&condition=${condition}&keyword=${keyword}">&raquo;</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li class="page-item"><a class="page-link" href="board.ad?currentPage=${pi.currentPage + 1}">다음</a></li>
+                        <li class="page-item"><a class="page-link" href="board.ad?currentPage=${pi.currentPage + 1}">&raquo;</a></li>
                     </c:otherwise>
                 </c:choose>
             </c:otherwise>
