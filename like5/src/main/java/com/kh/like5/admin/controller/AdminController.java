@@ -103,6 +103,36 @@ public class AdminController {
 
 
 	}
+	
+	// 후원관리 - 메인페이지 불러오기 & 리스트 조회
+	@RequestMapping("dona.ad")
+	public String donaMain() {
+		return "admin/donationMain";
+	}
+	
+	// 후원관리 - 검색 기능
+	
+	
+	// 후원관리 - 상세 페이지로 넘어가기 => 후원내역
+	@RequestMapping("donaDetailOne.ad")
+	public String donaDetailOne() {
+		return "admin/donationDetailOne";
+	}
+	
+	// 후원관리 - 상세 페이지로 넘어가기 => 정산내역
+		@RequestMapping("donaDetailTwo.ad")
+		public String donaDetailTwo() {
+			return "admin/donationDetailTwo";
+		}
+		
+	
+	
+	
+	
+	
+	
+	
+	
 
 	// ============================= [재환] =============================
 
