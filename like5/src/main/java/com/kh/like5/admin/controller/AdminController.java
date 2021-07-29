@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import com.kh.like5.board.model.vo.Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -160,6 +161,47 @@ public class AdminController {
 			model.addAttribute("errorMsg", "게시글 삭제 실패");
 			return "common/errorPage";
 		}
+
+	}
+
+	// 고객센터 - 신고내역 관리 페이지
+	@RequestMapping("customer.ad")
+	public ModelAndView reportList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+
+		int listCount = adService.getReportCount();
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 15);
+		ArrayList<Report> list = adService.getReportList(pi);
+
+		mv.addObject("pi", pi)
+				.addObject("list", list)
+				.setViewName("admin/csReport");
+
+		adService.getReportList(pi).forEach(board -> log.info("list: " + board));
+
+		return mv;
+	}
+
+	// 신고내역 검색 기능
+	@RequestMapping("searchReport.ad")
+	public ModelAndView reportSearchList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, String condition , String keyword) {
+
+		HashMap<String,String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+
+		int listCount = adService.getSearchReportCount(map);
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 15);
+		ArrayList<Report> list = adService.getSearchReportList(pi,map);
+
+		mv.addObject("pi",pi)
+				.addObject("list",list)
+				.addObject("condition", condition)
+				.addObject("keyword", keyword)
+				.setViewName("admin/csReport");
+
+		return mv;
 
 	}
 	

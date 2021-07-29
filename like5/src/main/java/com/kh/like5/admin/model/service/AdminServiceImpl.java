@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.like5.board.model.vo.Board;
+import com.kh.like5.board.model.vo.Report;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,6 +70,26 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int deleteBoard(int bno) {
 		return adDao.deleteBoard(sqlSession, bno);
+	}
+
+	@Override
+	public int getReportCount() {
+		return adDao.getReportCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Report> getReportList(PageInfo pi) {
+		return adDao.getReportList(sqlSession, pi);
+	}
+
+	@Override
+	public int getSearchReportCount(HashMap<String, String> map) {
+		return adDao.getSearchReportCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Report> getSearchReportList(PageInfo pi, HashMap<String, String> map) {
+		return adDao.getSearchReportList(sqlSession, pi, map);
 	}
 
 

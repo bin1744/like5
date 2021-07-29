@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.like5.board.model.vo.Board;
+import com.kh.like5.board.model.vo.Report;
 import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.member.model.vo.Member;
 
@@ -55,8 +56,14 @@ public interface AdminService {
 
 	// 게시글 삭제 기능
 	int deleteBoard(int bno);
-	
-	
+
+	// 신고내역 리스트 조회
+	int getReportCount();
+	ArrayList<Report> getReportList(PageInfo pi);
+
+	// 신고내역 검색 리스트 조회
+	int getSearchReportCount(HashMap<String, String> map);
+	ArrayList<Report> getSearchReportList(PageInfo pi, HashMap<String, String> map);
 	
 	
 }
