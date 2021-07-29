@@ -16,6 +16,7 @@ import com.kh.like5.admin.model.service.AdminService;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.common.template.Pagination;
+import com.kh.like5.member.model.vo.Customer;
 import com.kh.like5.member.model.vo.Member;
 
 import lombok.extern.java.Log;
@@ -104,8 +105,28 @@ public class AdminController {
 
 	}
 	
+	// 1:1문의 메인페이지 불러오기&리스트 조회
+	@RequestMapping("csTwo.ad")
+	public ModelAndView csTwoList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		
+		int listCount = adService.selectMemCount();
+    	
+    	PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+    	ArrayList<Customer> list = adService.selectCsTwoList(pi);
+    	
+    	mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .setViewName("admin/csMainTwo");
+    	
+        return mv;
+	}
+	
+	// 1:1문의 관리 검색기능
+	
+	
+	
 	// 후원관리 - 메인페이지 불러오기 & 리스트 조회
-	@RequestMapping("dona.ad")
+	@RequestMapping("donation.ad")
 	public String donaMain() {
 		return "admin/donationMain";
 	}

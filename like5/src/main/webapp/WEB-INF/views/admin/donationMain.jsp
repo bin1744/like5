@@ -107,7 +107,7 @@
 	                  <a href="customer.ad">고객센터</a>
 	              </li>
 	              <li>
-	                  <a class="active" href="dona.ad">후원관리</a>
+	                  <a class="active" href="donation.ad">후원관리</a>
 	              </li>
 	              <li>
 	                  <a href="booking.ad">공간대여관리</a>

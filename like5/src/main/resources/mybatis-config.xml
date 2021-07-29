@@ -24,5 +24,6 @@
 		<mapper resource="/mappers/admin-mapper.xml"/>
 		<mapper resource="/mappers/board-mapper.xml"/>
 		<mapper resource="/mappers/sponsorship-mapper.xml"/>
+		<mapper resource="/mappers/customer-mapper.xml"/>
 	</mappers>
 </configuration>

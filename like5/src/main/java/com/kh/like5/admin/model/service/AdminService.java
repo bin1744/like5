@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.common.model.vo.PageInfo;
+import com.kh.like5.member.model.vo.Customer;
 import com.kh.like5.member.model.vo.Member;
 
 public interface AdminService {
@@ -24,6 +25,9 @@ public interface AdminService {
 	
 	
 	// 1:1문의 메인페이지 select문
+	int selectCsTwoCount();
+	ArrayList<Customer> selectCsTwoList(PageInfo pi);
+	
 	
 	// 1:1문의 상세페이지 select문
 	
