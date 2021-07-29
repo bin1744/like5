@@ -87,7 +87,7 @@
 	                        <div class="talk-box-row__info">
 	                            <label class="talk-box-label">${c.category } | </label>
 	                            <label class="talk-box-label">${c.enrollDate} | </label>
-	                            <label class="talk-box-label">${c.boardWriter }</label>
+	                            <label class="talk-box-label">${c.nickname }</label>
 	                        </div>
 	                    </div>
 	                    <!--thumbnail영역-->
