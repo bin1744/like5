@@ -25,20 +25,21 @@
             <hr>
         </div>
 
-        <form id="" action="" method="post">
+        <form id="" action="insertInquiry.me" method="post">
+        <input type="hidden" value="${loginUser.memNo}" name="memNo" >
             <br>
             <div class="content-header">
                 <div class="form-group">
-                    <label for="usr"><b>제목</b></label>
-                    <input type="text" class="form-control" id="content-title" name=""  placeholder="5글자 이상을 입력해주세요.">
+                    <label for="content-title"><b>제목</b></label>
+                    <input type="text" class="form-control" id="content-title" name="csTitle"  placeholder="5글자 이상을 입력해주세요.">
                     <div id="counting-title" style="float: right; font-size: 11px"></div>
                 </div>
             </div>
 
             <div class="content-body">
                 <div class="form-group">
-                    <label for="comment"><b>내용</b></label>
-                    <textarea class="form-control" id="comment" name="" rows="10"  style="resize: none;" ></textarea>
+                    <label for="content-content"><b>내용</b></label>
+                    <textarea class="form-control" id="content-content" name="csContent" rows="10"  style="resize: none;" ></textarea>
                 </div>
             </div>
 
@@ -77,6 +78,18 @@
                     $('#counting-title').html("49 / 49");
                 }
             });
+            
+            
+            $('#content-content').keyup(function(e){
+                var content = $(this).val();
+                
+                if (content.length > 1000){
+                    alert("최대 1000자까지 입력 가능합니다.");
+                    $(this).val(title.substring(0, 1000));
+                    $('#counting-content').html("1000 / 1000");
+                }
+            });
+            
 
         </script>
 
