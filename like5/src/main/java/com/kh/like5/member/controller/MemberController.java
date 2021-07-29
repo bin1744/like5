@@ -66,4 +66,20 @@ public class MemberController {
 		
 	}
 	
+	
+	//---------------------------------성은------------------------------------
+	
+	/**
+	 * [1:1문의]
+	 * @author seong
+	 */
+
+	@RequestMapping("mem-inquiry.me")
+	public ModelAndView colDetail(ModelAndView mv) {
+		mv.setViewName("member/memInquiry");
+		return mv;
+	}
+	
+	
+	
 }
