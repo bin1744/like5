@@ -20,5 +20,6 @@ public class Board {
     private int scrap;
     private String tag;
     private String imgPath;
+    private String nickname; // 사용자 닉네임
 
 }
