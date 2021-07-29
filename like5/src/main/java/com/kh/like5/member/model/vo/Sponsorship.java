@@ -1,6 +1,7 @@
 package com.kh.like5.member.model.vo;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,7 @@ public class Sponsorship {
 	private Date sponDate;
 	private int sponCategory;
 	private int refBoaNo;
+	
+	private ArrayList<Sponsorship> sponsorList;
 		
 }

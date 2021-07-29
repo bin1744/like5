@@ -21,5 +21,6 @@ public class Customer {
 	private String ansContent;
 	private Date ansDate;
 
-	
+	private String memName;
+	private String nickname;
 }

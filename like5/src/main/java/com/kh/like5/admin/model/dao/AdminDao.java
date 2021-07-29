@@ -9,8 +9,10 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh.like5.member.model.vo.Member;
+import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.common.model.vo.PageInfo;
+import com.kh.like5.member.model.vo.Customer;
+import com.kh.like5.member.model.vo.Member;
 
 @Repository
 public class AdminDao {
@@ -47,6 +49,20 @@ public class AdminDao {
 	public int deleteMem(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.update("memberMapper.deleteMem", memNo);
 	}
+	
+	//1:1문의 게시글 불러오기 
+	public int selectCsTwoCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("customerMapper.selectCsTwoCount");
+	}
+	
+	public ArrayList<Customer> selectCsTwoList(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("customerMapper.selectCsTwoList",null, rowBounds);
+	}
+	
+	
 
 	// ============================= [재환] =============================
 

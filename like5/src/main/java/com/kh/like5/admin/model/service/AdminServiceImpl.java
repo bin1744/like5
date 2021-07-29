@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.like5.admin.model.dao.AdminDao;
 import com.kh.like5.common.model.vo.PageInfo;
+import com.kh.like5.member.model.vo.Customer;
 import com.kh.like5.member.model.vo.Member;
 
 @Service
@@ -70,6 +71,17 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int deleteBoard(int bno) {
 		return adDao.deleteBoard(sqlSession, bno);
+	}
+	
+	// 1:1문의 게시글-페이징
+	@Override
+	public int selectCsTwoCount() {
+		return adDao.selectCsTwoCount(sqlSession);
+	}
+	// 1:1문의 게시글-리스트조회
+	@Override
+	public ArrayList<Customer> selectCsTwoList(PageInfo pi) {
+		return adDao.selectCsTwoList(sqlSession, pi);
 	}
 
 	@Override
