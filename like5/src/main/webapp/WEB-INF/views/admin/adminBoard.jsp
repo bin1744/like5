@@ -96,13 +96,13 @@
                 <a class="active" href="board.ad">게시글관리</a>
             </li>
             <li>
-                <a href="">고객센터</a>
+                <a href="customer.ad">고객센터</a>
             </li>
             <li>
-                <a href="">후원관리</a>
+                <a href="donation.ad">후원관리</a>
             </li>
             <li>
-                <a href="">공간대여관리</a>
+                <a href="booking.ad">공간대여관리</a>
             </li>
         </ul>
     </aside>
@@ -112,6 +112,7 @@
             <select class="selectpicker" name="condition">
                 <option value="category" name="category">카테고리</option>
                 <option value="title" name="title">제목</option>
+                <option value="nickname" name="nickname">작성자</option>
             </select>
             <input type="text" class="form-control w-25" name="keyword" value="${keyword}">
             <button class="btn btn-outline-danger">검색</button>
@@ -143,7 +144,7 @@
                         <td class="bno">${b.bno}</td>
                         <td>${b.category}</td>
                         <td>${b.title}</td>
-                        <td>user22</td>
+                        <td>${b.nickname}</td>
                         <td>${b.enrollDate}</td>
                         <td><button class="btn btn-outline-danger btn-sm" onclick="deleteBoard('${b.bno}')">삭제</button></td>
                     </tr>
