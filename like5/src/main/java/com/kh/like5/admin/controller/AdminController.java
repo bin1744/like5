@@ -45,6 +45,8 @@ public class AdminController {
 		return "admin/tags";
 	}
 
+	// ============================= [지현] =============================
+
 	// 회원관리 페이지
     @RequestMapping("member.ad")
     public  ModelAndView memberPage(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
@@ -83,6 +85,26 @@ public class AdminController {
     	return mv;
     	
     }
+
+	// 회원탈퇴 처리 기능
+	@RequestMapping("deleteMem.ad")
+	public String  deleteMem(int memNo, Model model, HttpSession session ) {
+
+		// 회원의 탈퇴 상태를 'Y'로 업데이트 해주기
+		int result= adService.deleteMem(memNo);
+		// 기존의 페이지로 돌아갈 수 있게 해주기
+		if(result>0) { //제대로 삭제된 경우
+			session.setAttribute("alertMsg", "해당 회원이 성공적으로 탈퇴 처리 되었습니다!");
+			return "redirect:member.ad";
+		}else {
+			model.addAttribute("errorMsg", "게시글 삭제 실패");
+			return "common/errorPage";
+		}
+
+
+	}
+
+	// ============================= [재환] =============================
 
     // 게시글 관리 페이지
 	@RequestMapping("board.ad")
@@ -124,23 +146,6 @@ public class AdminController {
 		return mv;
 
 	}
-    
-    // 회원탈퇴 처리 기능 
-    @RequestMapping("deleteMem.ad")
-    public String  deleteMem(int memNo, Model model, HttpSession session ) {
-    	
-    	// 회원의 탈퇴 상태를 'Y'로 업데이트 해주기
-    	int result= adService.deleteMem(memNo);
-    	// 기존의 페이지로 돌아갈 수 있게 해주기
-    	if(result>0) { //제대로 삭제된 경우 
-    		session.setAttribute("alertMsg", "해당 회원이 성공적으로 탈퇴 처리 되었습니다!");
-    		return "redirect:member.ad";
-    	}else {
-    		model.addAttribute("errorMsg", "게시글 삭제 실패");
-    		return "common/errorPage";
-    	}
-    	
-    	
-    }
+	
 
 }
