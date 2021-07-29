@@ -16,9 +16,9 @@ public class Calculate {
 	private int memNo;
 	private String memName;
 	private Date calDate;
-	private int cal_price;
+	private int calPrice;
 	private String calStatus;
 	private String calBank;
-	private String cal_account;
+	private String calAccount;
 	
 }
