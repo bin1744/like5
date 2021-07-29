@@ -65,7 +65,11 @@ public class AdminServiceImpl implements AdminService{
 	public ArrayList<Board> getSearchBoardList(PageInfo pi, HashMap<String, String> map) {
 		return adDao.getSearchBoardList(sqlSession, pi, map);
 	}
-	
+
+	@Override
+	public int deleteBoard(int bno) {
+		return adDao.deleteBoard(sqlSession, bno);
+	}
 
 
 }

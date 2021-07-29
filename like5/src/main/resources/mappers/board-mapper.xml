@@ -62,5 +62,11 @@
         by boa_no desc
     </select>
 
+    <!-- [재환] 관리자단 게시글 삭제 -->
+    <update id="deleteBoard">
+        update board
+           set boa_status = 'N'
+         where boa_no = #{bno}
+    </update>
 
 </mapper>

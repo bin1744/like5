@@ -121,4 +121,28 @@
 		   where mem_no = #{memNo}
 	</update>
 	
+	
+	
+	
+	
+	<!--                   성은                              -->
+	<!-- [1:1문의] 작성 - Author Seong  -->
+	
+	<insert id="insertInquiry" >
+		insert into 
+				customer 
+				(cs_no
+				,mem_no
+				,cs_title
+				,cs_content)
+			values
+				(seq_cus.nextval
+				,#{memNo}
+				,#{csTitle}
+				,#{csContent})
+	</insert>
+	
+	
+	
+	
 </mapper>

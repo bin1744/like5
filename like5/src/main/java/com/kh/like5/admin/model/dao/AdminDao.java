@@ -75,8 +75,11 @@ public class AdminDao {
 
 		return (ArrayList)sqlSession.selectList("boardMapper.getSearchBoardList", map, rowBounds);
 	}
-	
-	
+
+	// 게시글 삭제 기능
+	public int deleteBoard(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.update("boardMapper.deleteBoard", bno);
+	}
 	
 	
 	

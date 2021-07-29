@@ -176,6 +176,22 @@ public class AdminController {
 		return mv;
 
 	}
+
+	// 게시글 삭제 기능
+	@RequestMapping("deleteBoard.ad")
+	public String  deleteBoard(int bno, Model model, HttpSession session ) {
+
+		int result= adService.deleteBoard(bno);
+
+		if(result>0) { //제대로 삭제된 경우
+			session.setAttribute("alertMsg", "게시글 삭제 성공!");
+			return "redirect:board.ad";
+		}else {
+			model.addAttribute("errorMsg", "게시글 삭제 실패");
+			return "common/errorPage";
+		}
+
+	}
 	
 
 }

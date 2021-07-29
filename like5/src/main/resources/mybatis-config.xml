@@ -15,7 +15,7 @@
 		<typeAlias type="com.kh.like5.booking.model.vo.Office" alias="Office" />
 		<typeAlias type="com.kh.like5.board.model.vo.Board" alias="Board" />
 		<typeAlias type="com.kh.like5.common.model.vo.Attachment" alias="Attachment" />
-		
+		<typeAlias type="com.kh.like5.member.model.vo.Customer" alias="Customer" />
 	</typeAliases>
 	
 	<mappers>
