@@ -13,6 +13,9 @@ import com.kh.like5.common.model.vo.PageInfo;
 
 @Repository
 public class AdminDao {
+
+	// ============================= [지현] =============================
+
 	// 관리자-회원관리 기능
 	// 회원 정보 불러오기
 	public int selectMemCount(SqlSessionTemplate sqlSession) {
@@ -38,10 +41,13 @@ public class AdminDao {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectSearchMemList", map, rowBounds);
 	}
-	
+
+	// 회원 삭제 기능
 	public int deleteMem(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.update("memberMapper.deleteMem", memNo);
 	}
+
+	// ============================= [재환] =============================
 
 	// 게시글 리스트 조회
 	public int getBoardCount(SqlSessionTemplate sqlSession) {
