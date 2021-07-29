@@ -145,11 +145,27 @@
                         <td>${b.title}</td>
                         <td>user22</td>
                         <td>${b.enrollDate}</td>
-                        <td><button class="btn btn-outline-danger btn-sm">삭제</button></td>
+                        <td><button class="btn btn-outline-danger btn-sm" onclick="deleteBoard('${b.bno}')">삭제</button></td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
+
+        <script>
+            var memNo="";
+            $(document).ready(function(){
+
+            })
+
+            function deleteBoard(bno){
+
+                if(!confirm("해당 게시글을 삭제하시겠습니까?")){
+                    alert("취소하셨습니다.")
+                }else{
+                    location.href="deleteBoard.ad?bno="+bno;
+                }
+            }
+        </script>
 
 
     </article>

@@ -52,9 +52,9 @@ public interface AdminService {
 	// 게시글 검색 리스트 조회
 	int getSearchBoardCount(HashMap<String, String> map);
 	ArrayList<Board> getSearchBoardList(PageInfo pi, HashMap<String, String> map);
-	
-	
-	
+
+	// 게시글 삭제 기능
+	int deleteBoard(int bno);
 	
 	
 	
