@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>공간 리스트 상세페이지</title>
+<!-- 카카오 api 지도 key 입력부분-->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=010c7b5cd71c4c45be3b01ae1329b4b5&libraries=services,clusterer,drawing"></script>
 <style>
 	/*여기부터 메인 css*/
 
@@ -143,20 +145,19 @@
         <br><br>
         
         <!-- 세부 공간 선택-->
-        <div class="space"><h3><b>세부 공간 선택</b></h3></div> <br>
-        <div class="space2">
-            <div class="space3">
-                <b>호스트의 승인을 기다릴 필요 없이 <br>
-                    지금 바로 예약하세요!</b><br><br>
-                <b>${o.branch}</b> &nbsp;&nbsp;&nbsp;<b>${o.price} 원 / 1일 </b></b> <br><br><br>
-                <b>체크인</b> <br>
-                <input type="text" placeholder="2021년 07월 12일(목)"> <br><br>
-                <b>체크아웃</b> <br>
-                <input type="text" placeholder="2021년 07월 13일(금)"> <br><br><br><br>
-                <button type="button" class="btn btn-danger btn-block">예약 하기</button>
-            </div>
-        </div>
-        
+	        <div class="space"><h3><b>세부 공간 선택</b></h3></div> <br>
+	        <div class="space2">
+	            <div class="space3">
+	                <b>호스트의 승인을 기다릴 필요 없이 <br>
+	                    지금 바로 예약하세요!</b><br><br>
+	                <b>${o.branch}</b> &nbsp;&nbsp;&nbsp;<b>${o.price} 원 / 1일 </b></b> <br><br><br>
+	                <b>체크인</b> <br>
+	                <input type="text" placeholder="2021년 07월 12일(목)"> <br><br>
+	                <b>체크아웃</b> <br>
+	                <input type="text" placeholder="2021년 07월 13일(금)"> <br><br><br><br>
+	                <button type="button" class="btn btn-danger btn-block">예약 하기</button>
+	            </div>
+	        </div> 
         <!--시설 안내-->
    <div class="fa1"><h3><b>시설 안내</b></h3></div> <br>
    <div class="facility">
@@ -190,9 +191,9 @@
         <br><br> 
         <!--위치(지도)-->
        <div><h3><b>위치</b></h3> <br> 
-        <div><img src="../../../resources/images/지도.PNG"></div> <br><br></div>
+        <div id="map" style="width:400px;height:400px;"></div> <br><br></div>
         
-    	<br><br><br><br><br><br><br><br><br><br><br><br><br>
+    	<br>
         <!--후기-->
         <div><h3><b>의견 및 소감</b></h3></div> 
         
@@ -219,7 +220,7 @@
             </p>
         </div>
 </div>       
-	    <br><br><br><br>
+	    <br><br><br><br><br><br>
 		<jsp:include page="../common/footer.jsp"/>
 		
 <script>
@@ -247,6 +248,47 @@
 	<c:if test="${ fn:contains(o.facility, '매니저') }">
 		$("#peoplecon").css("color","red");
 	</c:if>
+	
+	<%-- kakao map --%>
+
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+    				center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+    				level: 5 // 지도의 확대 레벨
+				};  
+
+	// 지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+		
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch("${ o.address }", function(result, status) {
+
+	// 정상적으로 검색이 완료됐으면 
+ 	if (status === kakao.maps.services.Status.OK) {
+
+    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+    console.log(coords);
+    
+    // 결과값으로 받은 위치를 마커로 표시합니다
+    var marker = new kakao.maps.Marker({
+        map: map,
+        position: coords
+    });
+
+    // 인포윈도우로 장소에 대한 설명을 표시합니다
+    var infowindow = new kakao.maps.InfoWindow({
+        content: '<div style="width:100px;text-align:center;padding:6px 0;">${o.branch}</div>'
+    });
+    infowindow.open(map, marker);
+
+    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+    map.setCenter(coords);
+		}
+	});
+	
 	
 </script>
 </body>
