@@ -210,7 +210,7 @@ public class BookingController {
 		}
 	}
 	
-<<<<<<< Updated upstream
+
 	/**
 	 * 추가부분 - 상세조회 클릭시 연동 페이지(officeDetail)
 	 */
@@ -231,7 +231,7 @@ public class BookingController {
     }
 	
 	
-=======
+
 	@RequestMapping("paymentForm.bk")
 	public String paymentForm() {
 		/*
@@ -239,5 +239,5 @@ public class BookingController {
 		 * 예약신청시 정보를 booking테이블로 insert 성공시 성공 페이지로 redirect*/
 		return "booking/bPayment";
 	}
->>>>>>> Stashed changes
+
 }

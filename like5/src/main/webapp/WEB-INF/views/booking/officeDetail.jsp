@@ -105,7 +105,38 @@
         <!--메인 사진-->
         
         <div class="reserveImg">
-        	<img src="resources/images/20210722_17295.jpg">
+        	<div id="demo" class="carousel slide" data-ride="carousel">
+
+			  <!-- Indicators -->
+			  <ul class="carousel-indicators">
+			    <li data-target="#demo" data-slide-to="0" class="active"></li>
+			    <li data-target="#demo" data-slide-to="1"></li>
+			  </ul>
+			
+			  <!-- 슬라이드 부분 -->
+			  <div class="carousel-inner">
+			  
+			    <div class="carousel-item active">
+			    	<img src="${o.offImgPath}">
+			    </div>
+			    <c:forEach var="i" begin="1" end="${ fn:length(at)-1 }">
+				    <div class="carousel-item">
+				      <img src="${at.get(i).filePath}">
+				    </div>
+				</c:forEach>
+				
+				
+			  </div>
+			
+			  <!-- Left and right controls -->
+			  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+			    <span class="carousel-control-prev-icon"></span>
+			  </a>
+			  <a class="carousel-control-next" href="#demo" data-slide="next">
+			    <span class="carousel-control-next-icon"></span>
+			  </a>
+			
+			</div>
         </div>
          
 
@@ -142,7 +173,7 @@
             <div class="com"><i id="comcon" class="fas fa-laptop" style='font-size:48px'></i></div>
             <div class="com2"><b>PC/노트북</b></div> <br>
 
-            <div class="bar"><i id="barcon" class="fas fa-glass-cheers" style='font-size:48px'></i></div>
+            <div class="bar"><i id="barcon" class="fas fa-coffee" style='font-size:48px'></i></div>
             <div class="bar2"><b>bar</b></div>
 
             <div class="meeting"><i id="meetcon" class="fas fa-microphone" style="font-size:48px"></i></div>
