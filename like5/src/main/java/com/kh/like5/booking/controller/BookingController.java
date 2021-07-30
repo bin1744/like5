@@ -90,6 +90,7 @@ public class BookingController {
 	public String enrollForm() {
 		return "booking/aOfficeInsertForm";
 	}
+	
 	@RequestMapping("insertOf.bk")
 	public String insertOffice(Office o, HttpServletRequest request, MultipartFile[] file, HttpSession session, Model model) {
 		String[] facilityArr = request.getParameterValues("facility");
@@ -209,6 +210,7 @@ public class BookingController {
 		}
 	}
 	
+<<<<<<< Updated upstream
 	/**
 	 * 추가부분 - 상세조회 클릭시 연동 페이지(officeDetail)
 	 */
@@ -229,4 +231,13 @@ public class BookingController {
     }
 	
 	
+=======
+	@RequestMapping("paymentForm.bk")
+	public String paymentForm() {
+		/*
+		 * 상세정보페이지에서 오피스 번호로 오피스조회랑 예약테이블의 시작일, 끝일 list가져와서 뿌리기
+		 * 예약신청시 정보를 booking테이블로 insert 성공시 성공 페이지로 redirect*/
+		return "booking/bPayment";
+	}
+>>>>>>> Stashed changes
 }
