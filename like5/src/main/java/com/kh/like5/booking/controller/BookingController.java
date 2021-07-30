@@ -219,7 +219,11 @@ public class BookingController {
 		ArrayList<Attachment> at = bService.selectList(ono);
 		model.addAttribute("at", at);
 		model.addAttribute("ono", ono);
-		System.out.println(at);
+		/*System.out.println(at);*/
+		
+		Office o = bService.selectOffice(ono);
+		model.addAttribute("o", o);
+		model.addAttribute("ono", ono);
 		
         return "booking/officeDetail";
     }
