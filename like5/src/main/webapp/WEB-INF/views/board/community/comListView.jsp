@@ -69,20 +69,20 @@
 	                <h3><b>XX개의 게시물</b></h3>
 	            </div>
 
-            	<!--반복적으로 생성될 요소들-->
-       			 <c:forEach var="c" items="${comList}">
-		            <div class="TalkBoxItem com-bno">
-		                <input type="hidden" value="${c.bno}">
+            	  <!--반복적으로 생성될 요소들-->
+				 <c:forEach var="c" items="${comList}">
+		            <div class="TalkBoxItem">
 		                <hr>
 		                <!--하나의 컨텐츠 감쌀 영역-->
 		                <div class="talk-box-wrapper">
+		              		 <input type="hidden" class="com-bno" value="${c.bno}">
 		                    <!--content 영역-->
 		                    <div class="talk-box-col__content">
-		                            <div class="talk-box-row__title">
-		                                <h5 class="post-title">${c.title}
-		                                    <label class="post-commentcount">[0]</label>
-		                                </h5>
-		                            </div>
+	                            <div class="talk-box-row__title">
+	                                <h5 class="post-title">${c.title}
+	                                    <label class="post-commentcount">[0]</label>
+	                                </h5>
+	                            </div>
 		                        <!--게시글 정보 (카테고리, 작성일, 작성자)-->
 		                        <div class="talk-box-row__info">
 		                            <label class="talk-box-label">${c.category } | </label>
@@ -91,7 +91,6 @@
 		                        </div>
 		                    </div>
 		                    <!--thumbnail영역-->
-		                    <!-- 조건식으로 imgPath가 null이면 기본 이미지 출력하기 -->
 		                    <c:choose>
 		                    	<c:when test="${!empty c.imgPath}">
 		                    		<div class="talk-box-col__thumbnail">
@@ -100,13 +99,12 @@
 		                    	</c:when>
 		                    	<c:otherwise>
 		                    		<div class="talk-box-col__thumbnail">
-			                        <img src="">
+			                        <img src="${pageContext.request.contextPath}/resources/images/common/default-img.jpg">
 		                    	</c:otherwise>
 		                    </c:choose>
-		                </div>
-	                
-		            </div>
-            	</c:forEach>
+		            	</div>
+		          	  </div>
+            		</c:forEach>
 
             <!--메인 끝-->
         </div>
@@ -119,11 +117,9 @@
             })  
             
             $(function(){
-                $(".com-bno").click(function(){
-                    // 반복문으로 생성된 게시글의 글 번호 받아오기 (ex.bno)
-                    // 수정하기
-                    //console.log($(".com-bno").children("input[type=hidden]").val());
-                    //location.href="comDetail.bo?bno="+$(this).children("input[type=hidden]").val();
+                $(".talk-box-wrapper").click(function(){
+                    //console.log($(this).children("input[type=hidden]").val());
+                   	location.href="comDetail.bo?com-bno="+$(this).children("input[type=hidden]").val();
                 })
             })
         </script>
