@@ -92,7 +92,7 @@
                 <div class="talk-filter-box-inner" id="selectOption">
                     <div class="talk-filter-item on">최신순</div>
                     <div class="talk-filter-item " >조회순</div>
-                    <div class="talk-filter-item ">좋아요순</div>
+                    <div class="talk-filter-item ">댓글순</div>
                 </div>
             </div>
         </div>
