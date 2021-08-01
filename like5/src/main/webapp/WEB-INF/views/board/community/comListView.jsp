@@ -66,7 +66,14 @@
         <div class="main" id="communityList">
             
 	            <div class="talk-count-box" style="height: 100px; padding-top: 30px;">
-	                <h3><b>XX개의 게시물</b></h3>
+	            	<c:choose>
+	            		<c:when test="${!empty condition}">
+	               	 		<h3><b> ${listCount}개의 게시물</b></h3>
+	               	 	</c:when>
+	               	 	<c:otherwise>
+	               	 		<h3><b> ${listCount}개의 게시물</b></h3>
+	               	 	</c:otherwise>
+	                </c:choose>
 	            </div>
 
             	  <!--반복적으로 생성될 요소들-->

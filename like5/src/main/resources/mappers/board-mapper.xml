@@ -209,6 +209,7 @@
 			from board
 			join member using(mem_no)
 			where boa_status = 'Y'
+			and regexp_like (boa_category,'일상|스터디모집')
 			<choose>
 				<when test="condition=='titleAndcontent'">
 					and boa_title like '%'||#{keyword}||'%' or boa_content 
@@ -241,6 +242,7 @@
         from board b
 	     join member using(mem_no)
 	    where boa_status = 'Y'
+	    and regexp_like (boa_category,'일상|스터디모집')
 	    <choose>
 		    <when test="condition=='titleAndcontent'">
 		    	and boa_title like '%'||#{keyword}||'%' or boa_content 

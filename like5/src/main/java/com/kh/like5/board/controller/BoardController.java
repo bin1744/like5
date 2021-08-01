@@ -93,9 +93,11 @@ public class BoardController {
 		
 		ArrayList<Board>comList = bService.comList(pi);
 
-		mv.addObject("comList",comList);
-		mv.addObject("pi",pi);
-		mv.setViewName("board/community/comListView");
+
+		mv.addObject("listCount",listCount)
+		   .addObject("comList",comList)
+		   .addObject("pi",pi)
+		   .setViewName("board/community/comListView");
 		
 		return mv;
 	}
@@ -123,8 +125,9 @@ public class BoardController {
 		  .addObject("comList",comList)
 		  .addObject("condition",condition)
 		  .addObject("keyword",keyword)
+		  .addObject("listCount",listCount)
 		  .setViewName("board/community/comListView");
-
+		System.out.println(comList);
 		return mv;
 	}
 	
