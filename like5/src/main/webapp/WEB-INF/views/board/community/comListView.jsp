@@ -12,6 +12,7 @@
 <!-- comListView.css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/comListView.css" />
 	
+	
 </head>
 <body>
 
@@ -169,40 +170,6 @@
 		</script>
 
         <script>
-            /*조회 기준(최신순,조회순,좋아요순) 클릭시 배경색 변경되는 JS
-            
-            $(document).on("click","#selectOption>div",function(){
-                $(this).toggleClass('on');
-                $(this).siblings().removeClass('on');
-            })  
-            
-            */
-            
-            /*
-            function comOrderByCount(condition){
-	    		// 전체 조회할 때
-	    		if(condition==1){
-	    			$("#comOrderByCount").attr("action","comList.bo").submit();
-	    		// 조회수
-	    		}else{
-	    			// 일상 카테고리 조회
-	    			if(condition==2){
-	    				//input type hidden 요소의 value를 daily로 지정하기
-	    				$("#comOrderByCount").children("input[type=hidden]").attr("value","views");
-	    				
-	    				$("#comOrderByCount").attr("action","comOrderByCount.bo")
-	    				.submit();
-	    			}else{
-	    				// 댓글수
-	        			// input type hidden 요소의 value를 study로 지정하기 
-	    				$("#comOrderByCount").children("input[type=hidden]").attr("value","reply");
-	    				
-	    				$("#comOrderByCount").attr("action","comOrderByCount.bo")
-	    				.submit();
-	    			}
-	    		}
-        	}	
-            */
             
             /*JS 수정하기*/
     		 $(document).on("click","#selectOption>div",function(){
@@ -217,20 +184,22 @@
    	    			$("#comOrderByCount").attr("action","comList.bo").submit();
    	    		// 조회수
    	    		}else{
-   	    			// 일상 카테고리 조회
+   	    			// 조회수 조회
    	    			if(condition==2){
    	    				//input type hidden 요소의 value를 daily로 지정하기
    	    				$("#comOrderByCount").children("input[type=hidden]").attr("value","views");
-   	    				
    	    				$("#comOrderByCount").attr("action","comOrderByCount.bo")
    	    				.submit();
+
    	    			}else{
    	    				// 댓글수
    	        			// input type hidden 요소의 value를 study로 지정하기 
    	    				$("#comOrderByCount").children("input[type=hidden]").attr("value","reply");
-   	    				
    	    				$("#comOrderByCount").attr("action","comOrderByCount.bo")
    	    				.submit();
+   	    				
+   	    				$(this).toggleClass('on');
+   	    			 	$(this).siblings().removeClass('on');
    	    			}
    	    		}
            	 }
@@ -259,8 +228,9 @@
                                     <option value="writer">글작성자</option>
                                 </select>
                             </div>
-                            <input type="search" class="form-control" name="keyword"  placeholder="원하는 정렬 기준으로 검색해보세요!" style="width:300px">
-                           <input type="submit"> <i class="fas fa-search" style="margin-top:10px"></i>
+                            <input type="text" class="form-control" name="keyword"  placeholder="원하는 정렬 기준으로 검색해보세요!" style="width:300px">
+                            <i class="fas fa-search" style="margin-top:10px"></i>
+                            <button><i class="fa fa-search"></i></button>
                         </div>
                     <!--카테고리 끝--> 
                     </div>
@@ -295,6 +265,13 @@
 	                            	<c:choose>
 	                            		<c:when test="${!empty condition}">
 	                            			<c:choose>
+	                            				<c:when test="${condition.equals('views') || condition.equals('reply')}">
+	                            					<li class="page-item">
+					                            		<a class="page-link" href="comOrderByCount.bo?currentPage=${pi.currentPage-1}&condition=${condition}" aria-label="Previous">
+					                            			<span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
+					                            		</a>
+			                            			</li>
+	                            				</c:when>
 	                            				<c:when test="${!empty keyword }">
 			                            			<li class="page-item">
 					                            		<a class="page-link" href="comSearch.bo?currentPage=${pi.currentPage-1}&condition=${condition}&keyword=${keyword}" aria-label="Previous">
@@ -325,6 +302,11 @@
 	                        	<c:choose>
 	                        		<c:when test="${!empty condition}">
 	                        			<c:choose>
+	                       					<c:when test="${condition.equals('views') || condition.equals('reply')}">
+	                           					<li class="page-item">
+				                            		<li class="page-item"><a class="page-link" href="comOrderByCount.bo?currentPage=${ p }&condition=${condition}">${ p }</a></li>
+		                            			</li>
+	                           				</c:when>
 	                        				<c:when test="${!empty keyword }">
 			                        			<li class="page-item"><a class="page-link" href="comSearch.bo?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
 	                        				</c:when>
@@ -352,6 +334,13 @@
 		                      		<c:choose>
 	                      				<c:when test="${!empty condition}">
 	                      					<c:choose>
+                    							<c:when test="${condition.equals('views') || condition.equals('reply')}">
+	                            					<li class="page-item">
+					                            		<a class="page-link" href="comOrderByCount.bo?currentPage=${pi.currentPage+1}&condition=${condition}" aria-label="Previous">
+					                            			<span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
+					                            		</a>
+			                            			</li>
+	                            				</c:when>
                       							<c:when test="${!empty keyword }">
 					                      		   	<li class="page-item">
 							                          <a class="page-link" href="comSearch.bo?currentPage=${pi.currentPage+1}&condition=${condition}&keyword=${keyword}" aria-label="Next">
@@ -361,13 +350,12 @@
 					                         	 </c:when>
 					                         	 <c:otherwise>
 						                         	 <li class="page-item">
-								                          <a class="page-link" href="comOrderByCategory.bo?currentPage=${pi.currentPage+1}&condition=${condition}&keyword=${keyword}" aria-label="Next">
+								                          <a class="page-link" href="comOrderByCategory.bo?currentPage=${pi.currentPage+1}&condition=${condition}" aria-label="Next">
 								                              <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
 								                          </a>
 							                         </li>
 					                         	 </c:otherwise>
 				                          	</c:choose>
-				                        
 			                          	</c:when>
 			                          	<c:otherwise>
 			                          	 <li class="page-item">

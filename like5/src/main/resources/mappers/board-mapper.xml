@@ -338,10 +338,10 @@
           and boa_status='Y'
      	<choose>
 	    	<when test="orderBy=='views'">
-	    		 order by boa_count desc
+	    		 order by boa_count desc,boa_enroll_date desc
 	    	</when>
 	    	<when test="orderBy=='reply'">
-	    		order by reply  desc
+	    		order by reply  desc,boa_enroll_date desc
     		</when>
     		<otherwise>
    			   order by boa_enroll_date desc
