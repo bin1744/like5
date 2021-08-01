@@ -66,19 +66,30 @@ public class BoardDao {
 	 * @author seong
 	 */
 	
-	public int comOrderByCount(SqlSessionTemplate sqlSession,String condition) {
-		return sqlSession.selectOne("boardMapper.comOrderByCount",condition);
+	public int comOrderByListCount(SqlSessionTemplate sqlSession,String condition) {
+		return sqlSession.selectOne("boardMapper.comOrderByListCount",condition);
 	}
 	
 	
+	
 	/**
-	 * 
-	 * 
+	 * [커뮤니티] 전체 | 일상 | 스터디 모집 | 카테고리별 조회
+	 * @author seong
 	 */
-	public ArrayList<Board> comOrderBy(SqlSessionTemplate sqlSession,PageInfo pi,String condition){
+	public ArrayList<Board> comOrderByCategory(SqlSessionTemplate sqlSession,PageInfo pi,String condition){
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("boardMapper.comOrderBy",condition,rowBounds);
+		return (ArrayList)sqlSession.selectList("boardMapper.comOrderByCategory",condition,rowBounds);
+	}
+	
+	/**
+	 * [커뮤니티]최신 | 조회수 | 댓글수 기준으로 조회
+	 * @author seong
+	 */
+	public ArrayList<Board> comOrderByCount(SqlSessionTemplate sqlSession,PageInfo pi,String condition){
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.comOrderByCount",condition,rowBounds);
 	}
 
 }

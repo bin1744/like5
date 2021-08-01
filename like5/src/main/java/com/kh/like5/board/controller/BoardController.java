@@ -135,14 +135,14 @@ public class BoardController {
 	 * @author seong
 	 */
 	
-	@RequestMapping("comOrderBy.bo")
-	public ModelAndView comOrderBy(ModelAndView mv,@RequestParam(value="currentPage",defaultValue="1")
+	@RequestMapping("comOrderByCategory.bo")
+	public ModelAndView comOrderByCategory(ModelAndView mv,@RequestParam(value="currentPage",defaultValue="1")
 		int currentPage	,String condition) {
 	
-	int listCount = bService.comOrderByCount(condition);
+	int listCount = bService.comOrderByListCount(condition);
 	
 	PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
-	ArrayList<Board>comList = bService.comOrderBy(pi,condition);
+	ArrayList<Board>comList = bService.comOrderByCategory(pi,condition);
 	
 	
 	mv.addObject("pi",pi)
@@ -151,8 +151,28 @@ public class BoardController {
 	.addObject("listCount",listCount)
 	.setViewName("board/community/comListView");
 	return mv;
+	}
 	
 	
+	/**
+	 * [커뮤니티]최신 | 조회수 | 댓글수 기준으로 조회
+	 * @author seong
+	 */
+	@RequestMapping("comOrderByCount.bo")
+	public ModelAndView comOrderByCount(ModelAndView mv,@RequestParam(value="currentPage",defaultValue="1")
+										int currentPage, String condition) {
+		
+	int listCount = bService.comListCount();
+	
+	PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+	ArrayList<Board>comList = bService.comOrderByCount(pi, condition);
+	
+	mv.addObject("pi",pi)
+	.addObject("comList",comList)
+	.addObject("condition",condition)
+	.addObject("listCount",listCount)
+	.setViewName("board/community/comListView");
+	return mv;
 	}
 	
 	/**

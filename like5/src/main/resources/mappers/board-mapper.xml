@@ -200,7 +200,17 @@
                  join member using (mem_no)
         where regexp_like (boa_category,'일상|스터디모집')
           and boa_status='Y'
-        order by boa_enroll_date desc
+     	<choose>
+	    	<when test="orderBy=='count'">
+	    		 order by boa_count desc
+	    	</when>
+	    	<when test="orderBy=='reply'">
+	    		order by reply  desc
+    		</when>
+    		<otherwise>
+   			   order by boa_enroll_date desc
+    		</otherwise>
+	    </choose>
     </select>
 
 	<!-- [커뮤니티] - 키워드 검색 결과 list count -->
@@ -255,11 +265,13 @@
 	    	</otherwise>
 	    </choose>
 	    like '%'||#{keyword}||'%'
-	    order by boa_enroll_date desc
+
+		order by boa_enroll_date desc
+    	
 	</select>
 
 	<!-- [커뮤니티] - 카테고리별 게시글 list count -->
-	<select id="comOrderByCount" resultType="_int">
+	<select id="comOrderByListCount" resultType="_int">
 	    select
            count(*)
         from board b
@@ -278,7 +290,7 @@
 	
 	
 	<!-- [커뮤니티] - 전체 | 일상 | 스터디 모집 | 카테고리별 조회 -->
-	<select id="comOrderBy" resultMap="board">
+	<select id="comOrderByCategory" resultMap="board">
 	    select
             boa_no
              ,nickname
@@ -304,6 +316,39 @@
 	    </choose>
 	    order by boa_enroll_date desc
 	</select>
+	
+	
+	<!-- 최신 | 조회수 | 댓글수 기준으로 조회 -->	
+   <select id="comOrderByCount" resultMap="board">
+         select
+            boa_no
+             ,nickname
+             ,boa_category
+             ,boa_title
+             ,boa_content
+             ,boa_enroll_date
+             ,boa_img_path
+             ,boa_count
+             ,(select count(*)
+                from reply r
+                where r.boa_no = b.boa_no) reply
+        from board b
+                 join member using (mem_no)
+        where regexp_like (boa_category,'일상|스터디모집')
+          and boa_status='Y'
+     	<choose>
+	    	<when test="orderBy=='views'">
+	    		 order by boa_count desc
+	    	</when>
+	    	<when test="orderBy=='reply'">
+	    		order by reply  desc
+    		</when>
+    		<otherwise>
+   			   order by boa_enroll_date desc
+    		</otherwise>
+	    </choose>
+    </select>
+	
 	
 	
 

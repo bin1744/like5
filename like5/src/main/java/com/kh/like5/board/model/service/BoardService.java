@@ -23,6 +23,7 @@ public interface BoardService {
 	
 	// 전체 목록 리스트 페이징 처리시 필요한 게시글 전체 count
 	int comListCount();
+	
 	// 전체 목록 리스트 조회
 	ArrayList<Board>comList(PageInfo pi);
 	
@@ -33,10 +34,13 @@ public interface BoardService {
 	ArrayList<Board>comSearchList(PageInfo pi,HashMap<String,String>map);
 
 	// [커뮤니티] - 카테고리별 게시글 list count
-	int comOrderByCount(String condition);
+	int comOrderByListCount(String condition);
 	
 	// 전체 | 일상 | 스터디 모집 | 카테고리별 조회
-	ArrayList<Board>comOrderBy(PageInfo pi,String condition);
+	ArrayList<Board>comOrderByCategory(PageInfo pi,String condition);
+	
+	// 최신 | 조회수 | 댓글 순 조회
+	ArrayList<Board>comOrderByCount(PageInfo pi,String condition);
 	
 	// 커뮤니티 게시글 상세보기시 조회수 증가
 	int increaseCount(int bno);

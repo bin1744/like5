@@ -42,39 +42,38 @@
                     <hr>
                 </div>
                 <div class="category-list-wrapper">
-                    <ul><a onclick="comOrderBy(1)" class="aTags">📖전체 </a></ul>
-                    <ul><a onclick="comOrderBy(2)"class="aTags">📕일상</a></ul>
-                    <ul><a onclick="comOrderBy(3)"class="aTags">📕스터디모집</a></ul>
+                    <ul><a onclick="comOrderByCategory(1)" class="aTags">📖전체 </a></ul>
+                    <ul><a onclick="comOrderByCategory(2)"class="aTags">📕일상</a></ul>
+                    <ul><a onclick="comOrderByCategory(3)"class="aTags">📕스터디모집</a></ul>
                 </div>
             </div>
             	
             	
        	<!-- 위의 a태그 클릭시  아래의 script에서 생성된 매핑값 넘기는 목적 -->
-       	<form id="comOrderBy" action="" method="post">
+       	<form id="comOrderByCategory" action="" method="post">
        		<input type="hidden" name="condition" value="">
        	</form>
             	
        	 <script>
-	        	function comOrderBy(condition){
+	        	function comOrderByCategory(condition){
 	        		// 전체 조회할 때
 	        		if(condition==1){
-	        			$("#comOrderBy").attr("action","comList.bo").submit();
+	        			$("#comOrderByCategory").attr("action","comList.bo").submit();
 	        		// 일상 or 스터디 모집으로 조회
 	        		}else{
 	        			// 일상 카테고리 조회
 	        			if(condition==2){
 	        				//input type hidden 요소의 value를 daily로 지정하기
-	        				$("#comOrderBy").children("input[type=hidden]").attr("value","daily");
+	        				$("#comOrderByCategory").children("input[type=hidden]").attr("value","daily");
 	        				
-	        				$("#comOrderBy").attr("action","comOrderBy.bo")
+	        				$("#comOrderByCategory").attr("action","comOrderByCategory.bo")
 	        				.submit();
 	        			}else{
 	        				// 스터디 모집으로 조회
 		        			// input type hidden 요소의 value를 study로 지정하기 
-	        				console.log("스터디모집 클릭됨");
-	        				$("#comOrderBy").children("input[type=hidden]").attr("value","study");
+	        				$("#comOrderByCategory").children("input[type=hidden]").attr("value","study");
 	        				
-	        				$("#comOrderBy").attr("action","comOrderBy.bo")
+	        				$("#comOrderByCategory").attr("action","comOrderByCategory.bo")
 	        				.submit();
 	        			}
 	        		}
@@ -89,14 +88,19 @@
         <div class="TalkPageHeaderModule">
             <div class="talk-filter-box-wrapper"  style="width: 280px;" >
                 <div><h2 class="content-header"><b>전체</b> &nbsp;&nbsp;</h2></div>
-                <div class="talk-filter-box-inner" id="selectOption">
-                    <div class="talk-filter-item on">최신순</div>
-                    <div class="talk-filter-item " >조회순</div>
-                    <div class="talk-filter-item ">댓글순</div>
+                <div class="talk-filter-box-inner" id="selectOption" style="width:88%">
+                    <div onclick="comOrderByCount(1)" class="talk-filter-item on">최신순</div>
+                    <div onclick="comOrderByCount(2)" class="talk-filter-item " >조회순</div>
+                    <div onclick="comOrderByCount(3)" class="talk-filter-item ">댓글순</div>
                 </div>
             </div>
         </div>
-
+        
+        
+       <form id="comOrderByCount" action="" method="post">
+       		<input type="hidden" name="condition" value="">
+       	</form>
+	
   
         <!--메인 시작-->
         <div class="main" id="communityList">
@@ -158,13 +162,79 @@
 
             <!--메인 끝-->
         </div>
+        
+        
+		<script>
+			
+		</script>
 
         <script>
-            /*조회 기준(최신순,조회순,좋아요순) 클릭시 배경색 변경되는 JS*/
+            /*조회 기준(최신순,조회순,좋아요순) 클릭시 배경색 변경되는 JS
+            
             $(document).on("click","#selectOption>div",function(){
                 $(this).toggleClass('on');
                 $(this).siblings().removeClass('on');
             })  
+            
+            */
+            
+            /*
+            function comOrderByCount(condition){
+	    		// 전체 조회할 때
+	    		if(condition==1){
+	    			$("#comOrderByCount").attr("action","comList.bo").submit();
+	    		// 조회수
+	    		}else{
+	    			// 일상 카테고리 조회
+	    			if(condition==2){
+	    				//input type hidden 요소의 value를 daily로 지정하기
+	    				$("#comOrderByCount").children("input[type=hidden]").attr("value","views");
+	    				
+	    				$("#comOrderByCount").attr("action","comOrderByCount.bo")
+	    				.submit();
+	    			}else{
+	    				// 댓글수
+	        			// input type hidden 요소의 value를 study로 지정하기 
+	    				$("#comOrderByCount").children("input[type=hidden]").attr("value","reply");
+	    				
+	    				$("#comOrderByCount").attr("action","comOrderByCount.bo")
+	    				.submit();
+	    			}
+	    		}
+        	}	
+            */
+            
+            /*JS 수정하기*/
+    		 $(document).on("click","#selectOption>div",function(){
+                 $(this).toggleClass('on');
+                 $(this).siblings().removeClass('on');
+                 
+             })  
+          
+   		   	function comOrderByCount(condition){
+   	    		// 전체 조회할 때
+   	    		if(condition==1){
+   	    			$("#comOrderByCount").attr("action","comList.bo").submit();
+   	    		// 조회수
+   	    		}else{
+   	    			// 일상 카테고리 조회
+   	    			if(condition==2){
+   	    				//input type hidden 요소의 value를 daily로 지정하기
+   	    				$("#comOrderByCount").children("input[type=hidden]").attr("value","views");
+   	    				
+   	    				$("#comOrderByCount").attr("action","comOrderByCount.bo")
+   	    				.submit();
+   	    			}else{
+   	    				// 댓글수
+   	        			// input type hidden 요소의 value를 study로 지정하기 
+   	    				$("#comOrderByCount").children("input[type=hidden]").attr("value","reply");
+   	    				
+   	    				$("#comOrderByCount").attr("action","comOrderByCount.bo")
+   	    				.submit();
+   	    			}
+   	    		}
+           	 }
+	    
             
             $(function(){
                 $(".talk-box-wrapper").click(function(){
@@ -233,7 +303,7 @@
 			                            			</li>
 		                            			</c:when>
 		                            			<c:otherwise>
-		                            				<a class="page-link" href="comOrderBy.bo?currentPage=${pi.currentPage-1}&condition=${condition}" aria-label="Previous">
+		                            				<a class="page-link" href="comOrderByCategory.bo?currentPage=${pi.currentPage-1}&condition=${condition}" aria-label="Previous">
 					                            			<span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
 				                            		</a>
 		                            			</c:otherwise>
@@ -259,7 +329,7 @@
 			                        			<li class="page-item"><a class="page-link" href="comSearch.bo?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
 	                        				</c:when>
 	                        				<c:otherwise>
-	                        					<li class="page-item"><a class="page-link" href="comOrderBy.bo?currentPage=${ p }&condition=${condition}">${ p }</a></li>
+	                        					<li class="page-item"><a class="page-link" href="comOrderByCategory.bo?currentPage=${ p }&condition=${condition}">${ p }</a></li>
 	                        				</c:otherwise>
 	                        			</c:choose>
 	                        		</c:when>
@@ -291,7 +361,7 @@
 					                         	 </c:when>
 					                         	 <c:otherwise>
 						                         	 <li class="page-item">
-								                          <a class="page-link" href="comOrderBy.bo?currentPage=${pi.currentPage+1}&condition=${condition}&keyword=${keyword}" aria-label="Next">
+								                          <a class="page-link" href="comOrderByCategory.bo?currentPage=${pi.currentPage+1}&condition=${condition}&keyword=${keyword}" aria-label="Next">
 								                              <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
 								                          </a>
 							                         </li>
