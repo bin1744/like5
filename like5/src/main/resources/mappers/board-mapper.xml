@@ -258,5 +258,53 @@
 	    order by boa_enroll_date desc
 	</select>
 
+	<!-- [커뮤니티] - 카테고리별 게시글 list count -->
+	<select id="comOrderByCount" resultType="_int">
+	    select
+           count(*)
+        from board b
+	     join member using(mem_no)
+	    where boa_status = 'Y'
+	    <choose>
+	    	<when test="condition=='daily'">
+	    		and regexp_like (boa_category,'일상')
+	    	</when>
+	    	<otherwise>
+	    		and regexp_like (boa_category,'스터디모집')
+	    	</otherwise>
+	    </choose>
+	    order by boa_enroll_date desc
+	</select>
+	
+	
+	<!-- [커뮤니티] - 전체 | 일상 | 스터디 모집 | 카테고리별 조회 -->
+	<select id="comOrderBy" resultMap="board">
+	    select
+            boa_no
+             ,nickname
+             ,boa_category
+             ,boa_title
+             ,boa_content
+             ,boa_enroll_date
+             ,boa_img_path
+             ,boa_count
+             ,(select count(*)
+                from reply r
+                where r.boa_no = b.boa_no) reply
+        from board b
+	     join member using(mem_no)
+	    where boa_status = 'Y'
+   	    <choose>
+	    	<when test="condition=='daily'">
+	    		and regexp_like (boa_category,'일상')
+	    	</when>
+	    	<otherwise>
+	    		and regexp_like (boa_category,'스터디모집')
+	    	</otherwise>
+	    </choose>
+	    order by boa_enroll_date desc
+	</select>
+	
+	
 
 </mapper>

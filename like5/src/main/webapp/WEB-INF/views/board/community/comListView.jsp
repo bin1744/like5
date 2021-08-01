@@ -42,11 +42,47 @@
                     <hr>
                 </div>
                 <div class="category-list-wrapper">
-                    <ul><a href="" class="aTags">📖전체 </a></ul>
-                    <ul><a href="" class="aTags">📕일상 </a></ul>
-                    <ul><a href="" class="aTags">📕스터디모집 </a></ul>
+                    <ul><a onclick="comOrderBy(1)" class="aTags">📖전체 </a></ul>
+                    <ul><a onclick="comOrderBy(2)"class="aTags">📕일상</a></ul>
+                    <ul><a onclick="comOrderBy(3)"class="aTags">📕스터디모집</a></ul>
                 </div>
             </div>
+            	
+            	
+       	<!-- 위의 a태그 클릭시  아래의 script에서 생성된 매핑값 넘기는 목적 -->
+       	<form id="comOrderBy" action="" method="post">
+       		<input type="hidden" name="condition" value="">
+       	</form>
+            	
+       	 <script>
+	        	function comOrderBy(condition){
+	        		// 전체 조회할 때
+	        		if(condition==1){
+	        			$("#comOrderBy").attr("action","comList.bo").submit();
+	        		// 일상 or 스터디 모집으로 조회
+	        		}else{
+	        			// 일상 카테고리 조회
+	        			if(condition==2){
+	        				//input type hidden 요소의 value를 daily로 지정하기
+	        				$("#comOrderBy").children("input[type=hidden]").attr("value","daily");
+	        				
+	        				$("#comOrderBy").attr("action","comOrderBy.bo")
+	        				.submit();
+	        			}else{
+	        				// 스터디 모집으로 조회
+		        			// input type hidden 요소의 value를 study로 지정하기 
+	        				console.log("스터디모집 클릭됨");
+	        				$("#comOrderBy").children("input[type=hidden]").attr("value","study");
+	        				
+	        				$("#comOrderBy").attr("action","comOrderBy.bo")
+	        				.submit();
+	        			}
+	        		}
+	        	}
+     	</script>
+            	
+  
+            
         <!--카테고리 끝--> 
         </div>
 
@@ -187,12 +223,21 @@
 	                            </c:when>
 	                            <c:otherwise>
 	                            	<c:choose>
-	                            		<c:when test="${!empty condition }">
-	                            			<li class="page-item">
-			                            		<a class="page-link" href="comSearch.bo?currentPage=${pi.currentPage-1}&condition=${condition}&keyword=${keyword}" aria-label="Previous">
-			                            			<span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
-			                            		</a>
-	                            			</li>
+	                            		<c:when test="${!empty condition}">
+	                            			<c:choose>
+	                            				<c:when test="${!empty keyword }">
+			                            			<li class="page-item">
+					                            		<a class="page-link" href="comSearch.bo?currentPage=${pi.currentPage-1}&condition=${condition}&keyword=${keyword}" aria-label="Previous">
+					                            			<span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
+					                            		</a>
+			                            			</li>
+		                            			</c:when>
+		                            			<c:otherwise>
+		                            				<a class="page-link" href="comOrderBy.bo?currentPage=${pi.currentPage-1}&condition=${condition}" aria-label="Previous">
+					                            			<span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
+				                            		</a>
+		                            			</c:otherwise>
+	                            			</c:choose>
 	                            		</c:when>
 	                            		<c:otherwise>
 			                            	<li class="page-item">
@@ -209,7 +254,14 @@
 	                        <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
 	                        	<c:choose>
 	                        		<c:when test="${!empty condition}">
-	                        			<li class="page-item"><a class="page-link" href="comSearch.bo?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
+	                        			<c:choose>
+	                        				<c:when test="${!empty keyword }">
+			                        			<li class="page-item"><a class="page-link" href="comSearch.bo?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
+	                        				</c:when>
+	                        				<c:otherwise>
+	                        					<li class="page-item"><a class="page-link" href="comOrderBy.bo?currentPage=${ p }&condition=${condition}">${ p }</a></li>
+	                        				</c:otherwise>
+	                        			</c:choose>
 	                        		</c:when>
 	                        		<c:otherwise>
 		                       			<li class="page-item"><a class="page-link" href="comList.bo?currentPage=${ p }">${ p }</a></li>
@@ -229,11 +281,23 @@
 		                      	<c:otherwise>
 		                      		<c:choose>
 	                      				<c:when test="${!empty condition}">
-			                      		   <li class="page-item">
-					                          <a class="page-link" href="comSearch.bo?currentPage=${pi.currentPage+1}&condition=${condition}&keyword=${keyword}" aria-label="Next">
-					                              <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
-					                          </a>
-				                          </li>
+	                      					<c:choose>
+                      							<c:when test="${!empty keyword }">
+					                      		   	<li class="page-item">
+							                          <a class="page-link" href="comSearch.bo?currentPage=${pi.currentPage+1}&condition=${condition}&keyword=${keyword}" aria-label="Next">
+							                              <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
+							                          </a>
+						                          	</li>
+					                         	 </c:when>
+					                         	 <c:otherwise>
+						                         	 <li class="page-item">
+								                          <a class="page-link" href="comOrderBy.bo?currentPage=${pi.currentPage+1}&condition=${condition}&keyword=${keyword}" aria-label="Next">
+								                              <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
+								                          </a>
+							                         </li>
+					                         	 </c:otherwise>
+				                          	</c:choose>
+				                        
 			                          	</c:when>
 			                          	<c:otherwise>
 			                          	 <li class="page-item">

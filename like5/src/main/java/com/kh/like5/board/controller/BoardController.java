@@ -103,7 +103,7 @@ public class BoardController {
 	}
 	
 	/**
-	 * [커뮤니티] - 키워드 검색 결과
+	 * [커뮤니티] - 키워드 검색 결과 조회 
 	 * @author seong
 	 */
 	
@@ -127,10 +127,33 @@ public class BoardController {
 		  .addObject("keyword",keyword)
 		  .addObject("listCount",listCount)
 		  .setViewName("board/community/comListView");
-		System.out.println(comList);
 		return mv;
 	}
 	
+	/**
+	 * [커뮤니티] - 전체 | 일상 | 스터디 모집 | 카테고리별 조회
+	 * @author seong
+	 */
+	
+	@RequestMapping("comOrderBy.bo")
+	public ModelAndView comOrderBy(ModelAndView mv,@RequestParam(value="currentPage",defaultValue="1")
+		int currentPage	,String condition) {
+	
+	int listCount = bService.comOrderByCount(condition);
+	
+	PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+	ArrayList<Board>comList = bService.comOrderBy(pi,condition);
+	
+	
+	mv.addObject("pi",pi)
+	.addObject("comList",comList)
+	.addObject("condition",condition)
+	.addObject("listCount",listCount)
+	.setViewName("board/community/comListView");
+	return mv;
+	
+	
+	}
 	
 	/**
 	 * [커뮤니티] - 글 작성 Form

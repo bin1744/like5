@@ -31,11 +31,20 @@ public interface BoardService {
 	
 	// 키워드 검색 결과 조회
 	ArrayList<Board>comSearchList(PageInfo pi,HashMap<String,String>map);
+
+	// [커뮤니티] - 카테고리별 게시글 list count
+	int comOrderByCount(String condition);
+	
+	// 전체 | 일상 | 스터디 모집 | 카테고리별 조회
+	ArrayList<Board>comOrderBy(PageInfo pi,String condition);
 	
 	// 커뮤니티 게시글 상세보기시 조회수 증가
 	int increaseCount(int bno);
 	// 게시글 상세보기
 	Board comDetail(int bno);
+	
+	// 
+	
 	
 	//[커뮤니티] - 글 수정하기
 	
