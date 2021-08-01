@@ -80,7 +80,14 @@
 		                    <div class="talk-box-col__content">
 	                            <div class="talk-box-row__title">
 	                                <h5 class="post-title">${c.title}
-	                                    <label class="post-commentcount">[0]</label>
+	                                	<c:choose>
+	                                		<c:when test="${!empty c.reply }">
+	                                    		<label class="post-commentcount">[${c.reply}]</label>
+	                                    	</c:when>
+	                                    	<c:otherwise>
+	                                    		<label class="post-commentcount">[0]</label>
+	                                    	</c:otherwise>
+	                                    </c:choose>
 	                                </h5>
 	                            </div>
 		                        <!--게시글 정보 (카테고리, 작성일, 작성자)-->

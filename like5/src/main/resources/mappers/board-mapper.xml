@@ -17,6 +17,7 @@
         <result column="tag_name" property="tag" />
         <result column="boa_img_path" property="imgPath" />
         <result column="nickname" property="nickname" />
+        <result column="reply" property="reply" />
     </resultMap>
     
     <resultMap id="report" type="Report">
@@ -183,7 +184,7 @@
 
     <!-- [커뮤니티] - 전체 목록 리스트 조회  -->
     <select id="comList" resultMap="board">
-        select
+         select
             boa_no
              ,nickname
              ,boa_category
@@ -191,10 +192,13 @@
              ,boa_content
              ,boa_enroll_date
              ,boa_img_path
-        from board
+             ,boa_count
+             ,(select count(*)
+                from reply r
+                where r.boa_no = b.boa_no) reply
+        from board b
                  join member using (mem_no)
-        where 1=1
-          and regexp_like (boa_category,'일상|스터디모집')
+        where regexp_like (boa_category,'일상|스터디모집')
           and boa_status='Y'
         order by boa_enroll_date desc
     </select>
@@ -230,7 +234,11 @@
              ,boa_content
              ,boa_enroll_date
              ,boa_img_path
-        from board
+             ,boa_count
+             ,(select count(*)
+                from reply r
+                where r.boa_no = b.boa_no) reply
+        from board b
 	     join member using(mem_no)
 	    where boa_status = 'Y'
 	    <choose>
