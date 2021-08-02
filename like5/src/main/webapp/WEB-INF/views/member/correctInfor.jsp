@@ -126,9 +126,9 @@
 	            	</c:when>
 	            </c:choose>
 	            <div>계좌번호 :</div>
-	            <input type="text" value="${ loginUser.accountNum }">
+	            <input id="accountNum" name="accountNum" type="text" value="${ loginUser.accountNum }">
 	            <div style="margin-top: 40px;">
-	              <button data-toggle="modal" data-target="#myModal" style="border: 2px solid rgb(220, 53, 69); background-color: white; color: rgb(220, 53, 69); border-radius:3px;">탈퇴하기</button>
+	              <button id="calculate" type="button" data-toggle="modal" data-target="#MyModal" style="border: 2px solid rgb(220, 53, 69); background-color: white; color: rgb(220, 53, 69); border-radius:3px;">탈퇴하기</button>
 	              <button style="border: 2px solid rgb(220, 53, 69); background-color: white; color: rgb(220, 53, 69); border-radius:3px;">취소</button>
 	              <button type="submit" style="border: 2px solid rgb(220, 53, 69); background-color:rgb(220, 53, 69); color: white; border-radius:3px;">수정하기</button>
 	            </div>
@@ -138,7 +138,7 @@
       </div>
 
         <!-- The Modal -->
-        <div class="modal fade" id="myModal">
+        <div class="modal fade" id="MyModal">
             <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 
@@ -152,7 +152,7 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" style="border: 2px solid rgb(220, 53, 69); background-color: white; color: rgb(220, 53, 69);">취소</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: rgb(220, 53, 69); color: white;">탈퇴하기</button>
+                <button type="button" onclick="location.href='delete.me?memNo=${ loginUser.memNo }'" class="btn btn-secondary" data-dismiss="modal" style="background-color: rgb(220, 53, 69); color: white;">탈퇴하기</button>
                 </div>
                 
             </div>

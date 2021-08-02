@@ -30,8 +30,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int insertMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return mDao.insertMember(sqlSession, m);
+		
 	}
 
 	@Override
@@ -42,15 +43,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int deleteMember(String Email) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int emailCheck(String Email) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteMember(int memNo) {
+		
+		return mDao.deleteMember(sqlSession, memNo);
+		
 	}
 
 	/**

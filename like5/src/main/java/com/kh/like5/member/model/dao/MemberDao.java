@@ -15,26 +15,21 @@ import com.kh.like5.member.model.vo.Sponsorship;
 @Repository
 public class MemberDao {
 	
+	//-------------------------동규------------------------------------
+	
 	public Member loginMember(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.selectOne("memberMapper.loginMember", m);
 	}
 	
-	
-	/**
-	 * [1:1문의] 작성
-	 * @author seong
-	 */
-	
-	public int insertInquiry(SqlSessionTemplate sqlSession, Customer c) {
-		return sqlSession.insert("memberMapper.insertInquiry",c);
+	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.insert("memberMapper.insertMember", m);
+		
 	}
-	
 	
 	public ArrayList<Board> newlylist(SqlSessionTemplate sqlSession, int memNo) {
 		
-		
 		return (ArrayList)sqlSession.selectList("memberMapper.newlylist", memNo);
-		
 				
 	}
 
@@ -66,8 +61,27 @@ public class MemberDao {
 
 	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
 		
-		return sqlSession.insert("memberMapper.updateMember",m);
+		return sqlSession.update("memberMapper.updateMember",m);
 		
 	}
+
+
+	public int deleteMember(SqlSessionTemplate sqlSession, int memNo) {
+		
+		return sqlSession.update("memberMapper.deleteMem", memNo);
+
+	}
+	
+	/**
+	 * [1:1문의] 작성
+	 * @author seong
+	 */
+	
+	public int insertInquiry(SqlSessionTemplate sqlSession, Customer c) {
+		return sqlSession.insert("memberMapper.insertInquiry",c);
+	}
+	
+	
+	
 	
 }

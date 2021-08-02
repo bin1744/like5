@@ -120,7 +120,7 @@ div{box-sizing:border-box;}
 				<c:when test="${ empty loginUser }">
 					<!-- 로그인 전 -->
 					<div id="before_login">
-						<a data-toggle="modal" href="#myModal">로그인&nbsp;</a> | <a href="">&nbsp;회원가입</a>
+						<a data-toggle="modal" href="#myModal">로그인&nbsp;</a> | <a href="insertPage.me">&nbsp;회원가입</a>
 					</div>
 				</c:when>
 				<c:otherwise>
