@@ -113,19 +113,26 @@
         
         <!-- 세부 공간 선택-->
         <div class="space"><h3><b>세부 공간 선택</b></h3></div> <br>
+        
         <div class="space2">
             <div class="space3">
                 <b>호스트의 승인을 기다릴 필요 없이 <br>
                     지금 바로 예약하세요!</b><br><br>
+                <form class="detailForm" action="paymentForm.bk" method="post">
+                
                 <b>${o.branch}</b> &nbsp;&nbsp;&nbsp;<b>${o.price} 원 / 1일 </b></b> <br><br><br>
                 <b>체크인</b> <br>
-                <input type="text" placeholder="2021년 07월 12일(목)"> <br><br>
+                <%--flatpickr이용해서 날짜 선택할 수 있게 해주세요 --%>
+                <input type="text" class="startDate" name="startDate"> <br><br>
                 <b>체크아웃</b> <br>
-                <input type="text" placeholder="2021년 07월 13일(금)"> <br><br><br><br>
-                <button type="button" class="btn btn-danger btn-block">예약 하기</button>
+                <input type="text" class="endDate" name="endDate"> <br><br><br><br>
+                
+                <input type="hidden" name="officeNo" value="${ o.officeNo }">
+                <button type="submit" class="btn btn-danger btn-block">예약 하기</button>
+            	</form>
             </div>
         </div>
-        
+ 
         <!--시설 안내-->
    <div class="fa1"><h3><b>시설 안내</b></h3></div> <br>
    <div class="facility">
@@ -192,6 +199,15 @@
 		<jsp:include page="../common/footer.jsp"/>
 		
 <script>
+<%-- 날짜 가져오기 --%>
+var startDate = localStorage.getItem("startDate");
+var endDate = localStorage.getItem("endDate");
+console.log(startDate);
+$.when($.ready).then(function(){
+	$("input[name=startDate]").val(startDate);
+	$("input[name=endDate]").val(endDate);
+})
+	
     <c:if test="${ fn:contains(o.facility, '와이파이') }">
     	$("#wifiIcon").css("color","red");
 	</c:if>
