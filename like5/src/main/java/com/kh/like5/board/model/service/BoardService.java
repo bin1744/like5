@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.like5.board.model.vo.Board;
+import com.kh.like5.board.model.vo.Reply;
 import com.kh.like5.common.model.vo.PageInfo;
 
 public interface BoardService {
@@ -42,14 +43,14 @@ public interface BoardService {
 	// 최신 | 조회수 | 댓글 순 조회
 	ArrayList<Board>comOrderByCount(PageInfo pi,String condition);
 	
-	
 	// 게시글 상세보기시 조회수 증가
 	int increaseCount(int bno);
 	
 	// 게시글 상세보기
 	Board comDetail(int bno);
 	
-	// 
+	// 댓글 조회
+	ArrayList<Reply>selectReplyList(int bno);
 	
 	
 	//[커뮤니티] - 글 수정하기
