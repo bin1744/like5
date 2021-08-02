@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>공간 리스트 상세페이지</title>
+<!-- 카카오 api 지도 key 입력부분-->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=010c7b5cd71c4c45be3b01ae1329b4b5&libraries=services,clusterer,drawing"></script>
 <style>
 	/*여기부터 메인 css*/
 
@@ -105,7 +107,38 @@
         <!--메인 사진-->
         
         <div class="reserveImg">
-        	<img src="resources/images/20210722_17295.jpg">
+        	<div id="demo" class="carousel slide" data-ride="carousel">
+
+			  <!-- Indicators -->
+			  <ul class="carousel-indicators">
+			    <li data-target="#demo" data-slide-to="0" class="active"></li>
+			    <li data-target="#demo" data-slide-to="1"></li>
+			  </ul>
+			
+			  <!-- 슬라이드 부분 -->
+			  <div class="carousel-inner">
+			  
+			    <div class="carousel-item active">
+			    	<img src="${o.offImgPath}">
+			    </div>
+			    <c:forEach var="i" begin="1" end="${ fn:length(at)-1 }">
+				    <div class="carousel-item">
+				      <img src="${at.get(i).filePath}">
+				    </div>
+				</c:forEach>
+				
+				
+			  </div>
+			
+			  <!-- Left and right controls -->
+			  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+			    <span class="carousel-control-prev-icon"></span>
+			  </a>
+			  <a class="carousel-control-next" href="#demo" data-slide="next">
+			    <span class="carousel-control-next-icon"></span>
+			  </a>
+			
+			</div>
         </div>
          
 
@@ -149,7 +182,7 @@
             <div class="com"><i id="comcon" class="fas fa-laptop" style='font-size:48px'></i></div>
             <div class="com2"><b>PC/노트북</b></div> <br>
 
-            <div class="bar"><i id="barcon" class="fas fa-glass-cheers" style='font-size:48px'></i></div>
+            <div class="bar"><i id="barcon" class="fas fa-coffee" style='font-size:48px'></i></div>
             <div class="bar2"><b>bar</b></div>
 
             <div class="meeting"><i id="meetcon" class="fas fa-microphone" style="font-size:48px"></i></div>
@@ -166,9 +199,9 @@
         <br><br> 
         <!--위치(지도)-->
        <div><h3><b>위치</b></h3> <br> 
-        <div><img src="../../../resources/images/지도.PNG"></div> <br><br></div>
+        <div id="map" style="width:400px;height:400px;"></div> <br><br></div>
         
-    	<br><br><br><br><br><br><br><br><br><br><br><br><br>
+    	<br>
         <!--후기-->
         <div><h3><b>의견 및 소감</b></h3></div> 
         
@@ -195,7 +228,7 @@
             </p>
         </div>
 </div>       
-	    <br><br><br><br>
+	    <br><br><br><br><br><br>
 		<jsp:include page="../common/footer.jsp"/>
 		
 <script>
@@ -232,6 +265,47 @@ $.when($.ready).then(function(){
 	<c:if test="${ fn:contains(o.facility, '매니저') }">
 		$("#peoplecon").css("color","red");
 	</c:if>
+	
+	<%-- kakao map --%>
+
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+    				center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+    				level: 5 // 지도의 확대 레벨
+				};  
+
+	// 지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+		
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch("${ o.address }", function(result, status) {
+
+	// 정상적으로 검색이 완료됐으면 
+ 	if (status === kakao.maps.services.Status.OK) {
+
+    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+    console.log(coords);
+    
+    // 결과값으로 받은 위치를 마커로 표시합니다
+    var marker = new kakao.maps.Marker({
+        map: map,
+        position: coords
+    });
+
+    // 인포윈도우로 장소에 대한 설명을 표시합니다
+    var infowindow = new kakao.maps.InfoWindow({
+        content: '<div style="width:100px;text-align:center;padding:6px 0;">${o.branch}</div>'
+    });
+    infowindow.open(map, marker);
+
+    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+    map.setCenter(coords);
+		}
+	});
+	
 	
 </script>
 </body>

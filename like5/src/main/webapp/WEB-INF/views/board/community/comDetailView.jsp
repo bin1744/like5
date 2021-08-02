@@ -35,17 +35,17 @@
                         <h3><b>커뮤니티</b></h3><br>
                         <div class="content-header">
                             <div class="content-header-top">
-                                <h4><b>VS Code 생각보다 괜찮네요</b></h4>
+                                <h4><b>${b.title}</b></h4>
                             </div>
                             <div class="content-header-bottom">
                                 <div class="left-items">
-                                    <span>일상 | </span>
-                                    <span>21-07-05 |</span>
-                                    <span>작성자 닉네임</span>
+                                    <span>${b.category} | </span>
+                                    <span>${b.enrollDate} |</span>
+                                    <span>${b.nickname}</span>
                                 </div>
                                 
                                 <div class="rigth-items">
-                                    <span>조회 6 | </span>
+                                    <span>조회 ${b.count } | </span>
                                     <span><a href="" class="aTags" data-toggle="modal" data-target="#report-modal">🚨신고</a></span>
                                 </div>
                             </div>
@@ -53,16 +53,20 @@
                         </div>
                         <div class="main-content" style="height: 500px;">
 
-                            <div>내용이 보여지는 영역</div>
+                            <div>${b.content}</div>
                           
                         </div>
                         <!--글작성자에게만 보여지는 버튼-->
-                        <%-- <c:if test="${loginUser.userId != null}"></c:if>--%>
-	                        <div class="content-footer" align="center">
-	                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="postFormSubmit(1)">수정</button>
-	                            <button type="button" class="btn btn-danger btn-sm" onclick="postFormSubmit(2)">삭제</button>
-	                        </div>
+                        <c:choose>
+                        	<c:when test="${loginUser.memNo eq b.bno}">
+                        		<div class="content-footer" align="center">
+	                           	 	<button type="button" class="btn btn-outline-danger btn-sm" onclick="postFormSubmit(1)">수정</button>
+	                            	<button type="button" class="btn btn-danger btn-sm" onclick="postFormSubmit(2)">삭제</button>
+	                        	</div>
+                        	</c:when>
+                        </c:choose>
 	                        
+	                        <%-- 
 	                        <form id="postForm" action="" method="post">
 								<input type="hidden" name="bno" value="${b.boardNo}">
 								<input type="hidden" name="filePath" value="${b.changeName}">
@@ -78,7 +82,7 @@
 									}
 								}
 							</script>
-                        
+                       		 --%>
                         <hr>
                     </div>
                 </div>
@@ -87,8 +91,8 @@
 
             <form  id="" action="" method="post" style="margin-top: 0px;" >
                 <!--ex.아이디랑 글 번호 넘겨서 삭제 (sql문에 따라 보내는 값을 달라질 수 있음)-->
-                <input type="hidden" id="" name="" value="${loginUser.userId}" >
-                <input type="hidden" id="" name="" value="${loginUser.userId}" >
+                <input type="hidden" id="" name="" value="${loginUser.memNo}" >
+                <input type="hidden" id="" name="" value="${loginUser.memNo}" >
                 <!--신고하기 모달창-->
                 <div class="container">
                     <!-- The Modal -->
@@ -153,12 +157,13 @@
             <!--댓글 전체 감싸는 영역-->
             
             <div class="talk-commentbox-wrapper" style="margin-bottom:50px">
-                <div class="talk-comment-count-box">3개의 댓글</div>
+                <div class="talk-comment-count-box"></div>
                 <div class="talk-newcomment-box">
                     <div class="auto-heigth" style="box-sizing: border-box; height: auto;">
-                        <div style="height: 300px; width: 100%; border: 1px solid;">
-                            <!--토스트 UI 들어오는 자리-->
-                        </div>
+                         <div class="form-group">
+						  <label for="comment"><h5><b>3개의 댓글</b></h5></label>
+						  <textarea class="form-control" rows="5" id="comment" style="resize:none"></textarea>
+						</div>
                         <button type="button" class="btn-danger btn btn-sm" style="float:right; margin-top: 10px;">댓글 작성</button>
                     </div>
                 </div>
