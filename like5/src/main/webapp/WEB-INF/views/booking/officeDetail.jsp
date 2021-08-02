@@ -207,26 +207,21 @@
         
         <hr>
         
-        <div class="review">
-            <p>
-            <b>강하나</b> <br>
-            2021-05-21 <br>
-            ★★★★ <br>
-            깔끔하고 좋았음.
-            </p>
-        </div>
+        <c:forEach var="r" items="${ rv }">
+	        <div class="review">
+	            <p>
+	            <p>
+	            <b>${r.reviewWriter}</b> <br>
+	            ${r.createDate} <br>
+	           	${r.reviewStar} <br>
+	           	${r.reviewContent}
+	            </p>
+	        </div>
+	
+	        <hr>
+		</c:forEach>
 
-        <hr>
-
-        <div class="review">
-            <p>
-            <b>김하늘</b> <br>
-            2021-05-24 <br>
-            ★★★★ <br>
-            오아이스도 없는 사막이다 보이는 끝까지 찾아다녀도 목숨이 있는 때까지 방황하여도 보이는 것은 거친 모래뿐일 것이다 <br>
-            이상의 꽃이 없으면 쓸쓸한 인간에 남는 것은 영락과 부패 뿐이다 낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게....
-            </p>
-        </div>
+        
 </div>       
 	    <br><br><br><br><br><br>
 		<jsp:include page="../common/footer.jsp"/>

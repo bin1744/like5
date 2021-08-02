@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.like5.board.model.vo.Board;
+import com.kh.like5.board.model.vo.Reply;
 import com.kh.like5.common.model.vo.PageInfo;
 
 @Repository
@@ -111,7 +112,14 @@ public class BoardDao {
 		return sqlSession.selectOne("boardMapper.comDetail",bno);
 	}
 	
+	/**
+	 * 댓글 | 대댓글 전체 조회
+	 * @author seong
+	 */
 	
+	public ArrayList<Reply>selectReplyList(SqlSessionTemplate sqlSession,int bno){
+		return (ArrayList)sqlSession.selectList("boardMapper.replyList",bno);
+	}
 	
 	
 }

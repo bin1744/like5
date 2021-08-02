@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.like5.board.model.dao.BoardDao;
 import com.kh.like5.board.model.vo.Board;
+import com.kh.like5.board.model.vo.Reply;
 import com.kh.like5.common.model.vo.PageInfo;
 
 @Service
@@ -99,6 +100,7 @@ public class BoardServiceImpl implements BoardService {
 	public int increaseCount(int bno) {
 		return bDao.increaseCount(sqlSession, bno);
 	}
+
 	
 	/**
 	 *  [커뮤니티] 커뮤니티 게시글 상세보기
@@ -110,6 +112,15 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.comDetail(sqlSession, bno);
 	}
 
+	/**
+	 * 댓글 | 대댓글 전체 조회
+	 * @author seong
+	 */
+	@Override
+	public ArrayList<Reply> selectReplyList(int bno) {
+		return bDao.selectReplyList(sqlSession, bno);
+	}
+	
 	/**
 	 *  [칼럼] - 전체 목록 리스트 조회
 	 *  @author seong
@@ -131,6 +142,7 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 	
 

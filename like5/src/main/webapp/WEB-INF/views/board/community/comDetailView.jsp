@@ -161,17 +161,29 @@
                 <div class="talk-newcomment-box">
                     <div class="auto-heigth" style="box-sizing: border-box; height: auto;">
                          <div class="form-group">
-						  <label for="comment"><h5><b>3개의 댓글</b></h5></label>
-						  <textarea class="form-control" rows="5" id="comment" style="resize:none"></textarea>
+                         <!-- 로그인한 사용자만 작성할 수 있도록 구현하기 -->
+                         <label for="comment"><h5><b><span id="rcount">3</span>개의 댓글</h5></b></label>
+							<c:choose>
+								<c:when test="${!empty loginUser}">
+								 	<textarea class="form-control" rows="5" id="comment" style="resize:none"></textarea>
+									<button type="button" class="btn-danger btn btn-sm" style="float:right; margin-top: 10px;">댓글 작성</button>
+								</c:when>
+								<c:otherwise>
+									 <textarea class="form-control" rows="5" id="comment" style="resize:none" placeholder="로그인 후 이용 가능한 서비스입니다." disabled></textarea>
+								</c:otherwise>
+							</c:choose>
 						</div>
-                        <button type="button" class="btn-danger btn btn-sm" style="float:right; margin-top: 10px;">댓글 작성</button>
                     </div>
                 </div>
                 <div class="talk-comment-lists">
                     <div class="TalkCommentModule" >
                         <div class="comment-box-wrapper">
-
-                            <!--댓글 조회목록-->
+		
+							
+							<div id="replyResult"></div>
+							<div id="answerComment"></div>
+							
+                            <!--댓글 조회목록
                             <div class="comment-wrapper_value" >
                                 <div class="comment-info">
                                     <div class="info-wrapper">
@@ -195,7 +207,7 @@
                                 </div>
                             </div>
 
-                            <!--대댓글 조회 목록-->
+                            <!--대댓글 조회 목록
                             <div class="comments-wrapper_value" >
                                 <div class="comment-info">
                                     <div class="info-wrapper">
@@ -208,14 +220,96 @@
                                                 <span style="float: right;"><a href="" class="aTags" data-toggle="modal" data-target="#report-modal"><img src="">🚨신고</a></span>
                                                 <div>21-07-06</div>
                                             </div>
-                                            
                                         </div>
                                         <div class="comment-content">
                                             <div>대댓글 영역입니다.</div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
+                            
+                            <script >
+                            	$(function(){
+                            		selectReplyList();
+                            	})
+                            	
+                            	
+                            	function selectReplyList(){
+                            		$.ajax({
+                            			url:"rlist.bo",
+                            			data:{bno:${b.bno}},
+                            			
+                            			// 통신 성공했을 때
+                            			success:function(list){
+                            				
+                            				 //console.log(list); //배열 확인 완료
+                            				$("#rcount").text(list.length);
+                            				
+                            				var value="";
+                            				var value2="";
+                            				for(var i in list){
+                            					
+                            					if(list[i].refLevel == 1){
+                            						  <!--댓글 조회목록-->
+                            						  
+                            						  value += 
+                                                     '<div class="comment-wrapper_value">'
+                                                    +  '<div class="comment-info">'
+                                                    +      '<div class="info-wrapper">'
+                                                    +          '<div class="user-info">'
+                                                    +              '<div class="user-img">'
+                                                    +                  '<i class="far fa-user fa-2x">'+'</i>'
+                                                    +              '</div>'
+                                                    +              '<div class="user-info" style="display: inline-block;width: 90%;">'
+                                                    +                  '<div class="test">' 
+                                                    +                      '<span>'+'<a href="" class="aTags">' + list[i].nickname + '</a>'+'</span>'
+                                                    +                      '<span style="float: right;">'+'<a href="" class="aTags" data-toggle="modal" data-target="#report-modal">'+'<img src="">'+"🚨신고"+'</a>'+'</span>'
+                                                    +                   '</div>'
+                                                    +                  '<div>' + list[i].repEnrollDate + '</div>'
+                                                    +              '</div>'
+                                                    +      	'</div>'
+                                                    +         '<div class="comment-content">'
+                                                    +              '<div>'+list[i].repContent+'</div>'
+                                                    +          '</div>'
+                                                    +      '</div>'
+                                                    +  '</div>'
+                                                    + '</div>'
+                                                    
+                                                	$("#replyResult").html(value);	
+                                                    
+                            					}else{
+                            						<!--대댓글 조회목록-->
+                            						value2 +=
+                            						'<div class="comments-wrapper_value" >' 
+                                                   + '<div class="comment-info">'
+                                                   +    '<div class="info-wrapper">'
+                                                   +         '<div class="user-info">'
+                                                   +            '<div class="user-img">'
+                                                   +                '<i class="far fa-user fa-2x"></i>'
+                                                   +             '</div>'
+                                                   +            '<div class="user-info" style="display: inline-block; width: 90%;">'
+                                                   +               ' <span>'+'<a href="" class="aTags">'+list[i].nickname+'</a>'+'</span>'
+                                                   +                 '<span style="float: right;">'+'<a href="" class="aTags" data-toggle="modal" data-target="#report-modal"><img src="">'+'🚨신고'+'</a>'+'</span>'
+                                                   +                 '<div>'+list[i].repEnrollDate +'</div>'
+                                                   +             '</div>'
+                                                   +         '</div>'
+                                                   +         '<div class="comment-content">'
+                                                   +             '<div>'+list[i].repContent+'</div>'
+                                                   +         '</div>'
+                                                   +     '</div>'
+                                                   + '</div>'
+                                                	+'</div>'
+	                            						
+                                                	$("#answerComment").html(value2);	
+                            					}
+                            				}
+                            				
+                            			},error:function(){
+                            				console.log("ajax통신실패");
+                            			}
+                            		})
+                            	}
+                            </script>
                             
                             <!--대댓글 달기/취소하기 버튼-->
                             <div class="comment-plus-icon-wrapper" align="center">
@@ -233,7 +327,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

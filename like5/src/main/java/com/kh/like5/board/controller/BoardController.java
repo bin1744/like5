@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.like5.board.model.service.BoardService;
 import com.kh.like5.board.model.vo.Board;
+import com.kh.like5.board.model.vo.Reply;
 import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.common.template.Pagination;
 
@@ -207,6 +210,13 @@ public class BoardController {
 		}
 	
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="rlist.bo",produces="application/json; charset=utf-8")
+	public String selectReplyList(int bno) {
+		ArrayList<Reply>list = bService.selectReplyList(bno);
+		return new Gson().toJson(list);
 	}
 	
 	

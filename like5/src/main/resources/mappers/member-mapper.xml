@@ -71,6 +71,40 @@
 		<result column="cal_account" property="calAccount"/>
 	</resultMap>
 	
+	<!--                     동규                            -->
+	
+	<insert id="insertMember" >
+		
+		insert
+		  into member
+		  (
+		  	   mem_no
+		     , email
+		     , mem_pwd
+		     , mem_name
+		     , nickname
+		     , mem_profile
+		     , mem_check
+		     , bank
+		     , account_num
+		     , enr_date
+		  )   
+		  values
+		  (
+		  	   seq_mno.nextval
+		  	 , #{email}
+		  	 , #{memPwd}
+		  	 , #{memName}
+		  	 , #{nickName}  
+		  	 , #{memProfile}
+		  	 , 'L'
+		  	 , #{bank}
+		  	 , #{accountNum}
+		  	 , sysdate
+		  )
+		
+	</insert>
+	
 	<select id="loginMember" resultMap="memberResult">
 	
 		select
@@ -92,111 +126,7 @@
           and mem_pwd = #{memPwd}
 				
 	</select>
-	<!-- [지현]회원관리 맴버 전체 조회 -->
-	<select id="selectMemCount" resultType="_int">
-		select 
-			count(*)
-		from member
-		where user_status='N'
-	</select>
 	
-	<select id="selectMemList" resultMap="memberResult">
-		select
-		      mem_no
-		    , email
-		    , mem_name
-		    , nickname
-		    , mem_check
-		    , bank
-		    , account_num
-		    , enr_date
-		    , ent_yn
-		from member
-		where user_status ='N'
-		order 
-			by mem_no
-	</select>
-	
-	<!-- [지현]회원관리 맴버 키워드 조회-->
-	<select id="selectSearchMemCount" resultType="_int">
-		select
-		       count(*)
-		  from member
-		 where user_status ='N'
-	 	<choose>
-	 		<when test="condition == 'memName'">
-	 			and mem_name
-	 		</when>
-	 		<when test="condition == 'nickName'">
-	 			and nickName
-	 		</when>
-	 		<otherwise>
-	 			and mem_name like '%' || #{keyword} || '%'
-	 			or nickName
-	 		</otherwise>
-	 	</choose>
-	 	like '%' || #{keyword} || '%'
-	 	order by mem_no
-	</select>
-	
-	<select id="selectSearchMemList" resultMap="memberResult">
-		select
-			      mem_no
-			    , email
-			    , mem_name
-			    , nickname
-			    , mem_check
-			    , bank
-			    , account_num
-			    , enr_date
-			    , ent_yn
-			from member
-			where user_status ='N'
-			<choose>
-	 		<when test="condition == 'memName'">
-	 			and mem_name
-	 		</when>
-	 		<when test="condition == 'nickName'">
-	 			and nickName
-	 		</when>
-	 		<otherwise>
-	 			and mem_name like '%' || #{keyword} || '%'
-	 			or nickName
-	 		</otherwise>
-		 	</choose>
-		 	like '%' || #{keyword} || '%'
-		 	order by mem_no
-			
-	</select>
-	<update id="deleteMem">
-		update 
-				member
-		   set ent_yn ='Y'
-		   where mem_no = #{memNo}
-	</update>
-	
-	
-	
-	
-	
-	<!--                   성은                              -->
-	<!-- [1:1문의] 작성 - Author Seong  -->
-	
-	<insert id="insertInquiry" >
-		insert into 
-				customer 
-				(cs_no
-				,mem_no
-				,cs_title
-				,cs_content)
-			values
-				(seq_cus.nextval
-				,#{memNo}
-				,#{csTitle}
-				,#{csContent})
-	</insert>
-	
-	<!--                     동규                            -->
 	
 	<update id="updateMember">
 		update 
@@ -324,5 +254,111 @@
 		 where mem_no = #{memNo}
 		
 	</select>
+	
+	
+	<!-- [지현]회원관리 맴버 전체 조회 -->
+	<select id="selectMemCount" resultType="_int">
+		select 
+			count(*)
+		from member
+		where user_status='N'
+	</select>
+	
+	<select id="selectMemList" resultMap="memberResult">
+		select
+		      mem_no
+		    , email
+		    , mem_name
+		    , nickname
+		    , mem_check
+		    , bank
+		    , account_num
+		    , enr_date
+		    , ent_yn
+		from member
+		where user_status ='N'
+		order 
+			by mem_no
+	</select>
+	
+	<!-- [지현]회원관리 맴버 키워드 조회-->
+	<select id="selectSearchMemCount" resultType="_int">
+		select
+		       count(*)
+		  from member
+		 where user_status ='N'
+	 	<choose>
+	 		<when test="condition == 'memName'">
+	 			and mem_name
+	 		</when>
+	 		<when test="condition == 'nickName'">
+	 			and nickName
+	 		</when>
+	 		<otherwise>
+	 			and mem_name like '%' || #{keyword} || '%'
+	 			or nickName
+	 		</otherwise>
+	 	</choose>
+	 	like '%' || #{keyword} || '%'
+	 	order by mem_no
+	</select>
+	
+	<select id="selectSearchMemList" resultMap="memberResult">
+		select
+			      mem_no
+			    , email
+			    , mem_name
+			    , nickname
+			    , mem_check
+			    , bank
+			    , account_num
+			    , enr_date
+			    , ent_yn
+			from member
+			where user_status ='N'
+			<choose>
+	 		<when test="condition == 'memName'">
+	 			and mem_name
+	 		</when>
+	 		<when test="condition == 'nickName'">
+	 			and nickName
+	 		</when>
+	 		<otherwise>
+	 			and mem_name like '%' || #{keyword} || '%'
+	 			or nickName
+	 		</otherwise>
+		 	</choose>
+		 	like '%' || #{keyword} || '%'
+		 	order by mem_no
+			
+	</select>
+	<update id="deleteMem">
+		update 
+				member
+		   set ent_yn ='Y'
+		   where mem_no = #{memNo}
+	</update>
+	
+	
+	
+	
+	
+	<!--                   성은                              -->
+	<!-- [1:1문의] 작성 - Author Seong  -->
+	
+	<insert id="insertInquiry" >
+		insert into 
+				customer 
+				(cs_no
+				,mem_no
+				,cs_title
+				,cs_content)
+			values
+				(seq_cus.nextval
+				,#{memNo}
+				,#{csTitle}
+				,#{csContent})
+	</insert>
+	
 	
 </mapper>
