@@ -205,7 +205,7 @@
             $(function(){
                 $(".talk-box-wrapper").click(function(){
                     //console.log($(this).children("input[type=hidden]").val());
-                   	location.href="comDetail.bo?comBoardno="+$(this).children("input[type=hidden]").val();
+                   	location.href="comDetail.bo?bno="+$(this).children("input[type=hidden]").val();
                 })
             })
         </script>

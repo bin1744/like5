@@ -58,7 +58,7 @@
                         </div>
                         <!--글작성자에게만 보여지는 버튼-->
                         <c:choose>
-                        	<c:when test="${loginUser.memNo eq b.mno}">
+                        	<c:when test="${loginUser.memNo eq b.bno}">
                         		<div class="content-footer" align="center">
 	                           	 	<button type="button" class="btn btn-outline-danger btn-sm" onclick="postFormSubmit(1)">수정</button>
 	                            	<button type="button" class="btn btn-danger btn-sm" onclick="postFormSubmit(2)">삭제</button>
@@ -157,12 +157,13 @@
             <!--댓글 전체 감싸는 영역-->
             
             <div class="talk-commentbox-wrapper" style="margin-bottom:50px">
-                <div class="talk-comment-count-box">3개의 댓글</div>
+                <div class="talk-comment-count-box"></div>
                 <div class="talk-newcomment-box">
                     <div class="auto-heigth" style="box-sizing: border-box; height: auto;">
-                        <div style="height: 300px; width: 100%; border: 1px solid;">
-                            <!--토스트 UI 들어오는 자리-->
-                        </div>
+                         <div class="form-group">
+						  <label for="comment"><h5><b>3개의 댓글</b></h5></label>
+						  <textarea class="form-control" rows="5" id="comment" style="resize:none"></textarea>
+						</div>
                         <button type="button" class="btn-danger btn btn-sm" style="float:right; margin-top: 10px;">댓글 작성</button>
                     </div>
                 </div>

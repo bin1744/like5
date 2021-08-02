@@ -97,8 +97,7 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	@Override
 	public int increaseCount(int bno) {
-		// TODO Auto-generated method stub
-		return 0;
+		return bDao.increaseCount(sqlSession, bno);
 	}
 	
 	/**
@@ -107,8 +106,8 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	
 	@Override
-	public Board comDetail(int comBoardno) {
-		return bDao.comDetail(sqlSession, comBoardno);
+	public Board comDetail(int bno) {
+		return bDao.comDetail(sqlSession, bno);
 	}
 
 	/**

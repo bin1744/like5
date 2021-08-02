@@ -42,10 +42,12 @@ public interface BoardService {
 	// 최신 | 조회수 | 댓글 순 조회
 	ArrayList<Board>comOrderByCount(PageInfo pi,String condition);
 	
-	// 커뮤니티 게시글 상세보기시 조회수 증가
+	
+	// 게시글 상세보기시 조회수 증가
 	int increaseCount(int bno);
+	
 	// 게시글 상세보기
-	Board comDetail(int comBoardno);
+	Board comDetail(int bno);
 	
 	// 
 	

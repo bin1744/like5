@@ -370,5 +370,16 @@
           and boa_status='Y'
 	</select>
 	
+	
+	<update id="increaseCount">
+	     update 
+	     	board
+         set 
+         	boa_count = boa_count + 1
+         where 
+            boa_no = #{bno}
+         and boa_status='Y'
+	</update>
+	
 
 </mapper>

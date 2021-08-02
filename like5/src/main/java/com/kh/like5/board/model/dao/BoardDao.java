@@ -93,12 +93,25 @@ public class BoardDao {
 	}
 	
 	/**
+	 *  게시글 상세보기시 조회수 증가
+	 *  @author seong
+	 */
+	
+	public int increaseCount(SqlSessionTemplate sqlSession,int bno) {
+		return sqlSession.update("boardMapper.increaseCount",bno);
+				
+	}
+	
+	/**
 	 *[커뮤니티] 커뮤니티 게시글 상세보기
 	 * @author seong
 	 */
 	
-	public Board comDetail(SqlSessionTemplate sqlSession,int comBoardno) {
-		return sqlSession.selectOne("boardMapper.comDetail",comBoardno);
+	public Board comDetail(SqlSessionTemplate sqlSession,int bno) {
+		return sqlSession.selectOne("boardMapper.comDetail",bno);
 	}
+	
+	
+	
 	
 }

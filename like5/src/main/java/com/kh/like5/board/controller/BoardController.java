@@ -191,12 +191,21 @@ public class BoardController {
 	 */
 	
 	@RequestMapping("comDetail.bo")
-	public ModelAndView comDetail(ModelAndView mv,int comBoardno) {
+	public ModelAndView comDetail(ModelAndView mv,int bno) {
 		
-		Board b = bService.comDetail(comBoardno);
+		// 클릭시 조회수 증가
+		int result = bService.increaseCount(bno);
 		
-		mv.addObject("b",b)
-		  .setViewName("board/community/comDetailView");
+		// 상세보기
+		if(result>0) {
+			Board b = bService.comDetail(bno);
+			mv.addObject("b",b)
+			  .setViewName("board/community/comDetailView");
+		}else {
+			mv.addObject("errorMsg", "조회 실패!")
+				.setViewName("common/errorPage");
+		}
+	
 		return mv;
 	}
 	
