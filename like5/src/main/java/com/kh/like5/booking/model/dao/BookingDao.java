@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.like5.booking.model.vo.Booking;
 import com.kh.like5.booking.model.vo.Office;
+import com.kh.like5.booking.model.vo.Review;
 import com.kh.like5.common.model.vo.Attachment;
 import com.kh.like5.common.model.vo.PageInfo;
 
@@ -83,5 +84,14 @@ public class BookingDao {
 	public Booking selectBooking(SqlSessionTemplate sqlSession, int officeNo) {
 		return sqlSession.selectOne("selectBooking", officeNo);
 	}
+	
+	/*리뷰 조회*/
+	public ArrayList<Review> selectReview(SqlSessionTemplate sqlSession, int officeNo){
+		/*System.out.println(officeNo);*/
+		ArrayList<Review> pis = (ArrayList)sqlSession.selectList("selectReview", officeNo);
+		/*System.out.println(pis);*/
+		return pis;
+	}
+	
 	
 }

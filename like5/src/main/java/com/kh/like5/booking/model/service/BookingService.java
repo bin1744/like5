@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.kh.like5.booking.model.vo.Booking;
 import com.kh.like5.booking.model.vo.Office;
+import com.kh.like5.booking.model.vo.Review;
 import com.kh.like5.common.model.vo.Attachment;
 import com.kh.like5.common.model.vo.PageInfo;
 
@@ -48,6 +49,8 @@ public interface BookingService {
 	
 	//9. 예약정보조회
 	Booking selectBooking(int officeNo);
+	
 	//10. 리뷰 조회
+	ArrayList<Review> selectReview(int officeNo);
 }
 
