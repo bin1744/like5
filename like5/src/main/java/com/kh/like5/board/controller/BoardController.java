@@ -188,13 +188,15 @@ public class BoardController {
 	/**
 	 * [커뮤니티] - 글 상세보기
 	 * @author seong
-	 * 			
-	 * 			->int bno 받아오기
 	 */
 	
 	@RequestMapping("comDetail.bo")
-	public ModelAndView comDetail(ModelAndView mv) {
-		mv.setViewName("board/community/comDetailView");
+	public ModelAndView comDetail(ModelAndView mv,int comBoardno) {
+		
+		Board b = bService.comDetail(comBoardno);
+		
+		mv.addObject("b",b)
+		  .setViewName("board/community/comDetailView");
 		return mv;
 	}
 	

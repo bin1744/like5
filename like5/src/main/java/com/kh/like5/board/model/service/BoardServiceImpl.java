@@ -107,9 +107,8 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	
 	@Override
-	public Board comDetail(int bno) {
-		// TODO Auto-generated method stub
-		return null;
+	public Board comDetail(int comBoardno) {
+		return bDao.comDetail(sqlSession, comBoardno);
 	}
 
 	/**

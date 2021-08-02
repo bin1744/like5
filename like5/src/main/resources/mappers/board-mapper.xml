@@ -349,7 +349,26 @@
 	    </choose>
     </select>
 	
-	
+	<!-- 커뮤니티 게시글 상세보기 -->
+	<select id="comDetail" resultMap="board">
+        select
+            boa_no
+            ,mem_no
+             ,nickname
+             ,boa_category
+             ,boa_title
+             ,boa_content
+             ,boa_enroll_date
+             ,boa_img_path
+             ,boa_count
+             ,(select count(*)
+                from reply r
+                where r.boa_no = b.boa_no) reply
+        from board b
+                 join member using (mem_no)
+        where boa_no = #{bno}
+          and boa_status='Y'
+	</select>
 	
 
 </mapper>

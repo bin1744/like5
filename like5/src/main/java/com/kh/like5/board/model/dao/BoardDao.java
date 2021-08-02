@@ -91,5 +91,14 @@ public class BoardDao {
 		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("boardMapper.comOrderByCount",condition,rowBounds);
 	}
-
+	
+	/**
+	 *[커뮤니티] 커뮤니티 게시글 상세보기
+	 * @author seong
+	 */
+	
+	public Board comDetail(SqlSessionTemplate sqlSession,int comBoardno) {
+		return sqlSession.selectOne("boardMapper.comDetail",comBoardno);
+	}
+	
 }
