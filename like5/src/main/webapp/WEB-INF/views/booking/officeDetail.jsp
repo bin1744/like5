@@ -86,6 +86,21 @@
         background-color: white;
     }
     .fas{color:lightgrey}
+    
+    /*별점*/
+    span.star-prototype, span.star-prototype > * {
+    height: 16px; 
+    background: url(http://i.imgur.com/YsyS5y8.png) 0 -16px repeat-x;
+    width: 80px;
+    display: inline-block;
+	}
+ 
+	span.star-prototype > * {
+    background-position: 0 0;
+    max-width:80px; 
+	}
+	/*스크롤 이동*/
+	html {scroll-behavior: smooth; /* 부드럽게 */}
 </style>
 </head>
 <body>
@@ -97,9 +112,13 @@
 
         <!--공간 제목,별점-->
         <div class="wrap1">
-            <h1><b>${o.branch}</b></h1>
-            <h4>★ 3.5</h4>
-            <h4>후기(10)</h4>
+            <h1><b>${o.branch}</b></h1> 
+            <c:forEach var="r" items="${ rv }">
+            	<span class="star-prototype">${r.reviewStar}</span>
+            </c:forEach>
+            <div class="hz" id="section1">
+            <a href="#section2"><h4>후기</h4></a>
+            </div>
         </div>
 
         <br>
@@ -209,13 +228,13 @@
         
         <c:forEach var="r" items="${ rv }">
 	        <div class="review">
-	            <p>
-	            <p>
+	            <div class="hz" id="section2">
+	            	<a href="#section1"></a>
+	            </div> 
 	            <b>${r.reviewWriter}</b> <br>
 	            ${r.createDate} <br>
-	           	${r.reviewStar} <br>
+	           	<span class="star-prototype">${r.reviewStar}</span><br>
 	           	${r.reviewContent}
-	            </p>
 	        </div>
 	
 	        <hr>
@@ -227,15 +246,15 @@
 		<jsp:include page="../common/footer.jsp"/>
 		
 <script>
-<%-- 날짜 가져오기 --%>
-var startDate = localStorage.getItem("startDate");
-var endDate = localStorage.getItem("endDate");
-console.log(startDate);
-$.when($.ready).then(function(){
-	$("input[name=startDate]").val(startDate);
-	$("input[name=endDate]").val(endDate);
-})
-	
+	<%-- 날짜 가져오기 --%>
+	var startDate = localStorage.getItem("startDate");
+	var endDate = localStorage.getItem("endDate");
+	console.log(startDate);
+	$.when($.ready).then(function(){
+		$("input[name=startDate]").val(startDate);
+		$("input[name=endDate]").val(endDate);
+	})
+	<%--시설 안내 관련 if문 --%>
     <c:if test="${ fn:contains(o.facility, '와이파이') }">
     	$("#wifiIcon").css("color","red");
 	</c:if>
@@ -261,6 +280,29 @@ $.when($.ready).then(function(){
 		$("#peoplecon").css("color","red");
 	</c:if>
 	
+	<%--별점 관련 function--%>
+	$.fn.generateStars = function() {
+        return this.each(function(i,e){$(e).html($('<span/>').width($(e).text()*16));});
+    };
+	
+    // 숫자 평점을 별로 변환하도록 호출하는 함수
+    $('.star-prototype').generateStars();
+    
+    <%--스크롤 이동--%>
+    $(document).ready(function(){
+        $("a").on('click', function(event) {
+          if (this.hash !== "") {
+            event.preventDefault();
+            var hash = this.hash;
+            $('html, body').animate({
+              scrollTop: $(hash).offset().top
+            }, 800, function(){
+              window.location.hash = hash;
+            });
+          } 
+        });
+      });
+    
 	<%-- kakao map --%>
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
