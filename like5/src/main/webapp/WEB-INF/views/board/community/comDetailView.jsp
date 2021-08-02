@@ -242,13 +242,15 @@
                             			// 통신 성공했을 때
                             			success:function(list){
                             				
-                            				 //console.log(list); //배열 확인 완료
+                            				console.log(list); //배열 확인 완료
                             				$("#rcount").text(list.length);
                             				
                             				var value="";
-                            				var value2="";
+                            				// 참조되는 댓글 번호가 담길 배열
+                            				var repNo=[];
+                            			
+                            				
                             				for(var i in list){
-                            					
                             					if(list[i].refLevel == 1){
                             						  <!--댓글 조회목록-->
                             						  
@@ -277,38 +279,44 @@
                                                     
                                                 	$("#replyResult").html(value);	
                                                     
+                            						  repNo.push(list[i].repNo);
+                            						  console.log(repNo);
+                                                    
                             					}else{
-                            						<!--대댓글 조회목록-->
-                            						value2 +=
-                            						'<div class="comments-wrapper_value" >' 
-                                                   + '<div class="comment-info">'
-                                                   +    '<div class="info-wrapper">'
-                                                   +         '<div class="user-info">'
-                                                   +            '<div class="user-img">'
-                                                   +                '<i class="far fa-user fa-2x"></i>'
-                                                   +             '</div>'
-                                                   +            '<div class="user-info" style="display: inline-block; width: 90%;">'
-                                                   +               ' <span>'+'<a href="" class="aTags">'+list[i].nickname+'</a>'+'</span>'
-                                                   +                 '<span style="float: right;">'+'<a href="" class="aTags" data-toggle="modal" data-target="#report-modal"><img src="">'+'🚨신고'+'</a>'+'</span>'
-                                                   +                 '<div>'+list[i].repEnrollDate +'</div>'
-                                                   +             '</div>'
-                                                   +         '</div>'
-                                                   +         '<div class="comment-content">'
-                                                   +             '<div>'+list[i].repContent+'</div>'
-                                                   +         '</div>'
-                                                   +     '</div>'
-                                                   + '</div>'
-                                                	+'</div>'
 	                            						
-                                                	$("#answerComment").html(value2);	
+	                           						 if(repNo.indexOf(list[i].refRepNo)!= -1){
+	                            						<!--대댓글 조회목록-->
+	                            						value +=
+	                            						'<div class="comments-wrapper_value" >' 
+	                                                   + '<div class="comment-info">'
+	                                                   +    '<div class="info-wrapper">'
+	                                                   +         '<div class="user-info">'
+	                                                   +            '<div class="user-img">'
+	                                                   +                '<i class="far fa-user fa-2x"></i>'
+	                                                   +             '</div>'
+	                                                   +            '<div class="user-info" style="display: inline-block; width: 90%;">'
+	                                                   +               ' <span>'+'<a href="" class="aTags">'+list[i].nickname+'</a>'+'</span>'
+	                                                   +                 '<span style="float: right;">'+'<a href="" class="aTags" data-toggle="modal" data-target="#report-modal"><img src="">'+'🚨신고'+'</a>'+'</span>'
+	                                                   +                 '<div>'+list[i].repEnrollDate +'</div>'
+	                                                   +             '</div>'
+	                                                   +         '</div>'
+	                                                   +         '<div class="comment-content">'
+	                                                   +             '<div>'+list[i].repContent+'</div>'
+	                                                   +         '</div>'
+	                                                   +     '</div>'
+	                                                   + '</div>'
+	                                                	+'</div>'
+		                            						
+	                                                	$("#replyResult").html(value);	
+	                            					}
                             					}
                             				}
-                            				
                             			},error:function(){
                             				console.log("ajax통신실패");
                             			}
                             		})
-                            	}
+                            		}
+                            	
                             </script>
                             
                             <!--대댓글 달기/취소하기 버튼-->
