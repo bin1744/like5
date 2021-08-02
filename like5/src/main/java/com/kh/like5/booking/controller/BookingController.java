@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ import com.kh.like5.booking.model.vo.Office;
 import com.kh.like5.common.model.vo.Attachment;
 import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.common.template.Pagination;
+import com.kh.like5.member.model.vo.Member;
 
 
 @Controller
@@ -46,10 +48,7 @@ public class BookingController {
 	 */
 	@RequestMapping("searchOffice.bk")
 	public String searchOffice(Booking b, Model model, HttpServletRequest request) {
-		//System.out.println(b.getStartDate());
-		//System.out.println(b.getEndDate());
-		//System.out.println(b.getBranch());
-		ArrayList<Office> list = bService.selectList(b);
+		ArrayList<Office> list = bService.selectOfficeList(b);
 		model.addAttribute("list",list);
 		model.addAttribute("b", b);
 		return "booking/bResult";
@@ -210,34 +209,77 @@ public class BookingController {
 		}
 	}
 	
-<<<<<<< Updated upstream
 	/**
 	 * 추가부분 - 상세조회 클릭시 연동 페이지(officeDetail)
 	 */
 	/*첨부파일 조회 + 사진*/
+	/*
 	@RequestMapping("detail.bo")
-    public String officeDetailPage(int ono, Model model) {
-
+    public String officeDetailPage(int ono, Booking b, Model model) {
+		
+		
 		ArrayList<Attachment> at = bService.selectList(ono);
 		model.addAttribute("at", at);
-		model.addAttribute("ono", ono);
-		/*System.out.println(at);*/
-		
 		Office o = bService.selectOffice(ono);
 		model.addAttribute("o", o);
-		model.addAttribute("ono", ono);
-		
+		model.addAttribute("b", b);
+
         return "booking/officeDetail";
+        
     }
+	*/
 	
+	@RequestMapping("detail.bo")
+	public String officeDetailPage(int ono, Model model) {
+		ArrayList<Attachment> at = bService.selectList(ono);
+		model.addAttribute("at", at);
+		Office o = bService.selectOffice(ono);
+		model.addAttribute("o", o);
+		
+		return "booking/officeDetail";
+	}
 	
-=======
 	@RequestMapping("paymentForm.bk")
-	public String paymentForm() {
-		/*
-		 * 상세정보페이지에서 오피스 번호로 오피스조회랑 예약테이블의 시작일, 끝일 list가져와서 뿌리기
-		 * 예약신청시 정보를 booking테이블로 insert 성공시 성공 페이지로 redirect*/
+	public String paymentForm(int officeNo, Model model) {
+		
+		Office o = bService.selectOffice(officeNo);
+		model.addAttribute("o", o);	
 		return "booking/bPayment";
 	}
->>>>>>> Stashed changes
+	
+	@RequestMapping("research.bk")
+	public String research(Booking b, Model model) {
+		ArrayList<Office> list = bService.selectOfficeList(b);
+
+		model.addAttribute("list",list);
+		model.addAttribute("b", b);
+		
+		return"booking/bResult";
+	}
+	
+	@RequestMapping("submitBook.bk")
+	public String insertBook(Booking b, HttpServletRequest request, HttpSession session, Model model) {
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+		String person = request.getParameter("person");
+		int officeNo = Integer.parseInt(request.getParameter("officeNo"));
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		
+		System.out.println(memNo);
+		
+		b.setStartDate(startDate);
+		b.setEndDate(endDate);
+		b.setOfficeNo(officeNo);
+		b.setMemNo(memNo);
+		
+		int result = bService.insertBook(b);
+		if(result > 0) {
+			model.addAttribute("b", b);
+			return"booking/officeEnd";
+		} else {
+			model.addAttribute("errorMsg", "예약실패");
+			return "common/errorPage";
+		}
+
+	}
 }
