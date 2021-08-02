@@ -22,9 +22,14 @@ public class BookingServiceImpl implements BookingService{
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public ArrayList<Office> selectList(Booking b) {
+	public ArrayList<Office> selectOfficeList(Booking b) {
 	
-		return bDao.selectList(sqlSession, b);
+		return bDao.selectOfficeList(sqlSession, b);
+	}
+	
+	@Override
+	public int insertBook(Booking b) {
+		return bDao.insertBook(sqlSession, b);
 	}
 
 	@Override
@@ -104,6 +109,11 @@ public class BookingServiceImpl implements BookingService{
 	public ArrayList<Attachment> selectList(int refFno) {
 		/*System.out.println(refFno);*/
 		return bDao.selectList(sqlSession, refFno);
+	}
+
+	@Override
+	public Booking selectBooking(int officeNo) {
+		return bDao.selectBooking(sqlSession, officeNo);
 	}
 
 }

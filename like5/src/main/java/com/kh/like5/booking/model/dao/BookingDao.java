@@ -14,8 +14,12 @@ import com.kh.like5.common.model.vo.PageInfo;
 @Repository
 public class BookingDao {
 
-	public ArrayList<Office> selectList(SqlSessionTemplate sqlSession, Booking b){
-		return (ArrayList)sqlSession.selectList("bookingMapper.selectList", b);
+	public ArrayList<Office> selectOfficeList(SqlSessionTemplate sqlSession, Booking b){
+		return (ArrayList)sqlSession.selectList("bookingMapper.selectOfficeList", b);
+	}
+	
+	public int insertBook(SqlSessionTemplate sqlSession, Booking b) {
+		return sqlSession.insert("bookingMapper.insertBook", b);
 	}
 	
 	public int selectListCount(SqlSessionTemplate sqlSession) {
@@ -74,6 +78,10 @@ public class BookingDao {
 		/*System.out.println(pics);*/
 		return pics;
 		
+	}
+	
+	public Booking selectBooking(SqlSessionTemplate sqlSession, int officeNo) {
+		return sqlSession.selectOne("selectBooking", officeNo);
 	}
 	
 }
