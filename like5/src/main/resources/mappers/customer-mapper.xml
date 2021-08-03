@@ -98,6 +98,19 @@
 		join member using (mem_no)
 		where cs_no = #{csNo}
 	</select> 
-  
-  
+  	<update id="insertCsAns">
+  		update
+		        customer
+		    set status = 'Y'
+		      , ans_content = #{ansContent}
+		      , ans_date = sysdate
+		where cs_no = #{csNo}
+  	</update>
+  	
+  	<update id="updateCsAns">
+  		update
+		        customer
+		    set ans_content = #{ansContent}
+		where cs_no = #{csNo}
+  	</update>
 </mapper>

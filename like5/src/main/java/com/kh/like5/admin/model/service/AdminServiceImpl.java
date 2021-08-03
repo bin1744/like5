@@ -98,8 +98,16 @@ public class AdminServiceImpl implements AdminService{
 	public Customer selectCustomer(int csNo) {
 		return adDao.selectCustomer(sqlSession, csNo);
 	}
-
-
+	// 1:1문의 답변 등록
+	@Override
+	public int insertCsAns(Customer cs) {
+		return adDao.insertCsAns(sqlSession, cs);
+	}
+	// 1:1문의 답변 수정
+	@Override
+	public int updateCsAns(Customer cs) {
+		return adDao.updateCsAns(sqlSession, cs);
+	}
 	@Override
 	public int getReportCount() {
 		return adDao.getReportCount(sqlSession);
@@ -119,6 +127,10 @@ public class AdminServiceImpl implements AdminService{
 	public ArrayList<Report> getSearchReportList(PageInfo pi, HashMap<String, String> map) {
 		return adDao.getSearchReportList(sqlSession, pi, map);
 	}
+
+	
+
+	
 
 	
 

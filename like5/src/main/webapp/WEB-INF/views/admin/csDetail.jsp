@@ -51,6 +51,7 @@
             border-radius: 3px;
             border: 1px solid lightgray;
         }
+       #csT{font-size:22px;}
 </style>
 </head>
 <body>
@@ -67,7 +68,7 @@
 	        <div class="inner">
 	            <table>
 	                <tr style="height: 50px;">
-	                    <td colspan="3"><h5>${cs.csTitle }</h5></td>
+	                    <td colspan="3"><b id="csT">${cs.csTitle }</b></td>
 	                </tr>
 	                <tr>
 	                    <td style="width: 150px;"><b>작성자 : ${cs.memName }</b></td>
@@ -92,21 +93,45 @@
 	            <br>
 	            <div class="adminContent">
 	            	<c:choose>
-	            		<c:when test="${cs.ansContent == null}">
-	            			<form action="">
-			                    <input id="csAdminContent" value="" type="text" placeholder="관리자 분은 1:1문의 사항에 대해 답변 후 답변하기 버튼을 눌러주시면 됩니다.">
-			                    <br><br> 
-			                    <button id="answerBtn" type="submit" class="btn-danger">답변하기</button>
-		                    </form>
-	            		</c:when>
-	            		<c:when test="${cs.status== 'Y' && cs.ansContent != null  }">
-	            			<form action="">
-		                        <input id="csAdminContent" type="text" value="${cs.ansContent }" readonly >
+		            	<c:when test="${cs.status== 'Y' && cs.ansContent != null  }">
+	            			<form action="updateCsAns.ad">
+	            				<input type="hidden" value="${cs.csNo }" name="csNo">
+		                        <input id="csAdminContent" name="ansContent" type="text" value="${cs.ansContent }" readonly >
 		                        <br><br> 
-		                        <button id="updateBtn" type="button" onclick="updateCsAns();" >수정하기</button>
+		                        <c:if test="${ !empty loginUser && (loginUser.userStatus == 'Y') }">
+		                        	<button id="updateBtn" type="button" onclick="updateCsAns();" >수정하기</button>
+		                        	<button id="answerBtn" type="submit" class="btn-danger" style="display:none" >답변하기</button>
+		                        </c:if>
 		                    </form>
 	            		</c:when>
+	            		<c:otherwise>
+	            			<form action="insertCsAns.ad">
+	            				<input type="hidden" value="${cs.csNo }" name="csNo">
+			                    <input id="csAdminContent" name="ansContent"  type="text" placeholder="관리자 분은 1:1문의 사항에 대해 답변 후 답변하기 버튼을 눌러주시면 됩니다.">
+			                    <br><br> 
+			                    <c:if test="${ !empty loginUser && (loginUser.userStatus == 'Y') }">
+			                    	<button id="answerBtn" type="submit" class="btn-danger">답변하기</button>
+			                    </c:if>
+		                    </form>
+	            		</c:otherwise>
+	            		
 	            	</c:choose>
+	            	<script>
+	            		// 답변하기 버튼이 문서 로딩과 동시에 사라져야함
+	            		
+	            		
+						function updateCsAns(){
+							// 수정하기 버튼은 사라지고
+							$("#updateBtn").hide();
+							// 답변하기 버튼이 나타남
+							$("#answerBtn").removeAttr('style');
+							// readOnly 속성이 사라져야함
+							$("input[name='ansContent']").attr("readonly",false);
+							
+							
+						}
+	
+	    			</script>
 	                <!--관리자가 사용자에게 답변을 하기 전임(input에 아무런 값도 들어가 있지 않은경우로만 구분이 가능할까?)-->
 	                <!--
 	                    <form>
@@ -138,10 +163,7 @@
 	        </div>
 	    </div>
 	    
-	    <script>
-	
-	
-	    </script>
+	   
 	
 	<br><br><Br><br><br><Br>
 	</div>

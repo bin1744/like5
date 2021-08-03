@@ -146,15 +146,43 @@ public class AdminController {
 	// 1:1 문의 페이지 상세
 	@RequestMapping("csDetail.ad")
 	public ModelAndView csDetail(int csNo, ModelAndView mv) {
-		// 사용자가 적은 내용
-		// 관리자가 적은 내용 같이 불러와야함 
-		System.out.println(csNo);
 		Customer cs = adService.selectCustomer(csNo);
-		System.out.println(cs);
+		
 		mv.addObject("cs",cs).setViewName("admin/csDetail");
-		
-		
 		return mv;
+	}
+	
+	// 1:1문의 페이지 답변달기
+	@RequestMapping("insertCsAns.ad")
+	public String insertCsAns(Customer cs, HttpSession session) {
+		// 관리자의 답변 update해주기
+		int result = adService.insertCsAns(cs);
+		// 이에 성공했다면 Customer 객체 다시 받아와서 redirect로 해당 페이지 혹은 list페이지로 돌아갈 수 있도록 하기
+		if(result>0) { // 성공했을 경우 
+			session.setAttribute("alertMsg", "관리자님 답변이 성공적으로 등록되었습니다");
+			return "redirect:csTwo.ad";
+			
+		}else { // 실패한 경우
+			session.setAttribute("errorMsg", "관리자님 답변 등록에 실패했습니다.");
+			return "common/errorPage";
+		}
+		
+	}
+	//1:1문의 페이지 답변 수정
+	@RequestMapping("updateCsAns.ad")
+	public String updateCsAns(Customer cs, HttpSession session) {
+		// 관리자의 답변 update해주기
+		int result = adService.updateCsAns(cs);
+		// 이에 성공했다면 Customer 객체 다시 받아와서 redirect로 해당 페이지 혹은 list페이지로 돌아갈 수 있도록 하기
+		if(result>0) { // 성공했을 경우 
+			session.setAttribute("alertMsg", "관리자님 답변이 성공적으로 수정되었습니다.");
+			return "redirect:csTwo.ad";
+			
+		}else { // 실패한 경우
+			session.setAttribute("errorMsg", "관리자님 답변 등록에 실패했습니다.");
+			return "common/errorPage";
+		}
+		
 	}
 	
 	
