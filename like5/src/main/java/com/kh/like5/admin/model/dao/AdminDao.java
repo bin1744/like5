@@ -73,7 +73,10 @@ public class AdminDao {
 		return (ArrayList)sqlSession.selectList("customerMapper.searchCsMemList", map, rowBounds);
 	}
 	
-	
+	// 1:1 문의 상세 페이지
+	public Customer selectCustomer(SqlSessionTemplate sqlSession, int csNo) {
+		return sqlSession.selectOne("customerMapper.selectCustomer", csNo);
+	}
 	
 	
 	

@@ -93,6 +93,12 @@ public class AdminServiceImpl implements AdminService{
 	public ArrayList<Customer> searchCsMemList(PageInfo pi, HashMap<String, String> map) {
 		return adDao.searchCsMemList(sqlSession, pi, map);
 	}
+	// 1:1 문의글 상세 조회
+	@Override
+	public Customer selectCustomer(int csNo) {
+		return adDao.selectCustomer(sqlSession, csNo);
+	}
+
 
 	@Override
 	public int getReportCount() {
@@ -114,5 +120,6 @@ public class AdminServiceImpl implements AdminService{
 		return adDao.getSearchReportList(sqlSession, pi, map);
 	}
 
+	
 
 }

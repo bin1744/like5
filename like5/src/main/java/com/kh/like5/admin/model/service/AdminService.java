@@ -30,6 +30,7 @@ public interface AdminService {
 	public ArrayList<Customer> searchCsMemList(PageInfo pi, HashMap<String, String> map);
 	
 	// 1:1문의 상세페이지 select문
+	Customer selectCustomer(int csNo);
 	
 	// 1:1문의 수정 페이지 update문(다시 상세 페이지로 돌아가게)
 	

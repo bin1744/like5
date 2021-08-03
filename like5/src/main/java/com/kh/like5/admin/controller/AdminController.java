@@ -143,6 +143,22 @@ public class AdminController {
     	return mv;
 	}
 	
+	// 1:1 문의 페이지 상세
+	@RequestMapping("csDetail.ad")
+	public ModelAndView csDetail(int csNo, ModelAndView mv) {
+		// 사용자가 적은 내용
+		// 관리자가 적은 내용 같이 불러와야함 
+		System.out.println(csNo);
+		Customer cs = adService.selectCustomer(csNo);
+		System.out.println(cs);
+		mv.addObject("cs",cs).setViewName("admin/csDetail");
+		
+		
+		return mv;
+	}
+	
+	
+	
 	
 	// 후원관리 - 메인페이지 불러오기 & 리스트 조회
 	@RequestMapping("donation.ad")
@@ -165,9 +181,18 @@ public class AdminController {
 			return "admin/donationDetailTwo";
 		}
 		
+	// tag 메인페이지
 	
-	
-	
+	// tag 관리자 페이지
+	@RequestMapping("tagAdmin.ad")
+	public String tagAdmin() {
+		return "admin/tagAdmin";
+	}
+		
+		
+		
+		
+	// tag 게시글 끌어오는 페이지
 	
 	
 	
