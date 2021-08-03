@@ -122,6 +122,25 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	/**
+	 * 댓글 작성하기
+	 * @author seong
+	 */
+	
+	@Override
+	public int insertReply(Reply r) {
+		return bDao.insertReply(sqlSession, r);
+	}
+
+	/**
+	 * 대댓글 작성하기
+	 * @author seong
+	 */
+	@Override
+	public int insertReplies(Reply r) {
+		return bDao.insertReplies(sqlSession, r);
+	}
+	
+	/**
 	 *  [칼럼] - 전체 목록 리스트 조회
 	 *  @author seong
 	 */
@@ -142,6 +161,9 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
 
 
 	

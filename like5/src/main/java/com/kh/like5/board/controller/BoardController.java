@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -212,11 +213,39 @@ public class BoardController {
 		return mv;
 	}
 	
+	/**
+	 * Ajax
+	 * 댓글 | 대댓글 전체 조회
+	 * @author seong
+	 */
 	@ResponseBody
 	@RequestMapping(value="rlist.bo",produces="application/json; charset=utf-8")
 	public String selectReplyList(int bno) {
 		ArrayList<Reply>list = bService.selectReplyList(bno);
 		return new Gson().toJson(list);
+	}
+	
+	/**
+	 * 댓글 작성하기
+	 * @author seong
+	 */
+	@ResponseBody
+	@RequestMapping("insertReply.bo")
+	public String insertReply(Reply r,Model model) {
+		int result = bService.insertReply(r);
+		return result>0? "success" : "fail";		
+	}
+	
+	/**
+	 * 대댓글 작성하기
+	 * @author seong
+	 */
+	@ResponseBody
+	@RequestMapping("insertReplies.bo")
+	public String insertReplies(Reply r,Model model) {
+		int result = bService.insertReplies(r);
+		System.out.println(result);
+		return result>0?"success":"fail";
 	}
 	
 	

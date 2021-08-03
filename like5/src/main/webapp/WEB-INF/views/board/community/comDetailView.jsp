@@ -161,15 +161,15 @@
                 <div class="talk-newcomment-box">
                     <div class="auto-heigth" style="box-sizing: border-box; height: auto;">
                          <div class="form-group">
-                         <!-- 로그인한 사용자만 작성할 수 있도록 구현하기 -->
-                         <label for="comment"><h5><b><span id="rcount">3</span>개의 댓글</h5></b></label>
+                         <!-- 로그인한 사용자만 작성 가능-->
+                         <label for="comment"><h5><b><span id="rcount"></span>개의 댓글</h5></b></label>
 							<c:choose>
 								<c:when test="${!empty loginUser}">
 								 	<textarea class="form-control" rows="5" id="comment" style="resize:none"></textarea>
-									<button type="button" class="btn-danger btn btn-sm" style="float:right; margin-top: 10px;">댓글 작성</button>
+									<button type="button" class="btn-danger btn btn-sm"  style="float:right; margin-top: 10px;" onclick="insertReply();">댓글 작성</button>
 								</c:when>
 								<c:otherwise>
-									 <textarea class="form-control" rows="5" id="comment" style="resize:none" placeholder="로그인 후 이용 가능한 서비스입니다." disabled></textarea>
+									 <textarea class="form-control" rows="5" style="resize:none" placeholder="로그인 후 이용 가능한 서비스입니다." disabled></textarea>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -233,7 +233,7 @@
                             		selectReplyList();
                             	})
                             	
-                            	
+                            	var repNo=[];
                             	function selectReplyList(){
                             		$.ajax({
                             			url:"rlist.bo",
@@ -247,7 +247,7 @@
                             				
                             				var value="";
                             				// 참조되는 댓글 번호가 담길 배열
-                            				var repNo=[];
+                            				
                             			
                             				
                             				for(var i in list){
@@ -255,7 +255,7 @@
                             						  <!--댓글 조회목록-->
                             						  
                             						  value += 
-                                                     '<div class="comment-wrapper_value">'
+                                                     '<div class="comment-wrapper_value" style="margin-top:50px">'
                                                     +  '<div class="comment-info">'
                                                     +      '<div class="info-wrapper">'
                                                     +          '<div class="user-info">'
@@ -276,6 +276,21 @@
                                                     +      '</div>'
                                                     +  '</div>'
                                                     + '</div>'
+                                                    
+                                               	 	<!--대댓글 달기/취소하기 버튼-->
+                                                    + '<div class="comment-plus-icon-wrapper" align="center">'
+                                                    +    '<div class="container">'
+                                                    +        '<a href="#demo" id="comments" onclick="comments();" class="btn btn-outline-secondary" data-toggle="collapse" style="margin-bottom: 10px;">'+"대댓글 달기"+'</a>'
+                                                    +        '<div id="demo" class="collapse">'
+                                                    +            '<div class="talk-newcomment-box">'
+                                                    +                '<div class="auto-heigth" style="box-sizing: border-box; height: auto;">'
+                                                    +                    '<textarea class="form-control" rows="5" id="insertReplies" style="resize:none">'+'</textarea>'
+                                                    +                    '<button type="button" class="btn-danger btn btn-sm" style="float:right; margin-top: 10px;" onclick="insertReplies();">'+"대댓글 작성"+'</button>'
+                                                    +                '</div>'
+                                                    +            '</div>'
+                                                    +        '</div>'
+                                                    +   '</div>'
+                                                    +'</div>'
                                                     
                                                 	$("#replyResult").html(value);	
                                                     
@@ -317,24 +332,66 @@
                             		})
                             		}
                             	
+                            	function insertReply(){
+                            		
+                            		if($("#comment").val().trim().length != 0){
+                            			// 댓글일때
+                            				$.ajax({
+                                				url:"insertReply.bo",
+                                				data:{
+                                					boaNo :${b.bno}
+                                					,repContent : $("#comment").val()
+                                					,memNo : '${loginUser.memNo}'
+                                				},success:function(status){
+                                					
+                        	      					if(status == "success"){
+                        	      						// 댓글 리스트 갱신해야함
+                        	      						selectReplyList();
+                        	      						// 작성해놓은 댓글도 지워야함
+                        	      						$("#comment").val("");
+                        	      					}
+                                				}, error:function(){
+                        	      					console.log("댓글 작성용 AJAX 통신 실패");
+                        	      				}
+                                			})
+                                			
+                                			
+                                            
+                            		}
+                            	}
+                            	
+                            	<%--
+                            	function insertReplies(){
+                            		if($("#insertReplies").val().trim().length != 0){
+                            				// 대댓글일때
+                            				$.ajax({
+                                				url:"insertReplies.bo",
+                                				data:{
+                                					boaNo :${b.bno}
+                                					,repContent : $("#insertReplies").val()
+                                					,memNo : '${loginUser.memNo}'
+                                					,refRepNo : repNo
+                                				},success:function(status){
+                        	      					if(status == "success"){
+                        	      						// 전체 댓글 리스트 갱신해야함
+                        	      						selectReplyList();
+                        	      						// 작성해놓은 대댓글도 지워야함
+                        	      						$("#insertReplies").val("");
+                        	      					}
+                                				}, error:function(){
+                        	      					console.log("댓글 작성용 AJAX 통신 실패");
+                        	      				}
+                                			})
+                            		}
+                            	}--%>
+                            	
+                            	
+                            	
                             </script>
                             
-                            <!--대댓글 달기/취소하기 버튼-->
-                            <div class="comment-plus-icon-wrapper" align="center">
-                                <div class="container">
-                                    <a href="#demo" id="comments" onclick="comments();" class="btn btn-outline-secondary" data-toggle="collapse" style="margin-bottom: 10px;">대댓글 달기</a>
-                                    <div id="demo" class="collapse">
-                                        <div class="talk-newcomment-box">
-                                            <div class="auto-heigth" style="box-sizing: border-box; height: auto;">
-                                                <div style="height: 300px; width: 100%; border: 1px solid;">
-                                                    <!--토스트 UI 들어오는 자리-->
-                                                </div>
-                                                <button type="button" class="btn-danger btn btn-sm" style="float:right; margin-top: 10px;">대댓글 작성</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                           
+                            
+                            
                         </div>
                     </div>
                 </div>

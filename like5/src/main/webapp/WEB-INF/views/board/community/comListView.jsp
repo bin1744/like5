@@ -185,18 +185,15 @@
    	    			if(condition==2){
    	    				//input type hidden 요소의 value를 daily로 지정하기
    	    				$("#comOrderByCount").children("input[type=hidden]").attr("value","views");
-   	    				$("#comOrderByCount").attr("action","comOrderByCount.bo")
+   	    				$("#comOrderByCount").attr("action","comOrderByCount.bo?")
    	    				.submit();
 
    	    			}else{
    	    				// 댓글수
    	        			// input type hidden 요소의 value를 study로 지정하기 
    	    				$("#comOrderByCount").children("input[type=hidden]").attr("value","reply");
-   	    				$("#comOrderByCount").attr("action","comOrderByCount.bo")
+   	    				$("#comOrderByCount").attr("action","comOrderByCount.bo?")
    	    				.submit();
-   	    				
-   	    				$(this).toggleClass('on');
-   	    			 	$(this).siblings().removeClass('on');
    	    			}
    	    		}
            	 }

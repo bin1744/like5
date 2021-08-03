@@ -122,4 +122,22 @@ public class BoardDao {
 	}
 	
 	
+	/**
+	 * 댓글 작성하기
+	 * @author seong
+	 */
+	
+	public int insertReply(SqlSessionTemplate sqlSession,Reply r) {
+		return sqlSession.insert("boardMapper.insertReply",r);
+	}
+	
+	/**
+	 * 대댓글 작성하기
+	 * @author seong
+	 */
+	public int insertReplies(SqlSessionTemplate sqlSession,Reply r) {
+		return sqlSession.insert("boardMapper.insertReplies",r);
+	}
+	
+	
 }

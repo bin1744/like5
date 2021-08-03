@@ -409,7 +409,54 @@
 	        from reply
 	        join member using(mem_no)
 	        where boa_no = #{bno}
+	        order by rep_enroll_date desc
 	</select>
 	
+	<!-- 댓글 작성하기 -->
+	<insert id="insertReply">
+		insert into 
+			reply
+			    (rep_no
+			    ,boa_no
+			    ,mem_no
+			    ,rep_content
+			    ,rep_enroll_date
+			    )
+	    	values
+			    (seq_rno.nextval
+			    ,#{boaNo}
+			    ,#{memNo}
+			    ,#{repContent}
+			    ,sysdate
+			    )
+	</insert>
+	
+	
+	<!-- 대댓글 작성하기 -->
+	
+	<insert id="insertReplies">
+		insert into 
+		   reply
+		    (
+			    rep_no
+			    ,boa_no
+			    ,mem_no
+			    ,rep_content
+			    ,rep_enroll_date
+			    ,ref_rep_no
+			    ,ref_level
+			    )
+		    values
+		    (
+			    seq_rno.nextval
+			    ,#{boaNo}
+			    ,#{memNo}
+			    ,#{repContent}
+			    ,sysdate
+			    ,#{refRepNo}
+			    ,2
+		    )
+	</insert>
+
 
 </mapper>
