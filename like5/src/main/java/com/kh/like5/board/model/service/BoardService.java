@@ -49,9 +49,14 @@ public interface BoardService {
 	// 게시글 상세보기
 	Board comDetail(int bno);
 	
-	// 댓글 조회
+	// 댓글 | 대댓글 전체 조회
 	ArrayList<Reply>selectReplyList(int bno);
 	
+	// 댓글 작성
+	int insertReply(Reply r);
+	
+	// 대댓글 작성
+	int insertReplies(Reply r);
 	
 	//[커뮤니티] - 글 수정하기
 	
