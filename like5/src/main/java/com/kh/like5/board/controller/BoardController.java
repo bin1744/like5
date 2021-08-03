@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.like5.board.model.service.BoardService;
 import com.kh.like5.board.model.vo.Board;
+import com.kh.like5.board.model.vo.Reply;
 import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.common.template.Pagination;
 
@@ -93,15 +96,17 @@ public class BoardController {
 		
 		ArrayList<Board>comList = bService.comList(pi);
 
-		mv.addObject("comList",comList);
-		mv.addObject("pi",pi);
-		mv.setViewName("board/community/comListView");
+
+		mv.addObject("listCount",listCount)
+		   .addObject("comList",comList)
+		   .addObject("pi",pi)
+		   .setViewName("board/community/comListView");
 		
 		return mv;
 	}
 	
 	/**
-	 * [커뮤니티] - 키워드 검색 결과
+	 * [커뮤니티] - 키워드 검색 결과 조회 
 	 * @author seong
 	 */
 	
@@ -123,11 +128,55 @@ public class BoardController {
 		  .addObject("comList",comList)
 		  .addObject("condition",condition)
 		  .addObject("keyword",keyword)
+		  .addObject("listCount",listCount)
 		  .setViewName("board/community/comListView");
-
 		return mv;
 	}
 	
+	/**
+	 * [커뮤니티] - 전체 | 일상 | 스터디 모집 | 카테고리별 조회
+	 * @author seong
+	 */
+	
+	@RequestMapping("comOrderByCategory.bo")
+	public ModelAndView comOrderByCategory(ModelAndView mv,@RequestParam(value="currentPage",defaultValue="1")
+		int currentPage	,String condition) {
+	
+	int listCount = bService.comOrderByListCount(condition);
+	
+	PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+	ArrayList<Board>comList = bService.comOrderByCategory(pi,condition);
+	
+	
+	mv.addObject("pi",pi)
+	.addObject("comList",comList)
+	.addObject("condition",condition)
+	.addObject("listCount",listCount)
+	.setViewName("board/community/comListView");
+	return mv;
+	}
+	
+	
+	/**
+	 * [커뮤니티]최신 | 조회수 | 댓글수 기준으로 조회
+	 * @author seong
+	 */
+	@RequestMapping("comOrderByCount.bo")
+	public ModelAndView comOrderByCount(ModelAndView mv,@RequestParam(value="currentPage",defaultValue="1")
+										int currentPage, String condition) {
+		
+	int listCount = bService.comListCount();
+	
+	PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+	ArrayList<Board>comList = bService.comOrderByCount(pi, condition);
+	
+	mv.addObject("pi",pi)
+	.addObject("comList",comList)
+	.addObject("condition",condition)
+	.addObject("listCount",listCount)
+	.setViewName("board/community/comListView");
+	return mv;
+	}
 	
 	/**
 	 * [커뮤니티] - 글 작성 Form
@@ -142,14 +191,32 @@ public class BoardController {
 	/**
 	 * [커뮤니티] - 글 상세보기
 	 * @author seong
-	 * 			
-	 * 			->int bno 받아오기
 	 */
 	
 	@RequestMapping("comDetail.bo")
-	public ModelAndView comDetail(ModelAndView mv) {
-		mv.setViewName("board/community/comDetailView");
+	public ModelAndView comDetail(ModelAndView mv,int bno) {
+		
+		// 클릭시 조회수 증가
+		int result = bService.increaseCount(bno);
+		
+		// 상세보기
+		if(result>0) {
+			Board b = bService.comDetail(bno);
+			mv.addObject("b",b)
+			  .setViewName("board/community/comDetailView");
+		}else {
+			mv.addObject("errorMsg", "조회 실패!")
+				.setViewName("common/errorPage");
+		}
+	
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="rlist.bo",produces="application/json; charset=utf-8")
+	public String selectReplyList(int bno) {
+		ArrayList<Reply>list = bService.selectReplyList(bno);
+		return new Gson().toJson(list);
 	}
 	
 	
