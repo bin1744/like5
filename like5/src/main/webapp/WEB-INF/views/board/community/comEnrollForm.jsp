@@ -46,7 +46,7 @@
             <div class="content-header">
                 <div class="form-group">
                     <label for="usr"><b>제목</b></label>
-                    <input type="text" class="form-control" id="content-title" name="title"  placeholder="5글자 이상을 입력해주세요.">
+                    <input type="text" class="form-control" id="content-title" name="title"  placeholder="5글자 이상을 입력해주세요." required>
                     <div id="counting-title" style="float: right; font-size: 11px"></div>
                 </div>
             </div>
@@ -59,10 +59,10 @@
             </div>
             <div class="file-upload" style="padding: 0px;">
               
-                <button class="file-upload-btn"  type="button" onclick="$('.file-upload-input').trigger( 'click' )">첨부파일 등록하기</button>
+                <!-- <button class="file-upload-btn"  type="button" onclick="$('.file-upload-input').trigger( 'click' )">첨부파일 등록하기</button> -->
             
                 <div class="image-upload-wrap">
-                <input class="file-upload-input" type='file' name="upfile" onchange="readURL(this);" accept="image/*" />
+                	<input class="file-upload-input" type='file' name="upfile" onchange="readURL(this);" accept="image/*" />
                 <div class="drag-text">
                     <p>업로드하고 싶은 파일을 드래그 해보세요😜</p>
                 </div>
@@ -86,9 +86,9 @@
             </div>
             <br><br>
 
-            <div style="display: flex;  justify-content: space-between; margin-bottom:50px;"  >
+            <div id="comEnrollbtn" style="display: flex;  justify-content: space-between; margin-bottom:50px;"  >
                 <button type="reset" class="btn btn-outline-danger">취소</button>
-                <button type="submit" class="btn btn-danger">등록</button>
+                <button type="submit" class="btn btn-danger" disabled>등록</button>
             </div>
         </form>    
 
@@ -113,6 +113,21 @@
                     $('#counting-title').html("49 / 49");
                 }
             });
+            
+            $(function(){
+            	
+            	var $titleInput = $("#content-title");
+            	
+            	$titleInput.keyup(function(){
+            		
+            		if($titleInput.val().length>=5){
+            			$("#comEnrollbtn :submit").attr("disabled",false);
+            		}
+            		
+            	})
+            	
+            })
+            
 
             // 첨부파일 업로드
             function readURL(input) {

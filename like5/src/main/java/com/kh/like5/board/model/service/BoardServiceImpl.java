@@ -150,6 +150,15 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.insertCommunity(sqlSession, b);
 	}
 
+	/**
+	 * [커뮤니티] 게시글 삭제하기
+	 * @author seong
+	 */
+	@Override
+	public int deleteCommunity(int bno) {
+		return bDao.deleteCommunity(sqlSession, bno);
+	}
+
 	
 	/**
 	 *  [칼럼] - 전체 목록 리스트 조회

@@ -289,6 +289,21 @@ public class BoardController {
 	}
 	
 	/**
+	 * [커뮤니티] 게시글 삭제하기
+	 * @author seong
+	 */
+	
+	@RequestMapping("comDelete.bo")
+	public String deleteCommunity(int bno,HttpSession session){
+		
+		int result = bService.deleteCommunity(bno);
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 삭제되었습니다!");
+		}
+		return "redirect:comList.bo";
+	}
+	
+	/**
 	 * [칼럼] - 전체 목록 리스트 조회
 	 * @author seong
 	 */

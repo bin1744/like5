@@ -193,6 +193,7 @@
             board
         where
             regexp_like (boa_category,'일상|스터디모집')
+             and boa_status='Y'
     </select>
 
     <!-- [커뮤니티] - 전체 목록 리스트 조회  -->
@@ -433,7 +434,6 @@
 	
 	
 	<!-- 대댓글 작성하기 -->
-	
 	<insert id="insertReplies">
 		insert into 
 		   reply
@@ -458,6 +458,7 @@
 		    )
 	</insert>
 	
+	<!-- 커뮤니티 게시글 작성하기 -->
 	<insert id="insertCommunity">
 		insert into 
 			board
@@ -482,6 +483,15 @@
 			    )
 	</insert>
 	
+	<!-- 커뮤니티 게시글 삭제하기 -->
+	<update id="deleteCommunity">
+		update 
+			board
+		set 
+			boa_status = 'N'
+		where 
+			boa_no = #{bno}
+	</update>
 	
 	
 

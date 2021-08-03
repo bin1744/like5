@@ -147,5 +147,12 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.insertCommunity",b);
 	}
 	
+	/**
+	 * [커뮤니티] 게시글 삭제하기
+	 * @author seong
+	 */
+	public int deleteCommunity(SqlSessionTemplate sqlSession,int bno) {
+		return sqlSession.update("boardMapper.deleteCommunity",bno);
+	}
 	
 }

@@ -58,41 +58,85 @@
                         </div>
                         <!--글작성자에게만 보여지는 버튼-->
                         <c:choose>
-                        	<c:when test="${loginUser.memNo eq b.bno}">
+                        	<c:when test="${loginUser.memNo eq b.mno}">
                         		<div class="content-footer" align="center">
 	                           	 	<button type="button" class="btn btn-outline-danger btn-sm" onclick="postFormSubmit(1)">수정</button>
-	                            	<button type="button" class="btn btn-danger btn-sm" onclick="postFormSubmit(2)">삭제</button>
+	                            	<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal" >삭제</button>
 	                        	</div>
                         	</c:when>
                         </c:choose>
 	                        
-	                        <%-- 
+	                         
 	                        <form id="postForm" action="" method="post">
-								<input type="hidden" name="bno" value="${b.boardNo}">
-								<input type="hidden" name="filePath" value="${b.changeName}">
+								<input type="hidden" name="bno" value="${b.bno}">
+								<input type="hidden" name="imgPath" value="${b.imgPath}">
 							</form>
 							
-							<script>
-								function postFormSubmit(num){
-									if(num==1){ // 수정하기
-										$("#postForm").attr("action","comUpdateForm.bo").submit();
-									 	// 선택된 요소에 액션값 부여하고, 바로 submit 시키기 == 메소드 체이닝
-									}else{ // 삭제하기
-										$("#postForm").attr("action","comDelete.bo").submit();
-									}
-								}
-							</script>
-                       		 --%>
+		
+                       		 
                         <hr>
                     </div>
                 </div>
             </div>
+            
+            
+            
+            <!-- 삭제하기 모달창 -->
+             <form  method="post" style="margin-top: 0px;" >
+                <!--ex.아이디랑 글 번호 넘겨서 삭제 (sql문에 따라 보내는 값을 달라질 수 있음)-->
+                <input type="hidden" name="bno" value="${b.bno}" >
+                <div class="container">
+                    <!-- The Modal -->
+                    <div class="modal fade" id="delete-modal">
+                        <div class="modal-dialog modal-dialog-centered modal-sm">
+                            <div class="modal-content">
+                            
+                                <!-- Modal Header -->
+                                <div class="modal-header" style="background-color: rgba(224, 224, 224, 0.24);">
+                                    <h4 class="modal-title">🧺삭제하기</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                   		<p align="center"><b>${b.nickname}</b>님 안녕하세요!</p>
+                                    <div class="modal-content" style="border:1px solid grey;width: 100%;height: 100%; border-radius: 5px;">
+                                        <div>
+                                            <div align="center">
+                                            	삭제 후에는 복구가 불가능합니다.<br>
+                                            	정말로 삭제하시겠어요? 🙃
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Modal footer -->
+                                <div class="modal-footer" style="justify-content: center;">
+                                    <div>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="postFormSubmit(2)">삭제하기</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">취소</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>    
+            
+			<script>
+				function postFormSubmit(num){
+					if(num==1){ // 수정하기
+						$("#postForm").attr("action","comUpdateForm.bo").submit();
+					 	// 선택된 요소에 액션값 부여하고, 바로 submit 시키기 == 메소드 체이닝
+					}else{ // 삭제하기
+						$("#postForm").attr("action","comDelete.bo").submit();
+					}
+				}
+			</script>
 
 
             <form  id="" action="" method="post" style="margin-top: 0px;" >
-                <!--ex.아이디랑 글 번호 넘겨서 삭제 (sql문에 따라 보내는 값을 달라질 수 있음)-->
-                <input type="hidden" id="" name="" value="${loginUser.memNo}" >
-                <input type="hidden" id="" name="" value="${loginUser.memNo}" >
                 <!--신고하기 모달창-->
                 <div class="container">
                     <!-- The Modal -->

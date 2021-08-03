@@ -64,7 +64,7 @@ public interface BoardService {
 	//[커뮤니티] - 글 수정하기
 	
 	//[커뮤니티] - 삭제하기
-	
+	int deleteCommunity(int bno);
 	
 	//[칼럼] - 전체 목록 리스트 조회
 	ArrayList<Board>colList(PageInfo pi);
