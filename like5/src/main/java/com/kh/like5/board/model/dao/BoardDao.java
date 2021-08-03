@@ -94,7 +94,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 *  게시글 상세보기시 조회수 증가
+	 * [커뮤니티] 게시글 상세보기시 조회수 증가
 	 *  @author seong
 	 */
 	
@@ -113,7 +113,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 * 댓글 | 대댓글 전체 조회
+	 * [커뮤니티] 댓글 | 대댓글 전체 조회
 	 * @author seong
 	 */
 	
@@ -123,7 +123,7 @@ public class BoardDao {
 	
 	
 	/**
-	 * 댓글 작성하기
+	 * [커뮤니티] 댓글 작성하기
 	 * @author seong
 	 */
 	
@@ -132,11 +132,19 @@ public class BoardDao {
 	}
 	
 	/**
-	 * 대댓글 작성하기
+	 * [커뮤니티] 대댓글 작성하기
 	 * @author seong
 	 */
 	public int insertReplies(SqlSessionTemplate sqlSession,Reply r) {
 		return sqlSession.insert("boardMapper.insertReplies",r);
+	}
+	
+	/**
+	 * [커뮤니티] 게시글 작성하기
+	 * @author seong
+	 */
+	public int insertCommunity(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.insertCommunity",b);
 	}
 	
 	

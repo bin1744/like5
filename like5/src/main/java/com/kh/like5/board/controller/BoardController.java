@@ -1,7 +1,13 @@
 package com.kh.like5.board.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -244,8 +251,29 @@ public class BoardController {
 	@RequestMapping("insertReplies.bo")
 	public String insertReplies(Reply r,Model model) {
 		int result = bService.insertReplies(r);
-		System.out.println(result);
+		
 		return result>0?"success":"fail";
+	}
+	
+	/**
+	 * [커뮤니티] 게시글 작성하기
+	 * @author seong
+	 */
+	@RequestMapping("insertCom.bo")
+	public ModelAndView insertCommunity(Board b,ModelAndView mv,MultipartFile upfile,HttpSession session) {
+		
+		if(!upfile.getOriginalFilename().equals("")) {
+			String changeName = saveFile(session,upfile); // "2021070217013023152.jpg"
+			b.setImgPath("resources/images/board/" + changeName); // resource/uploadFiles/2021070217013023152.jpg
+		}
+		
+		int result = bService.insertCommunity(b);
+		if(result>0) {
+			
+			session.setAttribute("alertMsg", "성공적으로 등록 되었어요 😀 ");
+			mv.setViewName("redirect:comList.bo");
+		}
+		return mv;
 	}
 	
 	
@@ -293,6 +321,31 @@ public class BoardController {
 		return mv;
 	}
 	
+	
+	
+	//-----------------------------------------------------------
+	
+	public String saveFile(HttpSession session,MultipartFile file) {
+		
+		String savePath = session.getServletContext().getRealPath("resources/images/board/");
+		
+		String originName = file.getOriginalFilename();
+		//20210702(년월일) + 23432(랜덤값) + .jpg(원본파일확장자) 
+		String currentTime = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		int ranNum = (int)(Math.random() * 90000 + 10000);
+		String ext = originName.substring(originName.lastIndexOf("."));//.다음 인덱스부터의 문자열 추출
+		
+		String changeName = currentTime + "_" + ranNum + ext;
+		
+		try {
+			file.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		return changeName;
+	}
+	
+
 	
 	
 }

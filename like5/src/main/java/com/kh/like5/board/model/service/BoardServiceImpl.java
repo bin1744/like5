@@ -113,7 +113,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * 댓글 | 대댓글 전체 조회
+	 * [커뮤니티] 댓글 | 대댓글 전체 조회
 	 * @author seong
 	 */
 	@Override
@@ -122,7 +122,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	/**
-	 * 댓글 작성하기
+	 * [커뮤니티] 댓글 작성하기
 	 * @author seong
 	 */
 	
@@ -132,13 +132,24 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * 대댓글 작성하기
+	 * [커뮤니티] 대댓글 작성하기
 	 * @author seong
 	 */
 	@Override
 	public int insertReplies(Reply r) {
 		return bDao.insertReplies(sqlSession, r);
 	}
+	
+	/**
+	 * [커뮤니티] 게시글 작성하기
+	 * @author seong
+	 */
+	
+	@Override
+	public int insertCommunity(Board b) {
+		return bDao.insertCommunity(sqlSession, b);
+	}
+
 	
 	/**
 	 *  [칼럼] - 전체 목록 리스트 조회
@@ -161,6 +172,7 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 
 

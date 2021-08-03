@@ -457,6 +457,33 @@
 			    ,2
 		    )
 	</insert>
+	
+	<insert id="insertCommunity">
+		insert into 
+			board
+			    (
+		    	boa_no
+			    ,mem_no
+			    ,boa_category
+			    ,boa_title
+			    ,boa_content
+			    ,boa_enroll_date
+			    ,boa_img_path
+			    )
+		    values
+	    		(
+			    seq_bno.nextval
+			    ,#{mno}
+			    ,#{category}
+			    ,#{title}
+			    ,#{content}
+			    ,sysdate
+			    ,#{imgPath}
+			    )
+	</insert>
+	
+	
+	
 
 
 </mapper>

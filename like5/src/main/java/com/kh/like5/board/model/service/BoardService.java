@@ -34,7 +34,7 @@ public interface BoardService {
 	// 키워드 검색 결과 조회
 	ArrayList<Board>comSearchList(PageInfo pi,HashMap<String,String>map);
 
-	// [커뮤니티] - 카테고리별 게시글 list count
+	// 카테고리별 게시글 list count
 	int comOrderByListCount(String condition);
 	
 	// 전체 | 일상 | 스터디 모집 | 카테고리별 조회
@@ -57,6 +57,9 @@ public interface BoardService {
 	
 	// 대댓글 작성
 	int insertReplies(Reply r);
+	
+	// 게시글 작성하기
+	int insertCommunity(Board b);
 	
 	//[커뮤니티] - 글 수정하기
 	
