@@ -35,17 +35,17 @@
                         <h3><b>커뮤니티</b></h3><br>
                         <div class="content-header">
                             <div class="content-header-top">
-                                <h4><b>VS Code 생각보다 괜찮네요</b></h4>
+                                <h4><b>${b.title}</b></h4>
                             </div>
                             <div class="content-header-bottom">
                                 <div class="left-items">
-                                    <span>일상 | </span>
-                                    <span>21-07-05 |</span>
-                                    <span>작성자 닉네임</span>
+                                    <span>${b.category} | </span>
+                                    <span>${b.enrollDate} |</span>
+                                    <span>${b.nickname}</span>
                                 </div>
                                 
                                 <div class="rigth-items">
-                                    <span>조회 6 | </span>
+                                    <span>조회 ${b.count } | </span>
                                     <span><a href="" class="aTags" data-toggle="modal" data-target="#report-modal">🚨신고</a></span>
                                 </div>
                             </div>
@@ -53,16 +53,20 @@
                         </div>
                         <div class="main-content" style="height: 500px;">
 
-                            <div>내용이 보여지는 영역</div>
+                            <div>${b.content}</div>
                           
                         </div>
                         <!--글작성자에게만 보여지는 버튼-->
-                        <%-- <c:if test="${loginUser.userId != null}"></c:if>--%>
-	                        <div class="content-footer" align="center">
-	                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="postFormSubmit(1)">수정</button>
-	                            <button type="button" class="btn btn-danger btn-sm" onclick="postFormSubmit(2)">삭제</button>
-	                        </div>
+                        <c:choose>
+                        	<c:when test="${loginUser.memNo eq b.bno}">
+                        		<div class="content-footer" align="center">
+	                           	 	<button type="button" class="btn btn-outline-danger btn-sm" onclick="postFormSubmit(1)">수정</button>
+	                            	<button type="button" class="btn btn-danger btn-sm" onclick="postFormSubmit(2)">삭제</button>
+	                        	</div>
+                        	</c:when>
+                        </c:choose>
 	                        
+	                        <%-- 
 	                        <form id="postForm" action="" method="post">
 								<input type="hidden" name="bno" value="${b.boardNo}">
 								<input type="hidden" name="filePath" value="${b.changeName}">
@@ -78,7 +82,7 @@
 									}
 								}
 							</script>
-                        
+                       		 --%>
                         <hr>
                     </div>
                 </div>
@@ -87,8 +91,8 @@
 
             <form  id="" action="" method="post" style="margin-top: 0px;" >
                 <!--ex.아이디랑 글 번호 넘겨서 삭제 (sql문에 따라 보내는 값을 달라질 수 있음)-->
-                <input type="hidden" id="" name="" value="${loginUser.userId}" >
-                <input type="hidden" id="" name="" value="${loginUser.userId}" >
+                <input type="hidden" id="" name="" value="${loginUser.memNo}" >
+                <input type="hidden" id="" name="" value="${loginUser.memNo}" >
                 <!--신고하기 모달창-->
                 <div class="container">
                     <!-- The Modal -->
@@ -153,20 +157,33 @@
             <!--댓글 전체 감싸는 영역-->
             
             <div class="talk-commentbox-wrapper" style="margin-bottom:50px">
-                <div class="talk-comment-count-box">3개의 댓글</div>
+                <div class="talk-comment-count-box"></div>
                 <div class="talk-newcomment-box">
                     <div class="auto-heigth" style="box-sizing: border-box; height: auto;">
-                        <div style="height: 300px; width: 100%; border: 1px solid;">
-                            <!--토스트 UI 들어오는 자리-->
-                        </div>
-                        <button type="button" class="btn-danger btn btn-sm" style="float:right; margin-top: 10px;">댓글 작성</button>
+                         <div class="form-group">
+                         <!-- 로그인한 사용자만 작성 가능-->
+                         <label for="comment"><h5><b><span id="rcount"></span>개의 댓글</h5></b></label>
+							<c:choose>
+								<c:when test="${!empty loginUser}">
+								 	<textarea class="form-control" rows="5" id="comment" style="resize:none"></textarea>
+									<button type="button" class="btn-danger btn btn-sm"  style="float:right; margin-top: 10px;" onclick="insertReply();">댓글 작성</button>
+								</c:when>
+								<c:otherwise>
+									 <textarea class="form-control" rows="5" style="resize:none" placeholder="로그인 후 이용 가능한 서비스입니다." disabled></textarea>
+								</c:otherwise>
+							</c:choose>
+						</div>
                     </div>
                 </div>
                 <div class="talk-comment-lists">
                     <div class="TalkCommentModule" >
                         <div class="comment-box-wrapper">
-
-                            <!--댓글 조회목록-->
+		
+							
+							<div id="replyResult"></div>
+							<div id="answerComment"></div>
+							
+                            <!--댓글 조회목록
                             <div class="comment-wrapper_value" >
                                 <div class="comment-info">
                                     <div class="info-wrapper">
@@ -190,7 +207,7 @@
                                 </div>
                             </div>
 
-                            <!--대댓글 조회 목록-->
+                            <!--대댓글 조회 목록
                             <div class="comments-wrapper_value" >
                                 <div class="comment-info">
                                     <div class="info-wrapper">
@@ -203,32 +220,178 @@
                                                 <span style="float: right;"><a href="" class="aTags" data-toggle="modal" data-target="#report-modal"><img src="">🚨신고</a></span>
                                                 <div>21-07-06</div>
                                             </div>
-                                            
                                         </div>
                                         <div class="comment-content">
                                             <div>대댓글 영역입니다.</div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             
-                            <!--대댓글 달기/취소하기 버튼-->
-                            <div class="comment-plus-icon-wrapper" align="center">
-                                <div class="container">
-                                    <a href="#demo" id="comments" onclick="comments();" class="btn btn-outline-secondary" data-toggle="collapse" style="margin-bottom: 10px;">대댓글 달기</a>
-                                    <div id="demo" class="collapse">
-                                        <div class="talk-newcomment-box">
-                                            <div class="auto-heigth" style="box-sizing: border-box; height: auto;">
-                                                <div style="height: 300px; width: 100%; border: 1px solid;">
-                                                    <!--토스트 UI 들어오는 자리-->
-                                                </div>
-                                                <button type="button" class="btn-danger btn btn-sm" style="float:right; margin-top: 10px;">대댓글 작성</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            <script >
+                            	$(function(){
+                            		selectReplyList();
+                            	})
+                            	
+                            	var repNo=[];
+                            	function selectReplyList(){
+                            		$.ajax({
+                            			url:"rlist.bo",
+                            			data:{bno:${b.bno}},
+                            			
+                            			// 통신 성공했을 때
+                            			success:function(list){
+                            				
+                            				console.log(list); //배열 확인 완료
+                            				$("#rcount").text(list.length);
+                            				
+                            				var value="";
+                            				// 참조되는 댓글 번호가 담길 배열
+                            				
+                            			
+                            				
+                            				for(var i in list){
+                            					if(list[i].refLevel == 1){
+                            						  <!--댓글 조회목록-->
+                            						  
+                            						  value += 
+                                                     '<div class="comment-wrapper_value" style="margin-top:50px">'
+                                                    +  '<div class="comment-info">'
+                                                    +      '<div class="info-wrapper">'
+                                                    +          '<div class="user-info">'
+                                                    +              '<div class="user-img">'
+                                                    +                  '<i class="far fa-user fa-2x">'+'</i>'
+                                                    +              '</div>'
+                                                    +              '<div class="user-info" style="display: inline-block;width: 90%;">'
+                                                    +                  '<div class="test">' 
+                                                    +                      '<span>'+'<a href="" class="aTags">' + list[i].nickname + '</a>'+'</span>'
+                                                    +                      '<span style="float: right;">'+'<a href="" class="aTags" data-toggle="modal" data-target="#report-modal">'+'<img src="">'+"🚨신고"+'</a>'+'</span>'
+                                                    +                   '</div>'
+                                                    +                  '<div>' + list[i].repEnrollDate + '</div>'
+                                                    +              '</div>'
+                                                    +      	'</div>'
+                                                    +         '<div class="comment-content">'
+                                                    +              '<div>'+list[i].repContent+'</div>'
+                                                    +          '</div>'
+                                                    +      '</div>'
+                                                    +  '</div>'
+                                                    + '</div>'
+                                                    
+                                               	 	<!--대댓글 달기/취소하기 버튼-->
+                                                    + '<div class="comment-plus-icon-wrapper" align="center">'
+                                                    +    '<div class="container">'
+                                                    +        '<a href="#demo" id="comments" onclick="comments();" class="btn btn-outline-secondary" data-toggle="collapse" style="margin-bottom: 10px;">'+"대댓글 달기"+'</a>'
+                                                    +        '<div id="demo" class="collapse">'
+                                                    +            '<div class="talk-newcomment-box">'
+                                                    +                '<div class="auto-heigth" style="box-sizing: border-box; height: auto;">'
+                                                    +                    '<textarea class="form-control" rows="5" id="insertReplies" style="resize:none">'+'</textarea>'
+                                                    +                    '<button type="button" class="btn-danger btn btn-sm" style="float:right; margin-top: 10px;" onclick="insertReplies();">'+"대댓글 작성"+'</button>'
+                                                    +                '</div>'
+                                                    +            '</div>'
+                                                    +        '</div>'
+                                                    +   '</div>'
+                                                    +'</div>'
+                                                    
+                                                	$("#replyResult").html(value);	
+                                                    
+                            						  repNo.push(list[i].repNo);
+                            						  console.log(repNo);
+                                                    
+                            					}else{
+	                            						
+	                           						 if(repNo.indexOf(list[i].refRepNo)!= -1){
+	                            						<!--대댓글 조회목록-->
+	                            						value +=
+	                            						'<div class="comments-wrapper_value" >' 
+	                                                   + '<div class="comment-info">'
+	                                                   +    '<div class="info-wrapper">'
+	                                                   +         '<div class="user-info">'
+	                                                   +            '<div class="user-img">'
+	                                                   +                '<i class="far fa-user fa-2x"></i>'
+	                                                   +             '</div>'
+	                                                   +            '<div class="user-info" style="display: inline-block; width: 90%;">'
+	                                                   +               ' <span>'+'<a href="" class="aTags">'+list[i].nickname+'</a>'+'</span>'
+	                                                   +                 '<span style="float: right;">'+'<a href="" class="aTags" data-toggle="modal" data-target="#report-modal"><img src="">'+'🚨신고'+'</a>'+'</span>'
+	                                                   +                 '<div>'+list[i].repEnrollDate +'</div>'
+	                                                   +             '</div>'
+	                                                   +         '</div>'
+	                                                   +         '<div class="comment-content">'
+	                                                   +             '<div>'+list[i].repContent+'</div>'
+	                                                   +         '</div>'
+	                                                   +     '</div>'
+	                                                   + '</div>'
+	                                                	+'</div>'
+		                            						
+	                                                	$("#replyResult").html(value);	
+	                            					}
+                            					}
+                            				}
+                            			},error:function(){
+                            				console.log("ajax통신실패");
+                            			}
+                            		})
+                            		}
+                            	
+                            	function insertReply(){
+                            		
+                            		if($("#comment").val().trim().length != 0){
+                            			// 댓글일때
+                            				$.ajax({
+                                				url:"insertReply.bo",
+                                				data:{
+                                					boaNo :${b.bno}
+                                					,repContent : $("#comment").val()
+                                					,memNo : '${loginUser.memNo}'
+                                				},success:function(status){
+                                					
+                        	      					if(status == "success"){
+                        	      						// 댓글 리스트 갱신해야함
+                        	      						selectReplyList();
+                        	      						// 작성해놓은 댓글도 지워야함
+                        	      						$("#comment").val("");
+                        	      					}
+                                				}, error:function(){
+                        	      					console.log("댓글 작성용 AJAX 통신 실패");
+                        	      				}
+                                			})
+                                			
+                                			
+                                            
+                            		}
+                            	}
+                            	
+                            	<%--
+                            	function insertReplies(){
+                            		if($("#insertReplies").val().trim().length != 0){
+                            				// 대댓글일때
+                            				$.ajax({
+                                				url:"insertReplies.bo",
+                                				data:{
+                                					boaNo :${b.bno}
+                                					,repContent : $("#insertReplies").val()
+                                					,memNo : '${loginUser.memNo}'
+                                					,refRepNo : repNo
+                                				},success:function(status){
+                        	      					if(status == "success"){
+                        	      						// 전체 댓글 리스트 갱신해야함
+                        	      						selectReplyList();
+                        	      						// 작성해놓은 대댓글도 지워야함
+                        	      						$("#insertReplies").val("");
+                        	      					}
+                                				}, error:function(){
+                        	      					console.log("댓글 작성용 AJAX 통신 실패");
+                        	      				}
+                                			})
+                            		}
+                            	}--%>
+                            	
+                            	
+                            	
+                            </script>
+                            
+                           
+                            
+                            
                         </div>
                     </div>
                 </div>

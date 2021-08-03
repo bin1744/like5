@@ -138,7 +138,7 @@
 	
 	        <br><br>
 	
-	        <table class="table-bordered table-sm">
+	        <table id="csList" class="table-bordered table-sm">
 	            <thead>
 	                <tr class="table-danger">
 	                    <th width="50">No</th>
@@ -153,12 +153,12 @@
 	            <tbody>
 	                <c:forEach var="cs" items="${list }">
 	                	<tr>
-	                		<td class="csNo" name="csNo" id="csNo">
+	                		<td class="csNo" id="csNo">
 	                			${cs.csNo }
 	                		</td>
 	                		<td>${cs.memName }</td>
 		                    <td>${cs.nickname }</td>
-		                    <td>${cs.csTitle }</td>
+		                    <td ><a href="csDetail.ad?csNo=${cs.csNo }" >${cs.csTitle }</a></td>
 		                    <td>${cs.regDate }</td>
 		                	<c:choose>
 		                		<c:when test="${cs.status == 'Y' }">
@@ -172,7 +172,15 @@
 	                </c:forEach>
 	            </tbody>
 	        </table>
-	
+			<script>
+            	$(function(){
+            		$("#csList>tbody>tr").click(function(){
+            			location.href="csDetail.ad?csNo=" + $(this).children(".csNo").text();
+            		})
+            	})
+            </script>
+			
+			
 	    	<Br>
 	    	<!-- 페이징 바 -->
 	    	
@@ -239,5 +247,7 @@
     		}
     	})
     </script>
+    
+			
 </body>
 </html>

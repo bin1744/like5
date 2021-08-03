@@ -21,10 +21,7 @@ public interface MemberService {
 	int updateMember(Member m);
 	
 	// 회원탈퇴용 서비스
-	int deleteMember(String Email);
-	
-	// 아이디 중복 체크용 서비스
-	int emailCheck(String Email);
+	int deleteMember(int memNo);
 	
 	// 1:1 문의 작성하기 서비스
 	int insertInquiry(Customer c);

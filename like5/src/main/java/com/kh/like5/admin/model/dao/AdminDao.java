@@ -74,10 +74,18 @@ public class AdminDao {
 		return (ArrayList)sqlSession.selectList("customerMapper.searchCsMemList", map, rowBounds);
 	}
 	
-	
-	
-	
-	
+	// 1:1 문의 상세 페이지
+	public Customer selectCustomer(SqlSessionTemplate sqlSession, int csNo) {
+		return sqlSession.selectOne("customerMapper.selectCustomer", csNo);
+	}
+	// 1:1문의 관리자 답변 등록 (update)
+	public int insertCsAns(SqlSessionTemplate sqlSession, Customer cs) {
+		return sqlSession.update("customerMapper.insertCsAns", cs);
+	}
+	// 1:1문의 관리자 답변 수정 update
+	public int updateCsAns(SqlSessionTemplate sqlSession, Customer cs) {
+		return sqlSession.update("customerMapper.updateCsAns", cs);
+	}
 
 	// ============================= [재환] =============================
 

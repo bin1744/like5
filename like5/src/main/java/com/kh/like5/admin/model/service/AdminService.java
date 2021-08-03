@@ -31,8 +31,13 @@ public interface AdminService {
 	public ArrayList<Customer> searchCsMemList(PageInfo pi, HashMap<String, String> map);
 	
 	// 1:1문의 상세페이지 select문
+	Customer selectCustomer(int csNo);
 	
-	// 1:1문의 수정 페이지 update문(다시 상세 페이지로 돌아가게)
+	// 1:1문의 답변 페이지 update문 (1:1문의 메인페이지로 )
+	int insertCsAns(Customer cs);
+	// 1:1문의 수정 페이지 update문 (1:1문의 메인페이지로 )
+	int updateCsAns(Customer cs);
+	
 	
 	// 후원관리 메인 페이지 select문-페이징처리
 	
