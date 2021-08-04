@@ -63,11 +63,11 @@
              <!--내 예약정보-->
             <div class="wrap">
                 <b>내 예약정보</b> <br><br>
-                <b>회원</b> 고길동 <br><br>
+                <b>회원</b> ${ loginUser.memName } <br><br>
                 <b>날짜</b> <br>
-                07월 12일~ 07월 15일 <br><br>
+                ${ b.startDate } ~ ${ b.endDate }<br><br>
                 <b>인원</b> <br>
-                2명
+                ${ b.person } 명
             </div>
 
             <br><br>
@@ -79,13 +79,13 @@
             <div class="wrap2">
                 <b>결제 금액</b>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <b>60,000원</b> <br><br>
+                <b>${ b.total } 원</b> <br><br>
                 <b>1일</b> 
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                60000원 <br><br> 
+               	<div class="price">${ o.price } 원</div><br><br> 
                 <b>부가세(10%)</b>
                 &nbsp;&nbsp;&nbsp;&nbsp; 
-                6000원 <br><br>
+                <div class="fee">${ o.price }*0.1 원</div><br><br>
             </div>
         </div>
         <br><br>
@@ -94,6 +94,9 @@
         </div>
         
     </div>
-<jsp:include page="../common/footer.jsp"/>    
+<jsp:include page="../common/footer.jsp"/>
+<script>
+
+</script>    
 </body>
 </html>    

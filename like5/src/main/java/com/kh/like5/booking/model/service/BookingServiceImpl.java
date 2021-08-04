@@ -116,4 +116,19 @@ public class BookingServiceImpl implements BookingService{
 		return bDao.selectBooking(sqlSession, officeNo);
 	}
 
+	@Override
+	public ArrayList<Booking> selectMyBookList(int memNo, PageInfo pi) {
+		return bDao.selectMyBookList(sqlSession, memNo, pi);
+	}
+
+	@Override
+	public int selectListCountBook(int memNo) {
+		return bDao.selectListCountBook(sqlSession, memNo);
+	}
+
+	@Override
+	public Booking selectMyBook(int bookingNo) {
+		return bDao.selectMyBook(sqlSession, bookingNo);
+	}
+
 }

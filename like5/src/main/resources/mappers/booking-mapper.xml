@@ -15,6 +15,8 @@
   	<result property="phone" column="phone"/>
   	<result property="bAsk" column="b_ask"/>
   	<result property="total" column="total"/>
+  	<result property="typeName" column="type_name"/>
+  	<result property="price" column="price"/>
   </resultMap>
   
   <resultMap type="Office" id="officeResultSet">
@@ -249,7 +251,7 @@
   		, total
   	 from booking
   	where office_no = #{officeNo}
-  	  and status = 'Y';
+  	  and status = 'Y'
   </select>
   
   <insert id="insertBook" parameterType="Booking">
@@ -285,5 +287,57 @@
   	  	 , #{total}
   	  )
   </insert>
+  
+  <select id="selectListCountBook" resultType="_int">
+  	select
+		   count(*)
+	 from  booking
+	where  mem_no = #{memNo}
+  </select>
 
+	<select id="selectMyBookList" parameterType="Booking" resultMap="bookingResultSet">
+	select
+  		  bookin_no
+  		, o.office_no
+  		, mem_no
+  		, start_date
+  		, end_date
+  		, request_date
+  		, modify_date
+  		, status
+  		, b.person
+  		, phone
+  		, b_ask
+  		, total
+  		, branch
+  		, type_name
+  		, price
+  	 from booking b
+  	 join office o on(b.office_no = o.office_no)
+  	where mem_no = #{memNo}
+  	order
+  	   by request_date desc 
+	</select>
+	<select id="selectMyBook" parameterType="Booking" resultMap="bookingResultSet">
+	select
+  		  bookin_no
+  		, o.office_no
+  		, mem_no
+  		, start_date
+  		, end_date
+  		, request_date
+  		, modify_date
+  		, status
+  		, b.person
+  		, phone
+  		, b_ask
+  		, total
+  		, branch
+  		, type_name
+  		, price
+  	 from booking b
+  	 join office o on(b.office_no = o.office_no)
+  	where bookin_no = #{bookingNo}
+  	  and status = 'Y'
+	</select>
 </mapper>

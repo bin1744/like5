@@ -16,10 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.like5.booking.model.service.BookingService;
 import com.kh.like5.booking.model.vo.Booking;
 import com.kh.like5.booking.model.vo.Office;
@@ -231,7 +233,7 @@ public class BookingController {
 	
 	@RequestMapping("detail.bo")
 	public String officeDetailPage(int ono, Model model) {
-		ArrayList<Attachment> at = bService.selectList(ono);
+		ArrayList<Attachment> at = bService.selectOfficeAtt(ono);
 		model.addAttribute("at", at);
 		Office o = bService.selectOffice(ono);
 		model.addAttribute("o", o);
@@ -257,8 +259,13 @@ public class BookingController {
 		return"booking/bResult";
 	}
 	
+	@RequestMapping("import.ts")
+	public String iamport() {
+		return"booking/importTest";
+	}
+	
 	@RequestMapping("submitBook.bk")
-	public String insertBook(Booking b, HttpServletRequest request, HttpSession session, Model model) {
+	public String insertBook(Booking b, Office o ,HttpServletRequest request, HttpSession session, Model model) {
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
 		String person = request.getParameter("person");
@@ -274,12 +281,35 @@ public class BookingController {
 		
 		int result = bService.insertBook(b);
 		if(result > 0) {
+			model.addAttribute("o", o);
 			model.addAttribute("b", b);
 			return"booking/officeEnd";
 		} else {
 			model.addAttribute("errorMsg", "예약실패");
 			return "common/errorPage";
 		}
+	}
+	
+	@RequestMapping("myBookList.bk")
+	public String selectMyBookList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, HttpServletRequest request, HttpSession session, Model model) {
 
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		//반환되는 게시글 개수
+		int listCount = bService.selectListCountBook(memNo);
+		//page설정
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		//게시글조회
+		ArrayList<Booking> list = bService.selectMyBookList(memNo, pi);
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		
+		return "booking/myBookList";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="myDetail.bk", produces="application/json; charset=utf-8")
+	public String selectMyBook(int bookingNo) {
+		Booking b = bService.selectMyBook(bookingNo);
+		return new Gson().toJson(b);
 	}
 }

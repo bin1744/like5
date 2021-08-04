@@ -79,9 +79,24 @@ public class BookingDao {
 		return pics;
 		
 	}
-	
+	//뭐에 쓰는거더라??
 	public Booking selectBooking(SqlSessionTemplate sqlSession, int officeNo) {
-		return sqlSession.selectOne("selectBooking", officeNo);
+		return sqlSession.selectOne("bookingMapper.selectBooking", officeNo);
 	}
 	
+	//마이페이지 조회용
+	public ArrayList<Booking> selectMyBookList(SqlSessionTemplate sqlSession,int memNo, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("bookingMapper.selectMyBookList", memNo, rowBounds);
+	}
+	public int selectListCountBook(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("bookingMapper.selectListCountBook", memNo);
+	}
+	
+	public Booking selectMyBook(SqlSessionTemplate sqlSession, int bookingNo) {
+		return sqlSession.selectOne("bookingMapper.selectMyBook", bookingNo);
+	}
 }
