@@ -493,7 +493,20 @@
 			boa_no = #{bno}
 	</update>
 	
-	
+	<!-- 커뮤니티 게시글 수정하기 -->
+	<update id="updateCommunity">
+	update 
+		board
+		set 
+			boa_category = #{category}
+		    , boa_title =#{title}
+		    , boa_content=#{content}
+		    , boa_img_path =#{imgPath}
+		    , boa_update_date = sysdate
+		where 
+			boa_no = #{bno}
+		and boa_status = 'Y'
+	</update>
 
 
 </mapper>

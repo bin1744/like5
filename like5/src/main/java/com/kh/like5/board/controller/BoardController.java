@@ -204,6 +204,7 @@ public class BoardController {
 	@RequestMapping("comDetail.bo")
 	public ModelAndView comDetail(ModelAndView mv,int bno) {
 		
+		
 		// 클릭시 조회수 증가
 		int result = bService.increaseCount(bno);
 		
@@ -283,10 +284,41 @@ public class BoardController {
 	 */
 	
 	@RequestMapping("comUpdateForm.bo")
-	public ModelAndView comUpdateForm(ModelAndView mv) {
-		mv.setViewName("board/community/comUpdateForm");
+	public ModelAndView comUpdateForm(Board b,ModelAndView mv) {
+		
+		int bno = b.getBno();
+		
+		mv.addObject("b",bService.comDetail(bno))
+		   .setViewName("board/community/comUpdateForm");
+		
 		return mv;
 	}
+	
+	/**
+	 * [커뮤니티] - 게시글 수정하기
+	 * @author seong
+	 */
+	@RequestMapping("comUpdate.bo")
+	public ModelAndView updateCommunity(Board b, MultipartFile reupfile, ModelAndView mv,HttpSession session) {
+		
+		// 새로온 첨부파일이 있었을 때
+		if(!reupfile.getOriginalFilename().equals("")) {
+			if(b.getImgPath()!=null) {
+				new File(session.getServletContext().getRealPath(b.getImgPath())).delete();
+			}
+			String changeName = saveFile(session,reupfile);
+			b.setImgPath("resources/images/board/"+changeName);
+		}
+		
+		int result = bService.updateCommunity(b);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 수정되었습니다!");
+			mv.setViewName("redirect:comList.bo?bno="+b.getBno());
+		}
+		return mv;
+	}
+		
 	
 	/**
 	 * [커뮤니티] 게시글 삭제하기

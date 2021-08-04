@@ -72,8 +72,17 @@
 								<input type="hidden" name="imgPath" value="${b.imgPath}">
 							</form>
 							
-		
-                       		 
+						<script>
+						function postFormSubmit(num){
+							if(num==1){ // 수정하기
+								$("#postForm").attr("action","comUpdateForm.bo").submit();
+							 	// 선택된 요소에 액션값 부여하고, 바로 submit 시키기 == 메소드 체이닝
+							}else{ // 삭제하기
+								$("#postForm").attr("action","comDelete.bo").submit();
+							}
+						}
+					</script>
+		                       		 
                         <hr>
                     </div>
                 </div>
@@ -122,16 +131,7 @@
                     </div>
                 </div>
             
-			<script>
-				function postFormSubmit(num){
-					if(num==1){ // 수정하기
-						$("#postForm").attr("action","comUpdateForm.bo").submit();
-					 	// 선택된 요소에 액션값 부여하고, 바로 submit 시키기 == 메소드 체이닝
-					}else{ // 삭제하기
-						$("#postForm").attr("action","comDelete.bo").submit();
-					}
-				}
-			</script>
+		
 
 
             <form  id="" action="" method="post" style="margin-top: 0px;" >
