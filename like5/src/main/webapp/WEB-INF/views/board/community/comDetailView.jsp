@@ -72,17 +72,17 @@
 								<input type="hidden" name="imgPath" value="${b.imgPath}">
 							</form>
 							
-						<script>
-						function postFormSubmit(num){
-							if(num==1){ // 수정하기
-								$("#postForm").attr("action","comUpdateForm.bo").submit();
-							 	// 선택된 요소에 액션값 부여하고, 바로 submit 시키기 == 메소드 체이닝
-							}else{ // 삭제하기
-								$("#postForm").attr("action","comDelete.bo").submit();
-							}
+					<script>
+					function postFormSubmit(num){
+						if(num==1){ // 수정하기
+							$("#postForm").attr("action","comUpdateForm.bo").submit();
+						 	// 선택된 요소에 액션값 부여하고, 바로 submit 시키기 == 메소드 체이닝
+						}else{ // 삭제하기
+							$("#postForm").attr("action","comDelete.bo").submit();
 						}
-					</script>
-		                       		 
+					}
+				</script>
+	                       		 
                         <hr>
                     </div>
                 </div>
@@ -134,7 +134,11 @@
 		
 
 
-            <form  id="" action="" method="post" style="margin-top: 0px;" >
+            <form  id="" action="report.bo" method="post" style="margin-top: 0px;" >
+               
+               <input type="hidden" name="mno" value="${loginUser.memNo}">
+               <input type="hidden" name="refNo" value="${b.bno}">
+               <input type="hidden" name="category" value="${b.category}">
                 <!--신고하기 모달창-->
                 <div class="container">
                     <!-- The Modal -->
@@ -150,7 +154,7 @@
                                 
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                   		 작성자 : 꼰대가르송(작성자 닉네임)
+                                   		 <p><b>${b.nickname }<b>님을 신고하시겠어요?</p>
                                     <div class="modal-content" style="border:1px solid grey;width: 100%;height: 100%; border-radius: 5px;">
                                         <div>
                                             <b><span style="font-size: 15px;">사유 선택 : </span></b>
@@ -159,20 +163,20 @@
                                                 <span>대표적인 사유 1개를 선택해주세요.</span><br>
                                                 
                                                 <br>     
-                                                <input type="radio" id="f-option" name="selector">
+                                                <input type="radio" id="f-option" name="reason"  value="홍보성 게시글">
                                                 <label for="f-option">부적절한 홍보 게시글</label>
                                                 <br>
 
-                                                <input type="radio" id="s-option" name="selector">
+                                                <input type="radio" id="s-option" name="reason"  value="욕설 및 비방">
                                                 <label for="s-option">욕설,비방 음란성등</label>
                                                 <br>                               
 
-                                                <input type="radio" id="t-option" name="selector">
-                                                <label for="t-option">명예훼손, 사생활 침해</label>
+                                                <input type="radio" id="t-option" name="reason" value="명예훼손 및 사생활 침해">
+                                                <label for="t-option" >명예훼손, 사생활 침해</label>
                                                 <br> 
                                                 
-                                                <input type="radio" id="o-option" name="selector">
-                                                <label for="o-option">기타</label>
+                                                <input type="radio" id="o-option" name="reason" value="기타">
+                                                <label for="o-option" >기타</label>
                                                 <br>
 
                                             </div>

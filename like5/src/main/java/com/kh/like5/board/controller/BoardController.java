@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.kh.like5.board.model.service.BoardService;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Reply;
+import com.kh.like5.board.model.vo.Report;
 import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.common.template.Pagination;
 
@@ -338,6 +339,24 @@ public class BoardController {
 			session.setAttribute("alertMsg", "성공적으로 삭제되었습니다!");
 		}
 		return "redirect:comList.bo";
+	}
+	
+	/**
+	 * [커뮤니티] - 게시글 신고하기
+	 * @author seong
+	 */
+	@RequestMapping("report.bo")
+	public ModelAndView reportCommunity(Board b, Report r,ModelAndView mv,HttpSession session) {
+		
+		System.out.println(r);
+		
+		int result = bService.reportCommunity(r);
+		int bno = b.getBno();
+		if(result>0) {
+			session.setAttribute("alertMsg", "신고 접수가 완료되었습니다!");
+			mv.setViewName("redirect:comList.bo?bno="+b.getBno());
+		}
+		return mv;
 	}
 	
 	/**

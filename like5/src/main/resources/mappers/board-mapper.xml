@@ -508,5 +508,25 @@
 		and boa_status = 'Y'
 	</update>
 
+	<!-- 커뮤니티 게시글 신고하기 -->
+	<insert id="reportCommunity">
+		insert into 
+		report
+		 	(
+		    report_unique
+		    ,mem_no
+		    ,category
+		    ,ref_no
+		    ,report_reason
+	    	)
+    		values 
+    		(
+		    seq_repno.nextval
+		    ,#{mno}
+		    ,#{category}
+		    ,#{refNo}
+		    ,#{reason}
+	    	)
+	</insert>
 
 </mapper>

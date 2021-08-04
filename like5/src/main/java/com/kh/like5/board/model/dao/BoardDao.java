@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Reply;
+import com.kh.like5.board.model.vo.Report;
 import com.kh.like5.common.model.vo.PageInfo;
 
 @Repository
@@ -163,6 +164,14 @@ public class BoardDao {
 	 */
 	public int updateCommunity(SqlSessionTemplate sqlSession,Board b) {
 		return sqlSession.update("boardMapper.updateCommunity",b);
+	}
+	
+	/**
+	 * [커뮤니티] - 게시글 신고하기
+	 * @author seong
+	 */
+	public int reportCommunity(SqlSessionTemplate sqlSession,Report r) {
+		return sqlSession.insert("boardMapper.reportCommunity",r);
 	}
 	
 	

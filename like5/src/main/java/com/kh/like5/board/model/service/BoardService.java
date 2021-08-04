@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Reply;
+import com.kh.like5.board.model.vo.Report;
 import com.kh.like5.common.model.vo.PageInfo;
 
 public interface BoardService {
@@ -63,8 +64,13 @@ public interface BoardService {
 	
 	//[커뮤니티] - 글 수정하기
 	int updateCommunity(Board b);
+	
 	//[커뮤니티] - 삭제하기
 	int deleteCommunity(int bno);
+	
+	//[커뮤니티] - 게시글 신고하기
+	int reportCommunity(Report b);
+	
 	
 	//[칼럼] - 전체 목록 리스트 조회
 	ArrayList<Board>colList(PageInfo pi);

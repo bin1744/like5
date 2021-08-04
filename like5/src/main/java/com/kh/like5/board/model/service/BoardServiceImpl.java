@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.like5.board.model.dao.BoardDao;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Reply;
+import com.kh.like5.board.model.vo.Report;
 import com.kh.like5.common.model.vo.PageInfo;
 
 @Service
@@ -170,6 +171,15 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.updateCommunity(sqlSession, b);
 	}
 	
+	/**
+	 * [커뮤니티] - 게시글 신고하기
+	 * @author seong
+	 */
+	@Override
+	public int reportCommunity(Report r) {
+		return bDao.reportCommunity(sqlSession, r);
+	}
+	
 	
 	/**
 	 *  [칼럼] - 전체 목록 리스트 조회
@@ -192,6 +202,8 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 
 
