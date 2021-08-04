@@ -164,15 +164,15 @@
                                                 
                                                 <br>     
                                                 <input type="radio" id="f-option" name="reason"  value="홍보성 게시글">
-                                                <label for="f-option">부적절한 홍보 게시글</label>
+                                                <label for="f-option">홍보성 게시글</label>
                                                 <br>
 
                                                 <input type="radio" id="s-option" name="reason"  value="욕설 및 비방">
-                                                <label for="s-option">욕설,비방 음란성등</label>
+                                                <label for="s-option">욕설 및 비방</label>
                                                 <br>                               
 
                                                 <input type="radio" id="t-option" name="reason" value="명예훼손 및 사생활 침해">
-                                                <label for="t-option" >명예훼손, 사생활 침해</label>
+                                                <label for="t-option">명예훼손 및 사생활 침해</label>
                                                 <br> 
                                                 
                                                 <input type="radio" id="o-option" name="reason" value="기타">
