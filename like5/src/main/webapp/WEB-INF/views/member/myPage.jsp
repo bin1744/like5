@@ -30,7 +30,7 @@
         #body>div{float: left;}
 
         #sidebar{width: 15%; height: 100%;}
-        #sidmenu{height: 32%; width: 100%;border: 3px solid rgb(220, 53, 69);}
+        #sidmenu{height: 32%; width: 100%;border: 3px solid rgb(220, 53, 69); cursor:pointer;}
         #sidmenu>div{width: 100%; height: 25%; text-align:center; margin:0; padding-top:21px; font-size: 22px;}
         #sidmenu>div:hover{color:white; background-color:rgb(220, 53, 69) ; }
         #profile{height:23%; width: 100%;  margin-top: 15px; margin-left:3px;}
@@ -102,7 +102,7 @@
                   	1:1문의
           </div>
           <%-- 신원 수정 --%>
-          <div id="" onclick="location.href='myBookList.bk?memNo=${ loginUser.memNo }'">
+          <div onclick="location.href='myBookList.bk?memNo=${ loginUser.memNo }'">
                   	공간예약
           </div>
         </div>
