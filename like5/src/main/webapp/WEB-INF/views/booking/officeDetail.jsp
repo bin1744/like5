@@ -7,8 +7,14 @@
 <head>
 <meta charset="UTF-8">
 <title>공간 리스트 상세페이지</title>
-<!-- 카카오 api 지도 key 입력부분-->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=010c7b5cd71c4c45be3b01ae1329b4b5&libraries=services,clusterer,drawing"></script>
+    <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f2e27dda5cfdc6659ff812c6b423f97a&libraries=services,clusterer,drawing"></script>
+    <!-- flatpickr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_red.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+
 <style>
 	/*여기부터 메인 css*/
 
@@ -85,6 +91,13 @@
         padding:15px;
         background-color: white;
     }
+    .checkIn input, .checkOut input{
+    	z-index:2;
+    	border: 1px solid orange;
+    }
+    .checkOut input{
+    	border:1px solid green;
+    }
     .fas{color:lightgrey}
 </style>
 </head>
@@ -121,9 +134,10 @@
 			    <div class="carousel-item active">
 			    	<img src="${o.offImgPath}">
 			    </div>
-			    <c:forEach var="i" begin="1" end="${ fn:length(at)-1 }">
+			    <%-- 신원: 일단 오류나서 땜질해서 썼어요 --%>
+			    <c:forEach var="att" items="${ at }">
 				    <div class="carousel-item">
-				      <img src="${at.get(i).filePath}">
+				      <img src="${att.filePath}">
 				    </div>
 				</c:forEach>
 				
@@ -156,9 +170,11 @@
                 <b>${o.branch}</b> &nbsp;&nbsp;&nbsp;<b>${o.price} 원 / 1일 </b></b> <br><br><br>
                 <b>체크인</b> <br>
                 <%--flatpickr이용해서 날짜 선택할 수 있게 해주세요 --%>
-                <input type="text" class="startDate" name="startDate"> <br><br>
-                <b>체크아웃</b> <br>
-                <input type="text" class="endDate" name="endDate"> <br><br><br><br>
+                <div class="checkIn"><input type="text" class="startDate" name="startDate"></div>
+                
+                <b>체크아웃</b>
+                <div class="checkOut"><input type="text" class="endDate" name="endDate"></div>
+                 <br><br><br><br>
                 
                 <input type="hidden" name="officeNo" value="${ o.officeNo }">
                 <button type="submit" class="btn btn-danger btn-block">예약 하기</button>
@@ -232,6 +248,7 @@
 		<jsp:include page="../common/footer.jsp"/>
 		
 <script>
+
 <%-- 날짜 가져오기 --%>
 var startDate = localStorage.getItem("startDate");
 var endDate = localStorage.getItem("endDate");
@@ -240,73 +257,87 @@ $.when($.ready).then(function(){
 	$("input[name=startDate]").val(startDate);
 	$("input[name=endDate]").val(endDate);
 })
-	
-    <c:if test="${ fn:contains(o.facility, '와이파이') }">
-    	$("#wifiIcon").css("color","red");
-	</c:if>
-	<c:if test="${ fn:contains(o.facility, '프린트') }">
-		$("#printcon").css("color","red");
-	</c:if>
-	<c:if test="${ fn:contains(o.facility, '주차') }">
-		$("#carcon").css("color","red");
-	</c:if>
-	<c:if test="${ fn:contains(o.facility, 'PC/노트북') }">
-		$("#comcon").css("color","red");
-	</c:if>
-	<c:if test="${ fn:contains(o.facility, 'bar') }">
-		$("#barcon").css("color","red");
-	</c:if>
-	<c:if test="${ fn:contains(o.facility, '회의실') }">
-		$("#meetcon").css("color","red");
-	</c:if> 
-	<c:if test="${ fn:contains(o.facility, '냉/난방시설') }">
-		$("#windcon").css("color","red");
-	</c:if>
-	<c:if test="${ fn:contains(o.facility, '매니저') }">
-		$("#peoplecon").css("color","red");
-	</c:if>
-	
-	<%-- kakao map --%>
 
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		mapOption = {
-    				center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-    				level: 5 // 지도의 확대 레벨
-				};  
+flatpickr(".startDate",{
+    locale:"ko",
+    altInput:true,
+    altFormat:"Y F d\\일",
+    minDate:"today",
+    dateFormat:"Y-m-d"
+});
 
-	// 지도를 생성합니다    
-	var map = new kakao.maps.Map(mapContainer, mapOption); 
+flatpickr(".endDate",{
+    locale:"ko",
+    clickOpens: true,
+    altInput:true,
+    altFormat:"Y F d\\일",
+    minDate:"today",
+    dateFormat:"Y-m-d"
+});
 
-	// 주소-좌표 변환 객체를 생성합니다
-	var geocoder = new kakao.maps.services.Geocoder();
-		
-	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch("${ o.address }", function(result, status) {
 
-	// 정상적으로 검색이 완료됐으면 
- 	if (status === kakao.maps.services.Status.OK) {
+<c:if test="${ fn:contains(o.facility, '와이파이') }">
+	$("#wifiIcon").css("color","red");
+</c:if>
+<c:if test="${ fn:contains(o.facility, '프린트') }">
+	$("#printcon").css("color","red");
+</c:if>
+<c:if test="${ fn:contains(o.facility, '주차') }">
+	$("#carcon").css("color","red");
+</c:if>
+<c:if test="${ fn:contains(o.facility, 'PC/노트북') }">
+	$("#comcon").css("color","red");
+</c:if>
+<c:if test="${ fn:contains(o.facility, 'bar') }">
+	$("#barcon").css("color","red");
+</c:if>
+<c:if test="${ fn:contains(o.facility, '회의실') }">
+	$("#meetcon").css("color","red");
+</c:if> 
+<c:if test="${ fn:contains(o.facility, '냉/난방시설') }">
+	$("#windcon").css("color","red");
+</c:if>
+<c:if test="${ fn:contains(o.facility, '매니저') }">
+	$("#peoplecon").css("color","red");
+</c:if>
+<%-- kakao map --%>
 
-    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-    console.log(coords);
-    
-    // 결과값으로 받은 위치를 마커로 표시합니다
-    var marker = new kakao.maps.Marker({
-        map: map,
-        position: coords
-    });
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	mapOption = {
+				center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+				level: 5 // 지도의 확대 레벨
+			};  
 
-    // 인포윈도우로 장소에 대한 설명을 표시합니다
-    var infowindow = new kakao.maps.InfoWindow({
-        content: '<div style="width:100px;text-align:center;padding:6px 0;">${o.branch}</div>'
-    });
-    infowindow.open(map, marker);
+// 지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption); 
 
-    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-    map.setCenter(coords);
-		}
-	});
-	
-	
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+geocoder.addressSearch('${ o.address }', function(result, status) {
+
+// 정상적으로 검색이 완료됐으면 
+	if (status === kakao.maps.services.Status.OK) {
+
+var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+console.log(coords);
+// 결과값으로 받은 위치를 마커로 표시합니다
+var marker = new kakao.maps.Marker({
+    map: map,
+    position: coords
+});
+
+// 인포윈도우로 장소에 대한 설명을 표시합니다
+var infowindow = new kakao.maps.InfoWindow({
+    content: '<div style="width:150px;text-align:center;padding:6px 0;">${o.branch}</div>'
+});
+infowindow.open(map, marker);
+
+// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+map.setCenter(coords);
+	}
+});
 </script>
 </body>
 </html>
