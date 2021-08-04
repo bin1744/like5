@@ -377,8 +377,6 @@
 				,#{csContent})
 	</insert>
 
-
-</mapper>
 	<select id="selectMyRecentBookList" parameterType="Booking" resultMap="bookingResultSet">
 	select * from(
 					select
@@ -406,3 +404,4 @@
 	where ROWNUM &lt;=3
 	</select>
 </mapper>
+
