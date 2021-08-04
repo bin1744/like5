@@ -81,8 +81,7 @@
             
             
             
-            <!-- 삭제하기 모달창 -->
-             <form  method="post" style="margin-top: 0px;" >
+            	<!-- 삭제하기 모달창 -->
                 <!--ex.아이디랑 글 번호 넘겨서 삭제 (sql문에 따라 보내는 값을 달라질 수 있음)-->
                 <input type="hidden" name="bno" value="${b.bno}" >
                 <div class="container">
@@ -122,7 +121,6 @@
                         </div>
                     </div>
                 </div>
-            </form>    
             
 			<script>
 				function postFormSubmit(num){

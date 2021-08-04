@@ -294,10 +294,15 @@ public class BoardController {
 	 */
 	
 	@RequestMapping("comDelete.bo")
-	public String deleteCommunity(int bno,HttpSession session){
+	public String deleteCommunity(int bno,String imgPath, HttpSession session){
 		
 		int result = bService.deleteCommunity(bno);
 		if(result>0) {
+			//게시글 삭제시첨부파일도 지우기
+			if(!imgPath.equals("")) {
+				String removeImgPath = session.getServletContext().getRealPath(imgPath);
+				new File(removeImgPath).delete();
+			}
 			session.setAttribute("alertMsg", "성공적으로 삭제되었습니다!");
 		}
 		return "redirect:comList.bo";
