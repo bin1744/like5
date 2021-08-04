@@ -30,6 +30,46 @@ public class MemberController {
 	@Autowired
 	private MemberService mService;
 	
+	//------------------------------------동규------------------------------------
+	
+	@RequestMapping("insertPage.me")
+	public String insertPage() {
+		
+		return "member/insertMem";
+		
+	}
+	
+	@RequestMapping("insert.me")
+	public String insertMember(Member m, Model model, MultipartFile upfile, HttpSession session, String bankName) {
+		
+		if(!upfile.getOriginalFilename().equals("")) {
+			String changeName = saveFile(session, upfile);
+			m.setMemProfile("resources/images/memProfile/" + changeName);
+		}
+		
+		if(bankName.equals("kb")) {
+			m.setBank("국민은행");
+		}else if(bankName.equals("shin")) {
+			m.setBank("신한은행");
+		}else if(bankName.equals("we")){
+			m.setBank("우리은행");
+		}else if(bankName.equals("kko")){
+			m.setBank("카카오뱅크");
+		}else {
+			m.setBank(null);
+		}
+		
+		int result = mService.insertMember(m);
+		
+		if(result > 0) {
+			return "redirect:/";
+		}else {
+			model.addAttribute("errorMsg", "회원가입 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	
 	@RequestMapping("login.me")
 	public ModelAndView login(Member m, HttpSession session, ModelAndView mv) {
 		
@@ -55,7 +95,7 @@ public class MemberController {
 	@RequestMapping("inquiry.me")
 	public String inquiry() {
 		
-		return "member/inquiry";
+		return "redirect:/";
 		
 	}
 	
@@ -128,18 +168,18 @@ public class MemberController {
 	}
 	
 	@RequestMapping("update.me")
-	public String correctInfor(Member m, MultipartFile upfile, HttpSession session, Model model, String bankName, String memPwd) {
+	public String correctInfor(Member m, MultipartFile reupfile, HttpSession session, Model model, String bankName, String memPwd) {
 		
 		int memNo = m.getMemNo();
 		System.out.println(memNo);
 		System.out.println(bankName);
 		
-		if(!upfile.getOriginalFilename().equals("")) {
+		if(!reupfile.getOriginalFilename().equals("")) {
 			// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기
 			if(m.getMemProfile() != null) {
 				new File(session.getServletContext().getRealPath(m.getMemProfile())).delete();
 			}
-			String changeName = saveFile(session, upfile);
+			String changeName = saveFile(session, reupfile);
 			m.setMemProfile("resources/images/memProfile/" + changeName);
 		}
 		
@@ -163,6 +203,15 @@ public class MemberController {
 			model.addAttribute("errorMsg", "프로필 수정 실패");
 			return "common/errorPage";
 		}
+		
+	}
+	
+	@RequestMapping("delete.me")
+	public String deleteMember(HttpSession session, Member m) {
+		
+		mService.deleteMember(m.getMemNo());
+		session.invalidate();
+		return "redirect:/";
 		
 	}
 	

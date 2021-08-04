@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.like5.board.model.vo.Board;
+import com.kh.like5.board.model.vo.Reply;
+import com.kh.like5.board.model.vo.Report;
 import com.kh.like5.common.model.vo.PageInfo;
 
 @Repository
@@ -93,7 +95,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 *  게시글 상세보기시 조회수 증가
+	 * [커뮤니티] 게시글 상세보기시 조회수 증가
 	 *  @author seong
 	 */
 	
@@ -111,7 +113,66 @@ public class BoardDao {
 		return sqlSession.selectOne("boardMapper.comDetail",bno);
 	}
 	
+	/**
+	 * [커뮤니티] 댓글 | 대댓글 전체 조회
+	 * @author seong
+	 */
 	
+	public ArrayList<Reply>selectReplyList(SqlSessionTemplate sqlSession,int bno){
+		return (ArrayList)sqlSession.selectList("boardMapper.replyList",bno);
+	}
+	
+	
+	/**
+	 * [커뮤니티] 댓글 작성하기
+	 * @author seong
+	 */
+	
+	public int insertReply(SqlSessionTemplate sqlSession,Reply r) {
+		return sqlSession.insert("boardMapper.insertReply",r);
+	}
+	
+	/**
+	 * [커뮤니티] 대댓글 작성하기
+	 * @author seong
+	 */
+	public int insertReplies(SqlSessionTemplate sqlSession,Reply r) {
+		return sqlSession.insert("boardMapper.insertReplies",r);
+	}
+	
+	/**
+	 * [커뮤니티] 게시글 작성하기
+	 * @author seong
+	 */
+	public int insertCommunity(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.insertCommunity",b);
+	}
+	
+	/**
+	 * [커뮤니티] 게시글 삭제하기
+	 * @author seong
+	 */
+	public int deleteCommunity(SqlSessionTemplate sqlSession,int bno) {
+		return sqlSession.update("boardMapper.deleteCommunity",bno);
+	}
+	
+	
+	
+	/**
+	 * [커뮤니티] - 게시글 수정하기
+	 * @author seong
+	 */
+	public int updateCommunity(SqlSessionTemplate sqlSession,Board b) {
+		return sqlSession.update("boardMapper.updateCommunity",b);
+	}
+	
+	/**
+	 * [커뮤니티] - 게시글 신고하기
+	 * @author seong
+	 */
+	public int reportCommunity(SqlSessionTemplate sqlSession,Report r) {
+		return sqlSession.insert("boardMapper.reportCommunity",r);
+	}
 	
 	
 }

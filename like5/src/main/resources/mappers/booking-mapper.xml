@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
  <mapper namespace="bookingMapper">
-  
+
   <resultMap type="Booking" id="bookingResultSet">
   	<id property="bookingNo" column="bookin_no"/>
   	<result property="officeNo" column="office_no"/>
@@ -18,7 +18,7 @@
   	<result property="typeName" column="type_name"/>
   	<result property="price" column="price"/>
   </resultMap>
-  
+
   <resultMap type="Office" id="officeResultSet">
   	<id property="officeNo" column="office_no"/>
   	<result property="branch" column="branch"/>
@@ -30,7 +30,7 @@
   	<result property="price" column="price"/>
   	<result property="offImgPath" column="off_img_path"/>
   </resultMap>
-  
+
   <resultMap type="Attachment" id="attachmentResultSet">
   	<id property="fileNo" column="file_no"/>
   	<result property="refBno" column="ref_bno"/>
@@ -39,7 +39,17 @@
   	<result property="status" column="status"/>
   	<result property="filePath" column="file_path"/>
   </resultMap>
-  
+
+  <resultMap type="Review" id="ReviewResultSet">
+  	<result property="reviewNo" column="review_no"/>
+  	<result property="reviewTitle" column="review_title"/>
+  	<result property="reviewContent" column="review_content"/>
+  	<result property="reviewWriter" column="review_Writer"/>
+  	<result property="reviewStar" column="review_Star"/>
+  	<result property="createDate" column="create_Date"/>
+  	<result property="status" column="status"/>
+  </resultMap>
+
   <select id="selectOfficeList" parameterType="Office" resultMap="officeResultSet">
   	select
   		   distinct o.office_no
@@ -59,7 +69,7 @@
    							    and branch like '%'||#{branch}||'%')
      and branch like '%'||#{branch}||'%'
   </select>
-  
+
   <select id="selectList" parameterType="Office" resultMap="officeResultSet">
   select
 		 o.office_no
@@ -78,13 +88,13 @@
 	 and branch like '%'||#{branch}||'%'
 	 or address like '%'||#{branch}||'%'
   </select>
-  
+
   <select id="selectListCount" resultType="_int">
 	select
 		   count(*)
 	 from  office
   </select>
-  
+
   <select id="selectListAll" parameterType="Office" resultMap="officeResultSet">
   select
 		 o.office_no
@@ -100,7 +110,7 @@
    order
    	  by office_no desc
   </select>
-  
+
   <select id="selectOffice" parameterType="Office" resultMap="officeResultSet">
    select
 		 o.office_no
@@ -115,7 +125,7 @@
 	from office o
    where office_no = #{officeNo}
   </select>
-  
+
   <select id="selectOfficeAtt" parameterType="Attachment" resultMap="attachmentResultSet">
   	select
   		   file_no
@@ -127,7 +137,7 @@
 	 from  attachment
     where  ref_bno = 9
       and  ref_fno = #{officeNo}
-  
+
   </select>
   <insert id="insertOffice" parameterType="Office">
  	insert
@@ -156,7 +166,7 @@
  	  	 , #{offImgPath}
  	  )
   </insert>
-  
+
   <insert id="insertOfficeAtt" parameterType="Attachment">
 	insert
 	  into attachment
@@ -178,7 +188,7 @@
 		 , #{filePath}
 	)
   </insert>
-  
+
   <insert id="insertOfficeReAtt" parameterType="Attachment">
 	insert
 	  into attachment
@@ -200,7 +210,7 @@
 		 , #{filePath}
 	)
   </insert>
-  
+
   <update id="updateOffice" parameterType="Office">
   	update
   		   office
@@ -214,7 +224,7 @@
   	  	 , off_img_path = #{offImgPath}
   	 where office_no = #{officeNo}
   </update>
-  
+
   <update id="updateOfficeAtt" parameterType="Attachment">
 	update
 		   attachment
@@ -222,19 +232,24 @@
 	where  file_no = #{fileNo}
 	  and  ref_fno = #{refFno}
 	  and  ref_bno = 9
-	  and  status = 'Y' 
+	  and  status = 'Y'
   </update>
-  
+
+  <!-- 첨부파일 조회 + 사진 -->
   <select id="selectAtList" resultMap="attachmentResultSet">
   		select
 		       file_no
 		     , file_path
+		     , ref_bno
+		     , ref_fno
+		     , upload_date
+		     , status
 		  from attachment
 		 where ref_bno = 9
 		   and ref_fno = #{refFno}
 		   and status = 'Y'
   </select>
-  
+
   <select id="selectBooking" parameterType="Booking" resultMap="bookingResultSet">
   	select
   		  bookin_no
@@ -253,7 +268,7 @@
   	where office_no = #{officeNo}
   	  and status = 'Y'
   </select>
-  
+
   <insert id="insertBook" parameterType="Booking">
   	insert
   	  into booking
@@ -287,7 +302,7 @@
   	  	 , #{total}
   	  )
   </insert>
-  
+
   <select id="selectListCountBook" resultType="_int">
   	select
 		   count(*)
@@ -295,6 +310,21 @@
 	where  mem_no = #{memNo}
   </select>
 
+	<!-- 리뷰 조회 -->
+	  <select id="selectReview" resultMap="ReviewResultSet">
+		  	select
+		       review_no
+		     , review_title
+		     , review_content
+		     , review_writer
+		     , review_star
+		     , create_date
+		     , office_no
+		     , status
+		  from review
+		 where office_no = #{officeNo}
+		   and status = 'Y'
+		</select>
 	<select id="selectMyBookList" parameterType="Booking" resultMap="bookingResultSet">
 	select
   		  bookin_no
@@ -316,7 +346,7 @@
   	 join office o on(b.office_no = o.office_no)
   	where mem_no = #{memNo}
   	order
-  	   by request_date desc 
+  	   by request_date desc
 	</select>
 	<select id="selectMyBook" parameterType="Booking" resultMap="bookingResultSet">
 	select

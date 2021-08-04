@@ -21,5 +21,6 @@ public class Reply {
 	private String repStatus;
 	private int refRepNo;
 	private int refLevel;
+	private String nickname; // 닉네임
 	
 }

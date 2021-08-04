@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +16,7 @@
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
 
 <style>
-	/*여기부터 메인 css*/
+   /*여기부터 메인 css*/
 
      /*전체 공간*/
     .reservationDetail{
@@ -40,7 +40,7 @@
         padding:20px;
     }
     .fa1{margin-top:-825px;}
-    
+
     /*인터넷/wifi*/
     .wifi{margin-left:30px;}
     .wifi2{margin-left:23px;}
@@ -99,38 +99,57 @@
     	border:1px solid green;
     }
     .fas{color:lightgrey}
+
+    /*별점*/
+    span.star-prototype, span.star-prototype > * {
+    height: 16px;
+    background: url(http://i.imgur.com/YsyS5y8.png) 0 -16px repeat-x;
+    width: 80px;
+    display: inline-block;
+	}
+
+	span.star-prototype > * {
+    background-position: 0 0;
+    max-width:80px;
+	}
+	/*스크롤 이동*/
+	html {scroll-behavior: smooth; /* 부드럽게 */}
 </style>
 </head>
 <body>
-<jsp:include page="../common/header.jsp"/>    
+<jsp:include page="../common/header.jsp"/>
 
-	<br><br>
-	<!--예약 상세페이지-->
+   <br><br>
+   <!--예약 상세페이지-->
     <div class="reservationDetail">
 
         <!--공간 제목,별점-->
         <div class="wrap1">
             <h1><b>${o.branch}</b></h1>
-            <h4>★ 3.5</h4>
-            <h4>후기(10)</h4>
+            <c:forEach var="r" items="${ rv }">
+            	<span class="star-prototype">${r.reviewStar}</span>
+            </c:forEach>
+            <div class="hz" id="section1">
+            <a href="#section2"><h4>후기</h4></a>
+            </div>
         </div>
 
         <br>
 
         <!--메인 사진-->
-        
+        <%--
         <div class="reserveImg">
-        	<div id="demo" class="carousel slide" data-ride="carousel">
+           <div id="demo" class="carousel slide" data-ride="carousel">
 
-			  <!-- Indicators -->
-			  <ul class="carousel-indicators">
-			    <li data-target="#demo" data-slide-to="0" class="active"></li>
-			    <li data-target="#demo" data-slide-to="1"></li>
-			  </ul>
-			
-			  <!-- 슬라이드 부분 -->
+           <!-- Indicators -->
+           <ul class="carousel-indicators">
+             <li data-target="#demo" data-slide-to="0" class="active"></li>
+             <li data-target="#demo" data-slide-to="1"></li>
+           </ul>
+
+           <!-- 슬라이드 부분 -->
 			  <div class="carousel-inner">
-			  
+
 			    <div class="carousel-item active">
 			    	<img src="${o.offImgPath}">
 			    </div>
@@ -140,48 +159,48 @@
 				      <img src="${att.filePath}">
 				    </div>
 				</c:forEach>
-				
-				
-			  </div>
-			
-			  <!-- Left and right controls -->
-			  <a class="carousel-control-prev" href="#demo" data-slide="prev">
-			    <span class="carousel-control-prev-icon"></span>
-			  </a>
-			  <a class="carousel-control-next" href="#demo" data-slide="next">
-			    <span class="carousel-control-next-icon"></span>
-			  </a>
-			
-			</div>
+
+
+           </div>
+
+           <!-- Left and right controls -->
+           <a class="carousel-control-prev" href="#demo" data-slide="prev">
+             <span class="carousel-control-prev-icon"></span>
+           </a>
+           <a class="carousel-control-next" href="#demo" data-slide="next">
+             <span class="carousel-control-next-icon"></span>
+           </a>
+
+         </div>
         </div>
-         
+         --%>
 
         <br><br>
-        
+
         <!-- 세부 공간 선택-->
         <div class="space"><h3><b>세부 공간 선택</b></h3></div> <br>
-        
+
         <div class="space2">
             <div class="space3">
                 <b>호스트의 승인을 기다릴 필요 없이 <br>
                     지금 바로 예약하세요!</b><br><br>
                 <form class="detailForm" action="paymentForm.bk" method="post">
-                
+
                 <b>${o.branch}</b> &nbsp;&nbsp;&nbsp;<b>${o.price} 원 / 1일 </b></b> <br><br><br>
                 <b>체크인</b> <br>
                 <%--flatpickr이용해서 날짜 선택할 수 있게 해주세요 --%>
                 <div class="checkIn"><input type="text" class="startDate" name="startDate"></div>
-                
+
                 <b>체크아웃</b>
                 <div class="checkOut"><input type="text" class="endDate" name="endDate"></div>
                  <br><br><br><br>
-                
+
                 <input type="hidden" name="officeNo" value="${ o.officeNo }">
                 <button type="submit" class="btn btn-danger btn-block">예약 하기</button>
-            	</form>
+               </form>
             </div>
         </div>
- 
+
         <!--시설 안내-->
    <div class="fa1"><h3><b>시설 안내</b></h3></div> <br>
    <div class="facility">
@@ -191,10 +210,10 @@
 
             <div class="print"><i id="printcon" class='fas fa-print' style='font-size:48px'></i></div> <br>
             <div class="print2"><b>프린트</b></div>
-        
-            <div class="car"><i id="carcon" class="fas fa-car" style='font-size:60px'></i></div>  
+
+            <div class="car"><i id="carcon" class="fas fa-car" style='font-size:60px'></i></div>
             <div class="car2"><b>주차</b></div>
-            
+
             <div class="com"><i id="comcon" class="fas fa-laptop" style='font-size:48px'></i></div>
             <div class="com2"><b>PC/노트북</b></div> <br>
 
@@ -209,44 +228,38 @@
 
             <div class="people"><i id="peoplecon" class="fas fa-user" style='font-size:48px'></i></div>
             <div class="people2"><b>매니저</b></div>
-	
-        </div>   
 
-        <br><br> 
+        </div>
+
+        <br><br>
         <!--위치(지도)-->
-       <div><h3><b>위치</b></h3> <br> 
+       <div><h3><b>위치</b></h3> <br>
         <div id="map" style="width:400px;height:400px;"></div> <br><br></div>
-        
-    	<br>
+
+       <br>
         <!--후기-->
-        <div><h3><b>의견 및 소감</b></h3></div> 
-        
-        <hr>
-        
-        <div class="review">
-            <p>
-            <b>강하나</b> <br>
-            2021-05-21 <br>
-            ★★★★ <br>
-            깔끔하고 좋았음.
-            </p>
-        </div>
+        <div><h3><b>의견 및 소감</b></h3></div>
 
         <hr>
 
-        <div class="review">
-            <p>
-            <b>김하늘</b> <br>
-            2021-05-24 <br>
-            ★★★★ <br>
-            오아이스도 없는 사막이다 보이는 끝까지 찾아다녀도 목숨이 있는 때까지 방황하여도 보이는 것은 거친 모래뿐일 것이다 <br>
-            이상의 꽃이 없으면 쓸쓸한 인간에 남는 것은 영락과 부패 뿐이다 낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게....
-            </p>
-        </div>
-</div>       
-	    <br><br><br><br><br><br>
-		<jsp:include page="../common/footer.jsp"/>
-		
+        <c:forEach var="r" items="${ rv }">
+	        <div class="review">
+	            <div class="hz" id="section2">
+	            	<a href="#section1"></a>
+	            </div>
+	            <b>${r.reviewWriter}</b> <br>
+	            ${r.createDate} <br>
+	           	<span class="star-prototype">${r.reviewStar}</span><br>
+	           	${r.reviewContent}
+	        </div>
+
+	        <hr>
+		</c:forEach>
+
+</div>
+       <br><br><br><br><br><br>
+      <jsp:include page="../common/footer.jsp"/>
+
 <script>
 
 <%-- 날짜 가져오기 --%>
@@ -254,8 +267,8 @@ var startDate = localStorage.getItem("startDate");
 var endDate = localStorage.getItem("endDate");
 console.log(startDate);
 $.when($.ready).then(function(){
-	$("input[name=startDate]").val(startDate);
-	$("input[name=endDate]").val(endDate);
+   $("input[name=startDate]").val(startDate);
+   $("input[name=endDate]").val(endDate);
 })
 
 flatpickr(".startDate",{
@@ -275,41 +288,65 @@ flatpickr(".endDate",{
     dateFormat:"Y-m-d"
 });
 
-
+<%--시설 안내 관련 if문 --%>
 <c:if test="${ fn:contains(o.facility, '와이파이') }">
-	$("#wifiIcon").css("color","red");
+   $("#wifiIcon").css("color","red");
 </c:if>
 <c:if test="${ fn:contains(o.facility, '프린트') }">
-	$("#printcon").css("color","red");
+   $("#printcon").css("color","red");
 </c:if>
 <c:if test="${ fn:contains(o.facility, '주차') }">
-	$("#carcon").css("color","red");
+   $("#carcon").css("color","red");
 </c:if>
 <c:if test="${ fn:contains(o.facility, 'PC/노트북') }">
-	$("#comcon").css("color","red");
+   $("#comcon").css("color","red");
 </c:if>
 <c:if test="${ fn:contains(o.facility, 'bar') }">
-	$("#barcon").css("color","red");
+   $("#barcon").css("color","red");
 </c:if>
 <c:if test="${ fn:contains(o.facility, '회의실') }">
-	$("#meetcon").css("color","red");
-</c:if> 
+   $("#meetcon").css("color","red");
+</c:if>
 <c:if test="${ fn:contains(o.facility, '냉/난방시설') }">
-	$("#windcon").css("color","red");
+   $("#windcon").css("color","red");
 </c:if>
 <c:if test="${ fn:contains(o.facility, '매니저') }">
-	$("#peoplecon").css("color","red");
+   $("#peoplecon").css("color","red");
 </c:if>
+
+<%--별점 관련 function--%>
+$.fn.generateStars = function() {
+    return this.each(function(i,e){$(e).html($('<span/>').width($(e).text()*16));});
+};
+
+// 숫자 평점을 별로 변환하도록 호출하는 함수
+$('.star-prototype').generateStars();
+
+<%--스크롤 이동--%>
+$(document).ready(function(){
+    $("a").on('click', function(event) {
+      if (this.hash !== "") {
+        event.preventDefault();
+        var hash = this.hash;
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top
+        }, 800, function(){
+          window.location.hash = hash;
+        });
+      }
+    });
+  });
+
 <%-- kakao map --%>
 
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	mapOption = {
-				center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-				level: 5 // 지도의 확대 레벨
-			};  
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+   mapOption = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
+         };
 
-// 지도를 생성합니다    
-var map = new kakao.maps.Map(mapContainer, mapOption); 
+// 지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption);
 
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
@@ -317,8 +354,8 @@ var geocoder = new kakao.maps.services.Geocoder();
 // 주소로 좌표를 검색합니다
 geocoder.addressSearch('${ o.address }', function(result, status) {
 
-// 정상적으로 검색이 완료됐으면 
-	if (status === kakao.maps.services.Status.OK) {
+// 정상적으로 검색이 완료됐으면
+   if (status === kakao.maps.services.Status.OK) {
 
 var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 console.log(coords);
@@ -336,7 +373,7 @@ infowindow.open(map, marker);
 
 // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 map.setCenter(coords);
-	}
+   }
 });
 </script>
 </body>

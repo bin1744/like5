@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.like5.booking.model.service.BookingService;
 import com.kh.like5.booking.model.vo.Booking;
 import com.kh.like5.booking.model.vo.Office;
+import com.kh.like5.booking.model.vo.Review;
 import com.kh.like5.common.model.vo.Attachment;
 import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.common.template.Pagination;
@@ -230,13 +228,15 @@ public class BookingController {
         
     }
 	*/
-	
+	/*첨부파일 조회 + 사진 + 리뷰 조회*/
 	@RequestMapping("detail.bo")
 	public String officeDetailPage(int ono, Model model) {
 		ArrayList<Attachment> at = bService.selectOfficeAtt(ono);
 		model.addAttribute("at", at);
 		Office o = bService.selectOffice(ono);
 		model.addAttribute("o", o);
+		ArrayList<Review> rv = bService.selectReview(ono);
+		model.addAttribute("rv", rv);
 		
 		return "booking/officeDetail";
 	}

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.like5.booking.model.dao.BookingDao;
 import com.kh.like5.booking.model.vo.Booking;
 import com.kh.like5.booking.model.vo.Office;
+import com.kh.like5.booking.model.vo.Review;
 import com.kh.like5.common.model.vo.Attachment;
 import com.kh.like5.common.model.vo.PageInfo;
 
@@ -114,6 +115,13 @@ public class BookingServiceImpl implements BookingService{
 	@Override
 	public Booking selectBooking(int officeNo) {
 		return bDao.selectBooking(sqlSession, officeNo);
+	}
+	
+	/*리뷰 조회*/
+	@Override
+	public ArrayList<Review> selectReview(int officeNo) {
+		/*System.out.println(officeNo);*/
+		return bDao.selectReview(sqlSession, officeNo);
 	}
 
 	@Override
