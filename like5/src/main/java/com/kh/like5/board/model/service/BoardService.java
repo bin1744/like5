@@ -62,7 +62,7 @@ public interface BoardService {
 	int insertCommunity(Board b);
 	
 	//[커뮤니티] - 글 수정하기
-	
+	int updateCommunity(Board b);
 	//[커뮤니티] - 삭제하기
 	int deleteCommunity(int bno);
 	

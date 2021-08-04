@@ -72,8 +72,17 @@
 								<input type="hidden" name="imgPath" value="${b.imgPath}">
 							</form>
 							
-		
-                       		 
+						<script>
+						function postFormSubmit(num){
+							if(num==1){ // 수정하기
+								$("#postForm").attr("action","comUpdateForm.bo").submit();
+							 	// 선택된 요소에 액션값 부여하고, 바로 submit 시키기 == 메소드 체이닝
+							}else{ // 삭제하기
+								$("#postForm").attr("action","comDelete.bo").submit();
+							}
+						}
+					</script>
+		                       		 
                         <hr>
                     </div>
                 </div>
@@ -81,8 +90,7 @@
             
             
             
-            <!-- 삭제하기 모달창 -->
-             <form  method="post" style="margin-top: 0px;" >
+            	<!-- 삭제하기 모달창 -->
                 <!--ex.아이디랑 글 번호 넘겨서 삭제 (sql문에 따라 보내는 값을 달라질 수 있음)-->
                 <input type="hidden" name="bno" value="${b.bno}" >
                 <div class="container">
@@ -122,18 +130,8 @@
                         </div>
                     </div>
                 </div>
-            </form>    
             
-			<script>
-				function postFormSubmit(num){
-					if(num==1){ // 수정하기
-						$("#postForm").attr("action","comUpdateForm.bo").submit();
-					 	// 선택된 요소에 액션값 부여하고, 바로 submit 시키기 == 메소드 체이닝
-					}else{ // 삭제하기
-						$("#postForm").attr("action","comDelete.bo").submit();
-					}
-				}
-			</script>
+		
 
 
             <form  id="" action="" method="post" style="margin-top: 0px;" >

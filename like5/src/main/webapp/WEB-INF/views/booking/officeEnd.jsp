@@ -6,10 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
     /*전체 공간*/
     .reservation{
@@ -20,15 +16,16 @@
 		margin-top:50px !important;
 		border:1px solid lightgray;
 		padding:140px !important;
+		align-items:center;
     }
     /*예약 정보 box*/
     .box{
-        width:750px !important;
-        height:300px !important;
-        position:relative !important;
-        border:1px solid lightgray !important;
-        padding:20px !important;
-        margin-left:90px;
+        width:750px;
+        height:300px;
+        border:1px solid lightgray;
+        padding:20px;
+        margin:auto;
+		position:relative;	
     }
     /*예약 가운데 선*/
     .updown{ 
