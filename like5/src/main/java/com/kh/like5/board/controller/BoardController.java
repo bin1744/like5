@@ -240,9 +240,8 @@ public class BoardController {
 	 */
 	@ResponseBody
 	@RequestMapping("insertReplies.bo")
-	public String insertReplies(Reply r,Model model) {
+	public String insertReplies(Reply r,Board b,Model model) {
 		int result = bService.insertReplies(r);
-		
 		return result>0?"success":"fail";
 	}
 	
