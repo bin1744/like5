@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.like5.board.model.dao.BoardDao;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Reply;
+import com.kh.like5.board.model.vo.Report;
 import com.kh.like5.common.model.vo.PageInfo;
 
 @Service
@@ -21,8 +22,6 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
-	
 	
 	
 	/**
@@ -113,7 +112,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * 댓글 | 대댓글 전체 조회
+	 * [커뮤니티] 댓글 | 대댓글 전체 조회
 	 * @author seong
 	 */
 	@Override
@@ -122,7 +121,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	/**
-	 * 댓글 작성하기
+	 * [커뮤니티] 댓글 작성하기
 	 * @author seong
 	 */
 	
@@ -132,13 +131,53 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * 대댓글 작성하기
+	 * [커뮤니티] 대댓글 작성하기
 	 * @author seong
 	 */
 	@Override
 	public int insertReplies(Reply r) {
 		return bDao.insertReplies(sqlSession, r);
 	}
+	
+	/**
+	 * [커뮤니티] 게시글 작성하기
+	 * @author seong
+	 */
+	
+	@Override
+	public int insertCommunity(Board b) {
+		return bDao.insertCommunity(sqlSession, b);
+	}
+
+	/**
+	 * [커뮤니티] 게시글 삭제하기
+	 * @author seong
+	 */
+	
+	@Override
+	public int deleteCommunity(int bno) {
+		return bDao.deleteCommunity(sqlSession, bno);
+	}
+
+	/**
+	 * [커뮤니티] - 게시글 수정하기
+	 * @author seong
+	 */
+
+	@Override
+	public int updateCommunity(Board b) {
+		return bDao.updateCommunity(sqlSession, b);
+	}
+	
+	/**
+	 * [커뮤니티] - 게시글 신고하기
+	 * @author seong
+	 */
+	@Override
+	public int reportCommunity(Report r) {
+		return bDao.reportCommunity(sqlSession, r);
+	}
+	
 	
 	/**
 	 *  [칼럼] - 전체 목록 리스트 조회
@@ -161,6 +200,113 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	
+	//------------------ 한솔 -------------------------
+	
+	/**
+	 * [QnA] - 총 게시글 개수 조회
+	 * @author Hansol
+	 */
+	@Override
+	public int qnaListCount() {
+		return bDao.qnaListCount(sqlSession);
+	}
+
+	/**
+	 * [QnA] - 사용자가 요청한 페이지에 뿌려줄 리스트
+	 * @author Hansol
+	 */
+	@Override
+	public ArrayList<Board> qnaList(PageInfo pi) {
+		return bDao.qnaList(sqlSession, pi);
+	}
+
+	/**
+	 * [QnA] - 게시글 작성
+	 * @author Hansol
+	 */
+	@Override
+	public int insertQna(Board b) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/**
+	 * [QnA] - 실제 게시글 조회
+	 * @author Hansol
+	 */
+	@Override
+	public Board qnaDetail(int bno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * [QnA] - 게시글 삭제(status값 변경)
+	 * @author Hansol
+	 */
+	@Override
+	public int deleteQna(int bno) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/**
+	 * [QnA] - 게시글 수정
+	 * @author Hansol
+	 */
+	@Override
+	public int updateQna(Board b) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/**
+	 * [QnA] - 키워드 검색 총 게시글 개수 조회
+	 * @author Hansol
+	 */
+	@Override
+	public int qnaSearchListCount(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/**
+	 * [QnA] - 키워드 검색 결과 조희
+	 * @author Hansol
+	 */
+	@Override
+	public ArrayList<Board> qnaSearchListCount(PageInfo pi, HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * [QnA] - 정렬 기준별 총 게시글 개수 조회
+	 * @author Hansol
+	 */
+	@Override
+	public int qnaOrderByListCount(String condition) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/**
+	 * [QnA] - 정렬 기준별 결과 조회
+	 * @author Hansol
+	 */
+	@Override
+	public ArrayList<Board> qnaOrderByCount(PageInfo pi, String condition) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+
 
 
 

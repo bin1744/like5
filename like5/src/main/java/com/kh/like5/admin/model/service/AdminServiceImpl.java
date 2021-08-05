@@ -3,6 +3,7 @@ package com.kh.like5.admin.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.like5.admin.model.vo.Faq;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Report;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -165,6 +166,31 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public ArrayList<Report> getSearchReportList(PageInfo pi, HashMap<String, String> map) {
 		return adDao.getSearchReportList(sqlSession, pi, map);
+	}
+
+	@Override
+	public ArrayList<Faq> getFaqList() {
+		return adDao.getFaqList(sqlSession);
+	}
+
+	@Override
+	public Faq getFaq(int fno) {
+		return adDao.getFaq(sqlSession, fno);
+	}
+
+		@Override
+	public int insertFaq(Faq f) {
+		return adDao.insertFaq(sqlSession, f);
+	}
+
+	@Override
+	public int updateFaq(Faq f) {
+		return adDao.updateFaq(sqlSession, f);
+	}
+
+	@Override
+	public int deleteFaq(int fno) {
+		return adDao.deleteFaq(sqlSession, fno);
 	}
 
 	

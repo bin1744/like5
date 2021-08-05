@@ -119,7 +119,7 @@
 	                <a href="donation.ad">후원관리</a>
 	            </li>
 	            <li>
-	                <a href="booking.ad">공간대여관리</a>
+	                <a href="list.bk">공간대여관리</a>
 	            </li>
 	        </ul>
 	    </aside>
@@ -201,18 +201,31 @@
                     </c:otherwise>
               		</c:choose>
                 <!-- 반복문으로  -->
-                    	
-                <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage }">
-                	<c:choose>
-                		<c:when test="${!empty condition }">
-                			<li class="page-item"><a class="page-link" href="searchCs.ad?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
-                		</c:when>
-                		<c:otherwise>
-                			<li class="page-item"><a class="page-link" href="csTwo.ad?currentPage=${ p }">${ p }</a></li>
-                		</c:otherwise>
-                	</c:choose>
-                </c:forEach>
-                    
+
+				<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+					<c:choose>
+						<c:when test="${!empty condition}">
+							<c:choose>
+								<c:when test="${pi.currentPage eq p}">
+									<li class="page-item active"><a class="page-link" href="searchCs.ad?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${p}</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item"><a class="page-link" href="searchCs.ad?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${p}</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${pi.currentPage eq p}">
+									<li class="page-item active"><a class="page-link" href="csTwo.ad?currentPage=${ p }">${p}</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item"><a class="page-link" href="csTwo.ad?currentPage=${ p }">${p}</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
                     	
                 <c:choose>
                    	<c:when test="${ pi.currentPage eq pi.maxPage }">

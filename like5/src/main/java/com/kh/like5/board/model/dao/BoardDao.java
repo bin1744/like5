@@ -9,17 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Reply;
+import com.kh.like5.board.model.vo.Report;
 import com.kh.like5.common.model.vo.PageInfo;
 
 @Repository
 public class BoardDao {
 
-	
-	
-	
-	
-	
-	
 	//-----------------------성은
 	
 	/**
@@ -94,7 +89,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 *  게시글 상세보기시 조회수 증가
+	 * [커뮤니티] 게시글 상세보기시 조회수 증가
 	 *  @author seong
 	 */
 	
@@ -113,7 +108,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 * 댓글 | 대댓글 전체 조회
+	 * [커뮤니티] 댓글 | 대댓글 전체 조회
 	 * @author seong
 	 */
 	
@@ -123,7 +118,7 @@ public class BoardDao {
 	
 	
 	/**
-	 * 댓글 작성하기
+	 * [커뮤니티] 댓글 작성하기
 	 * @author seong
 	 */
 	
@@ -132,11 +127,68 @@ public class BoardDao {
 	}
 	
 	/**
-	 * 대댓글 작성하기
+	 * [커뮤니티] 대댓글 작성하기
 	 * @author seong
 	 */
 	public int insertReplies(SqlSessionTemplate sqlSession,Reply r) {
 		return sqlSession.insert("boardMapper.insertReplies",r);
+	}
+	
+	/**
+	 * [커뮤니티] 게시글 작성하기
+	 * @author seong
+	 */
+	public int insertCommunity(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.insertCommunity",b);
+	}
+	
+	/**
+	 * [커뮤니티] 게시글 삭제하기
+	 * @author seong
+	 */
+	public int deleteCommunity(SqlSessionTemplate sqlSession,int bno) {
+		return sqlSession.update("boardMapper.deleteCommunity",bno);
+	}
+	
+	
+	
+	/**
+	 * [커뮤니티] - 게시글 수정하기
+	 * @author seong
+	 */
+	public int updateCommunity(SqlSessionTemplate sqlSession,Board b) {
+		return sqlSession.update("boardMapper.updateCommunity",b);
+	}
+	
+	/**
+	 * [커뮤니티] - 게시글 신고하기
+	 * @author seong
+	 */
+	public int reportCommunity(SqlSessionTemplate sqlSession,Report r) {
+		return sqlSession.insert("boardMapper.reportCommunity",r);
+	}
+	
+	
+	
+	//------------------ 한솔 -------------------------
+
+	/**
+	 * [QnA] - 게시글 리스트 페이지 조회 시 유효한 게시글 총 개수 조회
+	 * @author Hansol
+	 */
+	public int qnaListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("boardMapper.qnaListCount");
+	}
+	
+	/**
+	 * [QnA] - 사용자가 요청한 페이지에 뿌려줄 리스트 조회 (요청 페이지 번호, 불러올 글 개수)
+	 * @author Hansol
+	 */
+	public ArrayList<Board> qnaList(SqlSessionTemplate sqlSession,PageInfo pi){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.qnaList", null, rowBounds);
 	}
 	
 	

@@ -78,11 +78,18 @@ public class BookingServiceImpl implements BookingService{
 	}
 
 	@Override
-	public int deleteOffice(Office o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteOffice(int ono) {
+		int result = bDao.deleteOffice(sqlSession, ono);
+		return result;
 	}
-
+	
+	@Override
+	public int deleteOfficeWithAtt(int ono) {
+		int result1 = bDao.deleteOffice(sqlSession, ono);
+		int result2 = bDao.deleteOfficeAtt(sqlSession, ono);
+		return result1 * result2;
+	}
+	
 	@Override
 	public int selectSearchListCount(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
@@ -122,6 +129,31 @@ public class BookingServiceImpl implements BookingService{
 	public ArrayList<Review> selectReview(int officeNo) {
 		/*System.out.println(officeNo);*/
 		return bDao.selectReview(sqlSession, officeNo);
+	}
+
+	@Override
+	public ArrayList<Booking> selectMyBookList(int memNo, PageInfo pi) {
+		return bDao.selectMyBookList(sqlSession, memNo, pi);
+	}
+
+	@Override
+	public int selectListCountBook(int memNo) {
+		return bDao.selectListCountBook(sqlSession, memNo);
+	}
+
+	@Override
+	public Booking selectMyBook(int bookingNo) {
+		return bDao.selectMyBook(sqlSession, bookingNo);
+	}
+
+	@Override
+	public int updateMyBook(Booking b) {
+		return  bDao.updateMyBook(sqlSession, b);
+	}
+
+	@Override
+	public int deleteMyBook(int bno) {
+		return bDao.deleteMyBook(sqlSession, bno);
 	}
 
 }

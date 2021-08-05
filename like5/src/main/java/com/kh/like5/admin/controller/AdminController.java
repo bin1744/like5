@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import com.kh.like5.admin.model.vo.Faq;
 import com.kh.like5.board.model.vo.Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,12 +35,6 @@ public class AdminController {
 	@RequestMapping("about.ad")
 	public String about() {
 		return "admin/about";
-	}
-
-	// faq 페이지
-	@RequestMapping("faq.ad")
-	public String faq() {
-		return "admin/faq";
 	}
 
 	// tags 페이지
@@ -371,6 +366,83 @@ public class AdminController {
 		return mv;
 
 	}
-	
+
+	// FAQ 페이지
+	@RequestMapping("faq.ad")
+	public ModelAndView faqList(ModelAndView mv) {
+
+		ArrayList<Faq> list = adService.getFaqList();
+
+		mv.addObject("list", list)
+				.setViewName("admin/faq");
+
+		adService.getFaqList().forEach(faq -> log.info("list: " + faq));
+
+		return mv;
+	}
+
+	// FAQ 작성하기 페이지
+	@RequestMapping("enrollForm.faq")
+	public String faqEnrollForm() {
+		return "admin/faqEnrollForm";
+	}
+
+	// FAQ 작성 기능
+	@RequestMapping("insertFaq.ad")
+	public String insertFaq(Faq f, HttpSession session, Model model) {
+
+		int result = adService.insertFaq(f);
+
+		if (result > 0) {
+			session.setAttribute("alertMsg", "등록 성공");
+			return "redirect:faq.ad";
+		} else {
+			model.addAttribute("errorMsg", "등록 실패");
+			return "common/errorPage";
+		}
+
+	}
+
+	// FAQ 수정하기 페이지
+	@RequestMapping("updateForm.faq")
+	public String faqUpdateForm(int fno, Model model) {
+
+		model.addAttribute("f", adService.getFaq(fno));
+
+		return "admin/faqUpdateForm";
+
+	}
+
+	// FAQ 수정 기능
+	@RequestMapping("updateFaq.ad")
+	public String updateFaq(Faq f, HttpSession session, Model model) {
+
+		int result = adService.updateFaq(f);
+
+		if(result > 0) {
+			session.setAttribute("alertMsg", "수정 성공");
+			return "redirect:faq.ad";
+		}else {
+			model.addAttribute("errorMsg", "수정 실패");
+			return "common/errorPage";
+		}
+
+	}
+
+	// FAQ 삭제 기능
+	@RequestMapping("deleteFaq.ad")
+	public String deleteFaq(int fno, HttpSession session, Model model) {
+
+		int result = adService.deleteFaq(fno);
+
+		if(result > 0) {
+			session.setAttribute("alertMsg", "삭제 성공");
+			return "redirect:faq.ad";
+		}else {
+			model.addAttribute("errorMsg", "삭제 실패");
+			return "common/errorPage";
+		}
+
+	}
 
 }
