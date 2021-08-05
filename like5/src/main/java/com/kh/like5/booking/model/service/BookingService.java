@@ -30,7 +30,8 @@ public interface BookingService {
 	int updateOffice(Office o, ArrayList<Attachment> list);
 
 	//5.오피스 삭제(관리자)
-	int deleteOffice(Office o);
+	int deleteOffice(int ono);
+	int deleteOfficeWithAtt(int ono);
 
 	//6.검색 + 페이징(관리자)
 	int selectSearchListCount(HashMap<String, String> map);
@@ -57,4 +58,8 @@ public interface BookingService {
 	//11.2.마이페이지 상세 조회
 	Booking selectMyBook(int bookingNo);
 	ArrayList<Review> selectReview(int officeNo);
+	//11.3 마이페이지 예약 수정
+	int updateMyBook(Booking b);
+	//11.4 마이페이지 예약 취소
+	int deleteMyBook(int bno);
 }

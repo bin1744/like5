@@ -70,13 +70,15 @@ public class BookingController {
 	}
 	
 	@RequestMapping("detail.bk")
-	public ModelAndView selectOffice(int ono, ModelAndView mv) {
+	public ModelAndView selectOffice(int ono, ModelAndView mv,HttpSession session) {
 		int officeNo = ono;
 		//attachment에도 접근해서 list로 가져와서 화면에 뿌려줘야함...
 		Office o = bService.selectOffice(officeNo);
 		ArrayList<Attachment> list = bService.selectOfficeAtt(officeNo);
-		System.out.println(list);
+		//System.out.println(list);
 		if(o != null) {
+			session.setAttribute("ott", o);
+			session.setAttribute("alist", list);
 			mv.addObject("o", o).setViewName("booking/aOfficeDetailView");
 			mv.addObject("list", list).setViewName("booking/aOfficeDetailView");
 		} else {
@@ -178,7 +180,7 @@ public class BookingController {
 					String changeName = saveFile(refile[i], session);
 					o.setOffImgPath("resources/images/" + changeName);
 				} else if(att.getFileNo() != 0) {//기존파일이 존재할경우
-					System.out.println(att.getFilePath());//왜 두개가 찍히니--> 배열로 안 가져오니까
+					//System.out.println(att.getFilePath());//왜 두개가 찍히니--> 배열로 안 가져오니까
 					String filePath[] = att.getFilePath().split(",");
 					//기존 것 삭제
 					new File(session.getServletContext().getRealPath(filePath[0])).delete();
@@ -207,6 +209,46 @@ public class BookingController {
 			model.addAttribute("errorMsg", "업데이트실패");
 			return "common/errorPage";
 		}
+	}
+	
+	
+	@RequestMapping("deleteOffice.bk")
+	public String deleteOffice(int ono, HttpSession session , HttpServletRequest request, Model model) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		String offImgPath = ((Office)request.getSession().getAttribute("ott")).getOffImgPath();
+		ArrayList<Attachment> list = ((ArrayList)request.getSession().getAttribute("alist"));
+		System.out.println(list);
+		//오피스 단독만 삭제
+		if(list.isEmpty()) {
+			int result = bService.deleteOffice(ono);
+			
+			if(result > 0) {
+				
+				new File(session.getServletContext().getRealPath(offImgPath)).delete();
+				session.setAttribute("alertMsg", "삭제 성공");
+				return "redirect:/list.bk";
+				
+			} else {
+				session.setAttribute("errorMsg", "삭제 실패");
+				return "common/errorPage";
+			}
+			//첨부파일이 있을경우에 같이 삭제
+		} else {
+			int result = bService.deleteOfficeWithAtt(ono);
+			
+			if(result > 0) {
+				new File(session.getServletContext().getRealPath(offImgPath)).delete();
+				for(int i=0; i<list.size(); i++) {
+					new File(session.getServletContext().getRealPath(list.get(i).getFilePath())).delete();
+				}
+				session.setAttribute("alertMsg", "삭제 성공");
+				return "redirect:/list.bk";
+			} else {
+				session.setAttribute("errorMsg", "삭제 실패");
+				return "common/errorPage";
+			}
+		}
+		
 	}
 	
 	/**
@@ -311,5 +353,33 @@ public class BookingController {
 	public String selectMyBook(int bookingNo) {
 		Booking b = bService.selectMyBook(bookingNo);
 		return new Gson().toJson(b);
+	}
+	
+	@RequestMapping("modifyMyBook.bk")
+	public String updateMyBook(Booking b, HttpServletRequest request, HttpSession session, int bookNo, Model model) {
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		b.setBookingNo(bookNo);
+		int result = bService.updateMyBook(b);
+		if(result > 0) {
+			return "redirect:/myBookList.bk?mno=" + memNo;
+		} else {
+			model.addAttribute("errorMsg", "예약수정실패");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	@RequestMapping("cancelMyBook.bk")
+	public String deleteMyBook(int bno, HttpServletRequest request, HttpSession session, Model model) {
+		System.out.println(bno);
+		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		int result = bService.deleteMyBook(bno);
+		
+		if(result>0) {
+			return "redirect:/myBookList.bk?mno=" + memNo;
+		} else {
+			model.addAttribute("errorMsg", "예약수정실패");
+			return "common/errorPage";
+		}
 	}
 }
