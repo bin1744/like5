@@ -9,14 +9,47 @@ import com.kh.like5.board.model.vo.Report;
 import com.kh.like5.common.model.vo.PageInfo;
 
 public interface BoardService {
+	
+	//------------------ 한솔 -------------------------
+	
+	// [QnA]
+	
+	// 1. 게시글 리스트 페이지 조회
+	// 총 게시글 개수 조회
+	int qnaListCount();
+	// 사용자가 요청한 페이지에 뿌려줄 리스트
+	ArrayList<Board> qnaList(PageInfo pi);
+	
+	// 2. 게시글 작성
+	int insertQna(Board b);
+	
+	// 3. 게시글 상세조회
+	// 상세조회 요청 시 조회수 증가 (중복이어서 주석처리 / 추후 삭제 예정)
+	// int increaseCount(int bno);
+	// 실제 게시글 조회
+	Board qnaDetail(int bno);
+	
+	// 4. 게시글 삭제(status값 변경)
+	int deleteQna(int bno);
+	
+	// 5. 게시글 수정
+	int updateQna(Board b);
+	
+	// 6. 키워드 검색
+	// 키워드 검색 총 게시글 개수 조회
+	int qnaSearchListCount(HashMap<String, String> map);
+	// 키워드 검색 결과 조희
+	ArrayList<Board>qnaSearchListCount(PageInfo pi, HashMap<String, String> map);
+	
+	// 7. 정렬 기준별 조회
+	// 정렬 기준별 총 게시글 개수 조회
+	int qnaOrderByListCount(String condition);
+	// 정렬 기준별 결과 조회
+	ArrayList<Board>qnaOrderByCount(PageInfo pi, String condition);
+	
+	// 8. 댓글, 대댓글 관련 (중복이어서 작성 X)
 
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	//-------------------성은-------------------------

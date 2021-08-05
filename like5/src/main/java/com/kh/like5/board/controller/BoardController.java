@@ -32,35 +32,24 @@ public class BoardController {
 	@Autowired
 	private BoardService bService;
 	
-	//------------------ 한솔-------------------------
+	//------------------ 한솔 -------------------------
 	
 	/**
 	 * [한솔] QnA 게시글 리스트 페이지 
 	 */
-	@RequestMapping("qList.bo")
-	public String qList() {
-		return "board/qna/qnaListView";
-	}
-	
-	/**
-	 * [한솔] QnA 게시글 작성 페이지
-	 */
-	
-	@RequestMapping("qEnrollForm.bo")
-	public String qEnrollForm() {
+	@RequestMapping("qnaList.bo")
+	public ModelAndView qnaList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		int listCount = bService.qnaListCount();
 		
-		return "board/qna/qnaEnrollForm";
-	}
-	
-	/**
-	 * [한솔] QnA 게시글 상세 페이지
-	 * 		 → 별도 가공처리 아직 X, 페이지 확인용으로 연결만 해둠
-	 */
-	
-	@RequestMapping("qDetail.bo")
-	public String qDetail() {
+		// 페이징바 5개, 한 페이지당 글 10개 -> 추후 테스트 후 너무 길면 수정할 것
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 7);
+		ArrayList<Board> qnaList = bService.qnaList(pi);
 		
-		return "board/qna/qnaDetailView";
+		mv.addObject("pi", pi)
+		  .addObject("qnaList", qnaList)
+		  .setViewName("board/qna/qnaListView");
+		
+		return mv;
 	}
 	
 	

@@ -24,8 +24,6 @@ public class BoardServiceImpl implements BoardService {
 	private SqlSessionTemplate sqlSession;
 	
 	
-	
-	
 	/**
 	 *  [커뮤니티] 전체 목록 리스트 페이징 처리시 필요한 게시글 전체 count
 	 *  @author seong
@@ -199,6 +197,108 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public Board colDetail(int bno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	
+	//------------------ 한솔 -------------------------
+	
+	/**
+	 * [QnA] - 총 게시글 개수 조회
+	 * @author Hansol
+	 */
+	@Override
+	public int qnaListCount() {
+		return bDao.qnaListCount(sqlSession);
+	}
+
+	/**
+	 * [QnA] - 사용자가 요청한 페이지에 뿌려줄 리스트
+	 * @author Hansol
+	 */
+	@Override
+	public ArrayList<Board> qnaList(PageInfo pi) {
+		return bDao.qnaList(sqlSession, pi);
+	}
+
+	/**
+	 * [QnA] - 게시글 작성
+	 * @author Hansol
+	 */
+	@Override
+	public int insertQna(Board b) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/**
+	 * [QnA] - 실제 게시글 조회
+	 * @author Hansol
+	 */
+	@Override
+	public Board qnaDetail(int bno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * [QnA] - 게시글 삭제(status값 변경)
+	 * @author Hansol
+	 */
+	@Override
+	public int deleteQna(int bno) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/**
+	 * [QnA] - 게시글 수정
+	 * @author Hansol
+	 */
+	@Override
+	public int updateQna(Board b) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/**
+	 * [QnA] - 키워드 검색 총 게시글 개수 조회
+	 * @author Hansol
+	 */
+	@Override
+	public int qnaSearchListCount(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/**
+	 * [QnA] - 키워드 검색 결과 조희
+	 * @author Hansol
+	 */
+	@Override
+	public ArrayList<Board> qnaSearchListCount(PageInfo pi, HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * [QnA] - 정렬 기준별 총 게시글 개수 조회
+	 * @author Hansol
+	 */
+	@Override
+	public int qnaOrderByListCount(String condition) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/**
+	 * [QnA] - 정렬 기준별 결과 조회
+	 * @author Hansol
+	 */
+	@Override
+	public ArrayList<Board> qnaOrderByCount(PageInfo pi, String condition) {
 		// TODO Auto-generated method stub
 		return null;
 	}

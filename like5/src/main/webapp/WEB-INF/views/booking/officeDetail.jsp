@@ -137,7 +137,7 @@
         <br>
 
         <!--메인 사진-->
-        <%--
+        <%--DB추가 완료 --%>
         <div class="reserveImg">
            <div id="demo" class="carousel slide" data-ride="carousel">
 
@@ -148,19 +148,15 @@
            </ul>
 
            <!-- 슬라이드 부분 -->
-			  <div class="carousel-inner">
-
+		   <div class="carousel-inner">
 			    <div class="carousel-item active">
 			    	<img src="${o.offImgPath}">
 			    </div>
-			    <%-- 신원: 일단 오류나서 땜질해서 썼어요 --%>
-			    <c:forEach var="att" items="${ at }">
+			    <c:forEach var="i" begin="1" end="${ fn:length(at)-1 }">
 				    <div class="carousel-item">
-				      <img src="${att.filePath}">
+				      <img src="${at.get(i).filePath}">
 				    </div>
 				</c:forEach>
-
-
            </div>
 
            <!-- Left and right controls -->
@@ -173,7 +169,7 @@
 
          </div>
         </div>
-         --%>
+         
 
         <br><br>
 

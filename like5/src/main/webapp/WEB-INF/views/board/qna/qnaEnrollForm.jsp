@@ -29,7 +29,7 @@
 				<div class="qnaBottomLeft">
 					<!-- 제목, 태그, 본문 작성 영역
 						 [novalidate] <form>이 유효성검사(검사 후 경고 안내문 출력)를 하지 않도록 지정 -->
-					<form action="/action_page.php" class="qnaWrite" novalidate>
+					<form action="" class="qnaWrite" novalidate>
 						<!-- 제목 영역 -->
 						<div class="form-group">
 							<label for="qTitle">
@@ -47,7 +47,7 @@
 						<div class="form-group">
 							<label for="qTag">
 								<button type="button" class="btn btn-secondary" disabled>태그</button>
-								&nbsp;&nbsp;해시태그(#)와 태그 이름을 입력한 후 반점(,)으로 구분해주세요!&nbsp;&nbsp;<i>ex)#JAVA, AWS, ...</i>
+								&nbsp;&nbsp;해시태그(#)와 태그 이름을 입력한 후 띄어쓰기로 구분해주세요!&nbsp;&nbsp;<i>ex)#JAVA #AWS ...</i>
 							</label>
 							<input type="text" class="form-control" id="qTag"
 								placeholder="우측에서 사용 중인 태그를 알아보고 질문과 관련있는 태그를 입력해주세요." name="qTag" required>
@@ -89,7 +89,7 @@
 						<!-- 버튼 영역 -->
 						<div class="w3-container w3-right-align w3-margin-top">
 							<button type="submit" class="w3-button w3-white w3-border w3-border-gray w3-round">임시저장</button>
-							<button type="submit" class="btn btn-danger">작성하기</button>
+							<button type="submit" class="btn btn-danger" id="submitButton">작성하기</button>
 						</div>
 						<!-- 버튼 영역 끝 -->
 					</form>
@@ -106,6 +106,7 @@
 						</div>
 						<input class="tagInput" type="text" placeholder="영어로 태그를 검색해보세요 (대/소문자 구분 없음)"
 							id="tagInput" onkeyup="tagSearch()">
+						<!-- 리스트를 DB에서 가져오면 좋을텐데..! -->
 						<table class="w3-table w3-striped w3-bordered w3-centered" id="tagTable">
 							<tr><td>JAVA</td></tr>
 							<tr><td>JavaScript</td></tr>
@@ -218,14 +219,14 @@
 		}
 
 		
-		// 양식 제출 관련 유효성 검사 (필수 필드가 안채워져있을 경우 제출X)
+		// 양식 제출 관련 유효성 검사
 		(function() {
 		'use strict';
 		window.addEventListener('load', function() {
-			// 유효성 검사 할 양식을 가져옴
 			var forms = document.getElementsByClassName('qnaWrite');
-			// 루프 오버 및 미입력 시 제출 방지
 			var validation = Array.prototype.filter.call(forms, function(form) {
+			// 임시저장/작성하기 모두 submit이어도 두 개를 분리해서 적용할 수는 없을까?
+			// 이 고민이 해결되면 임시저장 alert 설정하기
 			form.addEventListener('submit', function(event) {
 				if (form.checkValidity() === false) {
 				event.preventDefault();

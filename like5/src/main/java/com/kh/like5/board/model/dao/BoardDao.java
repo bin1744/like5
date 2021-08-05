@@ -15,12 +15,6 @@ import com.kh.like5.common.model.vo.PageInfo;
 @Repository
 public class BoardDao {
 
-	
-	
-	
-	
-	
-	
 	//-----------------------성은
 	
 	/**
@@ -172,6 +166,29 @@ public class BoardDao {
 	 */
 	public int reportCommunity(SqlSessionTemplate sqlSession,Report r) {
 		return sqlSession.insert("boardMapper.reportCommunity",r);
+	}
+	
+	
+	
+	//------------------ 한솔 -------------------------
+
+	/**
+	 * [QnA] - 게시글 리스트 페이지 조회 시 유효한 게시글 총 개수 조회
+	 * @author Hansol
+	 */
+	public int qnaListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("boardMapper.qnaListCount");
+	}
+	
+	/**
+	 * [QnA] - 사용자가 요청한 페이지에 뿌려줄 리스트 조회 (요청 페이지 번호, 불러올 글 개수)
+	 * @author Hansol
+	 */
+	public ArrayList<Board> qnaList(SqlSessionTemplate sqlSession,PageInfo pi){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.qnaList", null, rowBounds);
 	}
 	
 	

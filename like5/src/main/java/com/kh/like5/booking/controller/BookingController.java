@@ -282,12 +282,15 @@ public class BookingController {
 		
 		return "booking/officeDetail";
 	}
-	
+	/*날짜 선택에 따른 시작,끝 추가*/
 	@RequestMapping("paymentForm.bk")
-	public String paymentForm(int officeNo, Model model) {
+	public String paymentForm(int officeNo, Model model, String startDate, String endDate) {
 		
 		Office o = bService.selectOffice(officeNo);
 		model.addAttribute("o", o);	
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		//System.out.println(o);
 		return "booking/bPayment";
 	}
 	

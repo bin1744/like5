@@ -51,11 +51,11 @@ public interface BookingService {
 	//9. 예약정보조회
 	Booking selectBooking(int officeNo);
 	
-	//10. 리뷰 조회
-	//11. 마이페이지 예약 조회 + 페이징
+	//10. 마이페이지 예약 조회 + 페이징
 	int selectListCountBook(int memNo);
 	ArrayList<Booking> selectMyBookList(int memNo, PageInfo pi);
-	//11.2.마이페이지 상세 조회
+	
+	//11. 마이페이지 상세 조회
 	Booking selectMyBook(int bookingNo);
 	ArrayList<Review> selectReview(int officeNo);
 	//11.3 마이페이지 예약 수정
