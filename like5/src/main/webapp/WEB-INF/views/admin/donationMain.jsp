@@ -110,7 +110,7 @@
 	                  <a class="active" href="donation.ad">후원관리</a>
 	              </li>
 	              <li>
-	                  <a href="booking.ad">공간대여관리</a>
+	                  <a href="list.bk">공간대여관리</a>
 	              </li>
 	        </ul>
 	    </aside>
