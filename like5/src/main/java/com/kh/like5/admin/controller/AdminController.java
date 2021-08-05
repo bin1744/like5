@@ -19,6 +19,7 @@ import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.common.template.Pagination;
 import com.kh.like5.member.model.vo.Customer;
 import com.kh.like5.member.model.vo.Member;
+import com.kh.like5.member.model.vo.Sponsorship;
 
 import lombok.extern.java.Log;
 
@@ -190,25 +191,69 @@ public class AdminController {
 	
 	// 후원관리 - 메인페이지 불러오기 & 리스트 조회
 	@RequestMapping("donation.ad")
-	public String donaMain() {
-		return "admin/donationMain";
+	public ModelAndView donaMain(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		// 우선 페이징 처리를 위해서는 총 갯수를 알아야겠징
+		int listCount = adService.selectSponCount();
+		// 페이징 처리 & SponList 받아오기
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+    	ArrayList<Sponsorship> list = adService.selectSponList(pi);
+		
+    	mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .setViewName("admin/donationMain");
+    	
+		return mv;
 	}
 	
 	// 후원관리 - 검색 기능
-	
+	@RequestMapping("searchDona.ad")
+	public ModelAndView searchDonaList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, String condition , String keyword) {
+		HashMap<String,String> map = new HashMap<>();
+    	map.put("condition", condition);
+    	map.put("keyword", keyword);
+    	
+    	int listCount = adService.searchDonaCount(map);
+    	// 페이징 처리 및 리스트 받아오기
+    	PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+    	ArrayList<Sponsorship> list = adService.searchDonaList(pi,map);
+    	
+    	mv.addObject("pi",pi)
+	  	  .addObject("list",list)
+	  	  .addObject("condition", condition)
+	  	  .addObject("keyword", keyword)
+	  	  .setViewName("admin/donationMain");
+	  	
+	  	return mv;
+    	
+	}
 	
 	// 후원관리 - 상세 페이지로 넘어가기 => 후원내역
 	@RequestMapping("donaDetailOne.ad")
-	public String donaDetailOne() {
-		return "admin/donationDetailOne";
+	public ModelAndView donaDetailOne(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage ) {
+		// 특정회원의 smem_no를 받아와서 넘겨주면서 페이징 처리도 해줘야 한다 이말이야...^^
+		// 내역을 페이징 처리하고(후원한 회원들 조회하는 sql문 기준임==> list2가 기준이 되는거징!!!)
+		int smemNo = 5;
+		int listCount = adService.selectSponsorCount(smemNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		// 리스트도 조회해 와야한다궁(list1== smem_no회원& list2 == 후원한 회원들 정보)
+		Sponsorship spMem = adService.selectSponMem(smemNo); // 얘는 하나니까 페이징 처리를 할 필요가 없음
+		ArrayList<Sponsorship> list2 = adService.selectSponsorList(pi, smemNo);	//
+		
+		mv.addObject("pi", pi)
+		  .addObject("spMem", spMem)
+		  .addObject("list2", list2)
+		  .setViewName("admin/donationDetailOne");
+		
+		return mv;
 	}
 	
 	// 후원관리 - 상세 페이지로 넘어가기 => 정산내역
-		@RequestMapping("donaDetailTwo.ad")
-		public String donaDetailTwo() {
-			return "admin/donationDetailTwo";
-		}
-		
+	@RequestMapping("donaDetailTwo.ad")
+	public String donaDetailTwo() {
+		return "admin/donationDetailTwo";
+	}
+	
 	// tag 메인페이지
 	
 	// tag 관리자 페이지
