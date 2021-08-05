@@ -82,7 +82,7 @@
                	<div class="price">${ o.price } 원</div><br><br> 
                 <b>부가세(10%)</b>
                 &nbsp;&nbsp;&nbsp;&nbsp; 
-                <div class="fee">${ o.price }*0.1 원</div><br><br>
+                <div class="fee">${(o.price *0.1)} 원</div><br><br>
             </div>
         </div>
         <br><br>

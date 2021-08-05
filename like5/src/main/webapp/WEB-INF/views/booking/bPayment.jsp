@@ -347,6 +347,8 @@
           <div class="button-box">
             <button id="settle" type="button">예약 요청하기</button>
           </div>
+          <input type="hidden" id="priceInput" name="price" value="${ o.price }">
+          <input type="hidden" id="totalInput" name="total" value="${ o.price }">
         </form>
       </div>
       <div class="sum-section">
@@ -363,8 +365,7 @@
             <h2>요금 세부 정보</h2>
             <div class="receipt">
               <div class="receipt-day">￦${ o.price } x <div class="days"></div></div>
-              <input type="hidden" name="price" value="${ o.price }">
-              <div class="receipt-price">￦80,000</div>
+              <div class="receipt-price" id="receipt-price">￦80,000</div>
             </div>
             <div class="fee">
               <div class="fee-title">서비스 수수료</div>
@@ -372,7 +373,7 @@
             </div>
             <div class="total">
               <div class="total-title">총 합계(KRW)</div>
-              <div class="total-price">￦88,000</div>
+              <div class="total-price" id="total-price">￦88,000</div>
             </div>
           </div>
         </div>
@@ -440,6 +441,7 @@
                            data: {
                                imp_uid: rsp.imp_uid,
                                //기타 필요한 데이터가 있으면 추가 전달
+
                            },
                            //결제위변조검증기능추가??
                        })
@@ -473,8 +475,15 @@
        );
    }
     <%-- 로컬스토리지에서 날짜 가져오기 --%>
-    var startDate = localStorage.getItem("startDate");
-    var endDate = localStorage.getItem("endDate");
+    //var startDate = localStorage.getItem("startDate");
+    //var endDate = localStorage.getItem("endDate");
+
+    //console.log("로컬start"+localStorage.getItem("startDate"));
+    //console.log("로컬end"+localStorage.getItem("endDate"));
+    var startDate = "${startDate}";
+    var endDate = "${endDate}";
+    //console.log("start"+startDate);
+    //console.log("end"+endDate);
     $.when($.ready).then(function(){
     	$(".dateprint").html(startDate+" ~ "+endDate);
     	
@@ -492,12 +501,21 @@
         
         <%-- receiptPrice --%>
         $(".receipt-price").html("￦" + ${o.price} * (day2-day1));
+        $("#priceInput").val(${o.price} * (day2-day1));
         
         <%-- feePrice --%>
         $(".fee-price").html("￦" + (${o.price} * (day2-day1)) * 0.1);
         
         <%-- totalPrice --%>
         $(".total-price").html("￦" + (${o.price} * (day2-day1) + (${o.price} * (day2-day1)) * 0.1));
+        $("#totalInput").val((${o.price} * (day2-day1) + (${o.price} * (day2-day1)) * 0.1));
+
+
+      	//  $(".total-price").html("글씨출력");
+      	//  $("totalInput").val("input에값넣어줌");
+
+
+
     });
     
     <%-- 로컬스토리지 삭제하기 --%>
@@ -539,12 +557,14 @@
            
            <%-- receiptPrice --%>
            $(".receipt-price").html("￦" + ${o.price} * (day2-day1));
+           $("#priceInput").val(${o.price} * (day2-day1));
            
            <%-- feePrice --%>
            $(".fee-price").html("￦" + (${o.price} * (day2-day1)) * 0.1);
            
            <%-- totalPrice --%>
            $(".total-price").html("￦" + (${o.price} * (day2-day1) + (${o.price} * (day2-day1)) * 0.1));
+           $("#totalInput").val((${o.price} * (day2-day1) + (${o.price} * (day2-day1)) * 0.1));
           },
           clickOpens: true
 	  });
