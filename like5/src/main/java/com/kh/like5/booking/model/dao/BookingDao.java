@@ -72,6 +72,14 @@ public class BookingDao {
 		return result;
 	}
 
+	public int deleteOffice(SqlSessionTemplate sqlSession, int ono) {
+		return sqlSession.delete("bookingMapper.deleteOffice", ono);
+	}
+	
+	public int deleteOfficeAtt(SqlSessionTemplate sqlSession, int ono) {
+		return sqlSession.delete("bookingMapper.deleteOfficeAtt", ono);
+	}
+	
 	/*추가 - 첨부파일 조회 + 사진*/
 	public ArrayList<Attachment> selectList(SqlSessionTemplate sqlSession, int refFno){
 		/*System.out.println(refFno);*/
@@ -105,8 +113,15 @@ public class BookingDao {
 		return pis;
 	}
 
-
 	public Booking selectMyBook(SqlSessionTemplate sqlSession, int bookingNo) {
 		return sqlSession.selectOne("bookingMapper.selectMyBook", bookingNo);
+	}
+	
+	public int updateMyBook(SqlSessionTemplate sqlSession, Booking b) {
+		return sqlSession.update("bookingMapper.updateMyBook", b);
+	}
+	
+	public int deleteMyBook(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.update("bookingMapper.deleteMyBook", bno);
 	}
 }
