@@ -6,17 +6,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<!-- flatpickr -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_red.css">
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
 <style>
 	table {
 	  margin: 32px 0;
 	  min-width: 100%;
 	}
+	tbody{
+		cursor:pointer;
+	}
 	.pagination {
 	  justify-content: center;
 	}
     .b-detail{
+    	margin-top:60px;
         display: block;
         min-width: 100%;
+        height: 100vh;
     }
     .sum-box{
         margin:32px 0;
@@ -45,15 +55,25 @@
     .detail-content1 ul li{
         padding:8px;
     }
+    select[name=person]{
+    	width:100%;
+    }
     .line1,.line2,.line3,.line4 {
 	  display: flex;
 	  justify-content: space-between;
+	  height:50px;
 }
-	.line1 ul,.line2 ul,.line3 ul {
+	:is(.line1, .line2, .line3) ul {
 	  list-style-type: none;
 	  margin: 10px;
-	  padding: 0;
+	  padding: 0;;
 	  width: 100%;
+	  text-align:left;
+}
+
+	:is(.line1, .line2, .line3) li {
+	  align-items: center; 
+	  height:50px;
 }
     .price-tag{
         margin-left:20px;
@@ -63,6 +83,7 @@
     .price{
         width: 40%;
         padding: 10px;
+        text-align:right;
     }
     .border{
         margin:24px 0;
@@ -130,13 +151,18 @@
 	                    	<td>${ b.bookingNo }</td>
 	                        <td>${ b.requestDate }</td>
 	                        <td>${ b.typeName }</td>
-	                        <td>${ b.status }</td>
 	                        <c:choose>
 	                        	<c:when test="${ b.status eq 'Y' }">
+	                        		<td>대기</td>
 	                        		<td><a class="changeb" onclick="showBookDetail(${b.bookingNo});">변경 또는 취소</a></td>
 	                        	</c:when>
+	                        	<c:when test="${ b.status eq 'N' }">
+	                        		<td>취소</td>
+	                        		<td><a data-toggle="modal" data-target="#modal-cancel" onclick="showBookDetail(${b.bookingNo});">취소영수증</a></td>
+	                        	</c:when>
 	                        	<c:otherwise>
-	                        		<td><a data-toggle="modal" data-target="#modal-receipt"  href="#">영수증보기</a></td>
+	                        		<td>완료</td>
+	                        		<td><a data-toggle="modal" data-target="#modal-receipt" onclick="showBookDetail(${b.bookingNo});">완료영수증보기</a></td>
 	                        	</c:otherwise>
 	                        </c:choose>
 	                    </tr>
@@ -189,7 +215,8 @@
             </div>
 <!-- ajax처리할 부분 -->
             <div class="detail-page">
-                <form class="changebform" action="" method="post">
+                <form class="modifyBform" action="modifyMyBook.bk" method="post">
+                <input type="hidden" name="bookNo">
                     <div class="title-box">
                         <h2>예약 변경하기</h2>
                     </div>
@@ -197,15 +224,9 @@
                         <div class="detail-content1">
                             <div class="line1">
                                 <ul>
-                                    <li>오피스타입</li>
-                                    <li>
-                                        <select name="typeName">
-                                            <option value="프라이빗">프라이빗</option>
-                                            <option value="전용 데스크">전용데스크</option>
-                                            <option value="공용 데스크">개방형</option>
-                                        </select>
-                                    </li>
-                                    <li>인원수</li>
+                                    <li>오피스타입 : </li>
+                                    <li><span class="officeType"></span></li>
+                                    <li>인원수 : </li>
                                     <li>
                                         <select name="person">
                                             <option value="1">1 명</option>
@@ -218,16 +239,16 @@
                             <div class="line2">
                                 <ul>
                                     <li>체크인</li>
-                                    <li><input type="text" id="myCheckIn" name="checkIn"></li>
+                                    <li><input type="text" id="myCheckIn" name="startDate"></li>
                                     <li>체크아웃</li>
-                                    <li><input type="text" id="myCheckOut" name="checkOut"></li>
+                                    <li><input type="text" id="myCheckOut" name="endDate"></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="detail-content2">
                             <div class="line1">
                                 <div class="price-tag">소계:</div>
-                                <div class="price" id="dayPrice">￦80,000</div>
+                                <div class="price" id="total">￦80,000</div>
                             </div>
                             <div class="border-sm"></div>
                             <div class="line2">
@@ -237,7 +258,7 @@
                             <div class="border-sm"></div>
                             <div class="line3">
                                 <div class="price-tag">새로운 총계:</div>
-                                <div class="price" id="total">￦88,000</div>
+                                <div class="price" id="newTotal">￦88,000</div>
                             </div>
                             <div class="border-sm"></div>
                             <div class="line4">
@@ -252,7 +273,8 @@
                     <div class="border"></div>
                     <div class="button-box">
                         <button type="submit">변경 신청하기</button>
-                        <button type="button">변경 취소하기</button>
+                        <button type="button" class="cancelBook">예약 취소하기</button>
+                        <input type="hidden" id="tt">
                     </div>
                 </form>
             </div>
@@ -273,23 +295,23 @@
                 <div class="receipt-top">  
                     <div class="b-no">
                     <span class="top-t">예약번호</span>
-                    <span>001</span>
+                    <span id="receiptBno">001</span>
                     </div>
                     <!-- <div class="b-no-result">001</div> -->
                     <div class="b-date">
                         <span class="top-t">결제일</span>
-                        <span>2021-04-12</span>
+                        <span id="receiptRequestDay">2021-04-12</span>
                     </div>
                     <!-- <div class="b-date-result"></div> -->
                 </div>
                 <div class="border"></div>
                 <div class="receipt-middle">
                     <div class="b-date">
-                        <span class="checkIn">2021-07-12</span>
+                        <span class="checkIn" id="receiptStartDate">2021-07-12</span>
                         <span> ~ </span>
-                        <span class="checkOut">2021-07-13</span>
+                        <span class="checkOut" id="receiptEndDate">2021-07-13</span>
                     </div>
-                    <div class="person">프라이빗 1 인</div>
+                    <div class="person" id="receiptPerson">프라이빗 1 인</div>
                 </div>
                 <div class="border"></div>
                 <div class="receipt-title">
@@ -297,17 +319,17 @@
                 </div>
                 <div class="receipt-breakdown">
                     <div class="line1">
-                        <div class="price-tag">￦80,000 x 1일</div>
-                        <div class="price">￦80,000</div>
+                        <div class="price-tag"><span id="receiptDayPrice">￦80,000 </span> X <span id="receiptDay"></span> 일</div>
+                        <div class="price" id="receiptPrice">￦80,000</div>
                     </div>
                     <div class="line2">
                         <div class="price-tag">수수료</div>
-                        <div class="price">￦8,000</div>
+                        <div class="price" id="receiptFee">￦8,000</div>
                     </div>
                     <div class="border"></div>
                     <div class="line3">
                         <div class="price-tag">총합계</div>
-                        <div class="price">￦88,000</div>
+                        <div class="price" id="receiptTotal">￦88,000</div>
                     </div>
                 </div>
             </div>
@@ -332,23 +354,23 @@
             <div class="receipt-top">  
                 <div class="b-no">
                 <span class="top-t">예약번호</span>
-                <span>001</span>
+                <span id="cancelBno">001</span>
                 </div>
                 <!-- <div class="b-no-result">001</div> -->
                 <div class="b-date">
                     <span class="top-t">결제일</span>
-                    <span>2021-04-12</span>
+                    <span id="cancelRequest">2021-04-12</span>
                 </div>
                 <!-- <div class="b-date-result"></div> -->
             </div>
             <div class="border"></div>
             <div class="receipt-middle">
                 <div class="b-date">
-                    <span class="checkIn">2021-07-12</span>
+                    <span class="checkIn" id="cancelStartDate">2021-07-12</span>
                     <span> ~ </span>
-                    <span class="checkOut">2021-07-13</span>
+                    <span class="checkOut" id="cancelEndDate">2021-07-13</span>
                 </div>
-                <div class="person">프라이빗 1 인</div>
+                <div class="person" id="cancelPerson">프라이빗 1 인</div>
             </div>
             <div class="border"></div>
             <div class="receipt-title">
@@ -357,16 +379,16 @@
             <div class="receipt-breakdown">
                 <div class="line1">
                     <div class="price-tag">최초예약금액</div>
-                    <div class="price">￦80,000</div>
+                    <div class="price" id="cancelTotal">￦80,000</div>
                 </div>
                 <div class="line2">
                     <div class="price-tag">취소 수수료</div>
-                    <div class="price">￦8,000</div>
+                    <div class="price" id="cancelFee">￦8,000</div>
                 </div>
                 <div class="border"></div>
                 <div class="line3">
                     <div class="price-tag">환불 금액</div>
-                    <div class="price">￦88,000</div>
+                    <div class="price" id="refund">￦72000</div>
                 </div>
             </div>
         </div>
@@ -378,30 +400,110 @@
 </div>
 <jsp:include page="../common/footer.jsp"/>
 <script>
+
     $(function(){
         $(".changeb").click(function(){
             $(".detail-page").toggle();
         })
+<%--
+        $(".cancelBook").on("click", function(){
+        	/*
+		    	var bno = result.bookingNo
+		    	console.log("안"+bno);
+		    	location.href="cancelMyBook.bk?bno=" + bno;
+		    */
+        	location.href="cancelMyBook.bk?bno=" + $("#tt").val();
+		    	
+		   }) --%>
     })
     
+
     <%-- 예약 정보 --%>
+    
     function showBookDetail(bookingNo){
+    	
+    	$("#tt").val(bookingNo);
+    	
     	$.ajax({
     		url:"myDetail.bk",
-    		data:{ bookingNo: bookingNo},
+    		data:{ bookingNo: bookingNo },
     		success:function(result){
-    			console.log(result);
+    			<%-- 취소 및 변경 모달 --%>
+    	    	console.log(result.startDate);
+    			$("input[type=hidden]").val(result.bookingNo);
+    			
     			$("#myCheckIn").val(result.startDate);
     			$("#myCheckOut").val(result.endDate);
-    			$("#dayPrice").text("￦" + result.price);
-    			$("#total").text("￦" + result.total);
+    			$("#total").html("￦" + result.total);
+    			$(".officeType").text(result.typeName);
+    			$("select[name=person] option").each(function(){
+    				if($(this).val() == result.person){
+    					$(this).prop("selected", true);
+    				}
+    			});
+    			$("#fee").text("￦" + Math.floor(result.total * 0.1));
+    			$("#newTotal").text("￦" + Math.floor(result.total * 1.1));
+    			$("#gap").text("￦" + Math.floor(result.total * 1.1 - result.total));
     			
+    			<%-- 취소 영수증 --%>
+    			$("#cancelBno").text(result.bookingNo);
+    			$("#cancelRequest").text(result.requestDate);
+    			$("#cancelStartDate").text(result.startDate);
+    			$("#cancelEndDate").text(result.endDate);
+    			$("#cancelPerson").text(result.typeName + " " + result.person + "인");
+    			$("#cancelTotal").text("￦ "+result.total);
+    			$("#cancelFee").text("￦ "+result.total * 0.1);
+    			$("#refund").text("￦ "+(result.total - result.total*0.1));
+    			
+    			<%-- 완료 영수증 --%>
+    			$("#receiptStartDate").text(result.startDate);
+    			$("#receiptEndDate").text(result.endDate);
+    			$("#receiptBno").text(result.bookingNo);
+    			$("#receiptDayPrice").text("￦ "+result.price);
+    			var days = result.endDate.substr(8,10) - result.startDate.substr(8,10)
+    			$("#receiptDay").html(days);
+    			$("#receiptPrice").text("￦ "+result.price * days)
+    			$("#receiptFee").text("￦ "+result.price * days * 0.1);
+    			$("#receiptTotal").text("￦ "+ Math.floor(result.price * days*1.1));
+    			$("#receiptPerson").text(result.typeName + " " + result.person + "인");
+    			
+		    	flatpickr("#myCheckIn",{
+		    	    locale:"ko",
+		    	    altInput:true,
+		    	    altFormat:"Y\\년 F d\\일",
+		    	    minDate:"today",
+		    	    dateFormat:"Y-m-d",
+		    	    defaultDate: result.startDate
+		    	});
+		    	flatpickr("#myCheckOut",{
+		    	    locale:"ko",
+		    	    altInput:true,
+		    	    altFormat:"Y\\년 F d\\일",
+		    	    minDate:"today",
+		    	    dateFormat:"Y-m-d"
+		    	});
+		    	
+    		    
+    		    	
     		}, error:function(){
     			console.log("ajax실패");
     		}
     	})
+    	
     }
+
+    $("table>tbody>tr").on("click", function(){
+    	console.log("밖"+$(this).children().eq(0).text());
+    })
     
+   
+    $(".cancelBook").on("click", function(){
+		    	var bno = $("table>tbody>tr").children().eq(0).text();
+		    	console.log("안"+bno);
+		    	location.href="cancelMyBook.bk?bno=" + bno;
+		    	
+		   })
+
 </script>
 </body>
 </html>
