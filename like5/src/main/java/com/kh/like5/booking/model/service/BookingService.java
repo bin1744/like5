@@ -14,8 +14,10 @@ public interface BookingService {
 	//1.검색 결과 조회(사용자)
 	ArrayList<Office> selectOfficeList(Booking b);
 
-	//1.2. 예약하기(사용자)
-
+	//1.2. 자동검색어추천(사용자)
+	ArrayList<Office> autoComplete(String searchKeyword);
+	
+	//1.3. 예약하기(사용자)
 	int insertBook(Booking b);
 
 	//2.리스트 전체 조회 + 페이징(관리자)

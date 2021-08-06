@@ -43,6 +43,14 @@ public class BookingController {
 		return "booking/bMain";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="autoBranch.bk", produces="application/json; charset=utf-8")
+	public String autoComplete(String searchKeyword) {
+		System.out.println(searchKeyword);
+		ArrayList<Office> list = bService.autoComplete(searchKeyword);
+		return new Gson().toJson(list);
+	}
+	
 	/**
 	 * [신원]오피스검색결과
 	 */
