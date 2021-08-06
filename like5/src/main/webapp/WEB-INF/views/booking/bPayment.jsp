@@ -345,7 +345,16 @@
             </div>
           </div>
           <div class="button-box">
-            <button id="settle" type="button">예약 요청하기</button>
+          <c:choose>
+	          <c:when test="${loginUser ne null }">
+	          	<button id="settle" type="button">예약 요청하기</button>
+	          </c:when>
+	          <c:otherwise>
+	         	<button id="return" type="button"><a href="${ pageContext.request.contextPath }">예약 요청하기</a></button>
+	          </c:otherwise>
+          </c:choose>
+
+            
           </div>
           <input type="hidden" id="priceInput" name="price" value="${ o.price }">
           <input type="hidden" id="totalInput" name="total" value="${ o.price }">
@@ -405,6 +414,10 @@
 <jsp:include page="../common/footer.jsp"/>
 
     <script>
+    
+    $("#return").on("click", function(){
+    	window.alert("로그인이 필요한 서비스 입니다");
+    })
     
     <%-- 결제 방식 선택 --%>
 	 $("#settle").on("click", function(){
