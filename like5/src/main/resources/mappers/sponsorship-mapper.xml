@@ -152,6 +152,8 @@
 	      , nickname
 	      , spon_fee
 	      , to_char(spon_date,'YYYY-MM-DD') as spon_date
+	      , bank
+	      , account_num
 	from member
 	join sponsorship using(mem_no)
 	where smem_no = #{smemNo}

@@ -98,8 +98,8 @@
 	        <h3 class="title">통합관리</h3>
 	        
 	        <div class="tab-area">
-	            <button class="btn btn-outline-danger active">후원내역</button>
-	            <button class="btn btn-outline-danger ">정산내역</button>
+	            <button class="btn btn-outline-danger active" onclick="">후원내역</button>
+	            <button class="btn btn-outline-danger" onclick="location.href='donaDetailTwo.ad?smemNo=' + ${smemNo};">정산내역</button>
 	        </div>
 	    </div>
 	
@@ -147,9 +147,8 @@
 	                    <th>후원한 회원의 닉네임</th>
 	                    <th>후원받은 금액</th>
 	                    <th>후원받은 날짜</th>
-	                     
-	                    <th >정산받은 은행명</th>
-	                    <th width="180">정산받은 계좌</th>
+	                    <th >후원자 은행명</th>
+	                    <th width="180">후원자 계좌</th>
 	                    
 	                </tr>
 	            </thead>
@@ -162,8 +161,8 @@
 			                    <td>${m.nickName }</td>
 			                    <td><a>${m.sponFee }</a></td>
 			                    <td>${m.sponDate }</td>
-			                    <td >${spMem.bank }</td>
-			                    <td >${spMem.accountNum }</td>
+			                    <td >${m.bank }</td>
+			                    <td >${m.accountNum }</td>
 			                    
 		                </tr>
                     </c:forEach>

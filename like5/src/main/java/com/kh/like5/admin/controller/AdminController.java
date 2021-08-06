@@ -224,10 +224,10 @@ public class AdminController {
 	
 	// 후원관리 - 상세 페이지로 넘어가기 => 후원내역
 	@RequestMapping("donaDetailOne.ad")
-	public ModelAndView donaDetailOne(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage ) {
+	public ModelAndView donaDetailOne(int smemNo, ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage ) {
 		// 특정회원의 smem_no를 받아와서 넘겨주면서 페이징 처리도 해줘야 한다 이말이야...^^
 		// 내역을 페이징 처리하고(후원한 회원들 조회하는 sql문 기준임==> list2가 기준이 되는거징!!!)
-		int smemNo = 5;
+		//int smemNo = 5;
 		int listCount = adService.selectSponsorCount(smemNo);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
