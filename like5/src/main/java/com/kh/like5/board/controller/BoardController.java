@@ -34,6 +34,7 @@ public class BoardController {
 	
 	//------------------ 한솔 -------------------------
 	
+	
 	/**
 	 * [한솔] QnA 게시글 리스트 페이지 
 	 */
@@ -51,6 +52,40 @@ public class BoardController {
 		
 		return mv;
 	}
+	
+	
+	/** 
+	 * [한솔] Footer 메인 페이지 (팀 소개) 
+	 */
+	@RequestMapping("teamAskMe.me")
+	public String teamAskMe() {
+		return "common/teamAskMe";
+	}
+	
+	/** 
+	 * [한솔] Footer 이용약관 
+	 */
+	@RequestMapping("terms.me")
+	public String terms() {
+		return "common/termsOfService";
+	}
+	
+	/** 
+	 * [한솔] Footer 법적고지 
+	 */
+	@RequestMapping("legal.me")
+	public String legal() {
+		return "common/legalResources";
+	}
+	
+	/** 
+	 * [한솔] Footer 개인정보처리방침
+	 */
+	@RequestMapping("privacy.me")
+	public String privacy() {
+		return "common/privacyPolicy";
+	}
+	
 	
 	
 	//-------------------동규-------------------------
