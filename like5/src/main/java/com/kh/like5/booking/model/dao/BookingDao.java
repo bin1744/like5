@@ -19,6 +19,9 @@ public class BookingDao {
 		return (ArrayList)sqlSession.selectList("bookingMapper.selectOfficeList", b);
 	}
 
+	public ArrayList<Office> autoComplete(SqlSessionTemplate sqlSession, String searchKeyword){
+		return (ArrayList)sqlSession.selectList("bookingMapper.autoComplete", searchKeyword);
+	}
 	public int insertBook(SqlSessionTemplate sqlSession, Booking b) {
 		return sqlSession.insert("bookingMapper.insertBook", b);
 	}

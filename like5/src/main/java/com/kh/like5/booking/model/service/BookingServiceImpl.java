@@ -29,6 +29,11 @@ public class BookingServiceImpl implements BookingService{
 	}
 	
 	@Override
+	public ArrayList<Office> autoComplete(String searchKeyword){
+		return bDao.autoComplete(sqlSession, searchKeyword);
+	}
+	
+	@Override
 	public int insertBook(Booking b) {
 		return bDao.insertBook(sqlSession, b);
 	}

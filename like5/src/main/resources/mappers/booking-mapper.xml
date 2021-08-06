@@ -69,7 +69,14 @@
    							    and branch like '%'||#{branch}||'%')
      and branch like '%'||#{branch}||'%'
   </select>
-
+  
+  <select id="autoComplete" parameterType="Office" resultMap="officeResultSet">
+	select
+		   distinct branch
+	  from office
+	 where branch like '%'||#{searchKeyword}||'%'
+  </select>
+  
   <select id="selectList" parameterType="Office" resultMap="officeResultSet">
   select
 		 o.office_no
@@ -243,6 +250,7 @@
 	  and  ref_bno = 9
 	  and  status = 'Y'
   </update>
+  
   <!-- 첨부파일 조회 + 사진 -->
   <select id="selectAtList" resultMap="attachmentResultSet">
   		select
@@ -333,6 +341,7 @@
 		 where office_no = #{officeNo}
 		   and status = 'Y'
 		</select>
+		
 	<select id="selectMyBookList" parameterType="Booking" resultMap="bookingResultSet">
 	select
   		  bookin_no
@@ -356,6 +365,7 @@
   	order
   	   by request_date desc
 	</select>
+	
 	<select id="selectMyBook" parameterType="Booking" resultMap="bookingResultSet">
 	select
   		  bookin_no
