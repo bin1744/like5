@@ -57,7 +57,7 @@
 					<div class="qnaSearch_question">
 						<c:choose>
 							<c:when test="${!empty loginUser}">
-								<button type="button" class="btn btn-danger"><a href="qEnrollForm.bo">질문하기</a></button>
+								<button type="button" class="btn btn-danger"><a href="qnaEnrollForm.bo">질문하기</a></button>
 							</c:when>
 							<c:otherwise>
 								<button type="button" class="btn btn-danger" onClick="loginAlert()">질문하기</button>
