@@ -11,6 +11,7 @@ import com.kh.like5.board.model.dao.BoardDao;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Reply;
 import com.kh.like5.board.model.vo.Report;
+import com.kh.like5.board.model.vo.Tag;
 import com.kh.like5.common.model.vo.PageInfo;
 
 @Service
@@ -300,6 +301,15 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Board> qnaOrderByCount(PageInfo pi, String condition) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * [QnA] - QnaEnrollForm 태그 리스트
+	 * @author Hansol
+	 */
+	@Override
+	public ArrayList<Tag> tagList() {
+		return bDao.tagList(sqlSession);
 	}
 
 

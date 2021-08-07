@@ -106,42 +106,16 @@
 					<!-- 태그 검색 -->
 					<div class="tagList" style="width:100%; height:150px; overflow:auto">
 						<div class="tipName">
-							<b>⭐ LIKE5에서 사용되는 태그 검색 ⭐</b>
+							<b>⭐ 첨부 가능한 태그 보기 ⭐</b>
 						</div>
-						<input class="tagInput" type="text" placeholder="영어로 태그를 검색해보세요 (대/소문자 구분 없음)"
-							id="tagInput" onkeyup="tagSearch()">
-						<!-- 리스트를 DB에서 가져오면 좋을텐데..! -->
+						<!-- tag DB에 등록된 리스트 정렬 -->
 						<table class="w3-table w3-striped w3-bordered w3-centered" id="tagTable">
-							<tr><td>JAVA</td></tr>
-							<tr><td>JavaScript</td></tr>
-							<tr><td>C</td></tr>
-							<tr><td>Python</td></tr>
-							<tr><td>Spring</td></tr>
-							<tr><td>Html</td></tr>
-							<tr><td>Android</td></tr>
-							<tr><td>React.js</td></tr>
-							<tr><td>Linux</td></tr>
-							<tr><td>MySQL</td></tr>
-							<tr><td>Node.js</td></tr>
-							<tr><td>C++</td></tr>
-							<tr><td>CSS</td></tr>
-							<tr><td>AWS</td></tr>
-							<tr><td>PHP</td></tr>
-							<tr><td>Algorithm</td></tr>
-							<tr><td>Git</td></tr>
-							<tr><td>IOS</td></tr>
-							<tr><td>Kotiln</td></tr>
-							<tr><td>DataBase</td></tr>
-							<tr><td>Ajax</td></tr>
-							<tr><td>C_Sharp</td></tr>
-							<tr><td>Django</td></tr>
-							<tr><td>Firebase</td></tr>
-							<tr><td>Event</td></tr>
-							<tr><td>5분코딩</td></tr>
-							<tr><td>Rest</td></tr>
-							<tr><td>Swift</td></tr>
-							<tr><td>Jquery</td></tr>
-							<tr><td>Vue.js</td></tr>
+							<c:forEach var="t" items="${ tagList }">
+								<tr>
+									<td hidden>${ t.tagNo }</td>
+									<td>${ t.tagName }</td>
+								</tr>
+							</c:forEach>
 						</table>
 					</div>
 					<!-- 태그 검색 끝 -->
@@ -245,22 +219,22 @@
 		
 		// 테이블 내 일치하는 필드값 검색
 		function tagSearch() {
-		var input, filter, table, tr, td, i;
-		input = document.getElementById("tagInput");
-		filter = input.value.toUpperCase();
-		table = document.getElementById("tagTable");
-		tr = table.getElementsByTagName("tr");
-		for (i = 0; i < tr.length; i++) {
-			td = tr[i].getElementsByTagName("td")[0];
-			if (td) {
-			txtValue = td.textContent || td.innerText;
-			if (txtValue.toUpperCase().indexOf(filter) > -1) {
-				tr[i].style.display = "";
-			} else {
-				tr[i].style.display = "none";
+			var input, filter, table, tr, td, i;
+			input = document.getElementById("tagInput");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("tagTable");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
 			}
-			}
-		}
 		}
 	</script>
 	

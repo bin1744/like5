@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Reply;
 import com.kh.like5.board.model.vo.Report;
+import com.kh.like5.board.model.vo.Tag;
 import com.kh.like5.common.model.vo.PageInfo;
 
 @Repository
@@ -197,6 +198,16 @@ public class BoardDao {
 	 */
 	public int qnaInsert(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("boardMapper.qnaInsert", b);
+	}
+	
+	
+	
+	/**
+	 * [QnA] - QnaEnrollForm tag 리스트 조회
+	 * @author Hansol
+	 */
+	public ArrayList<Tag> tagList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("tagMapper.tagList", null);
 	}
 	
 }

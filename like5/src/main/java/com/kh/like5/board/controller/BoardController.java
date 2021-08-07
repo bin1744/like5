@@ -23,6 +23,7 @@ import com.kh.like5.board.model.service.BoardService;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Reply;
 import com.kh.like5.board.model.vo.Report;
+import com.kh.like5.board.model.vo.Tag;
 import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.common.template.Pagination;
 
@@ -57,8 +58,13 @@ public class BoardController {
 	 * [한솔] QnaEnrollForm 게시글 작성 페이지
 	 */
 	@RequestMapping("qnaEnrollForm.bo")
-	public String qnaEnrollForm() {
-		return "board/qna/qnaEnrollForm";
+	public ModelAndView qnaEnrollForm(ModelAndView mv) {
+		ArrayList<Tag> tagList = bService.tagList();
+
+		mv.addObject("tagList", tagList)
+		  .setViewName("board/qna/qnaEnrollForm");
+		
+		return mv;
 	}
 	
 	/** 
@@ -77,6 +83,7 @@ public class BoardController {
 		}
 	}
 	
+
 	
 
 	/* -------- 푸터 -------- */

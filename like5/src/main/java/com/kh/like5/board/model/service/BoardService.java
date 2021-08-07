@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Reply;
 import com.kh.like5.board.model.vo.Report;
+import com.kh.like5.board.model.vo.Tag;
 import com.kh.like5.common.model.vo.PageInfo;
 
 public interface BoardService {
@@ -48,6 +49,12 @@ public interface BoardService {
 	ArrayList<Board>qnaOrderByCount(PageInfo pi, String condition);
 	
 	// 8. 댓글, 대댓글 관련 (중복이어서 작성 X)
+	
+	
+	// [Tag]
+	
+	// 9. 태그 리스트
+	ArrayList<Tag> tagList();
 
 
 	
