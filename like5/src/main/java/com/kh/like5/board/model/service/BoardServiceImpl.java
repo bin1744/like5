@@ -229,7 +229,7 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	@Override
 	public int qnaInsert(Board b) {
-
+		return bDao.qnaInsert(sqlSession, b);
 	}
 
 	/**

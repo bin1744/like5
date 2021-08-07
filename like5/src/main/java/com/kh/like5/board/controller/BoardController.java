@@ -36,7 +36,7 @@ public class BoardController {
 	
 	
 	/**
-	 * [한솔] QnA 게시글 리스트 페이지 
+	 * [한솔] QnaList 게시글 리스트 페이지 
 	 */
 	@RequestMapping("qnaList.bo")
 	public ModelAndView qnaList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
@@ -53,6 +53,33 @@ public class BoardController {
 		return mv;
 	}
 	
+	/** 
+	 * [한솔] QnaEnrollForm 게시글 작성 페이지
+	 */
+	@RequestMapping("qnaEnrollForm.bo")
+	public String qnaEnrollForm() {
+		return "board/qna/qnaEnrollForm";
+	}
+	
+	/** 
+	 * [한솔] QnaEnrollForm 게시글 insert
+	 */
+	@RequestMapping("qnaInsert.bo")
+	public String qnaInsert(Board b, MultipartFile upfile, HttpSession session, Model model) {
+		int result = bService.qnaInsert(b);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", " 게시글이 성공적으로 등록되었습니다. ");
+			return "redirect:qnaList.bo";
+		}else {
+			model.addAttribute("errorMsg", " 게시글 등록에 실패하였습니다. ");
+			return "common/errorPage";
+		}
+	}
+	
+	
+
+	/* -------- 푸터 -------- */
 	
 	/** 
 	 * [한솔] Footer 메인 페이지 (팀 소개) 

@@ -173,7 +173,7 @@ public class BoardDao {
 	//------------------ 한솔 -------------------------
 
 	/**
-	 * [QnA] - 게시글 리스트 페이지 조회 시 유효한 게시글 총 개수 조회
+	 * [QnA] - QnaList 조회 시 유효한 게시글 총 개수 조회
 	 * @author Hansol
 	 */
 	public int qnaListCount(SqlSessionTemplate sqlSession) {
@@ -181,7 +181,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 * [QnA] - 사용자가 요청한 페이지에 뿌려줄 리스트 조회 (요청 페이지 번호, 불러올 글 개수)
+	 * [QnA] - QnaList 사용자가 요청한 페이지에 뿌려줄 리스트 조회 (요청 페이지 번호, 불러올 글 개수)
 	 * @author Hansol
 	 */
 	public ArrayList<Board> qnaList(SqlSessionTemplate sqlSession,PageInfo pi){
@@ -191,5 +191,12 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.qnaList", null, rowBounds);
 	}
 	
+	/**
+	 * [QnA] - QnaEnrollForm 게시글 insert
+	 * @author Hansol
+	 */
+	public int qnaInsert(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.qnaInsert", b);
+	}
 	
 }

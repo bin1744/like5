@@ -29,15 +29,19 @@
 				<div class="qnaBottomLeft">
 					<!-- 제목, 태그, 본문 작성 영역
 						 [novalidate] <form>이 유효성검사(검사 후 경고 안내문 출력)를 하지 않도록 지정 -->
-					<form action="" class="qnaWrite" novalidate>
+					<form class="qnaWrite"  id="enrollForm" method="post" action="qnaInsert.bo" enctype="multipart/form-data" novalidate>
+						<!-- 작성자, 카테고리 -->
+						<input class="form-group" id="qWriter" name="mno" value="${ loginUser.memNo }" hidden></input>
+						<input class="form-group" id="qCategory" name="category" value="QNA" hidden></input>
+						
 						<!-- 제목 영역 -->
 						<div class="form-group">
 							<label for="qTitle">
 								<button type="button" class="btn btn-secondary" disabled>제목</button>
 								&nbsp;&nbsp;제목은 50자 이내로 입력해주세요!
 							</label>
-							<input type="text" class="form-control" id="qTitle" 
-								placeholder="다른 사람들이 자세히 알 수 있도록 구체적으로 제목을 작성해주세요." name="qTitle" required>
+							<input type="text" class="form-control" id="qTitle" name="title"
+								placeholder="다른 사람들이 자세히 알 수 있도록 구체적으로 제목을 작성해주세요." required>
 							<div class="valid-feedback">입력되었습니다.</div>
 							<div class="invalid-feedback">제목을 작성해주세요.</div>
 						</div>
@@ -50,7 +54,7 @@
 								&nbsp;&nbsp;해시태그(#)와 태그 이름을 입력한 후 띄어쓰기로 구분해주세요!&nbsp;&nbsp;<i>ex)#JAVA #AWS ...</i>
 							</label>
 							<input type="text" class="form-control" id="qTag"
-								placeholder="우측에서 사용 중인 태그를 알아보고 질문과 관련있는 태그를 입력해주세요." name="qTag" required>
+								placeholder="우측에서 사용 중인 태그를 알아보고 질문과 관련있는 태그를 입력해주세요." name="tag" required>
 							<div class="valid-feedback">입력되었습니다.</div>
 							<div class="invalid-feedback">태그를 입력해주세요.</div>
 						</div>
@@ -63,12 +67,12 @@
 								&nbsp;&nbsp;질문하고 싶은 내용을 입력해주세요!
 							</label>
 							<!-- 마크다운 API 들어올 곳  -->
-							<textarea class="form-control" id="qContent" rows="5" name="qContent" required></textarea>
+							<textarea class="form-control" id="qContent" name="content" rows="5" required></textarea>
 							<div class="valid-feedback">입력되었습니다.</div>
 							<div class="invalid-feedback">본문을 작성해주세요.</div>
 						</div>
 						<!-- 본문 영역 -->
-	
+						
 						<!-- 작성 주의사항 -->
 						<div class="alert alert-danger alert-dismissible">
 							<button type="button" class="close" data-dismiss="alert">&times;</button>

@@ -533,7 +533,7 @@
 	
 	
 	<!-- ********** 한솔 ********** -->
-	<!-- [QnA] - 게시글 리스트 페이지 조회 시 유효한 게시글 총 개수 조회 -->
+	<!-- [QnA] - QnaList 조회 시 유효한 게시글 총 개수 조회 -->
 	<select id="qnaListCount" resultType="_int">
 		select
 			   count(*)
@@ -543,7 +543,7 @@
 		 	   and boa_status = 'Y'
 	</select>
 	
-	<!-- [QnA] - 사용자가 요청한 페이지에 필요한 게시글 리스트 조회 -->
+	<!-- [QnA] - QnaList 사용자가 요청한 페이지에 뿌려줄 리스트 조회 -->
 	<select id="qnaList" resultMap="board">
 		select
 			   boa_no
@@ -576,6 +576,31 @@
 			</otherwise>
 		</choose>
 	</select>
+	
+	<!-- [QnA] - QnaEnrollForm 게시글 insert -->
+	<insert id="qnaInsert">
+		insert
+		  into board
+		  	 (
+		  	   boa_no
+		  	 , mem_no
+		  	 , boa_category
+		  	 , boa_title
+		  	 , boa_content
+		  	 , tag_name
+		  	 , boa_enroll_date
+		  	 )
+		 	 values
+		 	 (
+		 	   seq_bno.nextval
+		 	 , #{mno}
+		 	 , #{category}
+		 	 , #{title}
+		 	 , #{content}
+		 	 , #{tag}
+		 	 , sysdate
+		 	 )
+	</insert>
 	
 
 
