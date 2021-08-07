@@ -21,7 +21,7 @@ public interface BoardService {
 	ArrayList<Board> qnaList(PageInfo pi);
 	
 	// 2. 게시글 작성
-	int insertQna(Board b);
+	int qnaInsert(Board b);
 	
 	// 3. 게시글 상세조회
 	// 상세조회 요청 시 조회수 증가 (중복이어서 주석처리 / 추후 삭제 예정)
@@ -30,10 +30,10 @@ public interface BoardService {
 	Board qnaDetail(int bno);
 	
 	// 4. 게시글 삭제(status값 변경)
-	int deleteQna(int bno);
+	int qnaDelete(int bno);
 	
 	// 5. 게시글 수정
-	int updateQna(Board b);
+	int qnaUpdate(Board b);
 	
 	// 6. 키워드 검색
 	// 키워드 검색 총 게시글 개수 조회

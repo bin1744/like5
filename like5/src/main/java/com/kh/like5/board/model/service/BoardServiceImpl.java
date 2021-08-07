@@ -206,7 +206,7 @@ public class BoardServiceImpl implements BoardService {
 	//------------------ 한솔 -------------------------
 	
 	/**
-	 * [QnA] - 총 게시글 개수 조회
+	 * [QnA] - QnaList 총 게시글 개수 조회
 	 * @author Hansol
 	 */
 	@Override
@@ -215,7 +215,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * [QnA] - 사용자가 요청한 페이지에 뿌려줄 리스트
+	 * [QnA] - QnaList 사용자가 요청한 페이지에 뿌려줄 리스트
 	 * @author Hansol
 	 */
 	@Override
@@ -224,17 +224,16 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * [QnA] - 게시글 작성
+	 * [QnA] - QnaEnrollForm 게시글 작성
 	 * @author Hansol
 	 */
 	@Override
-	public int insertQna(Board b) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int qnaInsert(Board b) {
+
 	}
 
 	/**
-	 * [QnA] - 실제 게시글 조회
+	 * [QnA] - QnaDetail 실제 게시글 조회
 	 * @author Hansol
 	 */
 	@Override
@@ -244,27 +243,27 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * [QnA] - 게시글 삭제(status값 변경)
+	 * [QnA] - QnaDetail 게시글 삭제(status값 변경)
 	 * @author Hansol
 	 */
 	@Override
-	public int deleteQna(int bno) {
+	public int qnaDelete(int bno) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	/**
-	 * [QnA] - 게시글 수정
+	 * [QnA] - QnaUpdateForm 게시글 수정
 	 * @author Hansol
 	 */
 	@Override
-	public int updateQna(Board b) {
+	public int qnaUpdate(Board b) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	/**
-	 * [QnA] - 키워드 검색 총 게시글 개수 조회
+	 * [QnA] - QnaList 키워드 검색 총 게시글 개수 조회
 	 * @author Hansol
 	 */
 	@Override
@@ -274,7 +273,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * [QnA] - 키워드 검색 결과 조희
+	 * [QnA] - QnaList 키워드 검색 결과 조희
 	 * @author Hansol
 	 */
 	@Override
@@ -284,7 +283,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * [QnA] - 정렬 기준별 총 게시글 개수 조회
+	 * [QnA] - QnaList 정렬 기준별 총 게시글 개수 조회
 	 * @author Hansol
 	 */
 	@Override
@@ -294,7 +293,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * [QnA] - 정렬 기준별 결과 조회
+	 * [QnA] - QnaList 정렬 기준별 결과 조회
 	 * @author Hansol
 	 */
 	@Override
