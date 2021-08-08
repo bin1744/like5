@@ -393,4 +393,12 @@ public class BookingController {
 			return "common/errorPage";
 		}
 	}
+	
+	/*공간 예약관리 화면 연결*/
+	@RequestMapping("space.bo")
+	public String officeSpace() {
+		return "booking/officeManagement";
+	}
+	
+	
 }
