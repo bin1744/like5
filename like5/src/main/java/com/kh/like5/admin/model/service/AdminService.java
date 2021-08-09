@@ -42,15 +42,18 @@ public interface AdminService {
 	int selectSponCount();
 	// 후원관리 메인 페이지 select문 - 후원정보 가져오기
 	ArrayList<Sponsorship> selectSponList(PageInfo pi);
-	// 후원상세 페이지 select문(후원내용)-페이징처리
+	// 후원관리 메인페이지 검색관련 기능
 	public int searchDonaCount(HashMap<String,String> map);
-	// 후원상세 페이지 select문(후원내용)-내용가져오기
 	public ArrayList<Sponsorship> searchDonaList(PageInfo pi, HashMap<String, String> map);
-	// 후원상세 페이지 select문(정산내용)-페이징처리
+	
+	// 후원상세 페이지 select문(후원내용)-페이징처리
 	int selectSponsorCount(int smemNo);
-	// 후원상세 페이지 select문(정산내용)-내용가져오기
+	// 후원상세 페이지 select문(후원내용)-내용가져오기
 	Sponsorship selectSponMem(int smemNo);
 	ArrayList<Sponsorship> selectSponsorList(PageInfo pi, int smemNo);
+	
+	// 후원상세 페이지 select문(정산내용)-페이징처리
+	// 후원상세 페이지 select문(정산내용)-내용가져오기
 	// tag 메인페이지 select문 
 	// tag 조회 페이지 select문-페이징처리
 	// tag 조회 페이지 select문-게시글불러오기

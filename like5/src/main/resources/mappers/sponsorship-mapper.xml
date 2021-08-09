@@ -145,6 +145,7 @@
 		      , account_num
         having smem_no = #{smemNo}
   </select>
+  
   <select id="selectSponsorList" resultMap="sponResult">
   	select 
 	        spon_no

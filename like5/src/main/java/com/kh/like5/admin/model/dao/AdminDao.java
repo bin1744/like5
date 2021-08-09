@@ -97,7 +97,7 @@ public class AdminDao {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("sponsorshipMapper.selectSponList");
+		return (ArrayList)sqlSession.selectList("sponsorshipMapper.selectSponList", null, rowBounds);
 	}
 	// 후원관리 검색 기능 - 페이징
 	public int searchDonaCount(SqlSessionTemplate sqlSession, HashMap<String,String>map) {

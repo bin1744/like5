@@ -144,7 +144,7 @@
 			<br>
 	        <table class="table-bordered table-sm">
 	            <thead>
-	                <tr class="table-danger">
+	                <tr width="900px" class="table-danger">
 	                    <th width="50">No</th>
 	                    <th >후원한 회원명</th>
 	                    <th>후원한 회원의 닉네임</th>
@@ -158,7 +158,7 @@
 	            <!--반복문으로 뿌릴 때 제목을 클릭하면 해당 게시글로 넘어갈 수 있도록 해줘야해! 그럼 게시글 제목에 input-hidden으로 게시글 번호를 넣어줘야겠지 아마두-->
 	            <tbody>
                 	<c:forEach var="m" items="${list2 }">
-		                <tr><!-- 이렇게 해도 되나...? -->
+		                <tr ><!-- 이렇게 해도 되나...? -->
 			                    <td>${m.sponNo }</td>
 			                    <td>${m.memName }</td>
 			                    <td>${m.nickName }</td>
@@ -171,23 +171,37 @@
                     </c:forEach>
 	            </tbody>
 	        </table>
-	
-	    
+		
+	    	<br><Br>
+			<ul class="pagination justify-content-center">
+               	<c:choose>
+               		<c:when test="${ pi.currentPage eq 1 }">
+                    	<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                    </c:when>
+                    <c:otherwise>
+                    			<li class="page-item"><a class="page-link" href="donaDetailOne.ad?currentPage=${pi.currentPage -1 }&smemNo=${spMem.smemNo}">&laquo;</a></li>
+                    </c:otherwise>
+              		</c:choose>
+               
+                <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage }">
+                			<li class="page-item"><a class="page-link" href="donaDetailOne.ad?currentPage=${ p }&smemNo=${spMem.smemNo}">${ p }</a></li>
+                </c:forEach>
+                    
+                    	
+                <c:choose>
+                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
+                    	<li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+                    </c:when>
+                    <c:otherwise>
+	                    		<li class="page-item"><a class="page-link" href="donaDetailOne.ad?currentPage=${ pi.currentPage+1 }&smemNo=${spMem.smemNo}">&raquo;</a></li>
+	                </c:otherwise>
+                   </c:choose>
+               </ul>
 	    </article>
 	
 	    <br><br><br>
 	    
-	    <!-- 페이징 바 -->
-	    <div class="paging-area">
-	        <ul class="pagination justify-content-center">
-	            <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
-	            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-	            <li class="page-item"><a class="page-link" href="#">2</a></li>
-	            <li class="page-item"><a class="page-link" href="#">3</a></li>
-	            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-	        </ul>
-	    </div>
-	</div>
+	    
 	    <br><br>
 	    
 </body>
