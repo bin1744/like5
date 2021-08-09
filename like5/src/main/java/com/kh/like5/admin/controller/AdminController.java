@@ -251,7 +251,7 @@ public class AdminController {
 	@RequestMapping("tags.ad")
 	public String tagList(Model model) {
 		model.addAttribute("list", adService.tagList());
-		return "admin/tags";
+		return "admin/tagMain";
 	}
 
 	// tag 관리자 페이지
