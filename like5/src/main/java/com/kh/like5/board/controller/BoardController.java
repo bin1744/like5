@@ -82,9 +82,26 @@ public class BoardController {
 			return "common/errorPage";
 		}
 	}
-	
 
-	
+	/** 
+	 * [한솔] QnaEnrollForm 게시글 insert
+	 */
+	@RequestMapping("qnaDetail.bo")
+	public ModelAndView qnaDetail(int bno, ModelAndView mv) {
+		int result = bService.increaseCount(bno);
+		
+		if(result > 0) {
+			Board b = bService.qnaDetail(bno);
+			mv.addObject("b", b)
+			  .setViewName("board/qna/qnaDetailView");
+			
+		}else {
+			mv.addObject("errorMsg", " 상세조회에 실패하였습니다. ")
+			  .setViewName("common/errorPage");
+		}
+		return mv;
+	}
+		
 
 	/* -------- 푸터 -------- */
 	
