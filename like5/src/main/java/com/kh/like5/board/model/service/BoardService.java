@@ -88,7 +88,7 @@ public interface BoardService {
 	int increaseCount(int bno);
 	
 	// 게시글 상세보기
-	Board comDetail(int bno);
+	Board boardDetail(int bno);
 	
 	// 댓글 | 대댓글 전체 조회
 	ArrayList<Reply>selectReplyList(int bno);
@@ -116,15 +116,17 @@ public interface BoardService {
 	// 전체 목록 리스트 페이징 처리시 필요한 게시글 전체 count
 	int colListCount();
 	
-	//[칼럼] - 전체 목록 리스트 조회
+	// [칼럼] - 전체 목록 리스트 조회
 	ArrayList<Board>colList(PageInfo pi);
 	
 	// 최신 | 조회수 | 좋아요 순 조회
 	ArrayList<Board>colOrderByCount(PageInfo pi,String condition);
 	
-
-	//[칼럼] - 글 상세보기
-	Board colDetail(int bno);
+	// 좋아요
+	int insertLike(Board b);
+	
+	// 스크랩
+	int likeAndScrap(HashMap<String,Object>map);
 	
 	//[칼럼] - 글 수정하기
 	

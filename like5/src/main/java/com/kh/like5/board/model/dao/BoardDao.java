@@ -104,8 +104,8 @@ public class BoardDao {
 	 * @author seong
 	 */
 	
-	public Board comDetail(SqlSessionTemplate sqlSession,int bno) {
-		return sqlSession.selectOne("boardMapper.comDetail",bno);
+	public Board boardDetail(SqlSessionTemplate sqlSession,int bno) {
+		return sqlSession.selectOne("boardMapper.boardDetail",bno);
 	}
 	
 	/**
@@ -200,6 +200,23 @@ public class BoardDao {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("boardMapper.colOrderByCount",condition,rowBounds);
+	}
+	
+	/**
+	 * [칼럼] 게시글 상세보기
+	 * @author seong
+	 */
+	
+	public Board colDetail(SqlSessionTemplate sqlSession,int bno) {
+		return sqlSession.selectOne("boardMapper.comDetail",bno);
+	}
+	
+	/**
+	 * 좋아요
+	 * @author seong
+	 */
+	public int likeAndScrap(SqlSessionTemplate sqlSession,HashMap<String,Object>map) {
+		return sqlSession.insert("boardMapper.insertLike",map);
 	}
 	
 	//------------------ 한솔 -------------------------
