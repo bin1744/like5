@@ -179,6 +179,17 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.reportCommunity(sqlSession, r);
 	}
 	
+
+	/**
+	 *  [칼럼] 전체 목록 리스트 페이징 처리시 필요한 게시글 전체 count
+	 *  @author seong
+	 */
+	
+	@Override
+	public int colListCount() {
+		return bDao.colListCount(sqlSession);
+	}
+	
 	
 	/**
 	 *  [칼럼] - 전체 목록 리스트 조회
@@ -187,8 +198,16 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public ArrayList<Board> colList(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+		return bDao.colList(sqlSession, pi);
+	}
+	
+	/**
+	 * [커뮤니티]최신 | 조회수 | 좋아요 기준으로 조회
+	 * @author seong
+	 */
+	@Override
+	public ArrayList<Board> colOrderByCount(PageInfo pi, String condition) {
+		return bDao.colOrderByCount(sqlSession, pi, condition);
 	}
 
 	/**
@@ -311,6 +330,10 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Tag> tagList() {
 		return bDao.tagList(sqlSession);
 	}
+
+
+
+
 
 
 

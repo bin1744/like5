@@ -111,9 +111,16 @@ public interface BoardService {
 	//[커뮤니티] - 게시글 신고하기
 	int reportCommunity(Report b);
 	
+	//-----------------------------------------------------
+	
+	// 전체 목록 리스트 페이징 처리시 필요한 게시글 전체 count
+	int colListCount();
 	
 	//[칼럼] - 전체 목록 리스트 조회
 	ArrayList<Board>colList(PageInfo pi);
+	
+	// 최신 | 조회수 | 좋아요 순 조회
+	ArrayList<Board>colOrderByCount(PageInfo pi,String condition);
 	
 
 	//[칼럼] - 글 상세보기

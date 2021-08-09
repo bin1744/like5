@@ -531,6 +531,67 @@
 	    	)
 	</insert>
 	
+	<!--[칼럼] 전체 목록 리스트 페이징 처리시 필요한 게시글 전체 count  -->
+	<select id="colListCount" resultType="_int">
+		select
+	            count(*) count
+	        from
+	            board
+	        where
+	            regexp_like (boa_category,'칼럼')
+	             and boa_status='Y'
+	</select>
+	
+	<!--  [칼럼] - 전체 목록 리스트 조회 -->
+	<select id="colList" resultMap="board">
+		select
+	            boa_no
+	             ,nickname
+	             ,boa_category
+	             ,boa_title
+	             ,boa_content
+	             ,boa_enroll_date
+	             ,boa_img_path
+	             ,boa_count
+	             ,boa_like
+	             ,boa_scrap
+	        from board b
+	                 join member using (mem_no)
+	        where regexp_like (boa_category,'칼럼')
+	          and boa_status='Y'
+	</select>
+	
+	<!-- 최신 | 조회수 | 댓글수 기준으로 조회 -->	
+   <select id="colOrderByCount" resultMap="board">
+         select
+	            boa_no
+	             ,nickname
+	             ,boa_category
+	             ,boa_title
+	             ,boa_content
+	             ,boa_enroll_date
+	             ,boa_img_path
+	             ,boa_count
+	             ,boa_like
+	             ,boa_scrap
+	        from board b
+	                 join member using (mem_no)
+	        where regexp_like (boa_category,'칼럼')
+	          and boa_status='Y'
+     	<choose>
+	    	<when test="orderBy=='views'">
+	    		 order by boa_count desc,boa_enroll_date desc
+	    	</when>
+	    	<when test="orderBy=='likes'">
+	    		order by boa_like desc,boa_enroll_date desc
+    		</when>
+    		<otherwise>
+   			   order by boa_enroll_date desc
+    		</otherwise>
+	    </choose>
+    </select>
+	
+	
 	
 	<!-- ********** 한솔 ********** -->
 	<!-- [QnA] - QnaList 조회 시 유효한 게시글 총 개수 조회 -->

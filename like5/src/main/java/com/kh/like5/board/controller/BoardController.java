@@ -422,10 +422,45 @@ public class BoardController {
 	 */
 	
 	@RequestMapping("colList.bo")
-	public ModelAndView colList(ModelAndView mv) {
-		mv.setViewName("board/column/colListView");
+	public ModelAndView colList(@RequestParam(value="currentPage",defaultValue="1") int currentPage,ModelAndView mv) {
+		
+		int listCount = bService.colListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 9);
+		
+		ArrayList<Board>colList = bService.colList(pi);
+		
+		mv.addObject("listCount",listCount)
+		   .addObject("colList",colList)
+		   .addObject("pi",pi)
+		   .setViewName("board/column/colListView");
 		return mv;
 	}
+	
+	
+
+	/**
+	 * [커뮤니티]최신 | 조회수 | 좋아요 기준으로 조회
+	 * @author seong
+	 */
+	
+	@RequestMapping("colOrderByCount.bo")
+	public ModelAndView colOrderByCount(ModelAndView mv,@RequestParam(value="currentPage",defaultValue="1")
+										int currentPage, String condition) {
+		
+	int listCount = bService.colListCount();
+	PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 9);
+	
+	ArrayList<Board>colList = bService.colOrderByCount(pi, condition);
+	
+	mv.addObject("pi",pi)
+	.addObject("colList",colList)
+	.addObject("condition",condition)
+	.addObject("listCount",listCount)
+	.setViewName("board/column/colListView");
+	return mv;
+	}
+	
 	
 	/**
 	 * [칼럼] - 글 작성 Form
@@ -448,6 +483,9 @@ public class BoardController {
 		mv.setViewName("board/column/colDetailView");
 		return mv;
 	}
+	
+	
+	
 	
 	
 	

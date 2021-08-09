@@ -37,11 +37,6 @@ public class AdminController {
 		return "admin/about";
 	}
 
-	// tags 페이지
-	@RequestMapping("tags.ad")
-	public String tag() {
-		return "admin/tags";
-	}
 
 	// ============================= [지현] =============================
 
@@ -253,7 +248,12 @@ public class AdminController {
 	}
 	
 	// tag 메인페이지
-	
+	@RequestMapping("tags.ad")
+	public String tagList(Model model) {
+		model.addAttribute("list", adService.tagList());
+		return "admin/tags";
+	}
+
 	// tag 관리자 페이지
 	@RequestMapping("tagAdmin.ad")
 	public String tagAdmin() {

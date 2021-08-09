@@ -150,7 +150,7 @@
 		                    	<c:when test="${!empty c.imgPath}">
 		                    		<div class="talk-box-col__thumbnail">
 			                        <img src="${c.imgPath}">
-			                    </div>
+			                    	</div>
 		                    	</c:when>
 		                    	<c:otherwise>
 		                    		<div class="talk-box-col__thumbnail">

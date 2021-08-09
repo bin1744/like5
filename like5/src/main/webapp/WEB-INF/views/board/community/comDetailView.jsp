@@ -287,7 +287,8 @@
                             		selectReplyList();
                             	})
                             	
-                            
+             
+						       	
                             	function selectReplyList(){
                             		
 
@@ -339,7 +340,7 @@
                                                     +                '<div class="auto-heigth" style="box-sizing: border-box; height: auto;">'
                                                     +                    '<textarea class="form-control" rows="5" id="insertReplies" style="resize:none">'+'</textarea>'
                                                     +					 '<input type="hidden" value="'+list[i].repNo+'">'
-                                                    +                    '<button type="button" class="btn-danger btn btn-sm submit" style="float:right; margin-top: 10px;">'+"대댓글 작성"+'</button>'
+                                                    +                    '<button type="button" class="btn-danger btn btn-sm insert-comments" style="float:right; margin-top: 10px;">'+"대댓글 작성"+'</button>'
                                                     +                '</div>'
                                                     +            '</div>'
                                                     +        '</div>'
@@ -464,24 +465,25 @@
     
                             
     <script>
+	   /*대댓글 문구 변경*/
+    
+ 	  $(document).on("click", ".comments", function(){
+ 		  
+ 		  var a = $(this).text();
+ 		  
+ 		  if(a=='취소하기'){
+ 			  $(this).text("대댓글 달기");
+ 		  }else{
+ 			  $(this).text("취소하기");
+ 		  }
+ 		  
+     });
+  
+ 	$(document).on("click",".insert-comments",function(){
+      insertReplies($(this).prev().val());
+   });
 
-        /*대댓글 문구 변경*/
-       
-       	  $(document).on("click", ".comments", function(){
-       		  
-       		  var a = $(this).text();
-       		  
-       		  if(a=='취소하기'){
-       			  $(this).text("대댓글 달기");
-       		  }else{
-       			  $(this).text("취소하기");
-       		  }
-       		  
-           });
-        
-       	$(document).on("click",".submit",function(){
-            insertReplies($(this).prev().val());
-         });
+     
 
     </script>
 
