@@ -17,6 +17,8 @@
   	<result property="total" column="total"/>
   	<result property="typeName" column="type_name"/>
   	<result property="price" column="price"/>
+  	<result property="memName" column="mem_name"/>
+  	<result property="branch" column="branch"/>
   </resultMap>
 
   <resultMap type="Office" id="officeResultSet">
@@ -404,4 +406,25 @@
   	  set  status = 'N'
   	 where bookin_no = #{bno}
   </update>
+  
+  <select id="selectSpaceCount" resultType="_int">
+  	select
+  	       count(*)
+  	  from booking
+  	 where mem_no = #{memNo}       
+  </select>
+  
+  <select id="selectSpace" resultMap="bookingResultSet">
+  	select bookin_no
+		    , branch 
+		    , mem_name
+		    , type_name
+		    , to_char(request_date, 'YYYY-MM-DD')as request_date
+		    , status
+		from booking
+		join office using(office_no)
+		join member using(mem_no)
+		where mem_no = #{memNo}
+  </select>
+  
 </mapper>
