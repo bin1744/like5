@@ -169,7 +169,38 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.reportCommunity",r);
 	}
 	
+	/**
+	 *  [칼럼] 전체 목록 리스트 페이징 처리시 필요한 게시글 전체 count
+	 *  @author seong
+	 */
 	
+	public int colListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("boardMapper.colListCount");
+	}
+
+	/**
+	 *  [칼럼] - 전체 목록 리스트 조회
+	 *  @author seong
+	 */
+	
+	public ArrayList<Board>colList(SqlSessionTemplate sqlSession,PageInfo pi){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds  rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("boardMapper.colList",null,rowBounds);
+	}
+	
+	
+
+	/**
+	 * [칼럼]최신 | 조회수 | 좋아요 기준으로 조회
+	 * @author seong
+	 */
+	public ArrayList<Board> colOrderByCount(SqlSessionTemplate sqlSession,PageInfo pi,String condition){
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.colOrderByCount",condition,rowBounds);
+	}
 	
 	//------------------ 한솔 -------------------------
 
