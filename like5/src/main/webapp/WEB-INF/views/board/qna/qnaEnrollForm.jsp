@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>[QnA] 질문 작성하기</title>
 
 <!-- qnaDetailView.css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/qnaEnrollForm.css" />
@@ -54,7 +54,7 @@
 								&nbsp;&nbsp;해시태그(#)와 태그 이름을 입력한 후 띄어쓰기로 구분해주세요!&nbsp;&nbsp;<i>ex)#JAVA #AWS ...</i>
 							</label>
 							<input type="text" class="form-control" id="qTag"
-								placeholder="우측에서 사용 중인 태그를 알아보고 질문과 관련있는 태그를 입력해주세요." name="tag" required>
+								placeholder="첨부 가능한 태그 확인 후 관련있는 태그를 입력해주세요. 입력 양식과 일치하지 않을 경우 태그가 보여지지 않아요." name="tag" required>
 							<div class="valid-feedback">입력되었습니다.</div>
 							<div class="invalid-feedback">태그를 입력해주세요.</div>
 						</div>
@@ -93,11 +93,39 @@
 						<!-- 버튼 영역 -->
 						<div class="w3-container w3-right-align w3-margin-top">
 							<button type="submit" class="w3-button w3-white w3-border w3-border-gray w3-round">임시저장</button>
-							<button type="submit" class="btn btn-danger" id="submitButton">작성하기</button>
+							<button type="submit" class="btn btn-danger" id="submitButton" onclick="postFormSubmit(1)">작성하기</button>
 						</div>
 						<!-- 버튼 영역 끝 -->
 					</form>
 					<!-- 제목, 태그, 본문 작성 영역 끝 -->
+					
+					<script>
+					// 양식 제출 관련 유효성 검사
+					function postFormSubmit(num){
+						// 작성하기 버튼일 경우 유효성검사 진행 후 제출여부 판단
+						if(num == 1){
+							(function() {
+							'use strict';
+							window.addEventListener('load', function() {
+								var forms = document.getElementsByClassName('qnaWrite');
+								var validation = Array.prototype.filter.call(forms, function(form) {
+								form.addEventListener('submit', function(event) {
+									if (form.checkValidity() === false) {
+									event.preventDefault();
+									event.stopPropagation();
+									}
+									form.classList.add('was-validated');
+								}, false);
+								});
+							}, false);
+							})();
+						// 임시저장 버튼일 경우 유효성검사 없이 바로 제출
+						}else {
+							$(".enrollForm").attr("action", "qnaStorageForm.bo").sumbit();
+						}
+					}
+					</script>
+					
 				</div>
 				<!-- 좌측 글쓰기 영역 끝 -->
 	
@@ -171,6 +199,23 @@
 					</div>
 					<hr class="tipLine">
 					<!-- 팁 아코디언 끝-->
+					
+					<script>
+					// 팁 아코디언
+					function explanation(id) {
+						var x = document.getElementById(id);
+						if (x.className.indexOf("w3-show") == -1) {
+							x.className += " w3-show";
+							x.previousElementSibling.className = 
+							x.previousElementSibling.className.replace("w3-white", "w3-red");
+						} else { 
+							x.className = x.className.replace(" w3-show", "");
+							x.previousElementSibling.className = 
+							x.previousElementSibling.className.replace("w3-red", "w3-white");
+						}
+					}
+					</script>
+					
 				</div>
 				<!-- 우측 설명 영역 끝 -->
 			</div>
@@ -181,42 +226,7 @@
 	<!-- 본문 끝 -->
 
 	<!-- JS -->
-	<script>
-		// 우측 설명 영역
-		function explanation(id) {
-			var x = document.getElementById(id);
-			if (x.className.indexOf("w3-show") == -1) {
-				x.className += " w3-show";
-				x.previousElementSibling.className = 
-				x.previousElementSibling.className.replace("w3-white", "w3-red");
-			} else { 
-				x.className = x.className.replace(" w3-show", "");
-				x.previousElementSibling.className = 
-				x.previousElementSibling.className.replace("w3-red", "w3-white");
-			}
-		}
-
-		
-		// 양식 제출 관련 유효성 검사
-		(function() {
-		'use strict';
-		window.addEventListener('load', function() {
-			var forms = document.getElementsByClassName('qnaWrite');
-			var validation = Array.prototype.filter.call(forms, function(form) {
-			// 임시저장/작성하기 모두 submit이어도 두 개를 분리해서 적용할 수는 없을까?
-			// 이 고민이 해결되면 임시저장 alert 설정하기
-			form.addEventListener('submit', function(event) {
-				if (form.checkValidity() === false) {
-				event.preventDefault();
-				event.stopPropagation();
-				}
-				form.classList.add('was-validated');
-			}, false);
-			});
-		}, false);
-		})();
-
-		
+	<script>		
 		// 테이블 내 일치하는 필드값 검색
 		function tagSearch() {
 			var input, filter, table, tr, td, i;
