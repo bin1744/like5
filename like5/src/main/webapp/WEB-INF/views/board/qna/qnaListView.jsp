@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- ArrayList 사용을 위해 import 선언 -->
-<%@ page import="java.util.Arrays" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>QnA List</title>
+<title>QnA 게시글 보기</title>
 
 <!-- qnaListView.css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/qnaListView.css" />
@@ -136,7 +134,8 @@
 											<c:otherwise>
 												<c:forTokens var="tags" items="${ q.tag }" delims=" ">
 													<button class="w3-button w3-white w3-border w3-border-red w3-round-xxlarge w3-hover-red w3-tiny">
-														<a href=""><c:out value="${ tags }"/></a>
+														<!-- 클릭 시 tagDatail 페이지로 이동 -->
+														<a href="tagDetail.ad"><c:out value="${ tags }"/></a>
 													</button>
 												</c:forTokens>
 											</c:otherwise>
