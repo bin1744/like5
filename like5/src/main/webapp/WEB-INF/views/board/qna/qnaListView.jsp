@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!-- ArrayList 사용을 위해 import 선언 -->
+<%@ page import="java.util.Arrays" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -132,10 +134,11 @@
 												<p id="noTag">no tag attached</p>
 											</c:when>
 											<c:otherwise>
-												<p id="tagResult">${ q.tag }</p>
-												<!--button class="w3-button w3-white w3-border w3-border-red w3-round-xxlarge w3-hover-red w3-tiny">
-													<a href="">${ q.tag }</a>
-												</button-->
+												<c:forTokens var="tags" items="${ q.tag }" delims=" ">
+													<button class="w3-button w3-white w3-border w3-border-red w3-round-xxlarge w3-hover-red w3-tiny">
+														<a href=""><c:out value="${ tags }"/></a>
+													</button>
+												</c:forTokens>
 											</c:otherwise>
 										</c:choose>
 									</div> <!-- 태그영역 끝 -->
