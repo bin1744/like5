@@ -589,6 +589,29 @@
 	    </choose>
     </select>
     
+    <!-- 게시글 상세 조회 시 로그인한 회원의  좋아요 여부 -->
+    <select id="likesCount" resultType="_int">
+	    select 
+    		count(*)
+		from 
+			likes
+		where 
+			mem_no = #{mno}
+		and 
+			boa_no = #{bno}
+    </select>
+    
+    <!-- 게시글 상세 조회 시 로그인한 회원의  스크랩 여부 -->
+    <select id="scrapCount" resultType="_int">
+    	select 
+    		count(*)
+		from 
+			scrap
+		where 
+			mem_no = #{mno}
+		and 
+			boa_no = #{bno}
+    </select>
     
     <!--[ 스크랩 | 좋아요 ]  등록 -->
     <insert id="insertLike">

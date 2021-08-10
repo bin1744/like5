@@ -212,6 +212,26 @@ public class BoardDao {
 	}
 	
 	/**
+	 *  게시글 상세 조회 시 로그인한 회원의  좋아요 여부
+	 * @author seong
+	 */
+	
+	public int likesCount(SqlSessionTemplate sqlSession,Board b) {
+		return sqlSession.selectOne("boardMapper.likesCount",b);
+	}
+	
+
+	/**
+	 *  게시글 상세 조회 시 로그인한 회원의  스크랩 여부
+	 * @author seong
+	 */
+	
+	public int scrapCount(SqlSessionTemplate sqlSession,Board b) {
+		return sqlSession.selectOne("boardMapper.scrapCount",b);
+	}
+	
+	
+	/**
 	 * [ 스크랩 | 좋아요 ]  등록
 	 * @author seong
 	 */
