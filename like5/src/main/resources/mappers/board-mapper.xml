@@ -363,8 +363,8 @@
 	    </choose>
     </select>
 	
-	<!-- 커뮤니티 게시글 상세보기 -->
-	<select id="comDetail" resultMap="board">
+	<!-- [커뮤니티 | 칼럼] 게시글 상세보기 -->
+	<select id="boardDetail" resultMap="board">
         select
             boa_no
             ,mem_no
@@ -554,7 +554,6 @@
 	             ,boa_img_path
 	             ,boa_count
 	             ,boa_like
-	             ,boa_scrap
 	        from board b
 	                 join member using (mem_no)
 	        where regexp_like (boa_category,'칼럼')
@@ -573,7 +572,6 @@
 	             ,boa_img_path
 	             ,boa_count
 	             ,boa_like
-	             ,boa_scrap
 	        from board b
 	                 join member using (mem_no)
 	        where regexp_like (boa_category,'칼럼')
@@ -590,7 +588,41 @@
     		</otherwise>
 	    </choose>
     </select>
-	
+    
+    
+    <!--[ 스크랩 | 좋아요 ]  등록 -->
+    <insert id="insertLike">
+	   	insert 
+	   		into
+		   	<choose>
+			   	<when test="condition =='like'">
+			   		 likes 
+			   	</when>
+			   	<when test="condition=='scrap'">
+			   		scrap
+			   	</when>
+		   	</choose>
+		    (
+		    mem_no
+		    ,boa_no
+		    ,
+		    <choose>
+		    	<when test="condition =='like'">
+		    	likes_date
+		    	</when>
+		    	<when test="condition=='scrap'">
+		    	scrap_date
+		    	</when>
+		    </choose>
+		    )
+		    values
+		    (
+		    #{mno}
+		    ,#{bno}
+		    ,sysdate
+		    )
+    </insert>
+
 	
 	
 	<!-- ********** 한솔 ********** -->

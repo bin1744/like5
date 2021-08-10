@@ -79,8 +79,6 @@
 						<c:forEach var="q" items="${ qnaList }">
 							<tr>
 								<input type="hidden" class="qBno" value="${ q.bno }">
-								<!-- 글번호  -->
-								<td class="qnaNo" hidden>${ q.bno }</td>
 								<!-- 좋아요 시작 -->
 								<td class="qnaLike">
 									<!-- 좋아요 상/중/하단 나누는 div-->
@@ -126,14 +124,20 @@
 								<td class="qnaContent">
 									<!-- 게시글 상/하단 나누는 div -->
 									<div id="qnaTitle">
-										<!-- 게시글 제목, 클릭 시 게시글 상세페이지로 이동-->
-										<a href="qDetail.bo">${ q.title }</a>
+										<a href="qnaDetail.bo">${ q.title }</a>
 									</div>
 									<div id="qnaTag">
-										<!-- 게시글에 첨부된 태그 -->
-										<button class="w3-button w3-white w3-border w3-border-red w3-round-xxlarge w3-hover-red w3-tiny">
-											<a href="">${ q.tag }</a>
-										</button>
+										<c:choose>
+											<c:when test="${ empty q.tag }">
+												<p id="noTag">no tag attached</p>
+											</c:when>
+											<c:otherwise>
+												<p id="tagResult">${ q.tag }</p>
+												<!--button class="w3-button w3-white w3-border w3-border-red w3-round-xxlarge w3-hover-red w3-tiny">
+													<a href="">${ q.tag }</a>
+												</button-->
+											</c:otherwise>
+										</c:choose>
 									</div> <!-- 태그영역 끝 -->
 								</td> <!-- 게시글 끝 -->
 	
@@ -166,11 +170,10 @@
 				</div> <!-- 게시글 리스트가 들어갈 부분 끝 -->
 				
 
-				<!-- 페이지네이션 -->
 				<!-- 페이지네이션 스타일 수정 예정 -->
-				<div class="pagingArea" style="border:1px solid red;">
-					<div class="nullArea" style="border:1px solid blue;"></div>
-					<ul class="pagination"style="border:1px solid black;">
+				<div class="pagingArea">
+					<div class="nullArea"></div>
+					<ul class="pagination">
 						<c:choose>
 							<c:when test="${ pi.currentPage eq 1 }">
 								<li class="page-item disabled"><a class="page-link">&laquo;</a></li>
@@ -209,7 +212,7 @@
 	<!-- JS -->
 	<script>
 	function loginAlert(){
-		alert(" 로그인 후 이용해주세요. ")
+		alertify.alert(" 로그인 후 이용해주세요. ")
 	}
 	</script>
 

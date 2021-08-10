@@ -105,24 +105,28 @@
 					<thead>
 						<tr class="table-default">
 							<th width="150px">예약번호</th>
-							<th width="150px">오피스타입</th>
+							<th width="130px">지점</th>
 							<th width="100px">예약자</th>
-							<th width="100px">타입</th>
+							<th width="100px">오피스타입</th>
 							<th width="100px">예약일</th>
+							<th width="80px">상태</th>
 							<th width="100px">#</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>프라이빗(1인)</td>
-							<td>최빛나</td>
-							<td>전용데스크(1인)</td>
-							<td>2021-07-12</td>
-							<td>
-								<input type="checkbox" onclick = "">
-							</td>
-						</tr>
+						<c:forEach var="s" items="${list}">
+							<tr>
+								<td>${ s.bookingNo }</td>
+								<td>${ s.branch }</td>
+								<td>${ s.memName }</td>
+								<td>${ s.typeName }</td>
+								<td>${ s.requestDate }</td>
+								<td>${ s.status }</td>
+								<td>
+									<input type="checkbox" onclick = "">
+								</td>
+							</tr>
+						</c:forEach>	
 					</tbody>
 				</table>
 			</div>
@@ -131,13 +135,13 @@
 
             <div id="pagingArea">
                 <ul class="pagination">
-                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
                     <li class="page-item"><a class="page-link" href="#">1</a></li>
                     <li class="page-item"><a class="page-link" href="#">2</a></li>
                     <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item"><a class="page-link" href="#">4</a></li>
                     <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
                 </ul>
             </div>
 		</div>

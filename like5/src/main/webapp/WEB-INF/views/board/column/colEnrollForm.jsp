@@ -39,7 +39,7 @@
             <hr>
         </div>
         <form  id="" action="" method="post" style="margin-top: 0px;" enctype="multipart/form-data">
-            <input type="hidden" id="" value="${loginUser.userId}" name="">
+            <input type="hidden" id="" value="${loginUser.memNo}" name="">
             <!--카테고리 시작-->
             <!--작성자 아이디, 제목, 내용, 첨부파일-->
             <br>
@@ -67,8 +67,8 @@
                 </div>
             </div>
                 
-            <!--🔥토스트 UI 컬러피커 작업중🔥
-            <script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.js"></script>-->
+            <!--🔥토스트 UI 컬러피커 작업중🔥-->
+            <script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.js"></script>
             
 
             <br><br>

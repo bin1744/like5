@@ -26,6 +26,15 @@ public class BoardServiceImpl implements BoardService {
 	
 	
 	/**
+	 *  [공통] 게시글 상세보기시 조회수 증가
+	 *  @author seong
+	 */
+	@Override
+	public int increaseCount(int bno) {
+		return bDao.increaseCount(sqlSession, bno);
+	}
+	
+	/**
 	 *  [커뮤니티] 전체 목록 리스트 페이징 처리시 필요한 게시글 전체 count
 	 *  @author seong
 	 */
@@ -92,24 +101,15 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.comOrderByCount(sqlSession,pi,condition);
 	}
 
-	/**
-	 *  [커뮤니티] 게시글 상세보기시 조회수 증가
-	 *  @author seong
-	 */
-	@Override
-	public int increaseCount(int bno) {
-		return bDao.increaseCount(sqlSession, bno);
-	}
-
 	
 	/**
-	 *  [커뮤니티] 커뮤니티 게시글 상세보기
+	 *  [커뮤니티 | 칼럼] 게시글 상세보기
 	 *  @author seong
 	 */
 	
 	@Override
-	public Board comDetail(int bno) {
-		return bDao.comDetail(sqlSession, bno);
+	public Board boardDetail(int bno) {
+		return bDao.boardDetail(sqlSession, bno);
 	}
 
 	/**
@@ -211,14 +211,13 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 *  [칼럼] - 글 상세보기
-	 *  @author seong
+	 * 좋아요
+	 * @author seong
 	 */
 	
 	@Override
-	public Board colDetail(int bno) {
-		// TODO Auto-generated method stub
-		return null;
+	public int likeAndScrap(HashMap<String,Object>map) {
+		return bDao.likeAndScrap(sqlSession, map);
 	}
 
 
@@ -330,6 +329,15 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Tag> tagList() {
 		return bDao.tagList(sqlSession);
 	}
+
+	@Override
+	public int insertLike(Board b) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
 
 
 
