@@ -295,10 +295,13 @@ public class BookingController {
 	public String paymentForm(int officeNo, Model model, String startDate, String endDate) {
 		
 		Office o = bService.selectOffice(officeNo);
+		
+		//예약된 날짜들 받아오기
+		ArrayList<Booking> list = bService.selectB(officeNo);
+		model.addAttribute("list", list);
 		model.addAttribute("o", o);	
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
-		//System.out.println(o);
 		return "booking/bPayment";
 	}
 	

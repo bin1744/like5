@@ -422,7 +422,6 @@
     <%-- 결제 방식 선택 --%>
 	 $("#settle").on("click", function(){
 		 if($("#card").prop("checked")){
-			 console.log("sss");
 			 requestPay();
 		 }
 	  })
@@ -437,8 +436,8 @@
                merchant_uid: "merchant_" + new Date().getTime(), //상점에서 관리하시는 고유 주문번호를 전달
                name: "주문명:결제테스트",
                amount: 100,
-               buyer_email: "dev.likeimfive@gmail.com",
-               buyer_name: "최빛나",
+               buyer_email: "${loginUser.email}",
+               buyer_name: "${loginUser.name}",
                buyer_tel: "010-8728-9254", //누락되면 이니시스 결제창에서 오류
                buyer_addr: "서울특별시 강남구 삼성동",
                buyer_postcode: "123-456",
@@ -523,12 +522,6 @@
         $(".total-price").html("￦" + (${o.price} * (day2-day1) + (${o.price} * (day2-day1)) * 0.1));
         $("#totalInput").val((${o.price} * (day2-day1) + (${o.price} * (day2-day1)) * 0.1));
 
-
-      	//  $(".total-price").html("글씨출력");
-      	//  $("totalInput").val("input에값넣어줌");
-
-
-
     });
     
     <%-- 로컬스토리지 삭제하기 --%>
@@ -545,14 +538,12 @@
           minDate: "today",
           dateFormat: "Y-m-d",
           disable: [<%-- 예약된 날짜들 받아오기 jstl--%>
-              {
-                from: "2021-08-01",
-                to: "2021-08-04",
-              },
-              {
-                from: "2021-08-15",
-                to: "2021-08-17",
-              },
+          <c:forEach var="b" items="${list}">
+          {
+              from: "${b.startDate}",
+              to: "${b.endDate}",
+            },
+          </c:forEach>
             ],
           onChange: function (selectedDates, dateStr, instance) {
             $(".dateprint").html(dateStr);

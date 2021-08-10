@@ -20,6 +20,9 @@ public interface BookingService {
 	//1.3. 예약하기(사용자)
 	int insertBook(Booking b);
 
+	//1.4. 예약날짜(사용자)
+	ArrayList<Booking> selectB(int officeNo);
+	
 	//2.리스트 전체 조회 + 페이징(관리자)
 	int selectListCount();
 	ArrayList<Office> selectListAll(PageInfo pi);

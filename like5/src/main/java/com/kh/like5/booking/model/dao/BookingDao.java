@@ -26,6 +26,10 @@ public class BookingDao {
 		return sqlSession.insert("bookingMapper.insertBook", b);
 	}
 
+	//예약된 날짜 가져오기
+	public ArrayList<Booking> selectB(SqlSessionTemplate sqlSession, int officeNo){
+		return(ArrayList)sqlSession.selectList("bookingMapper.selectB", officeNo);
+	}
 	public int selectListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("bookingMapper.selectListCount");
 	}

@@ -39,6 +39,11 @@ public class BookingServiceImpl implements BookingService{
 	}
 
 	@Override
+	public ArrayList<Booking> selectB(int officeNo) {
+		return bDao.selectB(sqlSession, officeNo);
+	}
+	
+	@Override
 	public int selectListCount() {
 		return bDao.selectListCount(sqlSession);
 	}
