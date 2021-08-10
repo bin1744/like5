@@ -210,16 +210,6 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.colOrderByCount(sqlSession, pi, condition);
 	}
 
-	/**
-	 * 좋아요
-	 * @author seong
-	 */
-	
-	@Override
-	public int likeAndScrap(HashMap<String,Object>map) {
-		return bDao.likeAndScrap(sqlSession, map);
-	}
-	
 
 	/**
 	 *  게시글 상세 조회 시 로그인한 회원의  좋아요 여부
@@ -240,6 +230,26 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.scrapCount(sqlSession, b);
 	}
 
+	/**
+	 * Ajax로 좋아요 | 스크랩 등록
+	 * @author seong
+	 */
+	
+	@Override
+	public int likeAndScrap(HashMap<String,Object>map) {
+		return bDao.likeAndScrap(sqlSession, map);
+	}
+	
+	/**
+	 * Ajax로 좋아요 | 스크랩 해제
+	 * @author seong
+	 */
+	
+	@Override
+	public int UnlikeAndUnScrap(HashMap<String, Object> map) {
+		return bDao.UnlikeAndUnScrap(sqlSession, map);
+	}
+	
 	
 	//------------------ 한솔 -------------------------
 	
@@ -348,6 +358,7 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Tag> tagList() {
 		return bDao.tagList(sqlSession);
 	}
+
 
 	
 
