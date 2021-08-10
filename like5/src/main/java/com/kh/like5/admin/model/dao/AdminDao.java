@@ -131,6 +131,18 @@ public class AdminDao {
 	public ArrayList<Tag> tagList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("tagMapper.tagList");
 	}
+
+	// TAG 상세조회
+	public int getTagCount(SqlSessionTemplate sqlSession, String tagName) {
+		return sqlSession.selectOne("boardMapper.getTagCount", tagName);
+	}
+
+	public ArrayList<Board> tagDetailList(SqlSessionTemplate sqlSession, PageInfo pi, String tagName) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+		return (ArrayList)sqlSession.selectList("boardMapper.tagDetailList", tagName, rowBounds);
+	}
 	
 
 	// ============================= [재환] =============================

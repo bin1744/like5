@@ -153,6 +153,16 @@ public class AdminServiceImpl implements AdminService{
 		return adDao.tagList(sqlSession);
 	}
 
+	@Override
+	public int getTagCount(String tagName) {
+		return adDao.getTagCount(sqlSession, tagName);
+	}
+
+	@Override
+	public ArrayList<Board> tagDetailList(PageInfo pi, String tagName) {
+		return adDao.tagDetailList(sqlSession, pi, tagName);
+	}
+
 
 	@Override
 	public int getReportCount() {

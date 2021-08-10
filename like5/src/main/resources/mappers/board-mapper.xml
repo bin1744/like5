@@ -183,6 +183,24 @@
         by REPORT_UNIQUE desc
     </select>
 
+    <!-- [재환] 관리자단 태그별 게시글 개수 조회 -->
+    <select id="getTagCount" resultType="_int">
+        select count(*)
+        from board
+        where tag_name like '%#' || #{tagName} || '%'
+    </select>
+
+    <!-- [재환] 관리자단 태그별 게시글 리스트 조회 -->
+    <select id="tagDetailList" resultMap="board">
+        select BOA_CATEGORY
+             , BOA_TITLE
+             , NICKNAME
+             , BOA_ENROLL_DATE
+          from BOARD
+          join MEMBER using(mem_no)
+         where tag_name like '%#' || #{tagName} || '%'
+    </select>
+
     <!--                    성은                           -->
 
     <!-- [커뮤니티] - 전체 목록 리스트 페이징 처리시 필요한 게시글 전체 count-->

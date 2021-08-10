@@ -55,10 +55,14 @@ public interface AdminService {
 	
 	// 후원상세 페이지 select문(정산내용)-페이징처리
 	// 후원상세 페이지 select문(정산내용)-내용가져오기
-	// tag 메인페이지 select문 
+	// tag 메인페이지 select문
 	// tag 메인페이지 select문
 	ArrayList<Tag> tagList();
+
 	// tag 조회 페이지 select문-페이징처리
+	int getTagCount(String tagName);
+	ArrayList<Board> tagDetailList(PageInfo pi, String tagName);
+
 	// tag 조회 페이지 select문-게시글불러오기
 	// tag 수정페이지(관리자용) select문
 	// tag 수정페이지 Modal update문
