@@ -11,6 +11,9 @@
 <head>
     <title>Title</title>
     <style>
+        .innerOuter{
+            height: 1065px;
+        }
         #star{
             color: yellow;
             size: 6px;
@@ -75,6 +78,8 @@
       </c:if>
 
   </div>
+
+  <jsp:include page="../common/footer.jsp" />
 
 </body>
 </html>

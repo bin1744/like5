@@ -663,7 +663,23 @@
 		    ,sysdate
 		    )
     </insert>
-
+    
+	<delete id="UnlikeAndUnScrap">
+		delete 
+			<choose>
+				<when test="condition =='like'">
+				likes
+				</when>
+				<when test="condition=='scrap'">
+				scrap
+				</when>
+			</choose>
+		where
+			 mem_no = #{mno}
+		and 
+		 	boa_no = #{bno}
+	</delete>
+	
 	
 	
 	<!-- ********** 한솔 ********** -->

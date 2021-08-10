@@ -58,7 +58,9 @@
 	                    			 <i id="selected-like" class="fas fa-thumbs-up fa-2x"></i>
 	                    		</c:when>
 	                    		<c:otherwise>
-			                        <i id="like" class="far fa-thumbs-up fa-2x"></i>
+			                        <i id="like" class="far fa-thumbs-up fa-2x" ></i>
+			                        <i id="selected-like" class="fas fa-thumbs-up fa-2x test" style="display:none;"></i>
+			                        <i id="like" class="fas fa-thumbs-up fa-2x test" style="display:none;"></i>
 	                    		</c:otherwise>
 	                        </c:choose>
 	                        <div>좋아요</div>
@@ -73,6 +75,8 @@
 	                    		</c:when>
 	                    		<c:otherwise>
 	                       			 <i id="scrap" class="far fa-bookmark fa-2x"></i>
+	                       			 <i id="selected-scrap" class="fas fa-bookmark fa-2x" style="display:none;"></i>
+	                       			 <i id="scrap" class="fas fa-bookmark fa-2x" style="display:none;"></i>
                        			</c:otherwise>
 	                        </c:choose>
 	                        <div>스크랩</div>
@@ -125,7 +129,7 @@
 
             <script>
 
-                /*좋아요 아이콘 클릭시 변경되는 JS*/
+                /*좋아요 아이콘 클릭시 변경되는 JS
                 $('.like').click(function(){
                     
                     if($('#selected-like').css('display')=='none'){
@@ -137,8 +141,9 @@
                     }
 
                 })
+                */
 
-                /*스크랩 아이콘 클릭시 변경되는 JS**/
+                /*스크랩 아이콘 클릭시 변경되는 JS
                 $('.scrap').click(function(){
 
                     if($('#selected-scrap').css('display')=='none'){
@@ -150,6 +155,12 @@
                     }
 
                 })
+                */
+                
+                $("#selected-like").click(function(){
+                	
+                })
+                
 
                 /* 후원 아이콘 클릭시 변경되는 JS*/
                 /*후원의 경우 DB에 insert된다면 변경되게끔 구현하기*/
@@ -165,7 +176,7 @@
 
                 })
                 
-                /*스크랩 | 좋아요 공통 모듈*/
+                /* 좋아요 | 스크랩 공통 모듈 [백업용]
                 function likeAndScrap(num){
                 	if(num == 1 ){
                 		$("#insertForm").children().eq(2).attr("value","like");
@@ -176,9 +187,96 @@
                 	}
                 }
                 
+                */
 
+                // 1 = 좋아요 | 2 = 스크랩
+                function likeAndScrap(num){
+                	if(num == 1){
+                		$("#like").click(function(){
+                			// 좋아요 버튼 클릭 시 
+                    		$.ajax({
+                    			url:"likeAndScrap.bo"
+                    			,data:{bno:${b.bno}
+                    				 ,mno:${loginUser.memNo}
+                    				 ,condition:"like"
+                    				 }
+                    			,success:function(status){
+                    				if(status=="success"){
+                    					alertify.alert("좋아요 성공!🎉");
+                    					$('#selected-like').css('display','block');
+                    					$('#like').css('display','none');
+                    				}
+                    			}
+                    		})
+                		})
+                		
+                		// 좋아요 해제
+                		$("#selected-like").click(function(){
+                			$.ajax({
+                    			url:"UnlikeAndUnScrap.bo"
+                    			,data:{bno:${b.bno}
+                    				 ,mno:${loginUser.memNo}
+                    				 ,condition:"like"
+                    				 }
+                    			,success:function(status){
+                    				if(status=="success"){
+                    					alertify.alert("좋아요 해제😅");
+                    					$('#like').css('display','block');
+                    					$('#selected-like').css('display','none');
+                    				}
+                    			}
+                    		})
+                			
+                		})
+                	}
+                	
+                	
+                	
+                	if(num == 2){
+                		
+                		$("#scrap").click(function(){
+	                		// 스크랩 버튼 클릭 시 
+	                		$.ajax({
+	                			url:"likeAndScrap.bo"
+	                			,data:{bno:${b.bno}
+	                				 ,mno:${loginUser.memNo}
+	                				 ,condition:"scrap"
+	                				 }
+	                			,success:function(status){
+	                				if(status=="success"){
+	                					alertify.alert("스크랩 성공!🎉");
+	                				   $('#selected-scrap').css('display','block');
+	                				   $('#scrap').css('display','none');
+	                				}
+	                			}
+	                		})
+                		})
+                		
+                		$("#selected-scrap").click(function(){
+                			$.ajax({
+	                			url:"UnlikeAndUnScrap.bo"
+	                			,data:{bno:${b.bno}
+	                				 ,mno:${loginUser.memNo}
+	                				 ,condition:"scrap"
+	                				 }
+	                			,success:function(status){
+	                				if(status=="success"){
+	                					alertify.alert("스크랩 해제 😅");
+	                				   $('#selected-scrap').css('display','none');
+	                				   $('#scrap').css('display','block');
+	                				}
+	                			}
+	                		})
+                		})
+                		
+                	}
+                }
+                
+                
+                
             </script>
             
+            <!-- 좋아요와 스크랩  -->
           	<form id="insertForm" action="" method="post">
 				<input type="hidden" name="bno" value="${b.bno}">
 				<input type="hidden" name="mno" value="${loginUser.memNo}">
@@ -203,7 +301,7 @@
                 <c:choose>
                 	<c:when test="${loginUser.memNo eq b.mno}">
 	               	     <div style="height: 30px; margin-left: 65%;"  >
-	                    	<button class="btn btn-outline-danger btn-sm"  onclick="postFormSubmit(1)">수정하기</button>
+	                    	<button class="btn btn-outline-danger btn-sm" onclick="postFormSubmit(1)">수정하기</button>
 	                   		<button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal" >삭제하기</button>
 	               		</div> 
                 	</c:when>

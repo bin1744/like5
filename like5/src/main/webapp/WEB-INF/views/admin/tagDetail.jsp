@@ -11,6 +11,9 @@
 <head>
     <title>Title</title>
     <style>
+        .outer{
+            height: 1080px;
+        }
         #star{
             color: yellow;
             size: 6x;
@@ -129,9 +132,9 @@
         </c:choose>
     </ul>
 
-
-
 </div>
+
+<jsp:include page="../common/footer.jsp" />
 
 </body>
 </html>

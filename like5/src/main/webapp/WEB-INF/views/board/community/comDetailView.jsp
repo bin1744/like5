@@ -237,60 +237,12 @@
 							<div id="replyResult"></div>
 							<div id="answerComment"></div>
 							
-                            <!--댓글 조회목록
-                            <div class="comment-wrapper_value" >
-                                <div class="comment-info">
-                                    <div class="info-wrapper">
-                                        <div class="user-info">
-                                            <div class="user-img">
-                                                <i class="far fa-user fa-2x"></i>
-                                            </div>
-                                            <div class="user-info" style="display: inline-block;width: 90%;">
-                                                <div class="test"> 
-                                                    <span><a href="" class="aTags">사용자 닉네임</a></span>
-                                                    <span style="float: right;"><a href="" class="aTags" data-toggle="modal" data-target="#report-modal"><img src="">🚨신고</a></span>
-                                                 </div>
-                                                <div>21-07-06</div>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="comment-content">
-                                            <div>댓글 영역입니다.</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!--대댓글 조회 목록
-                            <div class="comments-wrapper_value" >
-                                <div class="comment-info">
-                                    <div class="info-wrapper">
-                                        <div class="user-info">
-                                            <div class="user-img">
-                                                <i class="far fa-user fa-2x"></i>
-                                            </div>
-                                            <div class="user-info" style="display: inline-block; width: 90%;">
-                                                <span><a href="" class="aTags">사용자 닉네임</a></span>
-                                                <span style="float: right;"><a href="" class="aTags" data-toggle="modal" data-target="#report-modal"><img src="">🚨신고</a></span>
-                                                <div>21-07-06</div>
-                                            </div>
-                                        </div>
-                                        <div class="comment-content">
-                                            <div>대댓글 영역입니다.</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
-                            
                             <script >
                             	$(function(){
                             		selectReplyList();
                             	})
-                            	
-             
 						       	
                             	function selectReplyList(){
-                            		
 
                             		var repNo=[];
                             		
@@ -301,11 +253,9 @@
                             			// 통신 성공했을 때
                             			success:function(list){
                             				
-                            				console.log(list); //배열 확인 완료
                             				$("#rcount").text(list.length);
                             				
                             				var value="";
-                            				// 참조되는 댓글 번호가 담길 배열
                             				
                             				for(var i in list){
                             					if(list[i].refLevel == 1){
@@ -378,25 +328,16 @@
 		                            						
 	                                                	$("#replyResult").html(value);	
 	                            					}
-                            					
-			                                           
                             					}
-                            					
-                  
                             				}
-                            				
-                            				
-                            				
-                            				
-                            				
                             			},error:function(){
                             				console.log("ajax통신실패");
                             			}
                             		})
                             		}
                             	
+                            	// Ajax 댓글 작성하기
                             	function insertReply(){
-                            		
                             		
                             		if($("#comment").val().trim().length != 0){
                             			// 댓글일때
@@ -421,9 +362,8 @@
                             		}
                             	}
                             	
-                            
+                               // Ajax 대댓글 작성하기
                             	function insertReplies(repNo){
-                            		
                             		if($("#insertReplies").val().trim().length != 0){
                             				// 대댓글일때
                             				$.ajax({
@@ -446,14 +386,7 @@
                                 			})
                             		}
                             	}
-                            	
-                            	
-                            	
                             </script>
-                            
-                           
-                            
-                            
                         </div>
                     </div>
                 </div>
@@ -465,25 +398,18 @@
                             
     <script>
 	   /*대댓글 문구 변경*/
-    
  	  $(document).on("click", ".comments", function(){
- 		  
  		  var a = $(this).text();
- 		  
  		  if(a=='취소하기'){
  			  $(this).text("대댓글 달기");
  		  }else{
  			  $(this).text("취소하기");
  		  }
- 		  
-     });
-  
- 	$(document).on("click",".insert-comments",function(){
-      insertReplies($(this).prev().val());
-   });
-
-     
-
+   	 });
+	   
+ 	   $(document).on("click",".insert-comments",function(){
+	      insertReplies($(this).prev().val());
+	   });
     </script>
 
 	<!--푸터바-->
