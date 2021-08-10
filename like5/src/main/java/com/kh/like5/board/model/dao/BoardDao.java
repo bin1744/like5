@@ -239,6 +239,15 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.insertLike",map);
 	}
 	
+	/**
+	 * Ajax로 좋아요 | 스크랩 해제
+	 * @author seong
+	 */
+	
+	public int UnlikeAndUnScrap(SqlSessionTemplate sqlSession,HashMap<String,Object>map) {
+		return sqlSession.insert("boardMapper.UnlikeAndUnScrap",map);
+	}
+	
 	//------------------ 한솔 -------------------------
 
 	/**

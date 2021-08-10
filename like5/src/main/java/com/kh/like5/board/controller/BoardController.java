@@ -494,7 +494,6 @@ public class BoardController {
 			int likesCount = bService.likesCount(board);
 			int scrapCount = bService.scrapCount(board);
 			
-			
 			if(likesCount!=0) {
 				mv.addObject("likes",likesCount);
 				System.out.println("좋아요 수 " + likesCount);
@@ -504,7 +503,6 @@ public class BoardController {
 				mv.addObject("scrap",scrapCount);
 				System.out.println("스크랩 수 " + scrapCount);
 			}
-			
 			
 			// 둘 다 0일 때 보여지는 화면
 			mv.addObject("b",b).setViewName("board/column/colDetailView");
@@ -519,9 +517,10 @@ public class BoardController {
 
 
 	/**
-	 * [ 스크랩 | 좋아요 ]  등록
+	 * [백업용]
+	 * [ 좋아요  | 스크랩 ]  등록
 	 * @author seong
-	 */
+	 
 	@RequestMapping("likeAndScrap.bo")
 	public ModelAndView likeAndScrap(int bno,int mno,String condition,ModelAndView mv,HttpSession session) {
 
@@ -543,6 +542,43 @@ public class BoardController {
 			}
 		}
 		return mv;
+	}
+	*/
+	
+	/**
+	 *  Ajax로 좋아요 | 스크랩 등록
+	 * @author seong
+	 */
+	@ResponseBody
+	@RequestMapping("likeAndScrap.bo")
+	public String likeAndScrap(int bno,int mno,String condition,ModelAndView mv,HttpSession session) {
+		
+		HashMap<String,Object>map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("bno", bno);
+		map.put("mno",mno);
+		
+		int result = bService.likeAndScrap(map);
+		return result>0? "success" : "fail";
+	}
+	
+
+	/**
+	 *  Ajax로 좋아요 | 스크랩 해제
+	 * @author seong
+	 */
+	@ResponseBody
+	@RequestMapping("UnlikeAndUnScrap.bo")
+	public String UnlikeAndUnScrap(int bno,int mno,String condition,ModelAndView mv,HttpSession session) {
+		
+		HashMap<String,Object>map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("bno", bno);
+		map.put("mno",mno);
+		
+		int result = bService.UnlikeAndUnScrap(map);
+		
+		return result>0? "success" : "fail";
 	}
 	
 	

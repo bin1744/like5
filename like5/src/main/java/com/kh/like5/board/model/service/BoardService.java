@@ -131,6 +131,10 @@ public interface BoardService {
 	//  [ 스크랩 | 좋아요 ]  등록
 	int likeAndScrap(HashMap<String,Object>map);
 	
+	//  [ 스크랩 | 좋아요 ]  해제
+	int UnlikeAndUnScrap(HashMap<String,Object>map);
+	
+	
 	//[칼럼] - 글 수정하기
 	
 	//[칼럼] - 삭제하기
