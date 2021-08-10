@@ -330,12 +330,6 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.tagList(sqlSession);
 	}
 
-	@Override
-	public int insertLike(Board b) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 
 
 
