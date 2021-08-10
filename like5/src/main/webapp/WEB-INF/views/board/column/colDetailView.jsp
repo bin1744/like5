@@ -50,14 +50,26 @@
            	   <div>
 	                <div class="like-scrap-sponsorship" style="display: flex; margin-left: 40%; " >
 	                    <div class="like" onclick="likeAndScrap(1);">
-	                        <i id="like" class="far fa-thumbs-up fa-2x"></i>
-	                        <i id="selected-like" class="fas fa-thumbs-up fa-2x" style="display: none;"></i>
+	                    	<c:choose>
+	                    		<c:when test="${!empty likes}">
+			                        <i id="selected-like" class="fas fa-thumbs-up fa-2x"></i>
+	                    		</c:when>
+	                    		<c:when test="${!empty scrap && !empty likes}">
+	                    			 <i id="selected-like" class="fas fa-thumbs-up fa-2x"></i>
+	                    		</c:when>
+	                    		<c:otherwise>
+			                        <i id="like" class="far fa-thumbs-up fa-2x"></i>
+	                    		</c:otherwise>
+	                        </c:choose>
 	                        <div>좋아요</div>
 	                    </div>
 	                    <div class="scrap" onclick="likeAndScrap(2);">
 	                    	<c:choose>
-	                    		<c:when test="${!empty condition and loginUser.memNo eq mno}">
-	                    			 <i id="selected-scrap" class="fas fa-bookmark fa-2x " ></i>
+	                    		<c:when test="${!empty scrap}">
+	                    			<i id="selected-scrap" class="fas fa-bookmark fa-2x"></i>
+	                    		</c:when>
+	                    		<c:when test="${!empty scrap && !empty likes}">
+	                    			<i id="selected-scrap" class="fas fa-bookmark fa-2x"></i>
 	                    		</c:when>
 	                    		<c:otherwise>
 	                       			 <i id="scrap" class="far fa-bookmark fa-2x"></i>

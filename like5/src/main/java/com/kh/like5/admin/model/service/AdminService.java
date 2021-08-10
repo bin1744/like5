@@ -3,6 +3,7 @@ package com.kh.like5.admin.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.like5.admin.model.vo.Calculate;
 import com.kh.like5.admin.model.vo.Faq;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Report;
@@ -55,10 +56,21 @@ public interface AdminService {
 	
 	// 후원상세 페이지 select문(정산내용)-페이징처리
 	// 후원상세 페이지 select문(정산내용)-내용가져오기
+	// tag 메인페이지 select문
+	// 정산상세 페이지 select문(정산내용)-페이징처리
+	int selectCalCount(int smemNo);
+	// 정산상세 페이지 select문(정산내용)-내용가져오기
+	Calculate selectTotalCal(int smemNo);
+	ArrayList<Calculate> selectCalList(PageInfo pi, int smemNo);
+	
 	// tag 메인페이지 select문 
 	// tag 메인페이지 select문
 	ArrayList<Tag> tagList();
+
 	// tag 조회 페이지 select문-페이징처리
+	int getTagCount(String tagName);
+	ArrayList<Board> tagDetailList(PageInfo pi, String tagName);
+
 	// tag 조회 페이지 select문-게시글불러오기
 	// tag 수정페이지(관리자용) select문
 	// tag 수정페이지 Modal update문

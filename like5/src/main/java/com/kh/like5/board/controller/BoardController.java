@@ -477,13 +477,38 @@ public class BoardController {
 	 */
 
 	@RequestMapping("colDetail.bo")
-	public ModelAndView colDetail(ModelAndView mv,int bno) {
+	public ModelAndView colDetail(ModelAndView mv,Board board) {
 		
+		int bno = board.getBno();
+		int mno = board.getMno();
+		
+		
+		// 게시글 조회수 증가 
 		int result = bService.increaseCount(bno);
 		
+		// 유효한 게시글일 때
 		if(result>0) {
 			Board b = bService.boardDetail(bno);
+			
+			// 게시글 상세 조회 시 로그인한 회원이 해당 게시글에 좋아요와 스크랩을 확인하기
+			int likesCount = bService.likesCount(board);
+			int scrapCount = bService.scrapCount(board);
+			
+			
+			if(likesCount!=0) {
+				mv.addObject("likes",likesCount);
+				System.out.println("좋아요 수 " + likesCount);
+			} 
+			
+			if(scrapCount !=0) {
+				mv.addObject("scrap",scrapCount);
+				System.out.println("스크랩 수 " + scrapCount);
+			}
+			
+			
+			// 둘 다 0일 때 보여지는 화면
 			mv.addObject("b",b).setViewName("board/column/colDetailView");
+			
 		}else {
 			mv.addObject("errorMsg", "조회 실패!")
 			.setViewName("common/errorPage");
@@ -499,7 +524,6 @@ public class BoardController {
 	 */
 	@RequestMapping("likeAndScrap.bo")
 	public ModelAndView likeAndScrap(int bno,int mno,String condition,ModelAndView mv,HttpSession session) {
-		
 
 		HashMap<String,Object>map = new HashMap<>();
 		map.put("condition", condition);
@@ -508,15 +532,14 @@ public class BoardController {
 		
 		int result = bService.likeAndScrap(map);
 		if(result>0) {
-			
 			if(condition.equals("like")) {
 				session.setAttribute("alertMsg", "좋아요 성공!🎉");
 				mv.addObject("condition",condition)
-					.addObject("mno",mno)
-				  .setViewName("redirect:colDetail.bo?bno="+bno);
+				   .addObject("mno",mno)
+				  .setViewName("redirect:colDetail.bo?bno="+bno+"&mno="+mno);
 			}else {
 				session.setAttribute("alertMsg", "스크랩 성공!🎉");
-				mv.setViewName("redirect:colDetail.bo?bno="+bno);
+				mv.setViewName("redirect:colDetail.bo?bno="+bno+"&mno="+mno);
 			}
 		}
 		return mv;

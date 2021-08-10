@@ -219,7 +219,26 @@ public class BoardServiceImpl implements BoardService {
 	public int likeAndScrap(HashMap<String,Object>map) {
 		return bDao.likeAndScrap(sqlSession, map);
 	}
+	
 
+	/**
+	 *  게시글 상세 조회 시 로그인한 회원의  좋아요 여부
+	 * @author seong
+	 */
+	@Override
+	public int likesCount(Board b) {
+		return bDao.likesCount(sqlSession, b);
+	}
+
+	/**
+	 *  게시글 상세 조회 시 로그인한 회원의  스크랩 여부
+	 * @author seong
+	 */
+
+	@Override
+	public int scrapCount(Board b) {
+		return bDao.scrapCount(sqlSession, b);
+	}
 
 	
 	//------------------ 한솔 -------------------------
@@ -330,11 +349,10 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.tagList(sqlSession);
 	}
 
-	@Override
-	public int insertLike(Board b) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
+
+
+	
 
 
 

@@ -3,15 +3,15 @@ package com.kh.like5.admin.model.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.kh.like5.admin.model.vo.Faq;
-import com.kh.like5.board.model.vo.Board;
-import com.kh.like5.board.model.vo.Report;
-import com.kh.like5.board.model.vo.Tag;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.like5.admin.model.vo.Calculate;
+import com.kh.like5.admin.model.vo.Faq;
 import com.kh.like5.board.model.vo.Board;
+import com.kh.like5.board.model.vo.Report;
+import com.kh.like5.board.model.vo.Tag;
 import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.member.model.vo.Customer;
 import com.kh.like5.member.model.vo.Member;
@@ -126,10 +126,37 @@ public class AdminDao {
 		
 		return (ArrayList)sqlSession.selectList("sponsorshipMapper.selectSponsorList", smemNo, rowBounds);
 	}
-
+	// 정산상세-페이징
+	public int selectCalCount(SqlSessionTemplate sqlSession, int smemNo) {
+		return sqlSession.selectOne("calculateMapper.selectCalCount",smemNo);
+	}
+	// 정산상세 -총정산금 조회
+	public Calculate selectTotalCal(SqlSessionTemplate sqlSession, int smemNo) {
+		return sqlSession.selectOne("calculateMapper.selectTotalCal",smemNo);
+	}
+	// 정산상세 - 리스트 조회
+	public ArrayList<Calculate> selectCalList(SqlSessionTemplate sqlSession, PageInfo pi, int smemNo){
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("calculateMapper.selectCalList", smemNo, rowBounds);
+	}
+	
 	// TAG 리스트 조회
 	public ArrayList<Tag> tagList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("tagMapper.tagList");
+	}
+
+	// TAG 상세조회
+	public int getTagCount(SqlSessionTemplate sqlSession, String tagName) {
+		return sqlSession.selectOne("boardMapper.getTagCount", tagName);
+	}
+
+	public ArrayList<Board> tagDetailList(SqlSessionTemplate sqlSession, PageInfo pi, String tagName) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+		return (ArrayList)sqlSession.selectList("boardMapper.tagDetailList", tagName, rowBounds);
 	}
 	
 

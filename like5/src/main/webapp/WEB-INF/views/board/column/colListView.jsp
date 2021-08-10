@@ -103,6 +103,14 @@
 	                	<!--반복문 돌리기-->
 		                <div class="thumbnail" style="margin-left:0px" >
 		                   	<input type="hidden" class="col-bno" value="${col.bno}">
+		                   	<c:choose>
+								<c:when test="${!empty loginUser}">
+				                   	<input type="hidden" class="mno" value="${loginUser.memNo}">
+								</c:when>
+								<c:otherwise>
+									<input type="hidden" class="mno" value="0">
+								</c:otherwise>		                   	
+		                   	</c:choose>
 		                    <c:choose>
 			                    <c:when test="${!empty col.imgPath}">
 			                   		 <img src="${col.imgPath}" style="width:300px; height: 250px;">
@@ -115,7 +123,7 @@
 		                        <h6><b>${col.title}</b></h6><br>
 		                        <span>${col.enrollDate}</span><br>
 		                        <div class="test1">
-		                            <div>by <b>${col.nickname }</b></div>
+		                            <div>by <b>${col.nickname}</b></div>
 		                            <div style="margin-left: 200px; padding: 0;">👍<b>${col.like}</b></div>
 		                       </div>
 		                    </div>
@@ -127,15 +135,13 @@
 		
 			
             <script>
-           
 	            $(function(){
 	            	 $(".thumbnail").click(function(){
-	                    location.href="colDetail.bo?bno="+$(this).children("input[type=hidden]").val();
-	                   	console.log($(this).children("input[type=hidden]").val());
+	                    location.href="colDetail.bo?bno="+$(this).children(".col-bno").val()+"&mno="+$(this).children(".mno").val();
 	                })
 	            });
             </script>
-	
+            
                   
 
             <!--🔥페이징바 컬러 변경 예정🔥-->

@@ -116,11 +116,17 @@ public interface BoardService {
 	// 전체 목록 리스트 페이징 처리시 필요한 게시글 전체 count
 	int colListCount();
 	
+	// 최신 | 조회수 | 좋아요 순 조회
+	ArrayList<Board>colOrderByCount(PageInfo pi,String condition);
+		
 	// [칼럼] - 전체 목록 리스트 조회
 	ArrayList<Board>colList(PageInfo pi);
 	
-	// 최신 | 조회수 | 좋아요 순 조회
-	ArrayList<Board>colOrderByCount(PageInfo pi,String condition);
+	// [좋아요] - 게시글 상세 조회 시 로그인한 회원의  좋아요 여부
+	int likesCount(Board b);
+	
+	// [좋아요] - 게시글 상세 조회 시 로그인한 회원의  좋아요 여부
+	int scrapCount(Board b);
 	
 	//  [ 스크랩 | 좋아요 ]  등록
 	int likeAndScrap(HashMap<String,Object>map);
