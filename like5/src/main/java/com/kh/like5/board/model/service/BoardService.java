@@ -122,10 +122,7 @@ public interface BoardService {
 	// 최신 | 조회수 | 좋아요 순 조회
 	ArrayList<Board>colOrderByCount(PageInfo pi,String condition);
 	
-	// 좋아요
-	int insertLike(Board b);
-	
-	// 스크랩
+	//  [ 스크랩 | 좋아요 ]  등록
 	int likeAndScrap(HashMap<String,Object>map);
 	
 	//[칼럼] - 글 수정하기

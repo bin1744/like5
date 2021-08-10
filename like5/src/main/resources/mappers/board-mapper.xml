@@ -590,7 +590,7 @@
     </select>
     
     
-    <!-- 좋아요 -->
+    <!--[ 스크랩 | 좋아요 ]  등록 -->
     <insert id="insertLike">
 	   	insert 
 	   		into

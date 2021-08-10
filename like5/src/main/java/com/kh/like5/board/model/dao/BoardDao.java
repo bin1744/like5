@@ -212,7 +212,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 * 좋아요
+	 * [ 스크랩 | 좋아요 ]  등록
 	 * @author seong
 	 */
 	public int likeAndScrap(SqlSessionTemplate sqlSession,HashMap<String,Object>map) {

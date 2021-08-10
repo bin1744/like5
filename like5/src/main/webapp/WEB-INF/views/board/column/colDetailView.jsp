@@ -55,8 +55,14 @@
 	                        <div>좋아요</div>
 	                    </div>
 	                    <div class="scrap" onclick="likeAndScrap(2);">
-	                        <i id="scrap" class="far fa-bookmark fa-2x"></i>
-	                        <i id="selected-scrap" class="fas fa-bookmark fa-2x " style="display: none"></i>
+	                    	<c:choose>
+	                    		<c:when test="${condition eq 'scrap' and loginUser.memNo eq mno}">
+	                    			 <i id="selected-scrap" class="fas fa-bookmark fa-2x " ></i>
+	                    		</c:when>
+	                    		<c:otherwise>
+	                       			 <i id="scrap" class="far fa-bookmark fa-2x"></i>
+                       			</c:otherwise>
+	                        </c:choose>
 	                        <div>스크랩</div>
 	                    </div>
 	                    <div class="sponsorship"> 
@@ -147,14 +153,12 @@
 
                 })
                 
-                
+                /*스크랩 | 좋아요 공통 모듈*/
                 function likeAndScrap(num){
                 	if(num == 1 ){
-                		//console.log($("#insertForm").children().eq(2).val())
                 		$("#insertForm").children().eq(2).attr("value","like");
                 		$("#insertForm").attr("action","likeAndScrap.bo").submit();
                 	}else{
-                		//console.log("스크랩")
                 		$("#insertForm").children().eq(2).attr("value","scrap");
                 		$("#insertForm").attr("action","likeAndScrap.bo").submit();
                 	}
