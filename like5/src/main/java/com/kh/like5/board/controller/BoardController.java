@@ -99,6 +99,29 @@ public class BoardController {
 		}
 	}
 	
+	/** 
+	 * [한솔] QnaDetailView 게시글 상세 페이지
+	 */
+	@RequestMapping("qnaDetail.bo")
+	public ModelAndView qnaDetail(int bno, ModelAndView mv)  {
+		// 조회수 증가
+		int result = bService.increaseCount(bno);
+		
+		// 조회수 성공적으로 증가 시 상세조회 진행
+		if(result > 0) {
+			Board b = bService.qnaDetail(bno);
+			
+			mv.addObject("b", b)
+			  .setViewName("board/qna/qnaDetailView");
+		}else {
+			// 상세조회 실패 시
+			mv.addObject("errMsg", " 게시글 상세조회에 실패하였습니다. ")
+			  .setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
+	
 
 	
 

@@ -90,7 +90,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 * [커뮤니티] 게시글 상세보기시 조회수 증가
+	 * [커뮤니티, QnA] 게시글 상세보기시 조회수 증가
 	 *  @author seong
 	 */
 	
@@ -278,7 +278,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 * [QnA] - QnaEnrollForm 게시글 insert
+	 * [QnA] - QnaEnrollForm 게시글 임시저장
 	 * @author Hansol
 	 */
 	public int qnaStorageInsert(SqlSessionTemplate sqlSession, Board b) {
@@ -289,8 +289,15 @@ public class BoardDao {
 	 * [QnA] - QnaEnrollForm tag 리스트 조회
 	 * @author Hansol
 	 */
-	public ArrayList<Tag> tagList(SqlSessionTemplate sqlSession){
+	public ArrayList<Tag> tagList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("tagMapper.tagList", null);
 	}
 	
+	/**
+	 * [QnA] - QnaDetailView 게시글 상세 조회
+	 * @author Hansol
+	 */
+	public Board qnaDetail(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.selectOne("boardMapper.qnaDetail", bno);
+	}
 }

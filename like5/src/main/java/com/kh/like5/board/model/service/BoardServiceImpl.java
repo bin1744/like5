@@ -290,13 +290,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * [QnA] - QnaDetail 실제 게시글 조회
+	 * [QnA] - QnaDetail 게시글 상세조회
 	 * @author Hansol
 	 */
 	@Override
 	public Board qnaDetail(int bno) {
-		// TODO Auto-generated method stub
-		return null;
+		return bDao.qnaDetail(sqlSession, bno);
 	}
 
 	/**

@@ -402,7 +402,7 @@
           and boa_status='Y'
 	</select>
 	
-	<!-- 게시글 상세보기시 조회수 증가 -->
+	<!-- [공통] 게시글 상세보기시 조회수 증가 -->
 	<update id="increaseCount">
 	     update 
 	     	board
@@ -752,7 +752,7 @@
 		 	 )
 	</insert>
 	
-		<!-- [QnA] - QnaEnrollForm 게시글 임시저장 -->
+	<!-- [QnA] - QnaEnrollForm 게시글 임시저장 -->
 	<insert id="qnaStorageInsert">
 		insert
 		  into board
@@ -785,6 +785,27 @@
 		 	 , sysdate
 		 	 )
 	</insert>
+	
+	<!-- [QnA] - QnaDetailView 게시글 상세보기 -->
+	<select id="qnaDetail" resultMap="board">
+		select
+			   boa_no
+			 , mem_no
+			 , boa_title
+			 , tag_name
+			 , boa_like
+			 , boa_count
+			 , (select count(*)
+			 	  from reply r
+			 	 where r.boa_no = b.boa_no) reply
+			 , nickname
+			 , boa_enroll_date
+		  from board b
+		  join member using(mem_no)
+		 where
+		 	   boa_no = #{bno}
+		 	   and boa_category like 'QNA'
+	</select>
 	
 
 
