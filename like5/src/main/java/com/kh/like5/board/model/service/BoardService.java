@@ -50,12 +50,11 @@ public interface BoardService {
 	
 	// 8. 댓글, 대댓글 관련 (중복이어서 작성 X)
 	
-	
-	// [Tag]
-	
 	// 9. 태그 리스트
 	ArrayList<Tag> tagList();
-
+	
+	// 10. 게시글 임시저장
+	int qnaStorageInsert(Board b);
 
 	
 	

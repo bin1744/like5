@@ -82,6 +82,22 @@ public class BoardController {
 			return "common/errorPage";
 		}
 	}
+
+	/** 
+	 * [한솔] QnaEnrollForm 게시글 임시저장 insert
+	 */
+	@RequestMapping("qnaStorageInsert.bo")
+	public String qnaStorageInsert(Board b, MultipartFile upfile, HttpSession session, Model model) {
+		int result = bService.qnaStorageInsert(b);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", " 게시글이 성공적으로 임시저장되었습니다. ");
+			return "redirect:qnaList.bo";
+		}else {
+			model.addAttribute("errorMsg", " 게시글 임시저장에 실패하였습니다. ");
+			return "common/errorPage";
+		}
+	}
 	
 
 	

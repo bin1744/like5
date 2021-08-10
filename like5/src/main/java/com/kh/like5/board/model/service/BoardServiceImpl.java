@@ -279,6 +279,15 @@ public class BoardServiceImpl implements BoardService {
 	public int qnaInsert(Board b) {
 		return bDao.qnaInsert(sqlSession, b);
 	}
+	
+	/**
+	 * [QnA] - QnaEnrollForm 게시글 임시저장
+	 * @author Hansol
+	 */
+	@Override
+	public int qnaStorageInsert(Board b) {
+		return bDao.qnaStorageInsert(sqlSession, b);
+	}
 
 	/**
 	 * [QnA] - QnaDetail 실제 게시글 조회
@@ -358,6 +367,7 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Tag> tagList() {
 		return bDao.tagList(sqlSession);
 	}
+
 
 
 	

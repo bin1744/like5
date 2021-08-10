@@ -277,7 +277,13 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.qnaInsert", b);
 	}
 	
-	
+	/**
+	 * [QnA] - QnaEnrollForm 게시글 insert
+	 * @author Hansol
+	 */
+	public int qnaStorageInsert(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.qnaStorageInsert", b);
+	}
 	
 	/**
 	 * [QnA] - QnaEnrollForm tag 리스트 조회
