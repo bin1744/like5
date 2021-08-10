@@ -86,6 +86,7 @@
 	            <li><a href="customer.ad">고객센터</a></li>
 	            <li><a href="donation.ad">후원관리</a></li>
 	            <li><a href="list.bk">공간대여관리</a></li>
+	            <li><a href="space.bo">공간예약관리</a></li>
 	        </ul>
 	    </aside>
     </div>

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.kh.like5.admin.model.vo.Faq;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Report;
+import com.kh.like5.board.model.vo.Tag;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -146,8 +147,13 @@ public class AdminServiceImpl implements AdminService{
 	public ArrayList<Sponsorship> selectSponsorList(PageInfo pi, int smemNo) {
 		return adDao.selectSponsorList(sqlSession, pi, smemNo);
 	}
-	
-	
+
+	@Override
+	public ArrayList<Tag> tagList() {
+		return adDao.tagList(sqlSession);
+	}
+
+
 	@Override
 	public int getReportCount() {
 		return adDao.getReportCount(sqlSession);

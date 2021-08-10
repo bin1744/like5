@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>QnA List</title>
 
 <!-- qnaListView.css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/qnaListView.css" />
@@ -24,13 +24,6 @@
 			<!-- 게시판 제목이 들어갈 부분 -->
 			<div class="qnaMain_top1" id="top_name"><h2><b>QnA</b></h2></div>
 
-			<!--
-		        ** 기능 작업 시 참고 **
-		        1) 내가 쓴 게시글 tr background-color : lightgrey
-		        2) 답변 채택된 게시글 td background-color : rgb(220, 53, 69)
-		        3) 답변이 있으나 채택되지 않은 게시글 td background-color : lightgrey
-		            > 3번은 중요도 최하고 1, 2 구현 시 상황봐서 제외해도 됨
-      		-->
 			<!-- 게시판 기타 기능이 들어갈 부분 (최신순, 검색기능 등) -->
 			<div class="qnaMain_top2">
 				<!-- 정렬 리스트를 나누는 div -->
@@ -58,11 +51,19 @@
 						</span>
 					</div>
 					<div class="qnaSearch_retrieve">
-						<input type="text" placeholder="검색어를 입력해보세요">
+						<input type="text" class="searchArea" placeholder="검색어를 입력해보세요">
 						<button><i class="fas fa-search"></i></button>
 					</div>
 					<div class="qnaSearch_question">
-						<button type="button" class="btn btn-danger"><a href="qEnrollForm.bo">질문하기</a></button>
+						<c:choose>
+							<c:when test="${!empty loginUser}">
+								<button type="button" class="btn btn-danger"><a href="qnaEnrollForm.bo">질문하기</a></button>
+							</c:when>
+							<c:otherwise>
+								<button type="button" class="btn btn-danger" onClick="loginAlert()">질문하기</button>
+							</c:otherwise>
+						</c:choose>
+						
 					</div>
 				</div> <!-- 검색, 질문하기를 나누는 div 끝 -->
 			</div> <!-- 게시판 기타 기능이 들어갈 부분 끝-->
@@ -77,7 +78,7 @@
 						<thead><tr><th colspan="5"></th></tr></thead>
 						<c:forEach var="q" items="${ qnaList }">
 							<tr>
-								<!-- input type="hidden" class="qBno" value="${ q.bno }" -->
+								<input type="hidden" class="qBno" value="${ q.bno }">
 								<!-- 좋아요 시작 -->
 								<td class="qnaLike">
 									<!-- 좋아요 상/중/하단 나누는 div-->
@@ -123,14 +124,20 @@
 								<td class="qnaContent">
 									<!-- 게시글 상/하단 나누는 div -->
 									<div id="qnaTitle">
-										<!-- 게시글 제목, 클릭 시 게시글 상세페이지로 이동-->
-										<a href="qDetail.bo">${ q.title }</a>
+										<a href="qnaDetail.bo">${ q.title }</a>
 									</div>
 									<div id="qnaTag">
-										<!-- 게시글에 첨부된 태그 -->
-										<button class="w3-button w3-white w3-border w3-border-red w3-round-xxlarge w3-hover-red w3-tiny">
-											<a href="">${ q.tag }</a>
-										</button>
+										<c:choose>
+											<c:when test="${ empty q.tag }">
+												<p id="noTag">no tag attached</p>
+											</c:when>
+											<c:otherwise>
+												<p id="tagResult">${ q.tag }</p>
+												<!--button class="w3-button w3-white w3-border w3-border-red w3-round-xxlarge w3-hover-red w3-tiny">
+													<a href="">${ q.tag }</a>
+												</button-->
+											</c:otherwise>
+										</c:choose>
 									</div> <!-- 태그영역 끝 -->
 								</td> <!-- 게시글 끝 -->
 	
@@ -142,8 +149,15 @@
 										<!-- 작성자 좌/우 나누는 div-->
 										<div id="qnaUser_4"><i class="far fa-user-circle"></i></div>
 										<div id="qnaUser_5">
-											<!-- 작성자 닉네임 데이터값, 클릭 시 프로필로 이동 -->
-											<a href="memProfile.me">${ q.nickname }</a>
+											<c:choose>
+												<c:when test="${!empty loginUser}">
+													<!-- 작성자 닉네임 데이터값, 클릭 시 프로필로 이동 / 로그인 후 확인 가능 -->
+													<a href="memProfile.me">${ q.nickname }</a>
+												</c:when>
+												<c:otherwise>
+													<p>${ q.nickname }</p>
+												</c:otherwise>
+											</c:choose>
 										</div>
 										<!-- 작성자 좌/우 나누는 div 끝-->
 									</div>
@@ -156,7 +170,7 @@
 				</div> <!-- 게시글 리스트가 들어갈 부분 끝 -->
 				
 
-				<!-- 페이지네이션 -->
+				<!-- 페이지네이션 스타일 수정 예정 -->
 				<div class="pagingArea">
 					<div class="nullArea"></div>
 					<ul class="pagination">
@@ -192,8 +206,15 @@
 				</div> <!-- 페이지네이션 끝 -->
 			</div> <!-- 게시판 중/하단 모두를 감싸는 div 끝 -->
 		</div> <!-- 전체를 감싸는 div 끝-->
-
 	</div> <!-- innerOuter 끝 -->
+
+
+	<!-- JS -->
+	<script>
+	function loginAlert(){
+		alertify.alert(" 로그인 후 이용해주세요. ")
+	}
+	</script>
 
 	<!-- 푸터바 -->
 	<jsp:include page="../../common/footer.jsp"/>

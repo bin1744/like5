@@ -64,4 +64,9 @@ public interface BookingService {
 	int updateMyBook(Booking b);
 	//11.4 마이페이지 예약 취소
 	int deleteMyBook(int bno);
+	
+	//12. 공간예약관리 조회용 (페이징)
+	int selectSpaceCount(int memNo);
+	ArrayList<Booking> selectSpace(int memNo,PageInfo pi);
+	
 }

@@ -109,8 +109,11 @@
 		                  <a class="active" href="donation.ad">후원관리</a>
 		              </li>
 		              <li>
-		                  <a href="booking.ad">공간대여관리</a>
+		                  <a href="list.bk">공간대여관리</a>
 		              </li>
+		              <li>
+            			  <a href="space.bo">공간예약관리</a> <%--정빈 사이드 바 추가 --%>
+            		  </li>
 		        </ul>
 		    </aside>
 		
@@ -149,18 +152,31 @@
 		            <tbody><!-- 여기서 onclick시에는 해당 회원(smem_no)번호를 함께 넘겨줘야해! 매개변수로 넘겨주던지 ?smemNo = 으로 넘겨주던지!!! -->
 		                <c:forEach var="sp" items="${list}">
 		                	<tr>
-			                    <td name="smemNo">${sp.smemNo }</td>
+			                    <td class="smemNo" id="smemNo">${sp.smemNo }
+			                    	<input type="hidden" value="${sp.smemNo }" name="smemNo">
+			                    </td>
 			                    <td>${sp.memName }</td>
 			                    <td>${sp.nickName }</td>
 			                    <td>${sp.email }</td>
 			                    <td>${sp.sponFee }</td>
-			                    <td><button id="detailDo" type="button" onclick="detailDonation();">상세조회</button></td>
+			                    <td><button id="detailDo" type="button" onclick="detailDonation(${sp.smemNo});">상세조회</button></td>
 			                    <td>${sp.accountNum }</td>
 		                	</tr>
 		                </c:forEach>
 		            </tbody>
 		        </table>
-		
+				<script>
+			        var smemNo= "";
+			        $(document).ready(function(){
+		        		
+		        	})
+			       	function detailDonation(smemNo) {
+			       			//location.href="donaDetailOne.ad?smemNo=" + smemNo;
+			       			//console.log(smemNo);
+			        	location.href="donaDetailOne.ad?smemNo=" + smemNo;
+			        	
+			       	}
+			    </script>
 		        <br><br>
 		            
 				<ul class="pagination justify-content-center">
@@ -214,11 +230,7 @@
 		
 		    </article>
 		</div>
-	    <script>
-	        function detailDonation(){
-	        	location.href="donaDetailOne.ad?smemNo=" ;
-	        }
-	    </script>
+	    
 	
 	</c:if>
 </body>

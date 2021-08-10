@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.kh.like5.admin.model.vo.Faq;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Report;
+import com.kh.like5.board.model.vo.Tag;
 import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.member.model.vo.Customer;
 import com.kh.like5.member.model.vo.Member;
@@ -42,16 +43,21 @@ public interface AdminService {
 	int selectSponCount();
 	// 후원관리 메인 페이지 select문 - 후원정보 가져오기
 	ArrayList<Sponsorship> selectSponList(PageInfo pi);
-	// 후원상세 페이지 select문(후원내용)-페이징처리
+	// 후원관리 메인페이지 검색관련 기능
 	public int searchDonaCount(HashMap<String,String> map);
-	// 후원상세 페이지 select문(후원내용)-내용가져오기
 	public ArrayList<Sponsorship> searchDonaList(PageInfo pi, HashMap<String, String> map);
-	// 후원상세 페이지 select문(정산내용)-페이징처리
+	
+	// 후원상세 페이지 select문(후원내용)-페이징처리
 	int selectSponsorCount(int smemNo);
-	// 후원상세 페이지 select문(정산내용)-내용가져오기
+	// 후원상세 페이지 select문(후원내용)-내용가져오기
 	Sponsorship selectSponMem(int smemNo);
 	ArrayList<Sponsorship> selectSponsorList(PageInfo pi, int smemNo);
+	
+	// 후원상세 페이지 select문(정산내용)-페이징처리
+	// 후원상세 페이지 select문(정산내용)-내용가져오기
 	// tag 메인페이지 select문 
+	// tag 메인페이지 select문
+	ArrayList<Tag> tagList();
 	// tag 조회 페이지 select문-페이징처리
 	// tag 조회 페이지 select문-게시글불러오기
 	// tag 수정페이지(관리자용) select문
@@ -82,13 +88,13 @@ public interface AdminService {
 	// FAQ 조회
 	Faq getFaq(int fno);
 
-//	// FAQ 작성 기능
+	// FAQ 작성 기능
 	int insertFaq(Faq f);
-//
-//	// FAQ 수정 기능
+
+	// FAQ 수정 기능
 	int updateFaq(Faq f);
-//
-//	// FAQ 삭제 기능
+
+	// FAQ 삭제 기능
 	int deleteFaq(int fno);
 
 

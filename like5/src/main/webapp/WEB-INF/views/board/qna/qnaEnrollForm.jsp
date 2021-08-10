@@ -29,15 +29,19 @@
 				<div class="qnaBottomLeft">
 					<!-- 제목, 태그, 본문 작성 영역
 						 [novalidate] <form>이 유효성검사(검사 후 경고 안내문 출력)를 하지 않도록 지정 -->
-					<form action="" class="qnaWrite" novalidate>
+					<form class="qnaWrite"  id="enrollForm" method="post" action="qnaInsert.bo" enctype="multipart/form-data" novalidate>
+						<!-- 작성자, 카테고리 -->
+						<input class="form-group" id="qWriter" name="mno" value="${ loginUser.memNo }" hidden></input>
+						<input class="form-group" id="qCategory" name="category" value="QNA" hidden></input>
+						
 						<!-- 제목 영역 -->
 						<div class="form-group">
 							<label for="qTitle">
 								<button type="button" class="btn btn-secondary" disabled>제목</button>
 								&nbsp;&nbsp;제목은 50자 이내로 입력해주세요!
 							</label>
-							<input type="text" class="form-control" id="qTitle" 
-								placeholder="다른 사람들이 자세히 알 수 있도록 구체적으로 제목을 작성해주세요." name="qTitle" required>
+							<input type="text" class="form-control" id="qTitle" name="title"
+								placeholder="다른 사람들이 자세히 알 수 있도록 구체적으로 제목을 작성해주세요." required>
 							<div class="valid-feedback">입력되었습니다.</div>
 							<div class="invalid-feedback">제목을 작성해주세요.</div>
 						</div>
@@ -50,7 +54,7 @@
 								&nbsp;&nbsp;해시태그(#)와 태그 이름을 입력한 후 띄어쓰기로 구분해주세요!&nbsp;&nbsp;<i>ex)#JAVA #AWS ...</i>
 							</label>
 							<input type="text" class="form-control" id="qTag"
-								placeholder="우측에서 사용 중인 태그를 알아보고 질문과 관련있는 태그를 입력해주세요." name="qTag" required>
+								placeholder="우측에서 사용 중인 태그를 알아보고 질문과 관련있는 태그를 입력해주세요." name="tag" required>
 							<div class="valid-feedback">입력되었습니다.</div>
 							<div class="invalid-feedback">태그를 입력해주세요.</div>
 						</div>
@@ -63,12 +67,12 @@
 								&nbsp;&nbsp;질문하고 싶은 내용을 입력해주세요!
 							</label>
 							<!-- 마크다운 API 들어올 곳  -->
-							<textarea class="form-control" id="qContent" rows="5" name="qContent" required></textarea>
+							<textarea class="form-control" id="qContent" name="content" rows="5" required></textarea>
 							<div class="valid-feedback">입력되었습니다.</div>
 							<div class="invalid-feedback">본문을 작성해주세요.</div>
 						</div>
 						<!-- 본문 영역 -->
-	
+						
 						<!-- 작성 주의사항 -->
 						<div class="alert alert-danger alert-dismissible">
 							<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -102,42 +106,16 @@
 					<!-- 태그 검색 -->
 					<div class="tagList" style="width:100%; height:150px; overflow:auto">
 						<div class="tipName">
-							<b>⭐ LIKE5에서 사용되는 태그 검색 ⭐</b>
+							<b>⭐ 첨부 가능한 태그 보기 ⭐</b>
 						</div>
-						<input class="tagInput" type="text" placeholder="영어로 태그를 검색해보세요 (대/소문자 구분 없음)"
-							id="tagInput" onkeyup="tagSearch()">
-						<!-- 리스트를 DB에서 가져오면 좋을텐데..! -->
+						<!-- tag DB에 등록된 리스트 정렬 -->
 						<table class="w3-table w3-striped w3-bordered w3-centered" id="tagTable">
-							<tr><td>JAVA</td></tr>
-							<tr><td>JavaScript</td></tr>
-							<tr><td>C</td></tr>
-							<tr><td>Python</td></tr>
-							<tr><td>Spring</td></tr>
-							<tr><td>Html</td></tr>
-							<tr><td>Android</td></tr>
-							<tr><td>React.js</td></tr>
-							<tr><td>Linux</td></tr>
-							<tr><td>MySQL</td></tr>
-							<tr><td>Node.js</td></tr>
-							<tr><td>C++</td></tr>
-							<tr><td>CSS</td></tr>
-							<tr><td>AWS</td></tr>
-							<tr><td>PHP</td></tr>
-							<tr><td>Algorithm</td></tr>
-							<tr><td>Git</td></tr>
-							<tr><td>IOS</td></tr>
-							<tr><td>Kotiln</td></tr>
-							<tr><td>DataBase</td></tr>
-							<tr><td>Ajax</td></tr>
-							<tr><td>C_Sharp</td></tr>
-							<tr><td>Django</td></tr>
-							<tr><td>Firebase</td></tr>
-							<tr><td>Event</td></tr>
-							<tr><td>5분코딩</td></tr>
-							<tr><td>Rest</td></tr>
-							<tr><td>Swift</td></tr>
-							<tr><td>Jquery</td></tr>
-							<tr><td>Vue.js</td></tr>
+							<c:forEach var="t" items="${ tagList }">
+								<tr>
+									<td hidden>${ t.tagNo }</td>
+									<td>${ t.tagName }</td>
+								</tr>
+							</c:forEach>
 						</table>
 					</div>
 					<!-- 태그 검색 끝 -->
@@ -241,22 +219,22 @@
 		
 		// 테이블 내 일치하는 필드값 검색
 		function tagSearch() {
-		var input, filter, table, tr, td, i;
-		input = document.getElementById("tagInput");
-		filter = input.value.toUpperCase();
-		table = document.getElementById("tagTable");
-		tr = table.getElementsByTagName("tr");
-		for (i = 0; i < tr.length; i++) {
-			td = tr[i].getElementsByTagName("td")[0];
-			if (td) {
-			txtValue = td.textContent || td.innerText;
-			if (txtValue.toUpperCase().indexOf(filter) > -1) {
-				tr[i].style.display = "";
-			} else {
-				tr[i].style.display = "none";
+			var input, filter, table, tr, td, i;
+			input = document.getElementById("tagInput");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("tagTable");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
 			}
-			}
-		}
 		}
 	</script>
 	

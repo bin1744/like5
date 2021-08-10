@@ -363,8 +363,8 @@
 	    </choose>
     </select>
 	
-	<!-- 커뮤니티 게시글 상세보기 -->
-	<select id="comDetail" resultMap="board">
+	<!-- [커뮤니티 | 칼럼] 게시글 상세보기 -->
+	<select id="boardDetail" resultMap="board">
         select
             boa_no
             ,mem_no
@@ -531,9 +531,102 @@
 	    	)
 	</insert>
 	
+	<!--[칼럼] 전체 목록 리스트 페이징 처리시 필요한 게시글 전체 count  -->
+	<select id="colListCount" resultType="_int">
+		select
+	            count(*) count
+	        from
+	            board
+	        where
+	            regexp_like (boa_category,'칼럼')
+	             and boa_status='Y'
+	</select>
+	
+	<!--  [칼럼] - 전체 목록 리스트 조회 -->
+	<select id="colList" resultMap="board">
+		select
+	            boa_no
+	             ,nickname
+	             ,boa_category
+	             ,boa_title
+	             ,boa_content
+	             ,boa_enroll_date
+	             ,boa_img_path
+	             ,boa_count
+	             ,boa_like
+	        from board b
+	                 join member using (mem_no)
+	        where regexp_like (boa_category,'칼럼')
+	          and boa_status='Y'
+	</select>
+	
+	<!-- 최신 | 조회수 | 댓글수 기준으로 조회 -->	
+   <select id="colOrderByCount" resultMap="board">
+         select
+	            boa_no
+	             ,nickname
+	             ,boa_category
+	             ,boa_title
+	             ,boa_content
+	             ,boa_enroll_date
+	             ,boa_img_path
+	             ,boa_count
+	             ,boa_like
+	        from board b
+	                 join member using (mem_no)
+	        where regexp_like (boa_category,'칼럼')
+	          and boa_status='Y'
+     	<choose>
+	    	<when test="orderBy=='views'">
+	    		 order by boa_count desc,boa_enroll_date desc
+	    	</when>
+	    	<when test="orderBy=='likes'">
+	    		order by boa_like desc,boa_enroll_date desc
+    		</when>
+    		<otherwise>
+   			   order by boa_enroll_date desc
+    		</otherwise>
+	    </choose>
+    </select>
+    
+    
+    <!--[ 스크랩 | 좋아요 ]  등록 -->
+    <insert id="insertLike">
+	   	insert 
+	   		into
+		   	<choose>
+			   	<when test="condition =='like'">
+			   		 likes 
+			   	</when>
+			   	<when test="condition=='scrap'">
+			   		scrap
+			   	</when>
+		   	</choose>
+		    (
+		    mem_no
+		    ,boa_no
+		    ,
+		    <choose>
+		    	<when test="condition =='like'">
+		    	likes_date
+		    	</when>
+		    	<when test="condition=='scrap'">
+		    	scrap_date
+		    	</when>
+		    </choose>
+		    )
+		    values
+		    (
+		    #{mno}
+		    ,#{bno}
+		    ,sysdate
+		    )
+    </insert>
+
+	
 	
 	<!-- ********** 한솔 ********** -->
-	<!-- [QnA] - 게시글 리스트 페이지 조회 시 유효한 게시글 총 개수 조회 -->
+	<!-- [QnA] - QnaList 조회 시 유효한 게시글 총 개수 조회 -->
 	<select id="qnaListCount" resultType="_int">
 		select
 			   count(*)
@@ -543,7 +636,7 @@
 		 	   and boa_status = 'Y'
 	</select>
 	
-	<!-- [QnA] - 사용자가 요청한 페이지에 필요한 게시글 리스트 조회 -->
+	<!-- [QnA] - QnaList 사용자가 요청한 페이지에 뿌려줄 리스트 조회 -->
 	<select id="qnaList" resultMap="board">
 		select
 			   boa_no
@@ -576,6 +669,31 @@
 			</otherwise>
 		</choose>
 	</select>
+	
+	<!-- [QnA] - QnaEnrollForm 게시글 insert -->
+	<insert id="qnaInsert">
+		insert
+		  into board
+		  	 (
+		  	   boa_no
+		  	 , mem_no
+		  	 , boa_category
+		  	 , boa_title
+		  	 , boa_content
+		  	 , tag_name
+		  	 , boa_enroll_date
+		  	 )
+		 	 values
+		 	 (
+		 	   seq_bno.nextval
+		 	 , #{mno}
+		 	 , #{category}
+		 	 , #{title}
+		 	 , #{content}
+		 	 , #{tag}
+		 	 , sysdate
+		 	 )
+	</insert>
 	
 
 

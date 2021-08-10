@@ -18,12 +18,19 @@
 /* 검색, 질문하기 배열 */
 .qnaSearch>div{float:left;}
 .qnaSearch_tip{width:25%; font-size:14px; text-align:right; padding-top:1.5%; padding-right:3%; color:gray;}
-.qnaSearch_retrieve{width:50%; height:100; border:1px solid rgb(220, 53, 69);}
-.qnaSearch_question{width:25%; text-align:right; padding-right:5%;}
+.qnaSearch_question{width:30%; text-align:right; padding-right:5%;}
 
 /* 검색창 스타일 */
-input{width:220px; height:31px; margin:0; padding:10px; border:0; outline:none; float:left; font-size:13px;}
-.qnaSearch_retrieve>button{width:40px; height:31px; margin:0px; border:0px; outline:none; float:right; background:rgb(220, 53, 69); }
+.searchArea{
+	width:200px; height:31px; margin:0; padding:10px; 
+	white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+	border:1px solid rgb(220, 53, 69);
+	outline:none; float:left; font-size:13px;
+}
+.qnaSearch_retrieve>button{
+	width:40px; height:31px; margin:0px; border:0px;
+	outline:none; float:right; background:rgb(220, 53, 69);
+	position:sticky;}
 [class$=fa-search]{color:white;}
 
 /* 질문하기 버튼 크기 맞추기 */

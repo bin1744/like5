@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Reply;
 import com.kh.like5.board.model.vo.Report;
+import com.kh.like5.board.model.vo.Tag;
 import com.kh.like5.common.model.vo.PageInfo;
 
 @Repository
@@ -103,8 +104,8 @@ public class BoardDao {
 	 * @author seong
 	 */
 	
-	public Board comDetail(SqlSessionTemplate sqlSession,int bno) {
-		return sqlSession.selectOne("boardMapper.comDetail",bno);
+	public Board boardDetail(SqlSessionTemplate sqlSession,int bno) {
+		return sqlSession.selectOne("boardMapper.boardDetail",bno);
 	}
 	
 	/**
@@ -168,12 +169,60 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.reportCommunity",r);
 	}
 	
+	/**
+	 *  [칼럼] 전체 목록 리스트 페이징 처리시 필요한 게시글 전체 count
+	 *  @author seong
+	 */
 	
+	public int colListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("boardMapper.colListCount");
+	}
+
+	/**
+	 *  [칼럼] - 전체 목록 리스트 조회
+	 *  @author seong
+	 */
+	
+	public ArrayList<Board>colList(SqlSessionTemplate sqlSession,PageInfo pi){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds  rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("boardMapper.colList",null,rowBounds);
+	}
+	
+	
+
+	/**
+	 * [칼럼]최신 | 조회수 | 좋아요 기준으로 조회
+	 * @author seong
+	 */
+	public ArrayList<Board> colOrderByCount(SqlSessionTemplate sqlSession,PageInfo pi,String condition){
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.colOrderByCount",condition,rowBounds);
+	}
+	
+	/**
+	 * [칼럼] 게시글 상세보기
+	 * @author seong
+	 */
+	
+	public Board colDetail(SqlSessionTemplate sqlSession,int bno) {
+		return sqlSession.selectOne("boardMapper.comDetail",bno);
+	}
+	
+	/**
+	 * [ 스크랩 | 좋아요 ]  등록
+	 * @author seong
+	 */
+	public int likeAndScrap(SqlSessionTemplate sqlSession,HashMap<String,Object>map) {
+		return sqlSession.insert("boardMapper.insertLike",map);
+	}
 	
 	//------------------ 한솔 -------------------------
 
 	/**
-	 * [QnA] - 게시글 리스트 페이지 조회 시 유효한 게시글 총 개수 조회
+	 * [QnA] - QnaList 조회 시 유효한 게시글 총 개수 조회
 	 * @author Hansol
 	 */
 	public int qnaListCount(SqlSessionTemplate sqlSession) {
@@ -181,7 +230,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 * [QnA] - 사용자가 요청한 페이지에 뿌려줄 리스트 조회 (요청 페이지 번호, 불러올 글 개수)
+	 * [QnA] - QnaList 사용자가 요청한 페이지에 뿌려줄 리스트 조회 (요청 페이지 번호, 불러올 글 개수)
 	 * @author Hansol
 	 */
 	public ArrayList<Board> qnaList(SqlSessionTemplate sqlSession,PageInfo pi){
@@ -191,5 +240,22 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.qnaList", null, rowBounds);
 	}
 	
+	/**
+	 * [QnA] - QnaEnrollForm 게시글 insert
+	 * @author Hansol
+	 */
+	public int qnaInsert(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.qnaInsert", b);
+	}
+	
+	
+	
+	/**
+	 * [QnA] - QnaEnrollForm tag 리스트 조회
+	 * @author Hansol
+	 */
+	public ArrayList<Tag> tagList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("tagMapper.tagList", null);
+	}
 	
 }

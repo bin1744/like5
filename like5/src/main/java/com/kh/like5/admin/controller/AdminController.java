@@ -37,11 +37,6 @@ public class AdminController {
 		return "admin/about";
 	}
 
-	// tags 페이지
-	@RequestMapping("tags.ad")
-	public String tag() {
-		return "admin/tags";
-	}
 
 	// ============================= [지현] =============================
 
@@ -189,6 +184,7 @@ public class AdminController {
 	public ModelAndView donaMain(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
 		// 우선 페이징 처리를 위해서는 총 갯수를 알아야겠징
 		int listCount = adService.selectSponCount();
+		
 		// 페이징 처리 & SponList 받아오기
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
     	ArrayList<Sponsorship> list = adService.selectSponList(pi);
@@ -196,6 +192,7 @@ public class AdminController {
     	mv.addObject("pi", pi)
 		  .addObject("list", list)
 		  .setViewName("admin/donationMain");
+    	
     	
 		return mv;
 	}
@@ -224,11 +221,12 @@ public class AdminController {
 	
 	// 후원관리 - 상세 페이지로 넘어가기 => 후원내역
 	@RequestMapping("donaDetailOne.ad")
-	public ModelAndView donaDetailOne(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage ) {
+	public ModelAndView donaDetailOne(int smemNo, ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage ) {
 		// 특정회원의 smem_no를 받아와서 넘겨주면서 페이징 처리도 해줘야 한다 이말이야...^^
 		// 내역을 페이징 처리하고(후원한 회원들 조회하는 sql문 기준임==> list2가 기준이 되는거징!!!)
-		int smemNo = 5;
+		//int smemNo = 5;
 		int listCount = adService.selectSponsorCount(smemNo);
+		System.out.println(listCount);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
 		// 리스트도 조회해 와야한다궁(list1== smem_no회원& list2 == 후원한 회원들 정보)
@@ -250,7 +248,12 @@ public class AdminController {
 	}
 	
 	// tag 메인페이지
-	
+	@RequestMapping("tags.ad")
+	public String tagList(Model model) {
+		model.addAttribute("list", adService.tagList());
+		return "admin/tagMain";
+	}
+
 	// tag 관리자 페이지
 	@RequestMapping("tagAdmin.ad")
 	public String tagAdmin() {

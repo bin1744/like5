@@ -23,6 +23,7 @@ import com.kh.like5.board.model.service.BoardService;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Reply;
 import com.kh.like5.board.model.vo.Report;
+import com.kh.like5.board.model.vo.Tag;
 import com.kh.like5.common.model.vo.PageInfo;
 import com.kh.like5.common.template.Pagination;
 
@@ -34,8 +35,9 @@ public class BoardController {
 	
 	//------------------ 한솔 -------------------------
 	
+	
 	/**
-	 * [한솔] QnA 게시글 리스트 페이지 
+	 * [한솔] QnaList 게시글 리스트 페이지 
 	 */
 	@RequestMapping("qnaList.bo")
 	public ModelAndView qnaList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
@@ -51,6 +53,73 @@ public class BoardController {
 		
 		return mv;
 	}
+	
+	/** 
+	 * [한솔] QnaEnrollForm 게시글 작성 페이지
+	 */
+	@RequestMapping("qnaEnrollForm.bo")
+	public ModelAndView qnaEnrollForm(ModelAndView mv) {
+		ArrayList<Tag> tagList = bService.tagList();
+
+		mv.addObject("tagList", tagList)
+		  .setViewName("board/qna/qnaEnrollForm");
+		
+		return mv;
+	}
+	
+	/** 
+	 * [한솔] QnaEnrollForm 게시글 insert
+	 */
+	@RequestMapping("qnaInsert.bo")
+	public String qnaInsert(Board b, MultipartFile upfile, HttpSession session, Model model) {
+		int result = bService.qnaInsert(b);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", " 게시글이 성공적으로 등록되었습니다. ");
+			return "redirect:qnaList.bo";
+		}else {
+			model.addAttribute("errorMsg", " 게시글 등록에 실패하였습니다. ");
+			return "common/errorPage";
+		}
+	}
+	
+
+	
+
+	/* -------- 푸터 -------- */
+	
+	/** 
+	 * [한솔] Footer 메인 페이지 (팀 소개) 
+	 */
+	@RequestMapping("teamAskMe.me")
+	public String teamAskMe() {
+		return "common/teamAskMe";
+	}
+	
+	/** 
+	 * [한솔] Footer 이용약관 
+	 */
+	@RequestMapping("terms.me")
+	public String terms() {
+		return "common/termsOfService";
+	}
+	
+	/** 
+	 * [한솔] Footer 법적고지 
+	 */
+	@RequestMapping("legal.me")
+	public String legal() {
+		return "common/legalResources";
+	}
+	
+	/** 
+	 * [한솔] Footer 개인정보처리방침
+	 */
+	@RequestMapping("privacy.me")
+	public String privacy() {
+		return "common/privacyPolicy";
+	}
+	
 	
 	
 	//-------------------동규-------------------------
@@ -194,13 +263,12 @@ public class BoardController {
 	@RequestMapping("comDetail.bo")
 	public ModelAndView comDetail(ModelAndView mv,int bno) {
 		
-		
 		// 클릭시 조회수 증가
 		int result = bService.increaseCount(bno);
 		
 		// 상세보기
 		if(result>0) {
-			Board b = bService.comDetail(bno);
+			Board b = bService.boardDetail(bno);
 			mv.addObject("b",b)
 			  .setViewName("board/community/comDetailView");
 		}else {
@@ -274,10 +342,8 @@ public class BoardController {
 	
 	@RequestMapping("comUpdateForm.bo")
 	public ModelAndView comUpdateForm(Board b,ModelAndView mv) {
-		
 		int bno = b.getBno();
-		
-		mv.addObject("b",bService.comDetail(bno))
+		mv.addObject("b",bService.boardDetail(bno))
 		   .setViewName("board/community/comUpdateForm");
 		
 		return mv;
@@ -353,10 +419,46 @@ public class BoardController {
 	 */
 	
 	@RequestMapping("colList.bo")
-	public ModelAndView colList(ModelAndView mv) {
-		mv.setViewName("board/column/colListView");
+	public ModelAndView colList(@RequestParam(value="currentPage",defaultValue="1") int currentPage,ModelAndView mv) {
+		
+		int listCount = bService.colListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 9);
+		
+		ArrayList<Board>colList = bService.colList(pi);
+		
+		mv.addObject("listCount",listCount)
+		   .addObject("colList",colList)
+		   .addObject("pi",pi)
+		   .setViewName("board/column/colListView");
 		return mv;
 	}
+	
+	
+
+	/**
+	 * [커뮤니티]최신 | 조회수 | 좋아요 기준으로 조회
+	 * @author seong
+	 */
+	
+	@RequestMapping("colOrderByCount.bo")
+	public ModelAndView colOrderByCount(ModelAndView mv,@RequestParam(value="currentPage",defaultValue="1")
+										int currentPage, String condition) {
+		
+	int listCount = bService.colListCount();
+	PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 9);
+	
+	ArrayList<Board>colList = bService.colOrderByCount(pi, condition);
+	
+	mv.addObject("pi",pi)
+	.addObject("colList",colList)
+	.addObject("condition",condition)
+	.addObject("listCount",listCount)
+	.setViewName("board/column/colListView");
+	return mv;
+	}
+	
+	
 	
 	/**
 	 * [칼럼] - 글 작성 Form
@@ -375,8 +477,48 @@ public class BoardController {
 	 */
 
 	@RequestMapping("colDetail.bo")
-	public ModelAndView colDetail(ModelAndView mv) {
-		mv.setViewName("board/column/colDetailView");
+	public ModelAndView colDetail(ModelAndView mv,int bno) {
+		
+		int result = bService.increaseCount(bno);
+		
+		if(result>0) {
+			Board b = bService.boardDetail(bno);
+			mv.addObject("b",b).setViewName("board/column/colDetailView");
+		}else {
+			mv.addObject("errorMsg", "조회 실패!")
+			.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+
+
+	/**
+	 * [ 스크랩 | 좋아요 ]  등록
+	 * @author seong
+	 */
+	@RequestMapping("likeAndScrap.bo")
+	public ModelAndView likeAndScrap(int bno,int mno,String condition,ModelAndView mv,HttpSession session) {
+		
+
+		HashMap<String,Object>map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("bno", bno);
+		map.put("mno",mno);
+		
+		int result = bService.likeAndScrap(map);
+		if(result>0) {
+			
+			if(condition.equals("like")) {
+				session.setAttribute("alertMsg", "좋아요 성공!🎉");
+				mv.addObject("condition",condition)
+					.addObject("mno",mno)
+				  .setViewName("redirect:colDetail.bo?bno="+bno);
+			}else {
+				session.setAttribute("alertMsg", "스크랩 성공!🎉");
+				mv.setViewName("redirect:colDetail.bo?bno="+bno);
+			}
+		}
 		return mv;
 	}
 	

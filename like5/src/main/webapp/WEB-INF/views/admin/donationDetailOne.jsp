@@ -98,8 +98,8 @@
 	        <h3 class="title">통합관리</h3>
 	        
 	        <div class="tab-area">
-	            <button class="btn btn-outline-danger active">후원내역</button>
-	            <button class="btn btn-outline-danger ">정산내역</button>
+	            <button class="btn btn-outline-danger active" onclick="">후원내역</button>
+	            <button class="btn btn-outline-danger" onclick="location.href='donaDetailTwo.ad?smemNo=' + ${smemNo};">정산내역</button>
 	        </div>
 	    </div>
 	
@@ -118,8 +118,11 @@
 		                  <a class="active" href="donation.ad">후원관리</a>
 		              </li>
 		              <li>
-		                  <a href="booking.ad">공간대여관리</a>
+		                  <a href="list.bk">공간대여관리</a>
 		              </li>
+		              <li>
+            			  <a href="space.bo">공간예약관리</a> <%--정빈 사이드 바 추가 --%>
+            		  </li>
 		        </ul>
 		    </aside>
 	
@@ -141,51 +144,64 @@
 			<br>
 	        <table class="table-bordered table-sm">
 	            <thead>
-	                <tr class="table-danger">
+	                <tr width="900px" class="table-danger">
 	                    <th width="50">No</th>
 	                    <th >후원한 회원명</th>
 	                    <th>후원한 회원의 닉네임</th>
 	                    <th>후원받은 금액</th>
 	                    <th>후원받은 날짜</th>
-	                     
-	                    <th >정산받은 은행명</th>
-	                    <th width="180">정산받은 계좌</th>
+	                    <th >후원자 은행명</th>
+	                    <th width="180">후원자 계좌</th>
 	                    
 	                </tr>
 	            </thead>
 	            <!--반복문으로 뿌릴 때 제목을 클릭하면 해당 게시글로 넘어갈 수 있도록 해줘야해! 그럼 게시글 제목에 input-hidden으로 게시글 번호를 넣어줘야겠지 아마두-->
 	            <tbody>
                 	<c:forEach var="m" items="${list2 }">
-		                <tr><!-- 이렇게 해도 되나...? -->
+		                <tr ><!-- 이렇게 해도 되나...? -->
 			                    <td>${m.sponNo }</td>
 			                    <td>${m.memName }</td>
 			                    <td>${m.nickName }</td>
 			                    <td><a>${m.sponFee }</a></td>
 			                    <td>${m.sponDate }</td>
-			                    <td >${spMem.bank }</td>
-			                    <td >${spMem.accountNum }</td>
+			                    <td >${m.bank }</td>
+			                    <td >${m.accountNum }</td>
 			                    
 		                </tr>
                     </c:forEach>
 	            </tbody>
 	        </table>
-	
-	    
+		
+	    	<br><Br>
+			<ul class="pagination justify-content-center">
+               	<c:choose>
+               		<c:when test="${ pi.currentPage eq 1 }">
+                    	<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                    </c:when>
+                    <c:otherwise>
+                    			<li class="page-item"><a class="page-link" href="donaDetailOne.ad?currentPage=${pi.currentPage -1 }&smemNo=${spMem.smemNo}">&laquo;</a></li>
+                    </c:otherwise>
+              		</c:choose>
+               
+                <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage }">
+                			<li class="page-item"><a class="page-link" href="donaDetailOne.ad?currentPage=${ p }&smemNo=${spMem.smemNo}">${ p }</a></li>
+                </c:forEach>
+                    
+                    	
+                <c:choose>
+                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
+                    	<li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+                    </c:when>
+                    <c:otherwise>
+	                    		<li class="page-item"><a class="page-link" href="donaDetailOne.ad?currentPage=${ pi.currentPage+1 }&smemNo=${spMem.smemNo}">&raquo;</a></li>
+	                </c:otherwise>
+                   </c:choose>
+               </ul>
 	    </article>
 	
 	    <br><br><br>
 	    
-	    <!-- 페이징 바 -->
-	    <div class="paging-area">
-	        <ul class="pagination justify-content-center">
-	            <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
-	            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-	            <li class="page-item"><a class="page-link" href="#">2</a></li>
-	            <li class="page-item"><a class="page-link" href="#">3</a></li>
-	            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-	        </ul>
-	    </div>
-	</div>
+	    
 	    <br><br>
 	    
 </body>

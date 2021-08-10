@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.kh.like5.admin.model.vo.Faq;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Report;
+import com.kh.like5.board.model.vo.Tag;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -97,7 +98,7 @@ public class AdminDao {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("sponsorshipMapper.selectSponList");
+		return (ArrayList)sqlSession.selectList("sponsorshipMapper.selectSponList", null, rowBounds);
 	}
 	// 후원관리 검색 기능 - 페이징
 	public int searchDonaCount(SqlSessionTemplate sqlSession, HashMap<String,String>map) {
@@ -124,6 +125,11 @@ public class AdminDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("sponsorshipMapper.selectSponsorList", smemNo, rowBounds);
+	}
+
+	// TAG 리스트 조회
+	public ArrayList<Tag> tagList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("tagMapper.tagList");
 	}
 	
 
