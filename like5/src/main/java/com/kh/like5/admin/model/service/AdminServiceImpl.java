@@ -3,6 +3,7 @@ package com.kh.like5.admin.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.like5.admin.model.vo.Calculate;
 import com.kh.like5.admin.model.vo.Faq;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Report;
@@ -147,10 +148,36 @@ public class AdminServiceImpl implements AdminService{
 	public ArrayList<Sponsorship> selectSponsorList(PageInfo pi, int smemNo) {
 		return adDao.selectSponsorList(sqlSession, pi, smemNo);
 	}
+	// 정산상세 페이징
+	@Override
+	public int selectCalCount(int smemNo) {
+		return adDao.selectCalCount(sqlSession, smemNo);
+	}
+	// 정산상세 총 정산금 조회
+	@Override
+	public Calculate selectTotalCal(int smemNo) {
+		return adDao.selectTotalCal(sqlSession, smemNo);
+	}
+	// 정산상세 리스트 조회
+	@Override
+	public ArrayList<Calculate> selectCalList(PageInfo pi, int smemNo) {
+		return adDao.selectCalList(sqlSession, pi, smemNo);
+	}
+
 
 	@Override
 	public ArrayList<Tag> tagList() {
 		return adDao.tagList(sqlSession);
+	}
+
+	@Override
+	public int getTagCount(String tagName) {
+		return adDao.getTagCount(sqlSession, tagName);
+	}
+
+	@Override
+	public ArrayList<Board> tagDetailList(PageInfo pi, String tagName) {
+		return adDao.tagDetailList(sqlSession, pi, tagName);
 	}
 
 
@@ -199,6 +226,7 @@ public class AdminServiceImpl implements AdminService{
 		return adDao.deleteFaq(sqlSession, fno);
 	}
 
+	
 	
 
 	
