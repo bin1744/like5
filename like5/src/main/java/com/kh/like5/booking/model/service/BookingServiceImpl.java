@@ -167,13 +167,13 @@ public class BookingServiceImpl implements BookingService{
 	}
 
 	@Override
-	public int selectSpaceCount(int memNo) {
-		return bDao.selectSpaceCount(sqlSession,memNo);
+	public int selectSpaceCount() {
+		return bDao.selectSpaceCount(sqlSession);
 	}
 
 	@Override
-	public ArrayList<Booking> selectSpace(int memNo, PageInfo pi) {
-		return bDao.selectSpace(sqlSession,memNo, pi);
+	public ArrayList<Booking> selectSpace(PageInfo pi) {
+		return bDao.selectSpace(sqlSession, pi);
 	}
 
 }

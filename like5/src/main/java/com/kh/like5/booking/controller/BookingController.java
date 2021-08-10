@@ -406,12 +406,12 @@ public class BookingController {
 	/*공간 예약관리 조회*/
 	@RequestMapping("space.bo")
 	public String selectSpace(HttpServletRequest request, HttpSession session, @RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
-		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		//int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
 		
-		int listCount = bService.selectSpaceCount(memNo);
+		int listCount = bService.selectSpaceCount();
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		
-		ArrayList<Booking> list = bService.selectSpace(memNo,pi);
+		ArrayList<Booking> list = bService.selectSpace(pi);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
