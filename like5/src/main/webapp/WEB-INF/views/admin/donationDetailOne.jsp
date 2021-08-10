@@ -98,8 +98,8 @@
 	        <h3 class="title">통합관리</h3>
 	        
 	        <div class="tab-area">
-	            <button class="btn btn-outline-danger active" onclick="">후원내역</button>
-	            <button class="btn btn-outline-danger" onclick="location.href='donaDetailTwo.ad?smemNo=' + ${smemNo};">정산내역</button>
+	            <button class="btn btn-outline-danger active" onclick="location.href='donaDetailOne.ad?smemNo=' + ${spMem.smemNo};">후원내역</button>
+	            <button class="btn btn-outline-danger" onclick="location.href='donaDetailTwo.ad?smemNo=' + ${spMem.smemNo};">정산내역</button>
 	        </div>
 	    </div>
 	
@@ -142,9 +142,9 @@
 	        	계좌명 : <b style="margin-right:10px">${spMem.bank }</b> 계좌번호 : <b>${spMem.accountNum }</b>
 	        </div>
 			<br>
-	        <table class="table-bordered table-sm">
+	        <table class="table-bordered table-sm" width="850px">
 	            <thead>
-	                <tr width="900px" class="table-danger">
+	                <tr  class="table-danger">
 	                    <th width="50">No</th>
 	                    <th >후원한 회원명</th>
 	                    <th>후원한 회원의 닉네임</th>

@@ -101,24 +101,24 @@
 	            <div class="list-area" style="margin-top: 10px;">   
 	            	<c:forEach var="col" items="${colList}">         
 	                	<!--반복문 돌리기-->
-		                <div class="thumbnail" id="col-bno" style="margin-left:0px" >
-	                   	<input type="hidden" class="col-bno" value="${col.bno}">
-	                    <c:choose>
-		                    <c:when test="${!empty col.imgPath}">
-		                   		 <img src="${col.imgPath}" style="width:300px; height: 250px;">
-	                   		 </c:when>
-	                   		 <c:otherwise>
-	                   		 	 <img src="${pageContext.request.contextPath}/resources/images/common/default-img.jpg" style="width:300px; height: 250px;">
-	                   		 </c:otherwise>
-	                    </c:choose>
-	                    <div class="column-conetent">
-	                        <h6><b>${col.title}</b></h6><br>
-	                        <span>${col.enrollDate}</span><br>
-	                        <div class="test1">
-	                            <div>by <b>${col.nickname }</b></div>
-	                            <div style="margin-left: 200px; padding: 0;">👍<b>${col.like}</b></div>
-	                       </div>
-	                    </div>
+		                <div class="thumbnail" style="margin-left:0px" >
+		                   	<input type="hidden" class="col-bno" value="${col.bno}">
+		                    <c:choose>
+			                    <c:when test="${!empty col.imgPath}">
+			                   		 <img src="${col.imgPath}" style="width:300px; height: 250px;">
+		                   		 </c:when>
+		                   		 <c:otherwise>
+		                   		 	 <img src="${pageContext.request.contextPath}/resources/images/common/default-img.jpg" style="width:300px; height: 250px;">
+		                   		 </c:otherwise>
+		                    </c:choose>
+		                    <div class="column-conetent">
+		                        <h6><b>${col.title}</b></h6><br>
+		                        <span>${col.enrollDate}</span><br>
+		                        <div class="test1">
+		                            <div>by <b>${col.nickname }</b></div>
+		                            <div style="margin-left: 200px; padding: 0;">👍<b>${col.like}</b></div>
+		                       </div>
+		                    </div>
 		                </div>
                      </c:forEach>
 	           	</div>
@@ -129,15 +129,9 @@
             <script>
            
 	            $(function(){
-	            	 <%--$("#").click(function(){
-	                        //console.log($(this).children("input[type=hidden]").val());
-	                        // 반복문으로 생성된 게시글의 글 번호 받아오기 (ex.bno)
-	                        location.href="?="+$(this).children("input[type=hidden]").val();
-	                    })--%>
-	            	 
-	            	 $("#col-bno").click(function(){
-	                     // [Test] 화면 확인 용 코드
-	                     location.href="colDetail.bo";
+	            	 $(".thumbnail").click(function(){
+	                    location.href="colDetail.bo?bno="+$(this).children("input[type=hidden]").val();
+	                   	console.log($(this).children("input[type=hidden]").val());
 	                })
 	            });
             </script>

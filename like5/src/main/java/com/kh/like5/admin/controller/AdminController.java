@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import com.kh.like5.admin.model.vo.Calculate;
 import com.kh.like5.admin.model.vo.Faq;
 import com.kh.like5.board.model.vo.Report;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -226,7 +227,7 @@ public class AdminController {
 		// 내역을 페이징 처리하고(후원한 회원들 조회하는 sql문 기준임==> list2가 기준이 되는거징!!!)
 		//int smemNo = 5;
 		int listCount = adService.selectSponsorCount(smemNo);
-		System.out.println(listCount);
+		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
 		// 리스트도 조회해 와야한다궁(list1== smem_no회원& list2 == 후원한 회원들 정보)
@@ -243,8 +244,23 @@ public class AdminController {
 	
 	// 후원관리 - 상세 페이지로 넘어가기 => 정산내역
 	@RequestMapping("donaDetailTwo.ad")
-	public String donaDetailTwo() {
-		return "admin/donationDetailTwo";
+	public ModelAndView donaDetailTwo(int smemNo,ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		// 페이징 처리 해줄거고(기준은 list가 되어야 한다 이말이지!)
+		// 단, 받아온 smem_no를 넘겨서 정보를 받아와야햄
+		int listCount = adService.selectCalCount(smemNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+		
+		// 총 정산금도 조회 해줄거고(total)
+		Calculate calMem = adService.selectTotalCal(smemNo);
+		// 리스트 조회도 해줄거야 (list)
+		ArrayList<Calculate> list = adService.selectCalList(pi, smemNo);
+		
+		mv.addObject("pi", pi)
+		  .addObject("calMem", calMem)
+		  .addObject("list", list)
+		  .setViewName("admin/donationDetailTwo");
+		
+		return mv;
 	}
 	
 	// tag 메인페이지

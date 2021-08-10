@@ -127,4 +127,16 @@ public class BookingDao {
 	public int deleteMyBook(SqlSessionTemplate sqlSession, int bno) {
 		return sqlSession.update("bookingMapper.deleteMyBook", bno);
 	}
+	
+	public int selectSpaceCount(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("bookingMapper.selectSpaceCount",memNo);
+	}
+	
+	public ArrayList<Booking> selectSpace(SqlSessionTemplate sqlSession, int memNo, PageInfo pi){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds  rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("bookingMapper.selectSpace", memNo, rowBounds);
+	}
+	
 }

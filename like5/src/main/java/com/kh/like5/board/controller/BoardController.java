@@ -263,13 +263,12 @@ public class BoardController {
 	@RequestMapping("comDetail.bo")
 	public ModelAndView comDetail(ModelAndView mv,int bno) {
 		
-		
 		// 클릭시 조회수 증가
 		int result = bService.increaseCount(bno);
 		
 		// 상세보기
 		if(result>0) {
-			Board b = bService.comDetail(bno);
+			Board b = bService.boardDetail(bno);
 			mv.addObject("b",b)
 			  .setViewName("board/community/comDetailView");
 		}else {
@@ -343,10 +342,8 @@ public class BoardController {
 	
 	@RequestMapping("comUpdateForm.bo")
 	public ModelAndView comUpdateForm(Board b,ModelAndView mv) {
-		
 		int bno = b.getBno();
-		
-		mv.addObject("b",bService.comDetail(bno))
+		mv.addObject("b",bService.boardDetail(bno))
 		   .setViewName("board/community/comUpdateForm");
 		
 		return mv;
@@ -462,6 +459,7 @@ public class BoardController {
 	}
 	
 	
+	
 	/**
 	 * [칼럼] - 글 작성 Form
 	 * @author seong
@@ -479,13 +477,50 @@ public class BoardController {
 	 */
 
 	@RequestMapping("colDetail.bo")
-	public ModelAndView colDetail(ModelAndView mv) {
-		mv.setViewName("board/column/colDetailView");
+	public ModelAndView colDetail(ModelAndView mv,int bno) {
+		
+		int result = bService.increaseCount(bno);
+		
+		if(result>0) {
+			Board b = bService.boardDetail(bno);
+			mv.addObject("b",b).setViewName("board/column/colDetailView");
+		}else {
+			mv.addObject("errorMsg", "조회 실패!")
+			.setViewName("common/errorPage");
+		}
 		return mv;
 	}
 	
-	
-	
+
+
+	/**
+	 * [ 스크랩 | 좋아요 ]  등록
+	 * @author seong
+	 */
+	@RequestMapping("likeAndScrap.bo")
+	public ModelAndView likeAndScrap(int bno,int mno,String condition,ModelAndView mv,HttpSession session) {
+		
+
+		HashMap<String,Object>map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("bno", bno);
+		map.put("mno",mno);
+		
+		int result = bService.likeAndScrap(map);
+		if(result>0) {
+			
+			if(condition.equals("like")) {
+				session.setAttribute("alertMsg", "좋아요 성공!🎉");
+				mv.addObject("condition",condition)
+					.addObject("mno",mno)
+				  .setViewName("redirect:colDetail.bo?bno="+bno);
+			}else {
+				session.setAttribute("alertMsg", "스크랩 성공!🎉");
+				mv.setViewName("redirect:colDetail.bo?bno="+bno);
+			}
+		}
+		return mv;
+	}
 	
 	
 	

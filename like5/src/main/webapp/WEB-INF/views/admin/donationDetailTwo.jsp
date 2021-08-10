@@ -99,8 +99,8 @@
 	        <h3 class="title">통합관리</h3>
 	        
 	        <div class="tab-area">
-	            <button class="btn btn-outline-danger">후원내역</button>
-	            <button class="btn btn-outline-danger  active">정산내역</button>
+	            <button class="btn btn-outline-danger" onclick="location.href='donaDetailOne.ad?smemNo=' + ${calMem.memNo};">후원내역</button>
+	            <button class="btn btn-outline-danger  active" onclick="location.href='donaDetailTwo.ad?smemNo=' + ${calMem.memNo};">정산내역</button>
 	        </div>
 	    </div>
 	
@@ -132,15 +132,15 @@
 	        <div class="donationMem">
 	            <table id="memInfo">
 	                <tr>
-	                    <td width="400px"><h5><b style="text-align: left; font-size: 25px;">김망고</b>님의 정산 내역</h5></td>
-	                    <td width="300px"><h5 style="text-align: center;">총 정산금 : <b style="color: rgb(220, 53, 69)  ;">140,000</b>원</h5> </td>
+	                    <td width="400px"><h5><b style="text-align: left; font-size: 25px;">${calMem.memName }</b>님의 정산 내역</h5></td>
+	                    <td width="300px"><h5 style="text-align: center;">총 정산금 : <b style="color: rgb(220, 53, 69)  ;">${calMem.calPrice }</b>원</h5> </td>
 	                </tr>
 	            </table>
 	        </div>
 	
 	        <br>
 	
-	        <table class="table-bordered table-sm" width="700px">
+	        <table class="table-bordered table-sm" width="850px">
 	            <thead>
 	                <tr class="table-danger">
 	                    <th width="50">No</th>
@@ -152,185 +152,59 @@
 	                </tr>
 	            </thead>
 	            <!--반복문으로 뿌릴 때 제목을 클릭하면 해당 게시글로 넘어갈 수 있도록 해줘야해! 그럼 게시글 제목에 input-hidden으로 게시글 번호를 넣어줘야겠지 아마두-->
-	            <tbody>
-	                <tr>
-	                    <td>364</td>
-	                    <td>13,000원</td>
-	                    <td>2021-06-18</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>301</td>
-	                    <td>15,000원</td>
-	                    <td>2021-06-15</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calCancle">정산취소</td>
-	                </tr>
-	                <tr>
-	                    <td>364</td>
-	                    <td>13,000원</td>
-	                    <td>2021-06-18</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>301</td>
-	                    <td>15,000원</td>
-	                    <td>2021-06-15</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>364</td>
-	                    <td>13,000원</td>
-	                    <td>2021-06-18</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>301</td>
-	                    <td>15,000원</td>
-	                    <td>2021-06-15</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>364</td>
-	                    <td>13,000원</td>
-	                    <td>2021-06-18</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>301</td>
-	                    <td>15,000원</td>
-	                    <td>2021-06-15</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>364</td>
-	                    <td>13,000원</td>
-	                    <td>2021-06-18</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>301</td>
-	                    <td>15,000원</td>
-	                    <td>2021-06-15</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>364</td>
-	                    <td>13,000원</td>
-	                    <td>2021-06-18</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>301</td>
-	                    <td>15,000원</td>
-	                    <td>2021-06-15</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>364</td>
-	                    <td>13,000원</td>
-	                    <td>2021-06-18</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>301</td>
-	                    <td>15,000원</td>
-	                    <td>2021-06-15</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>364</td>
-	                    <td>13,000원</td>
-	                    <td>2021-06-18</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>301</td>
-	                    <td>15,000원</td>
-	                    <td>2021-06-15</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>364</td>
-	                    <td>13,000원</td>
-	                    <td>2021-06-18</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>301</td>
-	                    <td>15,000원</td>
-	                    <td>2021-06-15</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>364</td>
-	                    <td>13,000원</td>
-	                    <td>2021-06-18</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
-	                <tr>
-	                    <td>301</td>
-	                    <td>15,000원</td>
-	                    <td>2021-06-15</td>
-	                    <td >국민</td>
-	                    <td >2143093830228</td>
-	                    <td id="calDone">정산완료</td>
-	                </tr>
+	            <tbody>	
+	                <c:forEach var="m" items="${list}">
+		                <tr>
+		                    <td>${m.calNo }</td>
+		                    <td>${m.calPrice}</td>
+		                    <td>${m.calDate }</td>
+		                    <td >${m.calBank }</td>
+		                    <td >${m.calAccount }</td>
+		                    <c:choose>
+		                    	<c:when test="${m.calStatus != 'Y' }">
+		                    		<td id="calCancle">정산취소</td>
+		                    	</c:when>
+		                    	<c:otherwise>
+		                    		<td id="calDone">정산완료</td>
+		                    	</c:otherwise>
+		                    </c:choose>
+		                </tr>
+	                </c:forEach>
+	                
 	            </tbody>
 	        </table>
-	
+		<br><br><br>
+		
+		<ul class="pagination justify-content-center">
+               	<c:choose>
+               		<c:when test="${ pi.currentPage eq 1 }">
+                    	<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                    </c:when>
+                    <c:otherwise>
+                    			<li class="page-item"><a class="page-link" href="donaDetailTwo.ad?currentPage=${pi.currentPage -1 }&smemNo=${calMem.memNo}">&laquo;</a></li>
+                    </c:otherwise>
+              		</c:choose>
+               
+                <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage }">
+                			<li class="page-item"><a class="page-link" href="donaDetailTwo.ad?currentPage=${ p }&smemNo=${calMem.memNo}">${ p }</a></li>
+                </c:forEach>
+                    
+                    	
+                <c:choose>
+                   	<c:when test="${ pi.currentPage eq pi.maxPage }">
+                    	<li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+                    </c:when>
+                    <c:otherwise>
+	                    		<li class="page-item"><a class="page-link" href="donaDetailTwo.ad?currentPage=${ pi.currentPage+1 }&smemNo=${calMem.memNo}">&raquo;</a></li>
+	                </c:otherwise>
+                   </c:choose>
+               </ul>
 	    
 	    </article>
 	
-	    <br><br>
 	    
-	    <!-- 페이징 바 -->
-	    <div class="paging-area">
-	        <ul class="pagination justify-content-center">
-	            <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
-	            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-	            <li class="page-item"><a class="page-link" href="#">2</a></li>
-	            <li class="page-item"><a class="page-link" href="#">3</a></li>
-	            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-	        </ul>
-	    </div>
+	    
+	   
 		
 	    <br><br>
 	
