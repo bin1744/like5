@@ -175,5 +175,12 @@ public class BookingServiceImpl implements BookingService{
 	public ArrayList<Booking> selectSpace(PageInfo pi) {
 		return bDao.selectSpace(sqlSession, pi);
 	}
+	
+	/*선택 삭제 기능*/
+	@Override
+	public void delete(String bookingNo) {
+		bDao.delete(sqlSession, bookingNo);
+		
+	}
 
 }

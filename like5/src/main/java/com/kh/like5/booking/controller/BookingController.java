@@ -418,4 +418,16 @@ public class BookingController {
 		
 		return "booking/officeManagement";
 	}
+	
+	/* 예약관리 게시물 선택삭제*/
+	@RequestMapping(value = "/delete")
+	 public String ajaxTest(HttpServletRequest request) {
+        
+        String[] ajaxMsg = request.getParameterValues("valueArr");
+        int size = ajaxMsg.length;
+        for(int i=0; i<size; i++) {
+        	bService.delete(ajaxMsg[i]);
+        }
+        return "redirect:list";
+    }
 }

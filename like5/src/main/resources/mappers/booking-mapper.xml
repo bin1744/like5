@@ -421,6 +421,7 @@
   	  from booking       
   </select>
   
+  <!-- 예약관리 조회 -->
   <select id="selectSpace" resultMap="bookingResultSet">
   	select bookin_no
 		    , branch 
@@ -435,4 +436,11 @@
   	   		by bookin_no asc
   </select>
   
+  <!-- 예약관리 선택삭제 -->
+  <update id="delete">
+  	 update 
+  	        booking
+  	    set status = 'N'    
+  	  where bookin_no = #{bookingNo}     
+  </update>
 </mapper>

@@ -72,4 +72,7 @@ public interface BookingService {
 	int selectSpaceCount();
 	ArrayList<Booking> selectSpace(PageInfo pi);
 	
+	// 13. 공간예약 선택 삭제 기능
+	public void delete(String bookingNo);
+	
 }

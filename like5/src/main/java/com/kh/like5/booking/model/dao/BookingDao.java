@@ -135,6 +135,7 @@ public class BookingDao {
 	public int selectSpaceCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("bookingMapper.selectSpaceCount");
 	}
+	
 	/*예약 관리 전체 조회*/
 	public ArrayList<Booking> selectSpace(SqlSessionTemplate sqlSession, PageInfo pi){
 		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
@@ -143,4 +144,8 @@ public class BookingDao {
 		return (ArrayList)sqlSession.selectList("bookingMapper.selectSpace", null, rowBounds);
 	}
 	
+	/*예약 관리 선택 삭제*/
+	public void delete(SqlSessionTemplate sqlSession, String bookingNo) {
+		sqlSession.delete("bookingMapper.delete", bookingNo);
+	}
 }
