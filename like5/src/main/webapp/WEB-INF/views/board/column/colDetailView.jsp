@@ -56,7 +56,7 @@
 	                    </div>
 	                    <div class="scrap" onclick="likeAndScrap(2);">
 	                    	<c:choose>
-	                    		<c:when test="${condition eq 'scrap' and loginUser.memNo eq mno}">
+	                    		<c:when test="${!empty condition and loginUser.memNo eq mno}">
 	                    			 <i id="selected-scrap" class="fas fa-bookmark fa-2x " ></i>
 	                    		</c:when>
 	                    		<c:otherwise>

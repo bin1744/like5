@@ -82,26 +82,9 @@ public class BoardController {
 			return "common/errorPage";
 		}
 	}
+	
 
-	/** 
-	 * [한솔] QnaEnrollForm 게시글 insert
-	 */
-	@RequestMapping("qnaDetail.bo")
-	public ModelAndView qnaDetail(int bno, ModelAndView mv) {
-		int result = bService.increaseCount(bno);
-		
-		if(result > 0) {
-			Board b = bService.qnaDetail(bno);
-			mv.addObject("b", b)
-			  .setViewName("board/qna/qnaDetailView");
-			
-		}else {
-			mv.addObject("errorMsg", " 상세조회에 실패하였습니다. ")
-			  .setViewName("common/errorPage");
-		}
-		return mv;
-	}
-		
+	
 
 	/* -------- 푸터 -------- */
 	
@@ -279,7 +262,6 @@ public class BoardController {
 	
 	@RequestMapping("comDetail.bo")
 	public ModelAndView comDetail(ModelAndView mv,int bno) {
-		
 		
 		// 클릭시 조회수 증가
 		int result = bService.increaseCount(bno);
@@ -524,14 +506,14 @@ public class BoardController {
 		map.put("bno", bno);
 		map.put("mno",mno);
 		
-		System.out.println(map);
-		
 		int result = bService.likeAndScrap(map);
 		if(result>0) {
 			
 			if(condition.equals("like")) {
 				session.setAttribute("alertMsg", "좋아요 성공!🎉");
-				mv.setViewName("redirect:colDetail.bo?bno="+bno);
+				mv.addObject("condition",condition)
+					.addObject("mno",mno)
+				  .setViewName("redirect:colDetail.bo?bno="+bno);
 			}else {
 				session.setAttribute("alertMsg", "스크랩 성공!🎉");
 				mv.setViewName("redirect:colDetail.bo?bno="+bno);
