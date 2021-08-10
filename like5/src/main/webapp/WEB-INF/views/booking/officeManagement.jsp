@@ -121,7 +121,17 @@
 								<td>${ s.memName }</td>
 								<td>${ s.typeName }</td>
 								<td>${ s.requestDate }</td>
-								<td>${ s.status }</td>
+								<c:choose>
+		                        	<c:when test="${ s.status eq 'Y' }">
+		                        		<td>대기</td>
+		                        	</c:when>
+		                        	<c:when test="${ s.status eq 'N' }">
+		                        		<td>취소</td>
+		                        	</c:when>
+		                        	<c:otherwise>
+		                        		<td>완료</td>
+		                        	</c:otherwise>
+	                        	</c:choose>
 								<td>
 									<input type="checkbox" onclick = "">
 								</td>
@@ -133,15 +143,30 @@
             
             <br><br><br>
 
+            <!-- 페이징 바 -->
             <div id="pagingArea">
                 <ul class="pagination">
-                    <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                	<c:choose>
+                		<c:when test="${ pi.currentPage eq 1 }">
+	                    	<li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li class="page-item"><a class="page-link" href="space.bo?currentPage=${ pi.currentPage-1 }">&laquo;</a></li>
+                    	</c:otherwise>
+                    </c:choose>
+                    
+                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                    	<li class="page-item"><a class="page-link" href="space.bo?currentPage=${ p }">${ p }</a></li>
+                    </c:forEach>
+                    
+                    <c:choose>
+                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                    	<li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li class="page-item"><a class="page-link" href="space.bo?currentPage=${ pi.currentPage+1 }">&raquo;</a></li>
+	                    </c:otherwise>
+	                </c:choose>    
                 </ul>
             </div>
 		</div>
