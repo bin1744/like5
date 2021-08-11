@@ -86,6 +86,7 @@
             <form id="postForm" action="" method="post">
 				<input type="hidden" name="bno" value="${b.bno}">
 				<input type="hidden" name="imgPath" value="${b.imgPath}">
+				<input type="hidden" name="category" value="커뮤니티">
 			</form>
 					
 			<script>
