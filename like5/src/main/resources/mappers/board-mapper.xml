@@ -802,6 +802,7 @@
 			 	 where r.boa_no = b.boa_no) reply
 			 , nickname
 			 , boa_enroll_date
+			 , boa_content
 		  from board b
 		  join member using(mem_no)
 		 where
