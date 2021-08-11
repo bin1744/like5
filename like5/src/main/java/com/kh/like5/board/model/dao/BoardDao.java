@@ -136,11 +136,11 @@ public class BoardDao {
 	}
 	
 	/**
-	 * [커뮤니티] 게시글 작성하기
+	 * [커뮤니티 | 칼럼] 게시글 작성하기
 	 * @author seong
 	 */
-	public int insertCommunity(SqlSessionTemplate sqlSession, Board b) {
-		return sqlSession.insert("boardMapper.insertCommunity",b);
+	public int insertComAndCol(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.insertComAndCol",b);
 	}
 	
 	/**

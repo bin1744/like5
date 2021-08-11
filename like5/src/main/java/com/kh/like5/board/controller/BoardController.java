@@ -248,18 +248,16 @@ public class BoardController {
 	public ModelAndView comOrderByCategory(ModelAndView mv,@RequestParam(value="currentPage",defaultValue="1")
 		int currentPage	,String condition) {
 	
-	int listCount = bService.comOrderByListCount(condition);
-	
-	PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
-	ArrayList<Board>comList = bService.comOrderByCategory(pi,condition);
-	
-	
-	mv.addObject("pi",pi)
-	.addObject("comList",comList)
-	.addObject("condition",condition)
-	.addObject("listCount",listCount)
-	.setViewName("board/community/comListView");
-	return mv;
+		int listCount = bService.comOrderByListCount(condition);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+		ArrayList<Board>comList = bService.comOrderByCategory(pi,condition);
+		
+		mv.addObject("pi",pi)
+		.addObject("comList",comList)
+		.addObject("condition",condition)
+		.addObject("listCount",listCount)
+		.setViewName("board/community/comListView");
+		return mv;
 	}
 	
 	
@@ -270,18 +268,17 @@ public class BoardController {
 	@RequestMapping("comOrderByCount.bo")
 	public ModelAndView comOrderByCount(ModelAndView mv,@RequestParam(value="currentPage",defaultValue="1")
 										int currentPage, String condition) {
+			
+		int listCount = bService.comListCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+		ArrayList<Board>comList = bService.comOrderByCount(pi, condition);
 		
-	int listCount = bService.comListCount();
-	
-	PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
-	ArrayList<Board>comList = bService.comOrderByCount(pi, condition);
-	
-	mv.addObject("pi",pi)
-	.addObject("comList",comList)
-	.addObject("condition",condition)
-	.addObject("listCount",listCount)
-	.setViewName("board/community/comListView");
-	return mv;
+		mv.addObject("pi",pi)
+		.addObject("comList",comList)
+		.addObject("condition",condition)
+		.addObject("listCount",listCount)
+		.setViewName("board/community/comListView");
+		return mv;
 	}
 	
 	/**
@@ -353,22 +350,29 @@ public class BoardController {
 	}
 	
 	/**
-	 * [커뮤니티] 게시글 작성하기
+	 * [커뮤니티 | 칼럼] 게시글 작성하기
 	 * @author seong
 	 */
-	@RequestMapping("insertCom.bo")
-	public ModelAndView insertCommunity(Board b,ModelAndView mv,MultipartFile upfile,HttpSession session) {
+	@RequestMapping("insert.bo")
+	public ModelAndView insertComAndCol(Board b,ModelAndView mv,MultipartFile upfile,HttpSession session) {
+		
+		String category = b.getCategory();
 		
 		if(!upfile.getOriginalFilename().equals("")) {
 			String changeName = saveFile(session,upfile); // "2021070217013023152.jpg"
 			b.setImgPath("resources/images/board/" + changeName); // resource/uploadFiles/2021070217013023152.jpg
 		}
 		
-		int result = bService.insertCommunity(b);
+		int result = bService.insertComAndCol(b);
 		if(result>0) {
-			
 			session.setAttribute("alertMsg", "성공적으로 등록 되었어요 😀 ");
-			mv.setViewName("redirect:comList.bo");
+			//카테고리가 칼럼일 경우 칼럼 전체 리스트 페이지로 이동
+			if(category.equals("칼럼")) {
+				mv.setViewName("redirect:colList.bo");
+			}else {
+				//카테고리가 커뮤니티(일상|칼럼)일 경우 커뮤니티 전체 리스트 페이지로 이동	
+				mv.setViewName("redirect:comList.bo");
+			}
 		}
 		return mv;
 	}
