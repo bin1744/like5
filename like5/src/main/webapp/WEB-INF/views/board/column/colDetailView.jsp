@@ -12,6 +12,9 @@
   	<!-- colDetailView.css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/colDetailView.css" />   
   
+ 	<!--토스트 UI-->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css" />
+  
 </head>
 <body>
 
@@ -40,9 +43,45 @@
         <div class="column-conetent"  style="width: 900px; height: 800px; ">
             <div style="height: 100%;width: 100%;">
                 <div>
-                	${b.content}
+                	<div id="editor" style="display:none;">${b.content}</div>
+                	<div id="viewer"></div>
                 </div>
             </div>
+            
+             <!--토스트 UI-->
+		    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+		    
+		    <script>
+
+		    	const content = [].join('\n');
+		    	<%----%>
+	    	   const editor = new toastui.Editor({
+	               el: document.querySelector('#editor'),
+	               previewStyle: 'vertical',
+	               initialEditType: "wysiwyg",
+	               height: '500px',
+	               initialValue: content
+	           });
+		    	
+		        const viewer = toastui.Editor.factory({
+		            el: document.querySelector('#viewer'),
+		            viewer: true,
+		            height: '500px',
+		            initialValue: content
+		        });
+
+		        $(function(){
+		        	ToView();
+		        })
+		        
+		        function ToView()
+		        {
+		            viewer.setMarkdown(editor.getHTML());
+		        };
+		    
+		    </script>
+		    
+		    
             <!--좋아요 스크랩 후원하기-->
             <!-- 로그인한 사용자만 버튼 요소 보여지게하기 -->
             <c:choose>
