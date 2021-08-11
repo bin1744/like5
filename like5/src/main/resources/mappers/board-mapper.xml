@@ -479,7 +479,9 @@
 	</insert>
 	
 	<!-- 커뮤니티 게시글 작성하기 -->
-	<insert id="insertCommunity">
+	<!-- 칼럼 insert도 같이 해보기 -->
+	<!-- 성공 시 id이름 변경 -->
+	<insert id="insertComAndCol">
 		insert into 
 			board
 			    (

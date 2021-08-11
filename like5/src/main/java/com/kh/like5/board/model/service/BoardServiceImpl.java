@@ -146,8 +146,8 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	
 	@Override
-	public int insertCommunity(Board b) {
-		return bDao.insertCommunity(sqlSession, b);
+	public int insertComAndCol(Board b) {
+		return bDao.insertComAndCol(sqlSession, b);
 	}
 
 	/**

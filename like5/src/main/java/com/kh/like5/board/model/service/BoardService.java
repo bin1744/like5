@@ -98,8 +98,8 @@ public interface BoardService {
 	// 대댓글 작성
 	int insertReplies(Reply r);
 	
-	// 게시글 작성하기
-	int insertCommunity(Board b);
+	// [커뮤니티 | 칼럼] 게시글 작성하기
+	int insertComAndCol(Board b);
 	
 	//[커뮤니티] - 글 수정하기
 	int updateCommunity(Board b);
@@ -124,7 +124,7 @@ public interface BoardService {
 	// [좋아요] - 게시글 상세 조회 시 로그인한 회원의  좋아요 여부
 	int likesCount(Board b);
 	
-	// [좋아요] - 게시글 상세 조회 시 로그인한 회원의  좋아요 여부
+	// [스크랩] - 게시글 상세 조회 시 로그인한 회원의  스크랩 여부
 	int scrapCount(Board b);
 	
 	//  [ 스크랩 | 좋아요 ]  등록
@@ -132,6 +132,7 @@ public interface BoardService {
 	
 	//  [ 스크랩 | 좋아요 ]  해제
 	int UnlikeAndUnScrap(HashMap<String,Object>map);
+	
 	
 	
 	//[칼럼] - 글 수정하기

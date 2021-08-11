@@ -26,7 +26,7 @@
             <hr>
         </div>
 															
-        <form action="insertCom.bo" method="post" enctype="multipart/form-data">
+        <form action="insert.bo" method="post" enctype="multipart/form-data">
             <input type="hidden" value="${loginUser.memNo}" name="mno">
             <!--카테고리 시작-->
             <!--작성자 아이디, 카테고리, 제목, 내용, 첨부파일-->
