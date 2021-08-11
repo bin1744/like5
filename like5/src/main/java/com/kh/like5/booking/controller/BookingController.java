@@ -295,10 +295,13 @@ public class BookingController {
 	public String paymentForm(int officeNo, Model model, String startDate, String endDate) {
 		
 		Office o = bService.selectOffice(officeNo);
+		
+		//예약된 날짜들 받아오기
+		ArrayList<Booking> list = bService.selectB(officeNo);
+		model.addAttribute("list", list);
 		model.addAttribute("o", o);	
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
-		//System.out.println(o);
 		return "booking/bPayment";
 	}
 	
@@ -403,16 +406,28 @@ public class BookingController {
 	/*공간 예약관리 조회*/
 	@RequestMapping("space.bo")
 	public String selectSpace(HttpServletRequest request, HttpSession session, @RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
-		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		//int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
 		
-		int listCount = bService.selectSpaceCount(memNo);
+		int listCount = bService.selectSpaceCount();
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		
-		ArrayList<Booking> list = bService.selectSpace(memNo,pi);
+		ArrayList<Booking> list = bService.selectSpace(pi);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		
 		return "booking/officeManagement";
 	}
+	
+	/* 예약관리 게시물 선택삭제*/
+	@RequestMapping(value = "/delete")
+	 public String ajaxTest(HttpServletRequest request) {
+        
+        String[] ajaxMsg = request.getParameterValues("valueArr");
+        int size = ajaxMsg.length;
+        for(int i=0; i<size; i++) {
+        	bService.delete(ajaxMsg[i]);
+        }
+        return "redirect:list";
+    }
 }

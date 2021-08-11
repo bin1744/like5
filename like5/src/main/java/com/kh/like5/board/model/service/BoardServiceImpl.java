@@ -210,8 +210,28 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.colOrderByCount(sqlSession, pi, condition);
 	}
 
+
 	/**
-	 * 좋아요
+	 *  게시글 상세 조회 시 로그인한 회원의  좋아요 여부
+	 * @author seong
+	 */
+	@Override
+	public int likesCount(Board b) {
+		return bDao.likesCount(sqlSession, b);
+	}
+
+	/**
+	 *  게시글 상세 조회 시 로그인한 회원의  스크랩 여부
+	 * @author seong
+	 */
+
+	@Override
+	public int scrapCount(Board b) {
+		return bDao.scrapCount(sqlSession, b);
+	}
+
+	/**
+	 * Ajax로 좋아요 | 스크랩 등록
 	 * @author seong
 	 */
 	
@@ -219,8 +239,17 @@ public class BoardServiceImpl implements BoardService {
 	public int likeAndScrap(HashMap<String,Object>map) {
 		return bDao.likeAndScrap(sqlSession, map);
 	}
-
-
+	
+	/**
+	 * Ajax로 좋아요 | 스크랩 해제
+	 * @author seong
+	 */
+	
+	@Override
+	public int UnlikeAndUnScrap(HashMap<String, Object> map) {
+		return bDao.UnlikeAndUnScrap(sqlSession, map);
+	}
+	
 	
 	//------------------ 한솔 -------------------------
 	
@@ -250,15 +279,23 @@ public class BoardServiceImpl implements BoardService {
 	public int qnaInsert(Board b) {
 		return bDao.qnaInsert(sqlSession, b);
 	}
+	
+	/**
+	 * [QnA] - QnaEnrollForm 게시글 임시저장
+	 * @author Hansol
+	 */
+	@Override
+	public int qnaStorageInsert(Board b) {
+		return bDao.qnaStorageInsert(sqlSession, b);
+	}
 
 	/**
-	 * [QnA] - QnaDetail 실제 게시글 조회
+	 * [QnA] - QnaDetail 게시글 상세조회
 	 * @author Hansol
 	 */
 	@Override
 	public Board qnaDetail(int bno) {
-		// TODO Auto-generated method stub
-		return null;
+		return bDao.qnaDetail(sqlSession, bno);
 	}
 
 	/**
@@ -330,11 +367,12 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.tagList(sqlSession);
 	}
 
-	@Override
-	public int insertLike(Board b) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+
+
+	
+
+
+	
 
 
 

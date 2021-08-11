@@ -90,7 +90,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 * [커뮤니티] 게시글 상세보기시 조회수 증가
+	 * [커뮤니티, QnA] 게시글 상세보기시 조회수 증가
 	 *  @author seong
 	 */
 	
@@ -212,11 +212,40 @@ public class BoardDao {
 	}
 	
 	/**
+	 *  게시글 상세 조회 시 로그인한 회원의  좋아요 여부
+	 * @author seong
+	 */
+	
+	public int likesCount(SqlSessionTemplate sqlSession,Board b) {
+		return sqlSession.selectOne("boardMapper.likesCount",b);
+	}
+	
+
+	/**
+	 *  게시글 상세 조회 시 로그인한 회원의  스크랩 여부
+	 * @author seong
+	 */
+	
+	public int scrapCount(SqlSessionTemplate sqlSession,Board b) {
+		return sqlSession.selectOne("boardMapper.scrapCount",b);
+	}
+	
+	
+	/**
 	 * [ 스크랩 | 좋아요 ]  등록
 	 * @author seong
 	 */
 	public int likeAndScrap(SqlSessionTemplate sqlSession,HashMap<String,Object>map) {
 		return sqlSession.insert("boardMapper.insertLike",map);
+	}
+	
+	/**
+	 * Ajax로 좋아요 | 스크랩 해제
+	 * @author seong
+	 */
+	
+	public int UnlikeAndUnScrap(SqlSessionTemplate sqlSession,HashMap<String,Object>map) {
+		return sqlSession.insert("boardMapper.UnlikeAndUnScrap",map);
 	}
 	
 	//------------------ 한솔 -------------------------
@@ -248,14 +277,27 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.qnaInsert", b);
 	}
 	
-	
+	/**
+	 * [QnA] - QnaEnrollForm 게시글 임시저장
+	 * @author Hansol
+	 */
+	public int qnaStorageInsert(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.qnaStorageInsert", b);
+	}
 	
 	/**
 	 * [QnA] - QnaEnrollForm tag 리스트 조회
 	 * @author Hansol
 	 */
-	public ArrayList<Tag> tagList(SqlSessionTemplate sqlSession){
+	public ArrayList<Tag> tagList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("tagMapper.tagList", null);
 	}
 	
+	/**
+	 * [QnA] - QnaDetailView 게시글 상세 조회
+	 * @author Hansol
+	 */
+	public Board qnaDetail(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.selectOne("boardMapper.qnaDetail", bno);
+	}
 }

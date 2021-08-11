@@ -265,24 +265,26 @@ console.log(startDate);
 $.when($.ready).then(function(){
    $("input[name=startDate]").val(startDate);
    $("input[name=endDate]").val(endDate);
+   
+   flatpickr(".startDate",{
+	    locale:"ko",
+	    altInput:true,
+	    altFormat:"Y F d\\일",
+	    minDate:"today",
+	    dateFormat:"Y-m-d"
+	});
+
+	flatpickr(".endDate",{
+	    locale:"ko",
+	    clickOpens: true,
+	    altInput:true,
+	    altFormat:"Y F d\\일",
+	    minDate:"today",
+	    dateFormat:"Y-m-d"
+	});
 })
 
-flatpickr(".startDate",{
-    locale:"ko",
-    altInput:true,
-    altFormat:"Y F d\\일",
-    minDate:"today",
-    dateFormat:"Y-m-d"
-});
 
-flatpickr(".endDate",{
-    locale:"ko",
-    clickOpens: true,
-    altInput:true,
-    altFormat:"Y F d\\일",
-    minDate:"today",
-    dateFormat:"Y-m-d"
-});
 
 <%--시설 안내 관련 if문 --%>
 <c:if test="${ fn:contains(o.facility, '와이파이') }">

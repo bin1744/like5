@@ -66,16 +66,13 @@
 	        			if(condition==2){
 	        				//input type hidden 요소의 value를 daily로 지정하기
 	        				$("#comOrderByCategory").children("input[type=hidden]").attr("value","daily");
-	        				
-	        				$("#comOrderByCategory").attr("action","comOrderByCategory.bo")
-	        				.submit();
+	        				$("#comOrderByCategory").attr("action","comOrderByCategory.bo").submit();
 	        			}else{
 	        				// 스터디 모집으로 조회
 		        			// input type hidden 요소의 value를 study로 지정하기 
 	        				$("#comOrderByCategory").children("input[type=hidden]").attr("value","study");
 	        				
-	        				$("#comOrderByCategory").attr("action","comOrderByCategory.bo")
-	        				.submit();
+	        				$("#comOrderByCategory").attr("action","comOrderByCategory.bo").submit();
 	        			}
 	        		}
 	        	}

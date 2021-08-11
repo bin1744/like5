@@ -74,6 +74,62 @@
         text-decoration: none;
     }
 </style>
+<!-- 체크 삭제 기능 -->
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var chkObj = document.getElementsByName("RowCheck");
+			var rowCnt = chkObj.length;
+			
+			$("input[name='allCheck']").click(function(){
+				var chk_listArr = $("input[name='RowCheck']");
+				for (var i=0; i<chk_listArr.length; i++){
+					chk_listArr[i].checked = this.checked;
+				}
+			});
+			$("input[name='RowCheck']").click(function(){
+				if($("input[name='RowCheck']:checked").length == rowCnt){
+					$("input[name='allCheck']")[0].checked = true;
+				}
+				else{
+					$("input[name='allCheck']")[0].checked = false;
+				}
+			});
+		});
+		function deleteValue(){
+			var url = "delete";    // Controller로 보내고자 하는 URL
+			var valueArr = new Array();
+		    var list = $("input[name='RowCheck']");
+		    for(var i = 0; i < list.length; i++){
+		        if(list[i].checked){ //선택되어 있으면 배열에 값을 저장함
+		            valueArr.push(list[i].value);
+		        }
+		    }
+		    if (valueArr.length == 0){
+		    	alert("선택된 글이 없습니다.");
+		    }
+		    else{
+				var chk = confirm("정말 삭제하시겠습니까?");				 
+				$.ajax({
+				    url : url,                    // 전송 URL
+				    type : 'POST',                // POST 방식
+				    traditional : true,
+				    data : {
+				    	valueArr : valueArr        // 보내고자 하는 data 변수 설정
+				    },
+	                success: function(jdata){
+	                    if(jdata = 1) {
+	                        alert("삭제에 성공하셨습니다.");
+	                        location.replace("list") //list 로 페이지 새로고침
+	                    }
+	                    else{
+	                        alert("삭제 실패");
+	                    }
+	                }
+				});
+			}
+		}
+	</script>
 </head>
 <body>
 	<jsp:include page="../common/header.jsp" />
@@ -97,34 +153,43 @@
         <div class="content-area">    
             <h4><b>예약관리</b></h4> 
             <div class="buttons">
-                <button class="btn btn-primary btn-sm" onclick="">취소하기</button>
+                <input type="button" value="선택삭제" class="btn btn-primary btn-sm" onclick="deleteValue();">
             </div>
 
 			<div class="table">
 				<table id="report-list">
 					<thead>
 						<tr class="table-default">
+							<th width="50px"><input id="allCheck" type="checkbox" name="allCheck"/></th>
 							<th width="150px">예약번호</th>
 							<th width="130px">지점</th>
 							<th width="100px">예약자</th>
 							<th width="100px">오피스타입</th>
 							<th width="100px">예약일</th>
 							<th width="80px">상태</th>
-							<th width="100px">#</th>
 						</tr>
 					</thead>
+					
 					<tbody>
-						<c:forEach var="s" items="${list}">
+						<c:forEach var="list" items="${list}">
 							<tr>
-								<td>${ s.bookingNo }</td>
-								<td>${ s.branch }</td>
-								<td>${ s.memName }</td>
-								<td>${ s.typeName }</td>
-								<td>${ s.requestDate }</td>
-								<td>${ s.status }</td>
-								<td>
-									<input type="checkbox" onclick = "">
-								</td>
+								<td><input name="RowCheck" type="checkbox" value="${ list.bookingNo }"></td>
+								<td>${ list.bookingNo }</td>
+								<td>${ list.branch }</td>
+								<td>${ list.memName }</td>
+								<td>${ list.typeName }</td>
+								<td>${ list.requestDate }</td>
+								<c:choose>
+		                        	<c:when test="${ list.status eq 'Y' }">
+		                        		<td>대기</td>
+		                        	</c:when>
+		                        	<c:when test="${ list.status eq 'N' }">
+		                        		<td>취소</td>
+		                        	</c:when>
+		                        	<c:otherwise>
+		                        		<td>완료</td>
+		                        	</c:otherwise>
+	                        	</c:choose>
 							</tr>
 						</c:forEach>	
 					</tbody>
@@ -133,18 +198,33 @@
             
             <br><br><br>
 
+            <!-- 페이징 바 -->
             <div id="pagingArea">
                 <ul class="pagination">
-                    <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                	<c:choose>
+                		<c:when test="${ pi.currentPage eq 1 }">
+	                    	<li class="page-item disabled"><a class="page-link">&laquo;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li class="page-item"><a class="page-link" href="space.bo?currentPage=${ pi.currentPage-1 }">&laquo;</a></li>
+                    	</c:otherwise>
+                    </c:choose>
+                    
+                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                    	<li class="page-item"><a class="page-link" href="space.bo?currentPage=${ p }">${ p }</a></li>
+                    </c:forEach>
+                    
+                    <c:choose>
+                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                    	<li class="page-item disabled"><a class="page-link">&raquo;</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<li class="page-item"><a class="page-link" href="space.bo?currentPage=${ pi.currentPage+1 }">&raquo;</a></li>
+	                    </c:otherwise>
+	                </c:choose>    
                 </ul>
             </div>
 		</div>
-    </div>
+    </div>   
 </body>
 </html>

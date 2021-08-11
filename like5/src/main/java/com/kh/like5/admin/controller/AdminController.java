@@ -326,7 +326,26 @@ public class AdminController {
 	}
 		
 		
+
 	// tag 게시글 끌어오는 페이지
+	@RequestMapping("tagDetail.ad")
+	public ModelAndView tagDetail(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, String tagName) {
+
+		int listCount = adService.getTagCount(tagName);
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Board> list = adService.tagDetailList(pi, tagName);
+
+		log.info("listCount = " + listCount);
+		adService.tagDetailList(pi, tagName).forEach(board -> log.info("list: " + board));
+
+		mv.addObject("pi", pi)
+				.addObject("list", list)
+				.addObject("tagName", tagName)
+				.setViewName("admin/tagDetail");
+
+		return mv;
+	}
 	
 	
 	

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>QnA List</title>
+<title>[QnA] 게시글 리스트 보기</title>
 
 <!-- qnaListView.css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/qnaListView.css" />
@@ -63,10 +63,16 @@
 								<button type="button" class="btn btn-danger" onClick="loginAlert()">질문하기</button>
 							</c:otherwise>
 						</c:choose>
-						
 					</div>
 				</div> <!-- 검색, 질문하기를 나누는 div 끝 -->
 			</div> <!-- 게시판 기타 기능이 들어갈 부분 끝-->
+			
+			<script>
+			// 비로그인 시 질문하기 클릭 제한
+			function loginAlert(){
+				alertify.alert(" 로그인 후 이용해주세요. ")
+			}
+			</script>
 
 			<!-- 게시판 중/하단 모두를 감싸는 div -->
 			<div class="qnaContent">
@@ -78,7 +84,6 @@
 						<thead><tr><th colspan="5"></th></tr></thead>
 						<c:forEach var="q" items="${ qnaList }">
 							<tr>
-								<input type="hidden" class="qBno" value="${ q.bno }">
 								<!-- 좋아요 시작 -->
 								<td class="qnaLike">
 									<!-- 좋아요 상/중/하단 나누는 div-->
@@ -123,8 +128,11 @@
 								<!-- 게시글 시작 -->
 								<td class="qnaContent">
 									<!-- 게시글 상/하단 나누는 div -->
-									<div id="qnaTitle">
-										<a href="qnaDetail.bo">${ q.title }</a>
+									<div class="qnaTitle" id="qnaTitle">
+										<!--a href="qnaDetail.bo">${ q.title }</a-->
+										<p style="cursor:pointer;">${ q.title }</p>
+										<input type="hidden" class="qCategory" name="category" value="QNA"></input>
+										<input type="hidden" class="qBno" value="${ q.bno }">
 									</div>
 									<div id="qnaTag">
 										<c:choose>
@@ -132,10 +140,12 @@
 												<p id="noTag">no tag attached</p>
 											</c:when>
 											<c:otherwise>
-												<p id="tagResult">${ q.tag }</p>
-												<!--button class="w3-button w3-white w3-border w3-border-red w3-round-xxlarge w3-hover-red w3-tiny">
-													<a href="">${ q.tag }</a>
-												</button-->
+												<c:forTokens var="tags" items="${ q.tag }" delims=" ">
+													<button class="w3-button w3-white w3-border w3-border-red w3-round-xxlarge w3-hover-red w3-tiny">
+														<!-- 클릭 시 tagDatail 페이지로 이동 -->
+														<a href="tagDetail.ad"><c:out value="${ tags }"/></a>
+													</button>
+												</c:forTokens>
 											</c:otherwise>
 										</c:choose>
 									</div> <!-- 태그영역 끝 -->
@@ -169,6 +179,16 @@
 					</table>
 				</div> <!-- 게시글 리스트가 들어갈 부분 끝 -->
 				
+				
+				<script>
+				// 게시글 제목 클릭 시 상세 페이지로 이동
+				$(function(){
+					$(".qnaContent>.qnaTitle").click(function(){
+						location.href="qnaDetail.bo?bno=" + $(this).children(".qBno").val();
+					})
+				})
+				</script>
+
 
 				<!-- 페이지네이션 스타일 수정 예정 -->
 				<div class="pagingArea">
@@ -207,14 +227,6 @@
 			</div> <!-- 게시판 중/하단 모두를 감싸는 div 끝 -->
 		</div> <!-- 전체를 감싸는 div 끝-->
 	</div> <!-- innerOuter 끝 -->
-
-
-	<!-- JS -->
-	<script>
-	function loginAlert(){
-		alertify.alert(" 로그인 후 이용해주세요. ")
-	}
-	</script>
 
 	<!-- 푸터바 -->
 	<jsp:include page="../../common/footer.jsp"/>

@@ -26,6 +26,10 @@ public class BookingDao {
 		return sqlSession.insert("bookingMapper.insertBook", b);
 	}
 
+	//예약된 날짜 가져오기
+	public ArrayList<Booking> selectB(SqlSessionTemplate sqlSession, int officeNo){
+		return(ArrayList)sqlSession.selectList("bookingMapper.selectB", officeNo);
+	}
 	public int selectListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("bookingMapper.selectListCount");
 	}
@@ -128,15 +132,20 @@ public class BookingDao {
 		return sqlSession.update("bookingMapper.deleteMyBook", bno);
 	}
 	
-	public int selectSpaceCount(SqlSessionTemplate sqlSession, int memNo) {
-		return sqlSession.selectOne("bookingMapper.selectSpaceCount",memNo);
+	public int selectSpaceCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("bookingMapper.selectSpaceCount");
 	}
 	
-	public ArrayList<Booking> selectSpace(SqlSessionTemplate sqlSession, int memNo, PageInfo pi){
+	/*예약 관리 전체 조회*/
+	public ArrayList<Booking> selectSpace(SqlSessionTemplate sqlSession, PageInfo pi){
 		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
 		RowBounds  rowBounds = new RowBounds(offset, limit);
-		return (ArrayList)sqlSession.selectList("bookingMapper.selectSpace", memNo, rowBounds);
+		return (ArrayList)sqlSession.selectList("bookingMapper.selectSpace", null, rowBounds);
 	}
 	
+	/*예약 관리 선택 삭제*/
+	public void delete(SqlSessionTemplate sqlSession, String bookingNo) {
+		sqlSession.delete("bookingMapper.delete", bookingNo);
+	}
 }

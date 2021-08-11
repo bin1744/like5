@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>[QnA] 질문 작성하기</title>
 
 <!-- qnaDetailView.css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/qnaEnrollForm.css" />
@@ -42,7 +42,7 @@
 							</label>
 							<input type="text" class="form-control" id="qTitle" name="title"
 								placeholder="다른 사람들이 자세히 알 수 있도록 구체적으로 제목을 작성해주세요." required>
-							<div class="valid-feedback">입력되었습니다.</div>
+							<div class="valid-feedback">제목이 입력되었습니다.</div>
 							<div class="invalid-feedback">제목을 작성해주세요.</div>
 						</div>
 						<!-- 제목 영역 끝 -->
@@ -54,8 +54,8 @@
 								&nbsp;&nbsp;해시태그(#)와 태그 이름을 입력한 후 띄어쓰기로 구분해주세요!&nbsp;&nbsp;<i>ex)#JAVA #AWS ...</i>
 							</label>
 							<input type="text" class="form-control" id="qTag"
-								placeholder="우측에서 사용 중인 태그를 알아보고 질문과 관련있는 태그를 입력해주세요." name="tag" required>
-							<div class="valid-feedback">입력되었습니다.</div>
+								placeholder="첨부 가능한 태그 확인 후 관련있는 태그를 입력해주세요. 입력 양식과 일치하지 않을 경우 태그가 보여지지 않아요." name="tag" required>
+							<div class="valid-feedback">태그가 입력되었습니다.</div>
 							<div class="invalid-feedback">태그를 입력해주세요.</div>
 						</div>
 						<!-- 태그 영역 끝 -->
@@ -68,7 +68,7 @@
 							</label>
 							<!-- 마크다운 API 들어올 곳  -->
 							<textarea class="form-control" id="qContent" name="content" rows="5" required></textarea>
-							<div class="valid-feedback">입력되었습니다.</div>
+							<div class="valid-feedback">본문이 입력되었습니다.</div>
 							<div class="invalid-feedback">본문을 작성해주세요.</div>
 						</div>
 						<!-- 본문 영역 -->
@@ -84,7 +84,7 @@
 							<label for="agree" class="form-check-label">
 								<input class="form-check-input" type="checkbox" name="agree" id="agree" required>
 									&nbsp;(필수) 상단의 안내사항을 확인하였습니다.
-								<div class="valid-feedback">동의하셨습니다.</div>
+								<div class="valid-feedback">안내사항에 동의하셨습니다.</div>
 								<div class="invalid-feedback">질문을 등록하시려면 안내 확인에 체크해주세요.</div>
 							</label>
 						</div>
@@ -92,14 +92,34 @@
 	
 						<!-- 버튼 영역 -->
 						<div class="w3-container w3-right-align w3-margin-top">
-							<button type="submit" class="w3-button w3-white w3-border w3-border-gray w3-round">임시저장</button>
-							<button type="submit" class="btn btn-danger" id="submitButton">작성하기</button>
-						</div>
-						<!-- 버튼 영역 끝 -->
-					</form>
-					<!-- 제목, 태그, 본문 작성 영역 끝 -->
-				</div>
-				<!-- 좌측 글쓰기 영역 끝 -->
+							<button type="button" onclick="storage()" class="w3-button w3-white w3-border w3-border-gray w3-round">임시저장</button>
+							<button type="submit" onclick="formTest()" class="btn btn-danger" id="submitButton">작성하기</button>
+						</div><!-- 버튼 영역 끝 -->
+					</form><!-- 제목, 태그, 본문 작성 영역 끝 -->
+				</div><!-- 좌측 글쓰기 영역 끝 -->
+				
+				<script>
+				// 작성하기 버튼 클릭 시 유효성 검사
+				(function formTest() {
+					window.addEventListener('load', function() {
+						var forms = document.getElementsByClassName('qnaWrite');
+						var validation = Array.prototype.filter.call(forms, function(form) {
+							form.addEventListener('submit', function(event) {
+								if (form.checkValidity() === false) {
+									event.preventDefault();
+									event.stopPropagation();
+								}
+								form.classList.add('was-validated');
+							}, false);
+						});
+					}, false);
+				})();
+				
+				// 임시저장 클릭 시 qnaStorageInsert.bo로 값 제출
+				function storage(num){
+					$("#enrollForm").attr("action", "qnaStorageInsert.bo").submit();
+				}
+				</script>
 	
 				<!-- 우측 설명 영역 & 팁 아코디언 -->
 				<div class="qnaBottomRight">
@@ -171,6 +191,23 @@
 					</div>
 					<hr class="tipLine">
 					<!-- 팁 아코디언 끝-->
+					
+					<script>
+					// 팁 아코디언
+					function explanation(id) {
+						var x = document.getElementById(id);
+						if (x.className.indexOf("w3-show") == -1) {
+							x.className += " w3-show";
+							x.previousElementSibling.className = 
+							x.previousElementSibling.className.replace("w3-white", "w3-red");
+						} else { 
+							x.className = x.className.replace(" w3-show", "");
+							x.previousElementSibling.className = 
+							x.previousElementSibling.className.replace("w3-red", "w3-white");
+						}
+					}
+					</script>
+					
 				</div>
 				<!-- 우측 설명 영역 끝 -->
 			</div>
@@ -181,42 +218,7 @@
 	<!-- 본문 끝 -->
 
 	<!-- JS -->
-	<script>
-		// 우측 설명 영역
-		function explanation(id) {
-			var x = document.getElementById(id);
-			if (x.className.indexOf("w3-show") == -1) {
-				x.className += " w3-show";
-				x.previousElementSibling.className = 
-				x.previousElementSibling.className.replace("w3-white", "w3-red");
-			} else { 
-				x.className = x.className.replace(" w3-show", "");
-				x.previousElementSibling.className = 
-				x.previousElementSibling.className.replace("w3-red", "w3-white");
-			}
-		}
-
-		
-		// 양식 제출 관련 유효성 검사
-		(function() {
-		'use strict';
-		window.addEventListener('load', function() {
-			var forms = document.getElementsByClassName('qnaWrite');
-			var validation = Array.prototype.filter.call(forms, function(form) {
-			// 임시저장/작성하기 모두 submit이어도 두 개를 분리해서 적용할 수는 없을까?
-			// 이 고민이 해결되면 임시저장 alert 설정하기
-			form.addEventListener('submit', function(event) {
-				if (form.checkValidity() === false) {
-				event.preventDefault();
-				event.stopPropagation();
-				}
-				form.classList.add('was-validated');
-			}, false);
-			});
-		}, false);
-		})();
-
-		
+	<script>		
 		// 테이블 내 일치하는 필드값 검색
 		function tagSearch() {
 			var input, filter, table, tr, td, i;

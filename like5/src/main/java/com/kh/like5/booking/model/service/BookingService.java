@@ -20,6 +20,9 @@ public interface BookingService {
 	//1.3. 예약하기(사용자)
 	int insertBook(Booking b);
 
+	//1.4. 예약날짜(사용자)
+	ArrayList<Booking> selectB(int officeNo);
+	
 	//2.리스트 전체 조회 + 페이징(관리자)
 	int selectListCount();
 	ArrayList<Office> selectListAll(PageInfo pi);
@@ -66,7 +69,10 @@ public interface BookingService {
 	int deleteMyBook(int bno);
 	
 	//12. 공간예약관리 조회용 (페이징)
-	int selectSpaceCount(int memNo);
-	ArrayList<Booking> selectSpace(int memNo,PageInfo pi);
+	int selectSpaceCount();
+	ArrayList<Booking> selectSpace(PageInfo pi);
+	
+	// 13. 공간예약 선택 삭제 기능
+	public void delete(String bookingNo);
 	
 }

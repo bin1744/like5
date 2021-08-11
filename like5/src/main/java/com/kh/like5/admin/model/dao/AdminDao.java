@@ -154,9 +154,22 @@ public class AdminDao {
 	public ArrayList<Tag> selectAllTags(SqlSessionTemplate sqlSession, PageInfo pi){
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-	
-		return (ArrayList)sqlSession.selectList("tagMapper.selectAllTags",null, rowBounds);
+	return (ArrayList)sqlSession.selectList("tagMapper.selectAllTags",null, rowBounds);
 	}
+
+	// TAG 상세조회
+	public int getTagCount(SqlSessionTemplate sqlSession, String tagName) {
+		return sqlSession.selectOne("boardMapper.getTagCount", tagName);
+	}
+
+	public ArrayList<Board> tagDetailList(SqlSessionTemplate sqlSession, PageInfo pi, String tagName) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+		return (ArrayList)sqlSession.selectList("boardMapper.tagDetailList", tagName, rowBounds);
+	}
+	
+		
 	// Tag관리자 페이지 - 태그 추가하기
 	public int addTag(SqlSessionTemplate sqlSession, String tagName) {
 		return sqlSession.insert("tagMapper.addTag", tagName);

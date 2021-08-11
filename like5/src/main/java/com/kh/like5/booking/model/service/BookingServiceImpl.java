@@ -39,6 +39,11 @@ public class BookingServiceImpl implements BookingService{
 	}
 
 	@Override
+	public ArrayList<Booking> selectB(int officeNo) {
+		return bDao.selectB(sqlSession, officeNo);
+	}
+	
+	@Override
 	public int selectListCount() {
 		return bDao.selectListCount(sqlSession);
 	}
@@ -162,13 +167,20 @@ public class BookingServiceImpl implements BookingService{
 	}
 
 	@Override
-	public int selectSpaceCount(int memNo) {
-		return bDao.selectSpaceCount(sqlSession,memNo);
+	public int selectSpaceCount() {
+		return bDao.selectSpaceCount(sqlSession);
 	}
 
 	@Override
-	public ArrayList<Booking> selectSpace(int memNo, PageInfo pi) {
-		return bDao.selectSpace(sqlSession,memNo, pi);
+	public ArrayList<Booking> selectSpace(PageInfo pi) {
+		return bDao.selectSpace(sqlSession, pi);
+	}
+	
+	/*선택 삭제 기능*/
+	@Override
+	public void delete(String bookingNo) {
+		bDao.delete(sqlSession, bookingNo);
+		
 	}
 
 }

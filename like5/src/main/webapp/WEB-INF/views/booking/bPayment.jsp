@@ -13,6 +13,8 @@
 	<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
 <!-- iamport.payment.js -->
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<!-- daum address -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
    * {
       box-sizing: border-box;
@@ -110,11 +112,25 @@
     .mandatory-section {
       margin-top: 24px;
     }
-    .phone input {
+    .phone input{
       border: 1px solid rgb(176, 176, 176);
       height: 64px;
       width: 100%;
       border-radius: 8px;
+    }
+    
+    .address input{
+    	border: 1px solid rgb(176, 176, 176);
+    	height:40px;
+    	margin:5px 0;
+    	border-radius:8px;
+    	width:100%;
+    }
+    .address1{display:flex;}
+	.address1 input[type=button]{width:30%}
+    .address3{display:flex;}
+    #sample6_detailAddress, #sample6_extraAddress{
+    	width: 50%;
     }
     .ask textarea {
       border: 1px solid rgb(176, 176, 176);
@@ -328,7 +344,22 @@
             <div class="mandatory-section">
               <div class="phone">
                 <h3>전화번호</h3>
-                <input type="text" name="phone"/>
+                <input type="text" name="phone" id="phone"/>
+              </div>
+              <div class="address">
+              	<h3>주소</h3>
+              		<div class="address1">
+	              		<input type="text" id="sample6_postcode" placeholder="우편번호">
+					    <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+              		</div>
+              		<div class="address2">
+              			<input type="text" id="sample6_address" placeholder="주소"><br>
+              		</div>
+					<div class="address3">
+						<input type="text" id="sample6_detailAddress" placeholder="상세주소">
+					    <input type="text" id="sample6_extraAddress" placeholder="참고항목">
+					</div>
+
               </div>
               <div class="ask">
                 <h3>요청사항</h3>
@@ -422,11 +453,12 @@
     <%-- 결제 방식 선택 --%>
 	 $("#settle").on("click", function(){
 		 if($("#card").prop("checked")){
-			 console.log("sss");
 			 requestPay();
 		 }
-	  })
-	  
+	  });
+	
+	//let phone = document.querySelector("#phone").value;
+	
 	IMP.init("imp00193045");
 	 
    function requestPay() {
@@ -436,12 +468,12 @@
                pay_method: "card", //card(신용카드), trans(실시간계좌이체), vbank(가상계좌), phone(휴대폰소액결제)
                merchant_uid: "merchant_" + new Date().getTime(), //상점에서 관리하시는 고유 주문번호를 전달
                name: "주문명:결제테스트",
-               amount: 100,
-               buyer_email: "dev.likeimfive@gmail.com",
-               buyer_name: "최빛나",
-               buyer_tel: "010-8728-9254", //누락되면 이니시스 결제창에서 오류
-               buyer_addr: "서울특별시 강남구 삼성동",
-               buyer_postcode: "123-456",
+               amount: $("#totalInput").val(),
+               buyer_email: "${loginUser.email}",
+               buyer_name: "${loginUser.memName}",
+               buyer_tel: "$(input[id='phone']).val()", //누락되면 이니시스 결제창에서 오류
+               buyer_addr: "$(input[id='sample6_address']).val()" + " " + "$(input[id='sample6_detailAddress']).val()",
+               buyer_postcode: "$(input[id='sample6_postcode']).val()",
            },
            function (rsp) {
                if (rsp.success) {
@@ -478,6 +510,7 @@
                            }
                        });
                    $("form").submit(); 
+                   console.log(buyer_tel);
                } else {
                    var msg = "결제에 실패하였습니다.";
                    msg += "에러내용 : " + rsp.error_msg;
@@ -523,12 +556,6 @@
         $(".total-price").html("￦" + (${o.price} * (day2-day1) + (${o.price} * (day2-day1)) * 0.1));
         $("#totalInput").val((${o.price} * (day2-day1) + (${o.price} * (day2-day1)) * 0.1));
 
-
-      	//  $(".total-price").html("글씨출력");
-      	//  $("totalInput").val("input에값넣어줌");
-
-
-
     });
     
     <%-- 로컬스토리지 삭제하기 --%>
@@ -536,7 +563,6 @@
     	localStorage.removeItem("startDate");
     	localStorage.removeItem("endDate");
     });
-            
     const editdate = document.querySelector('.editdate');
 	  flatpickr(editdate ,{
           locale: "ko",
@@ -544,15 +570,14 @@
           dateFormat: "Y F d\\일",
           minDate: "today",
           dateFormat: "Y-m-d",
-          disable: [<%-- 예약된 날짜들 받아오기 jstl--%>
-              {
-                from: "2021-08-01",
-                to: "2021-08-04",
-              },
-              {
-                from: "2021-08-15",
-                to: "2021-08-17",
-              },
+          disable: [
+          <%-- 예약된 날짜들 받아오기 jstl 원래는 ajax처리해야함--%>
+          <c:forEach var="b" items="${list}">
+          {
+              from: "${b.startDate}",
+              to: "${b.endDate}",
+            },
+          </c:forEach>
             ],
           onChange: function (selectedDates, dateStr, instance) {
             $(".dateprint").html(dateStr);
@@ -613,6 +638,7 @@
       const mbtn = document.querySelector(".circle");
 
       document.querySelector('.backto').addEventListener('click', () => {
+    	  console.log("back");
     	  history.back();
     	});
       
@@ -635,7 +661,54 @@
       window.onclick = (e) => {
         e.target === pmodal ? pmodal.classList.remove("show-modal") : false;
       };
-      
+
+      function sample6_execDaumPostcode() {
+          new daum.Postcode({
+              oncomplete: function(data) {
+                  // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+  
+                  // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                  // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                  var addr = ''; // 주소 변수
+                  var extraAddr = ''; // 참고항목 변수
+  
+                  //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                  if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                      addr = data.roadAddress;
+                  } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                      addr = data.roadAddress;//그래도 도로명으로 넣자
+                  }
+                  
+                  // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                  if(data.userSelectedType === 'R'){
+                      // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                      // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                      if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                          extraAddr += data.bname;
+                      }
+                      // 건물명이 있고, 공동주택일 경우 추가한다.
+                      if(data.buildingName !== '' && data.apartment === 'Y'){
+                          extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                      }
+                      // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                      if(extraAddr !== ''){
+                          extraAddr  = extraAddr;
+                      }
+                      // 조합된 참고항목을 해당 필드에 넣는다.
+                      document.getElementById("sample6_extraAddress").value = extraAddr;
+                  
+                  } else {
+                      document.getElementById("sample6_extraAddress").value = '';
+                  }
+  
+                  // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                  document.getElementById('sample6_postcode').value = data.zonecode;
+                  document.getElementById("sample6_address").value = addr;
+                  // 커서를 상세주소 필드로 이동한다.
+                  document.getElementById("sample6_detailAddress").focus();
+              }
+          }).open();
+      }
     </script>
 </body>
 </html>

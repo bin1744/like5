@@ -82,6 +82,45 @@ public class BoardController {
 			return "common/errorPage";
 		}
 	}
+
+	/** 
+	 * [한솔] QnaEnrollForm 게시글 임시저장 insert
+	 */
+	@RequestMapping("qnaStorageInsert.bo")
+	public String qnaStorageInsert(Board b, MultipartFile upfile, HttpSession session, Model model) {
+		int result = bService.qnaStorageInsert(b);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", " 게시글이 성공적으로 임시저장되었습니다. ");
+			return "redirect:qnaList.bo";
+		}else {
+			model.addAttribute("errorMsg", " 게시글 임시저장에 실패하였습니다. ");
+			return "common/errorPage";
+		}
+	}
+	
+	/** 
+	 * [한솔] QnaDetailView 게시글 상세 페이지
+	 */
+	@RequestMapping("qnaDetail.bo")
+	public ModelAndView qnaDetail(int bno, ModelAndView mv)  {
+		// 조회수 증가
+		int result = bService.increaseCount(bno);
+		
+		// 조회수 성공적으로 증가 시 상세조회 진행
+		if(result > 0) {
+			Board b = bService.qnaDetail(bno);
+			
+			mv.addObject("b", b)
+			  .setViewName("board/qna/qnaDetailView");
+		}else {
+			// 상세조회 실패 시
+			mv.addObject("errMsg", " 게시글 상세조회에 실패하였습니다. ")
+			  .setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
 	
 
 	
@@ -450,12 +489,12 @@ public class BoardController {
 	
 	ArrayList<Board>colList = bService.colOrderByCount(pi, condition);
 	
-	mv.addObject("pi",pi)
-	.addObject("colList",colList)
-	.addObject("condition",condition)
-	.addObject("listCount",listCount)
-	.setViewName("board/column/colListView");
-	return mv;
+	  mv.addObject("pi",pi)
+		.addObject("colList",colList)
+		.addObject("condition",condition)
+		.addObject("listCount",listCount)
+		.setViewName("board/column/colListView");
+	  return mv;
 	}
 	
 	
@@ -477,13 +516,34 @@ public class BoardController {
 	 */
 
 	@RequestMapping("colDetail.bo")
-	public ModelAndView colDetail(ModelAndView mv,int bno) {
+	public ModelAndView colDetail(ModelAndView mv,Board board) {
 		
+		int bno = board.getBno();
+		int mno = board.getMno();
+		
+		
+		// 게시글 조회수 증가 
 		int result = bService.increaseCount(bno);
 		
+		// 유효한 게시글일 때
 		if(result>0) {
 			Board b = bService.boardDetail(bno);
+			
+			// 게시글 상세 조회 시 로그인한 회원이 해당 게시글에 좋아요와 스크랩을 확인하기
+			int likesCount = bService.likesCount(board);
+			int scrapCount = bService.scrapCount(board);
+			
+			if(likesCount!=0) {
+				mv.addObject("likes",likesCount);
+			} 
+			
+			if(scrapCount !=0) {
+				mv.addObject("scrap",scrapCount);
+			}
+			
+			// 둘 다 0일 때 보여지는 화면
 			mv.addObject("b",b).setViewName("board/column/colDetailView");
+			
 		}else {
 			mv.addObject("errorMsg", "조회 실패!")
 			.setViewName("common/errorPage");
@@ -492,34 +552,41 @@ public class BoardController {
 	}
 	
 
-
+	
 	/**
-	 * [ 스크랩 | 좋아요 ]  등록
+	 *  Ajax로 좋아요 | 스크랩 등록
 	 * @author seong
 	 */
+	@ResponseBody
 	@RequestMapping("likeAndScrap.bo")
-	public ModelAndView likeAndScrap(int bno,int mno,String condition,ModelAndView mv,HttpSession session) {
+	public String likeAndScrap(int bno,int mno,String condition,ModelAndView mv,HttpSession session) {
 		
-
 		HashMap<String,Object>map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("bno", bno);
 		map.put("mno",mno);
 		
 		int result = bService.likeAndScrap(map);
-		if(result>0) {
-			
-			if(condition.equals("like")) {
-				session.setAttribute("alertMsg", "좋아요 성공!🎉");
-				mv.addObject("condition",condition)
-					.addObject("mno",mno)
-				  .setViewName("redirect:colDetail.bo?bno="+bno);
-			}else {
-				session.setAttribute("alertMsg", "스크랩 성공!🎉");
-				mv.setViewName("redirect:colDetail.bo?bno="+bno);
-			}
-		}
-		return mv;
+		return result>0? "success" : "fail";
+	}
+	
+
+	/**
+	 *  Ajax로 좋아요 | 스크랩 해제
+	 * @author seong
+	 */
+	@ResponseBody
+	@RequestMapping("UnlikeAndUnScrap.bo")
+	public String UnlikeAndUnScrap(int bno,int mno,String condition,ModelAndView mv,HttpSession session) {
+		
+		HashMap<String,Object>map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("bno", bno);
+		map.put("mno",mno);
+		
+		int result = bService.UnlikeAndUnScrap(map);
+		
+		return result>0? "success" : "fail";
 	}
 	
 	

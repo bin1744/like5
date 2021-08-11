@@ -54,6 +54,9 @@ public interface AdminService {
 	Sponsorship selectSponMem(int smemNo);
 	ArrayList<Sponsorship> selectSponsorList(PageInfo pi, int smemNo);
 	
+	// 후원상세 페이지 select문(정산내용)-페이징처리
+	// 후원상세 페이지 select문(정산내용)-내용가져오기
+	// tag 메인페이지 select문
 	// 정산상세 페이지 select문(정산내용)-페이징처리
 	int selectCalCount(int smemNo);
 	// 정산상세 페이지 select문(정산내용)-내용가져오기
@@ -63,7 +66,11 @@ public interface AdminService {
 	// tag 메인페이지 select문 
 	// tag 메인페이지 select문
 	ArrayList<Tag> tagList();
+
 	// tag 조회 페이지 select문-페이징처리
+	int getTagCount(String tagName);
+	ArrayList<Board> tagDetailList(PageInfo pi, String tagName);
+
 	// tag 조회 페이지 select문-게시글불러오기
 	
 	

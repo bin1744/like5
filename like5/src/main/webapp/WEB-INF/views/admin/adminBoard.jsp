@@ -93,7 +93,7 @@
                 <a href="member.ad">회원관리</a>
             </li>
             <li>
-                <a href="board.ad">게시글관리</a>
+                <a class="active" href="board.ad">게시글관리</a>
             </li>
             <li>
                 <a href="customer.ad">고객센터</a>
@@ -146,7 +146,7 @@
                     <tr>
                         <td class="bno">${b.bno}</td>
                         <td>${b.category}</td>
-                        <td>${b.title}</td>
+                        <td><a href="">${b.title}</a></td>
                         <td>${b.nickname}</td>
                         <td>${b.enrollDate}</td>
                         <td><button class="btn btn-outline-danger btn-sm" onclick="deleteBoard('${b.bno}')">삭제</button></td>
@@ -156,13 +156,7 @@
         </table>
 
         <script>
-            var memNo="";
-            $(document).ready(function(){
-
-            })
-
             function deleteBoard(bno){
-
                 if(!confirm("해당 게시글을 삭제하시겠습니까?")){
                     alert("취소하셨습니다.")
                 }else{

@@ -11,6 +11,9 @@
 <head>
     <title>Title</title>
     <style>
+        .innerOuter{
+            height: 1065px;
+        }
         #star{
             color: yellow;
             size: 6px;
@@ -60,17 +63,23 @@
 
       <div class="tag-area">
           <c:forEach var="t" items="${list}">
-              <a class="tag" href="">${t.tagName}</a>
+              <a class="tag" href="tagDetail.ad?tagName=${t.tagName}">${t.tagName}</a>
           </c:forEach>
       </div>
 
       <br>
 
-      <div class="button-area" align="center">
-          <button class="btn btn-outline-danger" onclick="location.href='tagAdmin.ad'">관리하기</button>
-      </div>
+      <c:if test="${ !empty loginUser && (loginUser.userStatus == 'Y') }">
+
+          <div class="button-area" align="center">
+              <button class="btn btn-outline-danger" onclick="location.href='tagAdmin.ad'">관리하기</button>
+          </div>
+
+      </c:if>
 
   </div>
+
+  <jsp:include page="../common/footer.jsp" />
 
 </body>
 </html>
