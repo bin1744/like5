@@ -52,17 +52,17 @@
 		    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 		    
 		    <script>
-
-		    	const content = [].join('\n');
-		    	<%----%>
-	    	   const editor = new toastui.Editor({
-	               el: document.querySelector('#editor'),
-	               previewStyle: 'vertical',
-	               initialEditType: "wysiwyg",
-	               height: '500px',
-	               initialValue: content
-	           });
-		    	
+		    
+			    $(function(){
+		        	ToView();
+		        })
+		        
+		        /*토스트 UI */
+	    		const content = [].join('\n');
+	    	    const editor = new toastui.Editor({
+		               el: document.querySelector('#editor'),
+		           });
+	    	    /*토스트 UI 뷰어 */	
 		        const viewer = toastui.Editor.factory({
 		            el: document.querySelector('#viewer'),
 		            viewer: true,
@@ -70,10 +70,6 @@
 		            initialValue: content
 		        });
 
-		        $(function(){
-		        	ToView();
-		        })
-		        
 		        function ToView()
 		        {
 		            viewer.setMarkdown(editor.getHTML());
@@ -168,38 +164,6 @@
 
             <script>
 
-                /*좋아요 아이콘 클릭시 변경되는 JS
-                $('.like').click(function(){
-                    
-                    if($('#selected-like').css('display')=='none'){
-                        $('#selected-like').css('display','block');
-                        $('#like').css('display','none');
-                    }else{
-                        $('#selected-like').css('display','none');
-                        $('#like').css('display','block');
-                    }
-
-                })
-                */
-
-                /*스크랩 아이콘 클릭시 변경되는 JS
-                $('.scrap').click(function(){
-
-                    if($('#selected-scrap').css('display')=='none'){
-                        $('#selected-scrap').css('display','block');
-                        $('#scrap').css('display','none');
-                    }else{
-                        $('#selected-scrap').css('display','none');
-                        $('#scrap').css('display','block');
-                    }
-
-                })
-                */
-                
-                $("#selected-like").click(function(){
-                	
-                })
-                
 
                 /* 후원 아이콘 클릭시 변경되는 JS*/
                 /*후원의 경우 DB에 insert된다면 변경되게끔 구현하기*/
@@ -232,7 +196,7 @@
                 function likeAndScrap(num){
                 	if(num == 1){
                 		$("#like").click(function(){
-                			// 좋아요 버튼 클릭 시 
+                			// 좋아요 활성화 버튼 클릭시 like 테이블에 insert 
                     		$.ajax({
                     			url:"likeAndScrap.bo"
                     			,data:{bno:${b.bno}
@@ -249,7 +213,7 @@
                     		})
                 		})
                 		
-                		// 좋아요 해제
+                		// 좋아요 비활성화 버튼시 like 테이블에 delete
                 		$("#selected-like").click(function(){
                 			$.ajax({
                     			url:"UnlikeAndUnScrap.bo"
@@ -269,12 +233,10 @@
                 		})
                 	}
                 	
-                	
-                	
                 	if(num == 2){
-                		
+                		// 스크랩 활성화 버튼 클릭시 scrap 테이블에 insert 
                 		$("#scrap").click(function(){
-	                		// 스크랩 버튼 클릭 시 
+	                		
 	                		$.ajax({
 	                			url:"likeAndScrap.bo"
 	                			,data:{bno:${b.bno}
@@ -290,7 +252,7 @@
 	                			}
 	                		})
                 		})
-                		
+                		// 스크랩 비활성화 버튼시 scrap 테이블에 delete
                 		$("#selected-scrap").click(function(){
                 			$.ajax({
 	                			url:"UnlikeAndUnScrap.bo"
@@ -307,12 +269,8 @@
 	                			}
 	                		})
                 		})
-                		
                 	}
                 }
-                
-                
-                
             </script>
             
             <!-- 좋아요와 스크랩  -->
@@ -347,7 +305,6 @@
                 </c:choose>
 
                 <!--수정 삭제-->
-             
 
                 <!--삭제시 필요한 키값 숨겨서 보내기--> 
                 <form id="test" action="" method="post">
