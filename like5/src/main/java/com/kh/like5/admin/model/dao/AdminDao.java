@@ -146,7 +146,25 @@ public class AdminDao {
 	public ArrayList<Tag> tagList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("tagMapper.tagList");
 	}
+	// Tag관리자페이지 - 페이징
+	public int selectTagsCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("tagMapper.selectTagsCount");
+	}
+	// Tag관리자페이지 - 리스트조회
+	public ArrayList<Tag> selectAllTags(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 	
+		return (ArrayList)sqlSession.selectList("tagMapper.selectAllTags",null, rowBounds);
+	}
+	// Tag관리자 페이지 - 태그 추가하기
+	public int addTag(SqlSessionTemplate sqlSession, String tagName) {
+		return sqlSession.insert("tagMapper.addTag", tagName);
+	}
+	// Tag관리자 페이지- 태그 수정하기
+	public int updateTag(SqlSessionTemplate sqlSession, Tag tag) {
+		return sqlSession.update("tagMapper.updateTag", tag);
+	}
 
 	// ============================= [재환] =============================
 

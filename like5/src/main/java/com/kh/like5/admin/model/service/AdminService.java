@@ -65,9 +65,15 @@ public interface AdminService {
 	ArrayList<Tag> tagList();
 	// tag 조회 페이지 select문-페이징처리
 	// tag 조회 페이지 select문-게시글불러오기
+	
+	
 	// tag 수정페이지(관리자용) select문
+	int selectTagsCount();
+	ArrayList<Tag> selectAllTags(PageInfo pi);
+	// tag 수정페이지 insert문
+	int addTag(String tagName);
 	// tag 수정페이지 Modal update문
-
+	int updateTag(Tag tag);
 	// 게시글 리스트 조회
 	int getBoardCount();
 	ArrayList<Board> getBoardList(PageInfo pi);

@@ -67,7 +67,7 @@
       <br>
 
       <div class="button-area" align="center">
-          <button class="btn btn-outline-danger">관리하기</button>
+          <button class="btn btn-outline-danger" onclick="location.href='tagAdmin.ad'">관리하기</button>
       </div>
 
   </div>
