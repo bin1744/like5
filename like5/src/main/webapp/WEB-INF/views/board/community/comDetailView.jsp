@@ -100,8 +100,7 @@
 			</script>
             
             
-           	<!-- 삭제하기 모달창 -->
-               <input type="hidden" name="bno" value="${b.bno}" >
+           		<!-- 삭제하기 모달창 -->
                <div class="container">
                    <!-- The Modal -->
                    <div class="modal fade" id="delete-modal">
