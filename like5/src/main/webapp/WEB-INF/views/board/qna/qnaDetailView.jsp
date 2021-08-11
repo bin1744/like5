@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>[QnA] 게시글 상세보기</title>
 
 <!-- qnaDetailView.css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/qnaDetailView.css" />
@@ -24,10 +24,24 @@
 			<div class="qnaTop">
 				<div class="qnaTop1"><h2><b>QnA</b></h2></div>
 				<div class="qnaTop2">
-					<button type="button" class="btn btn-danger"><a href="qEnrollForm.bo">질문하기</a></button>
+					<c:choose>
+						<c:when test="${!empty loginUser}">
+							<button type="button" class="btn btn-danger"><a href="qnaEnrollForm.bo">질문하기</a></button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="btn btn-danger" onClick="loginAlert()">질문하기</button>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 			<!-- 페이지 상단 이름/질문하기 버튼 영역 끝 -->
+			
+			<script>
+			// 비로그인 시 질문하기 클릭 제한
+			function loginAlert(){
+				alertify.alert(" 로그인 후 이용해주세요. ")
+			}
+			</script>
 
 			<!-- 페이지 중단 게시글 디테일 영역 -->
 			<div class="qnaMiddle">
@@ -36,25 +50,34 @@
 					<table>
 						<tr class="qnaInfo1">
 							<td class="tableBlank" rowspan="2"></td>
-							<td class="qnaTitle"><!-- 게시글 제목 -->제목 테스트</td>
+							<td class="qnaTitle"><!-- 게시글 제목 -->${ b.title }</td>
 							<td class="qnaLike1"><i class="far fa-thumbs-up"></i></td>
-							<td class="qnaLike2"><!--좋아요 수 데이터 값 -->100</td>
+							<td class="qnaLike2"><!--좋아요 수 데이터 값 -->${ b.like }</td>
 							<td class="qnaReply1"><i class="far fa-comment-dots"></i></td>
-							<td class="qnaReply2"><!--답변 수 데이터 값 -->100</td>
+							<td class="qnaReply2"><!--답변 수 데이터 값 -->${ b.reply }</td>
 							<td class="qnaView1"><i class="far fa-eye"></i></td>
-							<td class="qnaView2"><!--조회수 데이터 값 -->100</td>
+							<td class="qnaView2"><!--조회수 데이터 값 -->${ b.count }</td>
 							<td class="tableBlank" rowspan="2"></td>
 						</tr>
 						<tr class="qnaInfo2">
 							<td class="qnaTag">
-								<!-- 태그 -->
-								<button class="w3-button w3-white w3-border w3-border-red w3-round-xxlarge w3-hover-red w3-tiny">
-									<a href="">java</a>
-								</button>
+								<c:choose>
+									<c:when test="${ empty b.tag }">
+										<p id="noTag">no tag attached</p>
+									</c:when>
+									<c:otherwise>
+										<c:forTokens var="tags" items="${ b.tag }" delims=" ">
+											<button class="w3-button w3-white w3-border w3-border-red w3-round-xxlarge w3-hover-red w3-tiny">
+												<!-- 클릭 시 tagDatail 페이지로 이동 -->
+												<a href="tagDetail.ad"><c:out value="${ tags }"/></a>
+											</button>
+										</c:forTokens>
+									</c:otherwise>
+								</c:choose>
 							</td>
 							<td class="qnaUser1"><i class="far fa-user-circle"></i></td>
-							<td class="qnaUser2" colspan="3"><!-- 작성자 닉네임(한글 기준 8자까지) -->게시글작성자</td>
-							<td class="qnaUser3" colspan="2"><!-- SYSDATE -->2021-06-06</td>
+							<td class="qnaUser2" colspan="3">${ b.nickname }</td>
+							<td class="qnaUser3" colspan="2">${ b.enrollDate }</td>
 						</tr>
 					</table>
 				</div>
@@ -65,7 +88,7 @@
 					<!-- 좌측 게시글 본문 -->
 					<div class="qnaContent">
 						<div class="contentData">
-							<!-- 본문 내용 데이터값 -->본문 내용 데이터 일치시켜서 가져오기
+							<!-- 본문 내용 데이터값 -->${ b.content }
 						</div>
 					</div>
 					<!-- 좌측 게시글 본문 끝 -->
@@ -73,48 +96,96 @@
 					<!-- 우측 아이콘 옵션 -->
 					<div class="qnaIcon">
 						<!-- 글 작성자와 로그인한 회원이 불일치할 경우 -->
-						<table>
-							<tr><td></td></tr>
-							<tr>
-								<td class="icon"><i class="far fa-thumbs-up" id="like"></i>
-									<i class="fas fa-thumbs-up" id="selected-like" style="display: none; color: rgb(220, 53, 69);"></i>
-								</td>
-							</tr>
-							<tr><td class="iconName">좋아요</td></tr>
-							<tr>
-								<td class="icon"><i class="far fa-bookmark" id="scrap"></i>
-									<i class="fas fa-bookmark" id="selected-scrap" style="display: none; color: rgb(220, 53, 69);"></i>
-								</td>
-							</tr>
-							<tr><td class="iconName">스크랩</td></tr>
-							<tr>
-								<td class="icon"><i class="far fa-thumbs-down" data-toggle="modal" data-target="#report-modal"></i></td>
-							</tr>
-							<tr><td class="iconName">신고하기</td></tr>
-							<tr><td class="icon"><i class="fas fa-share-alt" data-toggle="modal" data-target="#url-modal"></i></td></tr>
-							<!-- 서버 연동할 경우 그 후에 작업 (로컬로 url 파싱 불가) -->
-							<tr><td class="iconName">URL 공유</td></tr>
-							<tr><td></td></tr>
-						</table>
-
-						<!-- 글 작성자와 로그인한 회원이 일치할 경우
-			            <table>
-			              <tr><td></td></tr>
-			              <tr><td class="icon"><i class="fas fa-sync-alt"></i></td></tr>
-			              <tr><td class="iconName">수정하기</td></tr>
-			              <tr><td class="icon"><i class="fas fa-share-alt" data-toggle="modal" data-target="#url-modal"></i></td></tr>
-			              <tr><td class="iconName">URL 공유</td></tr>
-			              <tr><td class="icon"><i class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></i></td></tr>
-			              <tr><td class="iconName">삭제하기</td></tr>
-			              <tr><td></td></tr>
-			            </table> -->
+						<c:choose>
+							<c:when test="${ loginUser.memNo ne b.mno }">
+								<table>
+									<tr><td></td></tr>
+									<c:choose>
+										<c:when test="${!empty loginUser}">
+											<tr>
+												<td class="icon"><i class="far fa-thumbs-up" id="like"></i>
+													<i class="fas fa-thumbs-up" id="selected-like" style="display: none; color: rgb(220, 53, 69);"></i>
+												</td>
+											</tr>
+											<tr><td class="iconName">좋아요</td></tr>
+											<tr>
+												<td class="icon"><i class="far fa-bookmark" id="scrap"></i>
+													<i class="fas fa-bookmark" id="selected-scrap" style="display: none; color: rgb(220, 53, 69);"></i>
+												</td>
+											</tr>
+											<tr><td class="iconName">스크랩</td></tr>
+											<tr>
+												<td class="icon"><i class="far fa-thumbs-down" data-toggle="modal" data-target="#report-modal"></i></td>
+											</tr>
+											<tr><td class="iconName">신고하기</td></tr>
+										</c:when>
+										<c:otherwise>
+											<!-- 비회원일 경우 -->
+											<tr onClick="loginAlert()">
+												<td class="icon"><i class="far fa-thumbs-up" id="like"></i></td>
+											</tr>
+											<tr><td class="iconName">좋아요</td></tr>
+											<tr onClick="loginAlert()">
+												<td class="icon"><i class="far fa-bookmark" id="scrap"></i></td>
+											</tr>
+											<tr onClick="loginAlert()"><td class="iconName">스크랩</td></tr>
+											<tr onClick="loginAlert()">
+												<td class="icon"><i class="far fa-thumbs-down"></i></td>
+											</tr>
+											<tr><td class="iconName">신고하기</td></tr>
+										</c:otherwise>
+									</c:choose>
+									<!-- 서버 연동할 경우 그 후에 작업 (로컬로 url 파싱 불가) -->
+									<tr><td class="icon"><i class="fas fa-share-alt" data-toggle="modal" data-target="#url-modal"></i></td></tr>
+									<tr><td class="iconName">URL 공유</td></tr>
+									<tr><td></td></tr>
+								</table>
+							</c:when>
+							<c:otherwise>		
+								<!-- 글 작성자와 로그인한 회원이 일치할 경우 -->
+					            <table>
+					              <tr><td></td></tr>
+					              <tr><td class="icon"><i class="fas fa-sync-alt"></i></td></tr>
+					              <tr><td class="iconName">수정하기</td></tr>
+					              <tr><td class="icon"><i class="fas fa-share-alt" data-toggle="modal" data-target="#url-modal"></i></td></tr>
+					              <tr><td class="iconName">URL 공유</td></tr>
+					              <tr><td class="icon"><i class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></i></td></tr>
+					              <tr><td class="iconName">삭제하기</td></tr>
+					              <tr><td></td></tr>
+					            </table>
+					    	</c:otherwise>
+						</c:choose>
 					</div>
 					<!-- 우측 아이콘 옵션 끝 -->
 				</div>
 				<!-- 게시글 상세 영역 끝 -->
 			</div>
 			<!-- 페이지 중단 게시글 디테일 영역 끝 -->
-
+			
+			<script>
+			//좋아요 아이콘 클릭 시 아이콘 변경
+			$('[class$=fa-thumbs-up]').click(function() {
+				if ($('#selected-like').css('display') == 'none') {
+					$('#selected-like').css('display', '');
+					$('#like').css('display', 'none');
+				} else {
+					$('#selected-like').css('display', 'none');
+					$('#like').css('display', '');
+				}
+			})
+	
+			//스크랩 아이콘 클릭 시 아이콘 변경
+			$('[class$=fa-bookmark]').click(function() {
+				if ($('#selected-scrap').css('display') == 'none') {
+					$('#selected-scrap').css('display', '');
+					$('#scrap').css('display', 'none');
+				} else {
+					$('#selected-scrap').css('display', 'none');
+					$('#scrap').css('display', '');
+				}
+			})
+			</script>
+		
 			<!-- 페이지 하단 댓글 디테일 영역 -->
 			<div class="qnaBottom">
 				<!-- 답변 갯수 안내 -->
@@ -131,15 +202,22 @@
 								<td class="replyUser1" rowspan="2"><i class="far fa-user-circle"></i></td>
 								<td class="replyUser2">답변작성자A</td>
 								<td class="replyAdoption" rowspan="2">
-									<!-- 글 작성자와 로그인한 회원이 일치할 경우 보여지는 버튼 -->
-									<button type="button" class="btn text-muted btn-lg" data-toggle="modal" data-target="#adoption-modal">
-										<i class="far fa-check-square text-muted"></i>&nbsp;&nbsp;&nbsp;채택하기
-									</button>
+									<!-- 글 작성자와 로그인한 회원이 일치할 경우 채택하기 버튼 보여짐 -->
+									<c:choose>
+										<c:when test="${loginUser.memNo eq b.mno}">
+											<button type="button" class="btn text-muted btn-lg" data-toggle="modal" data-target="#adoption-modal">
+												<i class="far fa-check-square text-muted"></i>&nbsp;&nbsp;&nbsp;채택하기
+											</button>
+										</c:when>
+									</c:choose>
 								</td>
+								<!-- 로그인 한 회원만 대댓글 달기 버튼 활성화 가능 -->
 								<td class="reReply" rowspan="2">
-									<button type="button" class="btn text-muted btn-lg">
-										<i class="far fa-plus-square text-muted"></i>&nbsp;&nbsp;&nbsp;대댓글 달기
-									</button>
+									<c:if test="${!empty loginUser}">
+										<button type="button" class="btn text-muted btn-lg">
+											<i class="far fa-plus-square text-muted"></i>&nbsp;&nbsp;&nbsp;대댓글 달기
+										</button>
+									</c:if>
 								</td>
 								<td class="tableBlank" rowspan="2"></td>
 							</tr>
@@ -149,6 +227,19 @@
 						</table>
 					</div>
 					<!-- 답변자 정보 영역 끝 -->
+					
+					<script>
+					// 대댓글 달기 클릭 시 나타나는 작성 영역 슬라이드 업&다운
+			        $(function(){
+			            $('.reReply').click(function(){
+								if($('#writeReReply').css('display') == "none"){
+			                    $('#writeReReply').slideDown();
+			                }else{
+			                    $('#writeReReply').slideUp();
+			                }
+			            })
+			        })
+			        </script>
 
 					<!-- 답변 상세 영역 -->
 					<div class="replyDetail">
@@ -162,25 +253,44 @@
 
 						<!-- 우측 아이콘 옵션 -->
 						<div class="replyIcon">
-							<!-- 답변 작성자와 로그인한 회원이 불일치할 경우 -->
-							<table>
-								<tr><td class="rIcon"></td></tr>
-								<tr>
-									<td class="rIcon"><i class="far fa-heart" data-toggle="modal" data-target="#sponsorship-modal"></i></td>
-								</tr>
-								<tr><td class="rIconName">후원하기</td></tr>
-								<tr>
-									<td class="rIcon"><i class="far fa-thumbs-down" data-toggle="modal" data-target="#report-modal"></i></td>
-								</tr>
-								<tr><td class="rIconName">신고하기</td></tr>
-								<tr><td></td></tr>
-							</table>
-
-							<!-- 답변 작성자와 로그인한 회원이 일치할 경우
-			                <table>
-			                <tr><td class="rIcon"><i class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></i></td></tr>
-			                <tr><td class="rIconName">삭제하기</td></tr>
-			                </table> -->
+							<c:choose>
+								<c:when test="${ loginUser.memNo ne b.mno }">
+									<!-- 답변 작성자와 로그인한 회원이 불일치할 경우 -->
+									<table>
+										<tr><td class="rIcon"></td></tr>
+										<c:choose>
+											<c:when test="${!empty loginUser}">
+												<tr>
+													<td class="rIcon"><i class="far fa-heart" data-toggle="modal" data-target="#sponsorship-modal"></i></td>
+												</tr>
+												<tr><td class="rIconName">후원하기</td></tr>
+												<tr>
+													<td class="rIcon"><i class="far fa-thumbs-down" data-toggle="modal" data-target="#report-modal"></i></td>
+												</tr>
+												<tr><td class="rIconName">신고하기</td></tr>
+											</c:when>
+											<c:otherwise>
+												<tr onClick="loginAlert()">
+													<td class="rIcon"><i class="far fa-heart"></i></td>
+												</tr>
+												<tr><td class="rIconName">후원하기</td></tr>
+												<tr onClick="loginAlert()">
+													<td class="rIcon"><i class="far fa-thumbs-down"></i></td>
+												</tr>
+												<tr><td class="rIconName">신고하기</td></tr>
+											</c:otherwise>
+										</c:choose>
+										<tr><td></td></tr>
+									</table>
+								</c:when>
+								<c:otherwise>
+									<!-- 답변 작성자와 로그인한 회원이 일치할 경우 -->
+					                <table>
+						                <tr><td class="rIcon"><i class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></i></td></tr>
+						                <tr><td class="rIconName">삭제하기</td></tr>
+					                </table>
+					        	</c:otherwise>
+			                </c:choose>
 						</div>
 						<!-- 우측 아이콘 옵션 끝 -->
 					</div>
@@ -196,7 +306,7 @@
 							<tr class="loginUserInfo">
 								<td class="tableBlank"></td>
 								<td class="userInfo1"><i class="far fa-user-circle"></i></td>
-								<td class="userInfo2">로그인한회원</td>
+								<td class="userInfo2">${ b.nickname }</td>
 								<td class="userInfo3">
 									<button type="button" class="btn btn-danger" onclick="return validate();"><a href="">작성하기</a></button>
 								</td>
@@ -208,9 +318,7 @@
 					<div class="userWrite1">
 						<!-- 마크다운 API가 들어올 자리 -->
 						<div>
-							마크다운 API 들어올 div 공간 <br><br>
-							비율 맞추려고 padding:1% 로 설정해뒀어요 ꔷ̑◡ꔷ̑<br>
-							구현 시에 padding값 지워야하면 말씀해주세요!
+							<textarea class="form-control" rows="5"></textarea>
 						</div>
 						<!-- 마크다운 API가 들어올 자리 끝-->
 					</div>
@@ -250,14 +358,28 @@
 							<!-- 답변 작성자와 로그인 한 회원이 불일치할 경우 -->
 							<table>
 								<tr><td class="rIcon"></td></tr>
-								<tr>
-									<td class="rIcon"><i class="far fa-heart" data-toggle="modal" data-target="#sponsorship-modal"></i></td>
-								</tr>
-								<tr><td class="rIconName">후원하기</td></tr>
-								<tr>
-									<td class="rIcon"><i class="far fa-thumbs-down" data-toggle="modal" data-target="#report-modal"></i></td>
-								</tr>
-								<tr><td class="rIconName">신고하기</td></tr>
+								<c:choose>
+									<c:when test="${!empty loginUser}">
+										<tr>
+											<td class="rIcon"><i class="far fa-heart" data-toggle="modal" data-target="#sponsorship-modal"></i></td>
+										</tr>
+										<tr><td class="rIconName">후원하기</td></tr>
+										<tr>
+											<td class="rIcon"><i class="far fa-thumbs-down" data-toggle="modal" data-target="#report-modal"></i></td>
+										</tr>
+										<tr><td class="rIconName">신고하기</td></tr>
+									</c:when>
+									<c:otherwise>
+										<tr onClick="loginAlert()">
+											<td class="rIcon"><i class="far fa-heart"></i></td>
+										</tr>
+										<tr><td class="rIconName">후원하기</td></tr>
+										<tr onClick="loginAlert()">
+											<td class="rIcon"><i class="far fa-thumbs-down"></i></td>
+										</tr>
+										<tr><td class="rIconName">신고하기</td></tr>
+									</c:otherwise>
+								</c:choose>
 								<tr><td></td></tr>
 							</table>
 
@@ -305,7 +427,14 @@
 						<tr class="loginUserInfo">
 							<td class="tableBlank"></td>
 							<td class="userInfo1"><i class="far fa-user-circle"></i></td>
-							<td class="userInfo2">로그인한회원</td>
+							<c:choose>
+								<c:when test="${!empty loginUser}">
+									<td class="userInfo2">${ b.nickname }</td>
+								</c:when>
+								<c:otherwise>
+									<td class="userInfo2">GUEST</td>
+								</c:otherwise>
+							</c:choose>
 						</tr>
 					</table>
 				</div>
@@ -314,20 +443,33 @@
 				<!-- 답변 상세 영역 -->
 				<div class="userWrite1">
 					<!-- 마크다운 API가 들어올 자리 -->
-					<div>
-						마크다운 API 들어올 div 공간 <br><br>
-						비율 맞추려고 padding:1% 로 설정해뒀어요 ꔷ̑◡ꔷ̑<br>
-						구현 시에 padding값 지워야하면 말씀해주세요!
-					</div>
-					<!-- 마크다운 API가 들어올 자리 끝-->
+					<c:choose>
+						<c:when test="${!empty loginUser}">
+							<div>
+								<textarea class="form-control" rows="5"></textarea>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div>
+								<textarea class="form-control" rows="5" placeholder=" 로그인 후 이용해주세요. " disabled></textarea>
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<!-- 답변 상세 영역 끝  -->
 
 				<!-- 답변달기 관련 하단부 -->
 				<div class="userWrite2">
-					<button type="button" class="btn btn-danger" onclick="return validate();">
-						<a href="">답변달기</a>
-					</button>
+					<c:choose>
+						<c:when test="${!empty loginUser}">
+							<button type="submit" class="btn btn-danger" onclick="return validate();">
+								<a href="">답변달기</a>
+							</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="btn btn-danger" onClick="loginAlert()">답변달기</button>
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<!-- 답변달기 버튼 끝 -->
 			</div>
@@ -461,9 +603,6 @@
 					<div class="modal-body" style="text-align: center;">
 						추후 URL 공유 작업 예정
 					</div>
-					<div class="modal-footer" style="justify-content: center;">
-						<button type="submit" class="btn btn-danger btn-block">OK</button>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -475,56 +614,6 @@
 
 	<!-- 위로가기 아이콘 -->
 	<a href="#header"><i class="fas fa-chevron-up" id="toTheTop">&nbsp;TOP</i></a>
-
-
-	<!-- JS -->
-	<script>
-		//좋아요 아이콘 클릭 시 아이콘 변경
-		$('[class$=fa-thumbs-up]').click(function() {
-			if ($('#selected-like').css('display') == 'none') {
-				$('#selected-like').css('display', '');
-				$('#like').css('display', 'none');
-			} else {
-				$('#selected-like').css('display', 'none');
-				$('#like').css('display', '');
-			}
-		})
-
-		//스크랩 아이콘 클릭 시 아이콘 변경
-		$('[class$=fa-bookmark]').click(function() {
-			if ($('#selected-scrap').css('display') == 'none') {
-				$('#selected-scrap').css('display', '');
-				$('#scrap').css('display', 'none');
-			} else {
-				$('#selected-scrap').css('display', 'none');
-				$('#scrap').css('display', '');
-			}
-		})
-		
-		// 대댓글 달기 클릭 시 나타나는 작성 영역 슬라이드 업&다운
-        $(function(){
-            $('.reReply').click(function(){
-					if($('#writeReReply').css('display') == "none"){
-                    $('#writeReReply').slideDown();
-                }else{
-                    $('#writeReReply').slideUp();
-                }
-            })
-        })
-		
-		// 한글자 이상 입력하지 않을 시 답변 작성 비활성화 (★나중에 다시 수정★)
-		function validate(){
-			// 클래스 이름 혹은 아이디는 추후 마크다운 구현 후 수정
-			var userReply = document.getElementByClassName('userWrite1');
-			// 문자에 상관없이 한 글자 이상 작성되었는지 체크
-			regExp = /^.+/;
-			if(!regExp.test(userReply.value)){
-				alert(" 내용을 작성해주세요. ");
-				userReply.select();
-				return false;
-			}
-		}
-	</script>
 
 	
 	<!-- 푸터바 -->
