@@ -311,33 +311,39 @@
 
                 <!--삭제하기 모달창-->
                 <!-- The Modal -->
-                <form  id="" action="" method="post" style="margin-top: 0px;" >
-                    <!--ex.아이디랑 글 번호 넘겨서 삭제 (sql문에 따라 보내는 값을 달라질 수 있음)-->
-                    <input type="hidden" id="" name="" value="${loginUser}" >
-                    <input type="hidden" id="" name="" value="${loginUser}" >
-
+               
                     <div class="modal fade" id="delete-modal">
                         <div class="modal-dialog modal-dialog-centered modal-sm">
                         <div class="modal-content">
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                            <h4 class="modal-title"><b>게시글 삭제</b></h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <!-- Modal body -->
-                            <div class="modal-body" style="line-height: 100%;">
-                                삭제시, 복구가 불가능합니다. <br>
-                                삭제하시겠습니까?
-                            </div>
-                            <!-- Modal footer -->
-                            <div class="modal-footer" style="display: flex; justify-content: space-between;" >
-                                <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">취소</button>
-                                <button type="button" class="btn btn-danger"  onclick="postFormSubmit(2)">삭제</button>
-                            </div>
+                         	<!-- Modal Header -->
+                               <div class="modal-header" style="background-color: rgba(224, 224, 224, 0.24);">
+                                   <h4 class="modal-title">🧺삭제하기</h4>
+                                   <button type="button" class="close" data-dismiss="modal">&times;</button>
+                               </div>
+                               
+                               <!-- Modal body -->
+                               <div class="modal-body">
+                                  		<p align="center"><b>${b.nickname}</b>님 안녕하세요!</p>
+                                   <div class="modal-content" style="border:1px solid grey; width: 100%; height:40px ;border-radius: 5px;">
+                                       <div >
+                                           <div align="center" style="line-height:100%; margin-top:5px;">
+                                           	삭제 후에는 복구가 불가능합니다.<br>
+                                           	정말로 삭제하시겠어요? 🙃
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                               <!-- Modal footer -->
+                               <div class="modal-footer" style="justify-content: center;">
+                                   <div>
+                                       <button type="button" class="btn btn-danger btn-sm" onclick="postFormSubmit(2)">삭제하기</button>
+                                       <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">취소</button>
+                                   </div>
+                               </div>
                         </div>
                         </div>
                     </div>
-                </form>
+                
             </div>
         </div>         
       
