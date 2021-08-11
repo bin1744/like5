@@ -405,8 +405,7 @@ public class BookingController {
 	
 	/*공간 예약관리 조회*/
 	@RequestMapping("space.bo")
-	public String selectSpace(HttpServletRequest request, HttpSession session, @RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
-		//int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+	public String selectSpace(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
 		
 		int listCount = bService.selectSpaceCount();
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
@@ -428,6 +427,6 @@ public class BookingController {
         for(int i=0; i<size; i++) {
         	bService.delete(ajaxMsg[i]);
         }
-        return "redirect:list";
+        return "redirect:space.bo";
     }
 }

@@ -120,7 +120,7 @@
 	                success: function(jdata){
 	                    if(jdata = 1) {
 	                        alert("삭제에 성공하셨습니다.");
-	                        location.replace("list") //list 로 페이지 새로고침
+	                        location.replace("space.bo") //list 로 페이지 새로고침
 	                    }
 	                    else{
 	                        alert("삭제 실패");
