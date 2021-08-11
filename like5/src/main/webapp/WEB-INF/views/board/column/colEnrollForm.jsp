@@ -172,15 +172,10 @@
             el: document.querySelector('#editor'),
             height: '600px',
             previewStyle: 'vertical',
-            initialValue: '📝당신의 한 줄이 개발자들의 영감이 됩니다.',
+            initialValue: '📝당신의 문장이 개발자들의 영감이 됩니다.',
             language: 'ko',
         });
-   
         
-     	
-     	
-        
-
         /*첨부파일-div 영역 클릭시 첨부파일 등록*/
         $(function(){
             $("#file-area").hide();

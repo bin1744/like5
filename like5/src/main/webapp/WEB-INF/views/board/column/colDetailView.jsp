@@ -306,22 +306,8 @@
 
                 <!--수정 삭제-->
 
-                <!--삭제시 필요한 키값 숨겨서 보내기--> 
-                <form id="test" action="" method="post">
-                    <input type="hidden" name="" value="">
-                    <input type="hidden" name="" value="">
-                </form>
 
-                <!--선택된 요소에 액션값 부여하고, 바로 submit 시키기-->     
-                <script>
-                function postFormSubmit(num){
-                    if(num==1){ // 수정하기
-                        $("#").attr("action","url주소").submit();
-                    }else{ // 삭제하기
-                        $("#").attr("action","url주소").submit();
-                    }
-                }
-                </script>
+              
 
                 <!--삭제하기 모달창-->
                 <!-- The Modal -->
@@ -346,7 +332,7 @@
                             <!-- Modal footer -->
                             <div class="modal-footer" style="display: flex; justify-content: space-between;" >
                                 <button type="reset" class="btn btn-outline-secondary" data-dismiss="modal">취소</button>
-                                <button type="submit" class="btn btn-danger"  onclick="postFormSubmit(2)">삭제</button>
+                                <button type="button" class="btn btn-danger"  onclick="postFormSubmit(2)">삭제</button>
                             </div>
                         </div>
                         </div>
@@ -354,6 +340,25 @@
                 </form>
             </div>
         </div>         
+      
+      
+      
+             <!--삭제시 필요한 키값 숨겨서 보내기--> 
+            <form id="postFormSubmit" action="" method="post">
+                <input type="hidden" name="bno" value="${b.bno}">
+				<input type="hidden" name="imgPath" value="${b.imgPath}">
+				<input type="hidden" name="category" value="칼럼">
+            </form>
+      		<!--선택된 요소에 액션값 부여하고, 바로 submit 시키기-->     
+              <script>
+               function postFormSubmit(num){
+                   if(num==1){ // 수정하기
+                       $("#postFormSubmit").attr("action","comUpdateForm.bo").submit();
+                   }else{ // 삭제하기
+                       $("#postFormSubmit").attr("action","comDelete.bo").submit();
+                   }
+               }
+              </script>
 
 
         <!--관심 있을 만한 컬럼-->

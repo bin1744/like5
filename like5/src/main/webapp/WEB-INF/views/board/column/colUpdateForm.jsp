@@ -24,13 +24,10 @@
 
 <body>
    
-    <!--토스트 UI-->
-    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-
+   
 
    <!--메뉴바-->
     <jsp:include page="../../common/header.jsp" />   
- 
 
 
     <div class="innerOuter" style="margin-top:50px; padding-left:50px">
@@ -39,14 +36,14 @@
             <hr>
         </div>
         <form  id="" action="" method="post" style="margin-top: 0px;" enctype="multipart/form-data">
-            <input type="hidden" id="" value="${loginUser.userId}" name="">
+            <input type="hidden" value="${b.bno}" name="bno">
             <!--카테고리 시작-->
             <!--작성자 아이디, 제목, 내용, 첨부파일-->
             <br>
             <div class="content-header">
                 <div class="form-group">
                     <label for="content-title"><b>제목</b></label>
-                    <input type="text" name="" class="form-control" id="content-title" placeholder="5글자 이상을 입력해주세요." required>
+                    <input type="text" class="form-control" id="content-title" placeholder="${b.title}" name="title" required>
                     <div id="counting-title" style="float: right; font-size: 11px"></div>
                 </div>
             </div>
@@ -54,16 +51,20 @@
             <div class="content-body">
                 <div class="form-group">
                     <label for="comment"><b>내용</b></label>
-                    <div id="editor"><textarea name=""></textarea></div>
-                    <div id="tui-color-picker-conatiner"></div>
+                    <div id="editor"><div id="viewer">${b.content}</div></div>
+                    
                 </div>
             </div>
+            
+             <!--토스트 UI-->
+    		<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+            
 
             <div class="content-footer">
                 <div class="container-fluid" style="background-color: rgba(224, 224, 224, 0.3);">
                         Like5에 멋진 글을 작성해주셔서 감사드립니다 🧡<br>
-                        청결한 게시판을 위해 
-                        욕설이나 비방, 모욕, 선정성이 존재하는 사진이나 게시글은 업로드하지 말아주세요.
+                                                       청결한 게시판을 위해 
+                       	 욕설이나 비방, 모욕, 선정성이 존재하는 사진이나 게시글은 업로드하지 말아주세요.
                 </div>
             </div>
                 
@@ -78,13 +79,43 @@
                     <button type="reset" class="btn btn-outline-danger">취소</button>
                 </div>
                 <div class="submit-btn">
-                    <button type="button" onclick="temSave();" class="btn btn-outline-danger">임시저장</button>
-                    <a data-toggle="modal" data-target="#thumbnail-modal"><button class="btn btn-danger">등록</button></a>
+                    <a data-toggle="modal" data-target="#thumbnail-modal"><button class="btn btn-danger">수정</button></a>
                 </div>
             </div>
 
             <script>
-  
+
+            	$(function(){
+		        	ToView();
+		        })
+		        
+		        /*토스트 UI */
+		        const content = [].join('\n');
+    		  	const Editor = toastui.Editor;
+		        const editor = new Editor({
+		            el: document.querySelector('#editor'),
+		            height: '600px',
+		            previewStyle: 'vertical',
+		            initialValue: '📝당신의 문장이 개발자들의 영감이 됩니다.',
+		            language: 'ko',
+		        });
+	            
+		        /*토스트 UI 뷰어 */	
+		        const viewer = toastui.Editor.factory({
+		            el: document.querySelector('#viewer'),
+		            viewer: true,
+		            height: '500px',
+		            initialValue: content
+		        });
+
+		        function ToView()
+		        {
+		            viewer.setMarkdown(editor.getHTML());
+		        };
+		    
+		        
+			            
+	
             </script>
 
             <!--썸네일 insert 모달창-->
@@ -131,15 +162,6 @@
 
     <script>
 
-        /*토스트 UI*/
-        const Editor = toastui.Editor;
-        const editor = new Editor({
-            el: document.querySelector('#editor'),
-            height: '600px',
-            previewStyle: 'vertical',
-            initialValue: '📝당신의 한 줄이 개발자들의 영감이 됩니다.',
-            language: 'ko',
-        });
 
         /*첨부파일-div 영역 클릭시 첨부파일 등록*/
         $(function(){
@@ -149,6 +171,7 @@
                 $("#thumbnail1").click();	
             })
         })
+      
         
         /*첨부파일-미리보기*/
         function loadImg(inputFile,num){

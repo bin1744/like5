@@ -385,9 +385,21 @@ public class BoardController {
 	
 	@RequestMapping("comUpdateForm.bo")
 	public ModelAndView comUpdateForm(Board b,ModelAndView mv) {
+		
+		String category = b.getCategory();
 		int bno = b.getBno();
-		mv.addObject("b",bService.boardDetail(bno))
-		   .setViewName("board/community/comUpdateForm");
+		
+		if(category.equals("칼럼")) {
+			
+			Board board = bService.boardDetail(bno);
+			mv.addObject("b",board)
+			  .setViewName("board/column/colUpdateForm");
+		}else {
+			mv.addObject("b",bService.boardDetail(bno))
+			  .setViewName("board/community/comUpdateForm");
+		}
+		
+		
 		
 		return mv;
 	}
@@ -398,6 +410,8 @@ public class BoardController {
 	 */
 	@RequestMapping("comUpdate.bo")
 	public ModelAndView updateCommunity(Board b, MultipartFile reupfile, ModelAndView mv,HttpSession session) {
+		
+		String category = b.getCategory();
 		
 		// 새로온 첨부파일이 있었을 때
 		if(!reupfile.getOriginalFilename().equals("")) {
@@ -424,9 +438,16 @@ public class BoardController {
 	 */
 	
 	@RequestMapping("comDelete.bo")
-	public String deleteCommunity(int bno,String imgPath, HttpSession session){
+	public String deleteCommunity(Board b,HttpSession session){
+		
+		int bno = b.getBno();
+		String imgPath = b.getImgPath();
+		String cagetory = b.getCategory();
+		
+		System.out.println(cagetory);
 		
 		int result = bService.deleteCommunity(bno);
+		
 		if(result>0) {
 			//게시글 삭제시첨부파일도 지우기
 			if(!imgPath.equals("")) {
@@ -435,7 +456,14 @@ public class BoardController {
 			}
 			session.setAttribute("alertMsg", "성공적으로 삭제되었습니다!");
 		}
-		return "redirect:comList.bo";
+		
+		if(cagetory.equals("칼럼")) {
+			return "redirect:colList.bo";
+		}else {
+			return "redirect:comList.bo";
+		}
+		
+	
 	}
 	
 	/**
