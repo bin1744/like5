@@ -444,8 +444,6 @@ public class BoardController {
 		String imgPath = b.getImgPath();
 		String cagetory = b.getCategory();
 		
-		System.out.println(cagetory);
-		
 		int result = bService.deleteCommunity(bno);
 		
 		if(result>0) {
@@ -457,10 +455,10 @@ public class BoardController {
 			session.setAttribute("alertMsg", "성공적으로 삭제되었습니다!");
 		}
 		
-		if(cagetory.equals("칼럼")) {
-			return "redirect:colList.bo";
-		}else {
+		if(!cagetory.equals("칼럼")) {
 			return "redirect:comList.bo";
+		}else {
+			return "redirect:colList.bo";
 		}
 		
 	
