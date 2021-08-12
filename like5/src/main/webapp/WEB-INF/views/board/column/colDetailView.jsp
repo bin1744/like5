@@ -359,9 +359,9 @@
               <script>
                function postFormSubmit(num){
                    if(num==1){ // 수정하기
-                       $("#postFormSubmit").attr("action","comUpdateForm.bo").submit();
+                       $("#postFormSubmit").attr("action","updateForm.bo").submit();
                    }else{ // 삭제하기
-                       $("#postFormSubmit").attr("action","comDelete.bo").submit();
+                       $("#postFormSubmit").attr("action","delete.bo").submit();
                    }
                }
               </script>

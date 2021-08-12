@@ -25,7 +25,7 @@
             <hr>
         </div>
 
-        <form action="comUpdate.bo" method="post" enctype="multipart/form-data">
+        <form action="update.bo" method="post" enctype="multipart/form-data">
         	<input type="hidden" value="${b.bno}" name="bno">
             <!--카테고리 시작-->
             <!--작성자 아이디, 카테고리, 제목, 내용, 첨부파일-->
@@ -118,11 +118,9 @@
             	var $titleInput = $("#content-title");
             	
             	$titleInput.keyup(function(){
-            		
             		if($titleInput.val().length>=5){
             			$("#comEnrollbtn :submit").attr("disabled",false);
             		}
-            		
             	})
             	
             });

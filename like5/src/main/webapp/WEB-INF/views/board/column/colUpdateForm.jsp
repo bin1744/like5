@@ -35,8 +35,8 @@
             <h2><b>칼럼</b></h2>
             <hr>
         </div>
-        <form  id="" action="" method="post" style="margin-top: 0px;" enctype="multipart/form-data">
-            <input type="hidden" value="${b.bno}" name="bno">
+        
+           
             <!--카테고리 시작-->
             <!--작성자 아이디, 제목, 내용, 첨부파일-->
             <br>
@@ -51,7 +51,8 @@
             <div class="content-body">
                 <div class="form-group">
                     <label for="comment"><b>내용</b></label>
-                    <div id="editor"><div id="viewer">${b.content}</div></div>
+                    <div id="editor">${b.content}</div>
+                    <div id="viewer"></div>
                     
                 </div>
             </div>
@@ -84,10 +85,6 @@
             </div>
 
             <script>
-
-            	$(function(){
-		        	ToView();
-		        })
 		        
 		        /*토스트 UI */
 		        const content = [].join('\n');
@@ -96,7 +93,6 @@
 		            el: document.querySelector('#editor'),
 		            height: '600px',
 		            previewStyle: 'vertical',
-		            initialValue: '📝당신의 문장이 개발자들의 영감이 됩니다.',
 		            language: 'ko',
 		        });
 	            
@@ -107,14 +103,6 @@
 		            height: '500px',
 		            initialValue: content
 		        });
-
-		        function ToView()
-		        {
-		            viewer.setMarkdown(editor.getHTML());
-		        };
-		    
-		        
-			            
 	
             </script>
 
@@ -137,7 +125,13 @@
                         </a>
 
                         <div class="input-type" id="file-area">
-		                    <input type="file" id="thumbnail1" name="" onchange="loadImg(this,1)" class="form-control-file border" required>
+                        	<form  id="updateColumn" action="" method="post" style="margin-top: 0px;" enctype="multipart/form-data">
+					           	<input type="hidden" name="bno" value="${b.bno}" >
+					           	<input type="hidden" name="category" value="칼럼">
+					           	<input type="hidden" name="title" value="">
+					           	<input type="hidden" name="content" value="">
+			                    <input type="file" id="thumbnail1" name=reupfile onchange="loadImg(this,1)" class="form-control-file border" required>
+		                	</form>
 		                </div>
 
                         <p style="font-size: 12px; margin-top: 15px; font-weight: bold;">
@@ -149,18 +143,36 @@
             
                     <!-- Modal footer -->
                     <div class="modal-footer"  style="justify-content: center;">
-                        <button type="submit" class="btn btn-danger btn-block">OK</button>
+                        <button onclick="submit();" class="btn btn-danger btn-block">OK</button>
                     </div>
             
                 </div>
                 </div>
             </div>
-        </form>
+        
     </div>
 
 
 
     <script>
+	    
+	    /*토스트 UI 에디터 update하기 */
+	    function submit(){
+	    	
+	    	// 수정하기
+	    	if(num=1){
+	    		// 제목과 내용 변수에 담아서 form에 담기
+	    		var $title = $("#content-title").val()
+	    		var content = editor.getHTML();
+	        	$("#updateColumn").children().eq(2).attr("value",$title);
+	        	$("#updateColumn").children().eq(3).attr("value",content);
+	
+	        	//form을 submit하기
+	    		$("#updateColumn").attr("action","update.bo").submit();
+	    	}
+	    	
+	    };
+    
 
 
         /*첨부파일-div 영역 클릭시 첨부파일 등록*/

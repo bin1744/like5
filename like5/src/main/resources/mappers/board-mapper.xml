@@ -478,9 +478,7 @@
 		    )
 	</insert>
 	
-	<!-- 커뮤니티 게시글 작성하기 -->
-	<!-- 칼럼 insert도 같이 해보기 -->
-	<!-- 성공 시 id이름 변경 -->
+	<!-- [커뮤니티 | 칼럼] - 게시글 작성 -->
 	<insert id="insertComAndCol">
 		insert into 
 			board
@@ -505,8 +503,8 @@
 			    )
 	</insert>
 	
-	<!-- 커뮤니티 게시글 삭제하기 -->
-	<update id="deleteCommunity">
+	<!-- [커뮤니티 | 칼럼] - 게시글 삭제 -->
+	<update id="deleteComAndCol">
 		update 
 			board
 		set 
@@ -515,8 +513,8 @@
 			boa_no = #{bno}
 	</update>
 	
-	<!-- 커뮤니티 게시글 수정하기 -->
-	<update id="updateCommunity">
+	<!-- [커뮤니티 | 칼럼] - 게시글 수정 -->
+	<update id="updateComAndCol">
 	update 
 		board
 		set 
@@ -530,7 +528,7 @@
 		and boa_status = 'Y'
 	</update>
 
-	<!-- 커뮤니티 게시글 신고하기 -->
+	<!-- [커뮤니티] - 게시글 신고 -->
 	<insert id="reportCommunity">
 		insert into 
 		report
