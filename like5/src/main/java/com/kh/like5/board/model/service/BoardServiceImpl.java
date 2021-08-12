@@ -141,7 +141,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	/**
-	 * [커뮤니티] 게시글 작성하기
+	 * [커뮤니티 | 칼럼] 게시글 작성하기
 	 * @author seong
 	 */
 	
@@ -156,18 +156,18 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	
 	@Override
-	public int deleteCommunity(int bno) {
-		return bDao.deleteCommunity(sqlSession, bno);
+	public int deleteComAndCol(int bno) {
+		return bDao.deleteComAndCol(sqlSession, bno);
 	}
 
 	/**
-	 * [커뮤니티] - 게시글 수정하기
+	 * [커뮤니티 | 칼럼] - 게시글 수정하기
 	 * @author seong
 	 */
 
 	@Override
-	public int updateCommunity(Board b) {
-		return bDao.updateCommunity(sqlSession, b);
+	public int updateComAndCol(Board b) {
+		return bDao.updateComAndCol(sqlSession, b);
 	}
 	
 	/**

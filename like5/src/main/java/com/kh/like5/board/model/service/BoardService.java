@@ -98,14 +98,14 @@ public interface BoardService {
 	// 대댓글 작성
 	int insertReplies(Reply r);
 	
-	// [커뮤니티 | 칼럼] 게시글 작성하기
+	// [커뮤니티 | 칼럼] - 게시글 작성하기
 	int insertComAndCol(Board b);
 	
-	//[커뮤니티] - 글 수정하기
-	int updateCommunity(Board b);
+	// [커뮤니티 | 칼럼] - 글 수정하기
+	int updateComAndCol(Board b);
 	
 	//[커뮤니티] - 삭제하기
-	int deleteCommunity(int bno);
+	int deleteComAndCol(int bno);
 	
 	//[커뮤니티] - 게시글 신고하기
 	int reportCommunity(Report b);

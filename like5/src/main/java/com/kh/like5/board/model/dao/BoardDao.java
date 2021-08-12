@@ -128,7 +128,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 * [커뮤니티] 대댓글 작성하기
+	 * [커뮤니티] 대댓글 작성
 	 * @author seong
 	 */
 	public int insertReplies(SqlSessionTemplate sqlSession,Reply r) {
@@ -136,7 +136,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 * [커뮤니티 | 칼럼] 게시글 작성하기
+	 * [커뮤니티 | 칼럼] - 게시글 작성
 	 * @author seong
 	 */
 	public int insertComAndCol(SqlSessionTemplate sqlSession, Board b) {
@@ -144,25 +144,25 @@ public class BoardDao {
 	}
 	
 	/**
-	 * [커뮤니티] 게시글 삭제하기
+	 * [커뮤니티 | 칼럼] - 게시글 삭제
 	 * @author seong
 	 */
-	public int deleteCommunity(SqlSessionTemplate sqlSession,int bno) {
-		return sqlSession.update("boardMapper.deleteCommunity",bno);
+	public int deleteComAndCol(SqlSessionTemplate sqlSession,int bno) {
+		return sqlSession.update("boardMapper.deleteComAndCol",bno);
 	}
 	
 	
 	
 	/**
-	 * [커뮤니티] - 게시글 수정하기
+	 * [커뮤니티 | 칼럼] - 게시글 수정
 	 * @author seong
 	 */
-	public int updateCommunity(SqlSessionTemplate sqlSession,Board b) {
-		return sqlSession.update("boardMapper.updateCommunity",b);
+	public int updateComAndCol(SqlSessionTemplate sqlSession,Board b) {
+		return sqlSession.update("boardMapper.updateComAndCol",b);
 	}
 	
 	/**
-	 * [커뮤니티] - 게시글 신고하기
+	 * [커뮤니티] - 게시글 신고
 	 * @author seong
 	 */
 	public int reportCommunity(SqlSessionTemplate sqlSession,Report r) {
