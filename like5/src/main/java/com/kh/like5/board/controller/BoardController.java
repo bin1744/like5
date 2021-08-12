@@ -125,10 +125,9 @@ public class BoardController {
 	/** 
 	 * [한솔] QnaDetailView 게시글 delete
 	 */
-	
 	@RequestMapping("qnaDelete.bo")
 	public String qnaDelete(int bno, Model model, HttpSession session) {
-		int result bService.qnaDelete(bno);
+		int result = bService.qnaDelete(bno);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", " 게시글이 삭제되었습니다. ");

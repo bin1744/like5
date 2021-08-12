@@ -850,10 +850,16 @@
 		 	   and boa_category like 'QNA'
 	</select>
 	
+	<!-- [QnA] - QnaDetailView 게시글 delete -->
+	<!-- 임시저장 또는 등록된 게시글 중 채택된 댓글이 없을 경우만 delete 가능 -->
 	<update id="qnaDelete">
 		update board
 		   set boa_status = 'N'
-		 where boa_no = {bno}
+		 where boa_no in (select #{bno}
+		                    from board b
+		                    join reply r using (boa_no)
+		                   where (b.boa_status = 'Y' or b.boa_status = 'F')
+		                         and r.rep_adoption = 'N')
 	</update>
 
 

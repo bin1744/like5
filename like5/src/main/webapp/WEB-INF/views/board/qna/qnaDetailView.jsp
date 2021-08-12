@@ -33,8 +33,7 @@
 						</c:otherwise>
 					</c:choose>
 				</div>
-			</div>
-			<!-- 페이지 상단 이름/질문하기 버튼 영역 끝 -->
+			</div><!-- 페이지 상단 이름/질문하기 버튼 영역 끝 -->
 			
 			<script>
 			// 비로그인 시 질문하기 클릭 제한
@@ -80,8 +79,7 @@
 							<td class="qnaUser3" colspan="2">${ b.enrollDate }</td>
 						</tr>
 					</table>
-				</div>
-				<!-- 게시글 정보 영역 끝 -->
+				</div><!-- 게시글 정보 영역 끝 -->
 
 				<!-- 게시글 상세 영역 -->
 				<div class="qnaDetail">
@@ -90,8 +88,7 @@
 						<div class="contentData">
 							<!-- 본문 내용 데이터값 -->${ b.content }
 						</div>
-					</div>
-					<!-- 좌측 게시글 본문 끝 -->
+					</div><!-- 좌측 게시글 본문 끝 -->
 
 					<!-- 우측 아이콘 옵션 -->
 					<div class="qnaIcon">
@@ -145,7 +142,10 @@
 								<!-- 글 작성자와 로그인한 회원이 일치할 경우 -->
 					            <table>
 					              <tr><td></td></tr>
-					              <tr><td class="icon"><i class="fas fa-sync-alt" onclick="contentSubmit(1)"></i></td></tr>
+					              <tr>
+					              	<!-- 수정하기 GET 방식으로 연결 -->
+					              	<a href=""><td class="icon"><i class="fas fa-sync-alt"></i></td></a>
+					              </tr>
 					              <tr><td class="iconName">수정하기</td></tr>
 					              <tr><td class="icon"><i class="fas fa-share-alt" data-toggle="modal" data-target="#url-modal"></i></td></tr>
 					              <tr><td class="iconName">URL 공유</td></tr>
@@ -156,26 +156,21 @@
 					    	</c:otherwise>
 						</c:choose>
 						
-						<form id="submitForm" method="post">
+						<!-- 삭제하기 POST 방식으로 연결 -->
+						<form id="postForm" action="" method="post">
 							<input type="hidden" name="bno" value="${ b.bno }">
 						</form>
 						
 						<script>
-						function contentSubmit(num){
-							if(num == 1){
-								location.herf="qnaUpdateForm.bo?bno=" + $("${b.bno}")
-							}else{
-								$("#sumitForm").attr("action", "qneDelete.bo").submit();
-							}
+						// 삭제하기 submit
+						function postFormSubmit(){
+							$("#postForm").attr("action", "qnaDelete.bo").submit();
 						}
 						</script>
 						
-					</div>
-					<!-- 우측 아이콘 옵션 끝 -->
-				</div>
-				<!-- 게시글 상세 영역 끝 -->
-			</div>
-			<!-- 페이지 중단 게시글 디테일 영역 끝 -->
+					</div><!-- 우측 아이콘 옵션 끝 -->
+				</div><!-- 게시글 상세 영역 끝 -->
+			</div><!-- 페이지 중단 게시글 디테일 영역 끝 -->
 			
 			<script>
 			//좋아요 아이콘 클릭 시 아이콘 변경
@@ -240,8 +235,7 @@
 								<td class="replyUser3">2021-06-06</td>
 							</tr>
 						</table>
-					</div>
-					<!-- 답변자 정보 영역 끝 -->
+					</div><!-- 답변자 정보 영역 끝 -->
 					
 					<script>
 					// 대댓글 달기 클릭 시 나타나는 작성 영역 슬라이드 업&다운
@@ -263,8 +257,7 @@
 							<div class="replyContentData">
 								<!-- 답변 내용 데이터값 -->답변 내용 데이터 일치시켜서 가져오기
 							</div>
-						</div>
-						<!-- 좌측 답변 본문 끝 -->
+						</div><!-- 좌측 답변 본문 끝 -->
 
 						<!-- 우측 아이콘 옵션 -->
 						<div class="replyIcon">
@@ -306,12 +299,9 @@
 					                </table>
 					        	</c:otherwise>
 			                </c:choose>
-						</div>
-						<!-- 우측 아이콘 옵션 끝 -->
-					</div>
-					<!-- 답변 상세 영역 끝 -->
-				</div>
-				<!-- 원댓글 영역 끝 -->
+						</div><!-- 우측 아이콘 옵션 끝 -->
+					</div><!-- 답변 상세 영역 끝 -->
+				</div><!-- 원댓글 영역 끝 -->
 				
 				<!-- 원댓글에 대댓글 달기 / 대댓글 작성 취소하기 -->
 				<div class="writeReReply" id="writeReReply" style="display:none;">
@@ -334,12 +324,9 @@
 						<!-- 마크다운 API가 들어올 자리 -->
 						<div>
 							<textarea class="form-control" rows="5"></textarea>
-						</div>
-						<!-- 마크다운 API가 들어올 자리 끝-->
-					</div>
-					<!-- 답변 상세 영역 끝  -->
-				</div>
-				<!-- 원댓글에 대댓글 달기 / 대댓글 작성 취소하기 끝 -->
+						</div><!-- 마크다운 API가 들어올 자리 끝-->
+					</div><!-- 답변 상세 영역 끝  -->
+				</div><!-- 원댓글에 대댓글 달기 / 대댓글 작성 취소하기 끝 -->
 
 				<!-- 대댓글 영역 -->
 				<div class="replyLv2">
@@ -355,8 +342,7 @@
 								<td class="replyUser3">2021-06-06</td>
 							</tr>
 						</table>
-					</div>
-					<!-- 답변자 정보 영역 끝 -->
+					</div><!-- 답변자 정보 영역 끝 -->
 
 					<!-- 답변 상세 영역 -->
 					<div class="replyDetail">
@@ -365,8 +351,7 @@
 							<div class="replyContentData">
 								<!-- 답변 내용 데이터값 -->답변 내용 데이터 일치시켜서 가져오기
 							</div>
-						</div>
-						<!-- 좌측 답변 본문 끝 -->
+						</div><!-- 좌측 답변 본문 끝 -->
 
 						<!-- 우측 아이콘 옵션 -->
 						<div class="replyIcon">
@@ -408,14 +393,10 @@
 			                <tr><td class="rIcon"><i class="far fa-trash-alt"></i></td></tr>
 			                <tr><td class="rIconName">삭제하기</td></tr>
 			                </table> -->
-						</div>
-						<!-- 우측 아이콘 옵션 끝 -->
-					</div>
-					<!-- 답변 상세 영역 끝 -->
-				</div>
-				<!-- 대댓글 영역 끝-->
-			</div>
-			<!-- 페이지 하단 댓글 디테일 영역 끝 -->
+						</div><!-- 우측 아이콘 옵션 끝 -->
+					</div><!-- 답변 상세 영역 끝 -->
+				</div><!-- 대댓글 영역 끝-->
+			</div><!-- 페이지 하단 댓글 디테일 영역 끝 -->
 
 			<!-- 답변을 작성할 수 있는 영역(항상 보여짐) -->
 			<div class="writeReply">
@@ -433,8 +414,7 @@
 						</span>
 					</div>
 					<div class="replyGuide3"></div>
-				</div>
-				<!-- 답변 작성 안내 끝 -->
+				</div><!-- 답변 작성 안내 끝 -->
 
 				<!-- 로그인한 회원 정보 영역 -->
 				<div class="userInfo">
@@ -452,8 +432,7 @@
 							</c:choose>
 						</tr>
 					</table>
-				</div>
-				<!-- 답변자 정보 영역 끝 -->
+				</div><!-- 답변자 정보 영역 끝 -->
 
 				<!-- 답변 상세 영역 -->
 				<div class="userWrite1">
@@ -470,8 +449,7 @@
 							</div>
 						</c:otherwise>
 					</c:choose>
-				</div>
-				<!-- 답변 상세 영역 끝  -->
+				</div><!-- 답변 상세 영역 끝  -->
 
 				<!-- 답변달기 관련 하단부 -->
 				<div class="userWrite2">
@@ -485,12 +463,9 @@
 							<button type="button" class="btn btn-danger" onClick="loginAlert()">답변달기</button>
 						</c:otherwise>
 					</c:choose>
-				</div>
-				<!-- 답변달기 버튼 끝 -->
-			</div>
-			<!-- 답변달기 관련 하단부 끝 -->
-		</div>
-		<!-- 답변을 작성할 수 있는 영역(항상 보여짐) 끝 -->
+				</div><!-- 답변달기 버튼 끝 -->
+			</div><!-- 답변달기 관련 하단부 끝 -->
+		</div><!-- 답변을 작성할 수 있는 영역(항상 보여짐) 끝 -->
 
 
 		<!-- 신고하기 모달창 -->
@@ -537,8 +512,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- 신고하기 모달창 끝 -->
+		</div><!-- 신고하기 모달창 끝 -->
 
 
 		<!-- 후원하기 모달창 -->
@@ -559,8 +533,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- 후원하기 모달창 끝 -->
+		</div><!-- 후원하기 모달창 끝 -->
 
 
 		<!-- 채택하기 모달창 -->
@@ -581,8 +554,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- 채택하기 모달창 끝 -->
+		</div><!-- 채택하기 모달창 끝 -->
 		
 		
 		<!-- 삭제하기 모달창 -->
@@ -599,13 +571,12 @@
 						<p style="font-size: 9px;">(삭제하기 버튼 클릭 시 글이 삭제됩니다.)</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" onclick="contentSubmit(2)">삭제하기</button>
+						<button type="button" class="btn btn-danger btn-sm" onclick="postFormSubmit()">삭제하기</button>
 						<button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">취소</button>
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- 삭제하기 모달창 끝 -->
+		</div><!-- 삭제하기 모달창 끝 -->
 		
 		<!-- URL 공유 모달창 -->
 		<div class="modal fade" id="url-modal">
@@ -620,11 +591,9 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- URL 공유 모달창 끝 -->
+		</div><!-- URL 공유 모달창 끝 -->
 
-	</div>
-	<!-- 전체를 감싸는 div 끝 -->
+	</div><!-- 전체를 감싸는 div 끝 -->
 
 
 	<!-- 위로가기 아이콘 -->
