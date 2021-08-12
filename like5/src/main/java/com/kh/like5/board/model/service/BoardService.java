@@ -136,11 +136,11 @@ public interface BoardService {
 	//  [ 스크랩 | 좋아요 ]  해제
 	int UnlikeAndUnScrap(HashMap<String,Object>map);
 	
+	// [ 스크랩 | 좋아요 ] count 감소
 	int decreaseCounts(HashMap<String,Object>map);
 	
-	//[칼럼] - 글 수정하기
-	
-	//[칼럼] - 삭제하기
+	// [ 칼럼 ] 관심 칼럼 조회
+	ArrayList<Board>topBoardList();
 	
 	
 	

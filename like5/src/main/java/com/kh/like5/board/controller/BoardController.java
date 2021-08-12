@@ -629,6 +629,20 @@ public class BoardController {
 	}
 	
 	
+	/**
+	 * Ajax [ 칼럼 ] 관심 칼럼 조회
+	 * @author seong
+	 */
+	
+	@ResponseBody
+	@RequestMapping(value="columnTop4.bo",produces="application/json; charset=utf-8")
+	public String topBoardList() {
+		ArrayList<Board>list = bService.topBoardList();
+		
+		System.out.println("top4내용 조회");
+		
+		return new Gson().toJson(list);
+	}
 	
 	//-----------------------------------------------------------
 	

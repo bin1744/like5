@@ -264,6 +264,15 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.decreaseCounts",map);
 	}
 	
+
+	/**
+	 * Ajax [ 칼럼 ] 관심 칼럼 조회
+	 * @author seong
+	 */
+	public ArrayList<Board>topBoardList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("boardMapper.topBoardList");
+	}
+	
 	
 	//------------------ 한솔 -------------------------
 

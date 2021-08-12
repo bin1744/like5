@@ -365,46 +365,71 @@
                    }
                }
               </script>
-
+                          
 
         <!--관심 있을 만한 컬럼-->
         <div class="column-footer" style="margin-top: 300px; margin-bottom:50px">
             <div style="margin-left: 10px; margin-bottom: 30px;">
                 <h4><b>관심 있을 만한 칼럼</b></h4>
             </div>
+            
+            <div id="likeCountTop4"></div>
+            
+            
             <!--좋아요 수 TOP 4 썸네일 조회하기-->
-            <!--반복문 생성하는 구간-->
-            <div class="thumbnail">
-                <div>
-                    <img src="" style="width:400px; height: 300px;">
-                    <div style="margin-top: 10px;"><b>당근 면접 후기 및 회고</b></div>
-                </div>
-            </div>
-            <!--반복문 생성하는 구간-->
-            <div class="thumbnail">
-                <div>
-                    <img src="" style="width:400px; height: 300px;">
-                    <div style="margin-top: 10px;"><b>당근 면접 후기 및 회고</b></div>
-                </div>
-            </div>
-            <!--반복문 생성하는 구간-->
-            <div class="thumbnail">
-                <div>
-                    <img src="" style="width:400px; height: 300px;">
-                    <div style="margin-top: 10px;"><b>당근 면접 후기 및 회고</b></div>
-                </div>
-            </div>
-            <!--반복문 생성하는 구간-->
-            <!--반복문 생성하는 구간-->
-            <div class="thumbnail">
-                <div>
-                    <img src="" style="width:400px; height: 300px;">
-                    <div style="margin-top: 10px;"><b>당근 면접 후기 및 회고</b></div>
-                </div>
-            </div>
-            <!--반복문 생성하는 구간-->
+          
         </div>   
     </div>
+    
+    <script>
+    
+ 		// 좋아요 가장 많은 Top4 게시글 조회로 이동
+	    $(function(){
+			topBoardList();
+	
+			$(document).on("click",".thumbnail",function(){
+				location.href="colDetail.bo?bno="+$(this).children(".col-bno").val()+"&mno="+$(this).children(".mno").val();
+			})
+	
+		})	
+    	
+    	// 좋아요 가장 많은 Top4 게시글 조회
+    	function topBoardList(){
+    		$.ajax({
+    			
+    			url:"columnTop4.bo",
+    			success:function(list){
+    				var value=""
+    				
+    				for(var i in list){
+    					value+=
+							'<div class="thumbnail">'
+						   +   '<input type="hidden" class="mno" value="${loginUser.memNo}">'
+						   +   '<input type="hidden" class="col-bno" value="'+list[i].bno+'">'
+		    	           +     '<div>'
+		    	           +         '<img src="';
+		    	           
+		    	           if(list[i].imgPath == null){
+		    	        	   value+="${pageContext.request.contextPath}/resources/images/common/default-img.jpg";
+		    	           }else{
+		    	        	   value+= list[i].imgPath;
+		    	           }
+		    	           value+= 
+		    	           '" style="width:400px; height: 300px;">'
+		    	           +         '<div style="margin-top: 10px;">'+'<b>'+ list[i].title + '</b>'+'</div>'
+		    	           +     '</div>'
+		    	           + '</div>';
+    				}
+    				$("#likeCountTop4").html(value);
+    			}, error:function(){
+    				console.log("AJAX 통신 실패");
+    			}
+    			
+    		})
+    		
+    	}
+    
+    </script>
 
 	<!--푸터바-->
 	<jsp:include page="../../common/footer.jsp" />

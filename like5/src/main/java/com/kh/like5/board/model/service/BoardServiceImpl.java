@@ -270,6 +270,15 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.decreaseCounts(sqlSession, map);
 	}
 
+
+	/**
+	 * Ajax [ 칼럼 ] 관심 칼럼 조회
+	 * @author seong
+	 */
+	@Override
+	public ArrayList<Board> topBoardList() {
+		return bDao.topBoardList(sqlSession);
+	}
 	
 	
 	//------------------ 한솔 -------------------------
@@ -387,6 +396,8 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Tag> tagList() {
 		return bDao.tagList(sqlSession);
 	}
+
+
 
 
 

@@ -576,6 +576,7 @@
 	                 join member using (mem_no)
 	        where regexp_like (boa_category,'칼럼')
 	          and boa_status='Y'
+	         order by boa_enroll_date desc
 	</select>
 	
 	<!-- 최신 | 조회수 | 댓글수 기준으로 조회 -->	
@@ -713,7 +714,15 @@
 			boa_no = #{bno}
     </update>
 	
-	
+	<!-- [ 칼럼 ] 관심 칼럼 조회 -->
+	<select id="topBoardList" resultMap="board">
+		select rownum, b.*
+		from (select boa_no, boa_title, boa_img_path
+		        from board
+		        where boa_status='Y'
+		        order by boa_like desc) b
+		where rownum between 1 and 4
+	</select>
 	
 	<!-- ********** 한솔 ********** -->
 	<!-- [QnA] - QnaList 조회 시 유효한 게시글 총 개수 조회 -->
