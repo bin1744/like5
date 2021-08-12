@@ -593,7 +593,14 @@ public class BoardController {
 		map.put("bno", bno);
 		map.put("mno",mno);
 		
+		// 좋아요 | 스크랩 insert 
 		int result = bService.likeAndScrap(map);
+		
+		// 성공적으로 insert가 되면 해당 컬럼에 count + 1
+		if(result>0) {
+			int increaseCounts = bService.increaseCounts(map);
+		}
+		
 		return result>0? "success" : "fail";
 	}
 	
@@ -612,6 +619,11 @@ public class BoardController {
 		map.put("mno",mno);
 		
 		int result = bService.UnlikeAndUnScrap(map);
+		
+		if(result>0) {
+			int decreaseCounts = bService.decreaseCounts(map);
+			System.out.println("성공적으로 감소");
+		}
 		
 		return result>0? "success" : "fail";
 	}

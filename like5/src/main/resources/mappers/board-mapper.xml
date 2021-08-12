@@ -664,6 +664,23 @@
 		    )
     </insert>
     
+    <!--[ 스크랩 | 좋아요 ] count 증가 -->
+    <update id="increaseCounts">
+	    update 
+	    	board
+	    <choose>
+	    	<when test="condition=='like'">
+				set boa_like = boa_like + 1
+	    	</when>
+	    	<when test="condition=='scrap'">
+	    		set boa_scrap = boa_scrap +1
+	    	</when>
+	    </choose>
+		where 
+			boa_no = #{bno}
+    </update>
+    
+    <!--[ 스크랩 | 좋아요 ]  해제 -->
 	<delete id="UnlikeAndUnScrap">
 		delete 
 			<choose>
@@ -679,6 +696,22 @@
 		and 
 		 	boa_no = #{bno}
 	</delete>
+	
+	<!-- [ 스크랩 | 좋아요 ] count 감소 -->
+    <update id="decreaseCounts">
+	    update 
+	    	board
+	    <choose>
+	    	<when test="condition=='like'">
+				set boa_like = boa_like -1
+	    	</when>
+	    	<when test="condition=='scrap'">
+	    		set boa_scrap = boa_scrap -1
+	    	</when>
+	    </choose>
+		where 
+			boa_no = #{bno}
+    </update>
 	
 	
 	

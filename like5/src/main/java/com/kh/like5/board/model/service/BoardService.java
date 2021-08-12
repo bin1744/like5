@@ -130,10 +130,13 @@ public interface BoardService {
 	//  [ 스크랩 | 좋아요 ]  등록
 	int likeAndScrap(HashMap<String,Object>map);
 	
+	// [ 스크랩 | 좋아요 ] count 증가
+	int increaseCounts(HashMap<String,Object>map);
+	
 	//  [ 스크랩 | 좋아요 ]  해제
 	int UnlikeAndUnScrap(HashMap<String,Object>map);
 	
-	
+	int decreaseCounts(HashMap<String,Object>map);
 	
 	//[칼럼] - 글 수정하기
 	

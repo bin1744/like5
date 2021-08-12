@@ -241,6 +241,16 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	/**
+	 * [ 스크랩 | 좋아요 ] count 증가
+	 * @author seong
+	 */
+	@Override
+	public int increaseCounts(HashMap<String,Object>map) {
+		return bDao.increaseCounts(sqlSession, map);
+	}
+
+	
+	/**
 	 * Ajax로 좋아요 | 스크랩 해제
 	 * @author seong
 	 */
@@ -249,6 +259,17 @@ public class BoardServiceImpl implements BoardService {
 	public int UnlikeAndUnScrap(HashMap<String, Object> map) {
 		return bDao.UnlikeAndUnScrap(sqlSession, map);
 	}
+	
+	
+	/**
+	 * [ 스크랩 | 좋아요 ] count 감소
+	 * @author seong
+	 */
+	@Override
+	public int decreaseCounts(HashMap<String, Object> map) {
+		return bDao.decreaseCounts(sqlSession, map);
+	}
+
 	
 	
 	//------------------ 한솔 -------------------------
@@ -366,6 +387,8 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Tag> tagList() {
 		return bDao.tagList(sqlSession);
 	}
+
+
 
 
 

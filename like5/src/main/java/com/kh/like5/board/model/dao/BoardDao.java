@@ -240,6 +240,14 @@ public class BoardDao {
 	}
 	
 	/**
+	 * [ 스크랩 | 좋아요 ] count 증가
+	 * @author seong
+	 */
+	public int increaseCounts(SqlSessionTemplate sqlSession,HashMap<String,Object>map) {
+		return sqlSession.update("boardMapper.increaseCounts",map);
+	}
+	
+	/**
 	 * Ajax로 좋아요 | 스크랩 해제
 	 * @author seong
 	 */
@@ -247,6 +255,15 @@ public class BoardDao {
 	public int UnlikeAndUnScrap(SqlSessionTemplate sqlSession,HashMap<String,Object>map) {
 		return sqlSession.insert("boardMapper.UnlikeAndUnScrap",map);
 	}
+	
+	/**
+	 * [ 스크랩 | 좋아요 ] count 감소
+	 * @author seong
+	 */
+	public int decreaseCounts(SqlSessionTemplate sqlSession,HashMap<String,Object>map) {
+		return sqlSession.update("boardMapper.decreaseCounts",map);
+	}
+	
 	
 	//------------------ 한솔 -------------------------
 
