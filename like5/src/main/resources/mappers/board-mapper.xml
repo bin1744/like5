@@ -850,6 +850,12 @@
 		 	   and boa_category like 'QNA'
 	</select>
 	
+	<update id="qnaDelete">
+		update board
+		   set boa_status = 'N'
+		 where boa_no = {bno}
+	</update>
+
 
 
 </mapper>

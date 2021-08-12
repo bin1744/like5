@@ -103,7 +103,7 @@ public class BoardController {
 	 * [한솔] QnaDetailView 게시글 상세 페이지
 	 */
 	@RequestMapping("qnaDetail.bo")
-	public ModelAndView qnaDetail(int bno, ModelAndView mv)  {
+	public ModelAndView qnaDetail(int bno, ModelAndView mv) {
 		// 조회수 증가
 		int result = bService.increaseCount(bno);
 		
@@ -122,7 +122,23 @@ public class BoardController {
 		return mv;
 	}
 	
-
+	/** 
+	 * [한솔] QnaDetailView 게시글 delete
+	 */
+	
+	@RequestMapping("qnaDelete.bo")
+	public String qnaDelete(int bno, Model model, HttpSession session) {
+		int result bService.qnaDelete(bno);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", " 게시글이 삭제되었습니다. ");
+			return "redirect:qnaList.bo";
+		}else {
+			model.addAttribute("errorMsg", " 게시글 삭제에 실패하였습니다. ");
+			return "common/errorPage";
+		}
+	}
+	
 	
 
 	/* -------- 푸터 -------- */

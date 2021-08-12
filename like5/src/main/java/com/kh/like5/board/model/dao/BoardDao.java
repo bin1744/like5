@@ -326,4 +326,12 @@ public class BoardDao {
 	public Board qnaDetail(SqlSessionTemplate sqlSession, int bno) {
 		return sqlSession.selectOne("boardMapper.qnaDetail", bno);
 	}
+	
+	/**
+	 * [QnA] - QnaDetailView 게시글 delete
+	 * @author Hansol
+	 */
+	public int qnaDelete(SqlSessionTemplate sqlSesion, int bno) {
+		return sqlSession.update("boardMapper.qnaDelete", bno);
+	}
 }

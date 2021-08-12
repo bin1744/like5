@@ -334,8 +334,7 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	@Override
 	public int qnaDelete(int bno) {
-		// TODO Auto-generated method stub
-		return 0;
+		return bDao.qnaDelete(sqlSession, bno);
 	}
 
 	/**
