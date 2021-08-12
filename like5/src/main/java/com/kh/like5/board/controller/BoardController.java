@@ -379,36 +379,31 @@ public class BoardController {
 	
 	
 	/**
-	 * [커뮤니티] - 글 수정 Form
+	 * [커뮤니티 | 칼럼] - 글 수정 Form
 	 * @author seong
 	 */
 	
-	@RequestMapping("comUpdateForm.bo")
+	@RequestMapping("updateForm.bo")
 	public ModelAndView comUpdateForm(Board b,ModelAndView mv) {
 		
 		String category = b.getCategory();
 		int bno = b.getBno();
 		
-		if(category.equals("칼럼")) {
-			
-			Board board = bService.boardDetail(bno);
-			mv.addObject("b",board)
-			  .setViewName("board/column/colUpdateForm");
+		if(category!=null && category.equals("커뮤니티")) {
+			mv.addObject("b",bService.boardDetail(bno))
+			.setViewName("board/community/comUpdateForm");
 		}else {
 			mv.addObject("b",bService.boardDetail(bno))
-			  .setViewName("board/community/comUpdateForm");
+			.setViewName("board/column/colUpdateForm");
 		}
-		
-		
-		
 		return mv;
 	}
 	
 	/**
-	 * [커뮤니티] - 게시글 수정하기
+	 * [커뮤니티 | 칼럼] - 게시글 수정하기
 	 * @author seong
 	 */
-	@RequestMapping("comUpdate.bo")
+	@RequestMapping("update.bo")
 	public ModelAndView updateCommunity(Board b, MultipartFile reupfile, ModelAndView mv,HttpSession session) {
 		
 		String category = b.getCategory();
@@ -422,29 +417,35 @@ public class BoardController {
 			b.setImgPath("resources/images/board/"+changeName);
 		}
 		
-		int result = bService.updateCommunity(b);
+		int result = bService.updateComAndCol(b);
 		
 		if(result>0) {
-			session.setAttribute("alertMsg", "성공적으로 수정되었습니다!");
-			mv.setViewName("redirect:comList.bo?bno="+b.getBno());
+			if(category.equals("칼럼")) {
+				session.setAttribute("alertMsg", "성공적으로 수정되었습니다!");
+				mv.setViewName("redirect:colList.bo?bno="+b.getBno());
+			}else {
+				session.setAttribute("alertMsg", "성공적으로 수정되었습니다!");
+				mv.setViewName("redirect:comList.bo?bno="+b.getBno());
+			}
+			
 		}
 		return mv;
 	}
 		
 	
 	/**
-	 * [커뮤니티] 게시글 삭제하기
+	 * [커뮤니티 | 칼럼] 게시글 삭제하기
 	 * @author seong
 	 */
 	
-	@RequestMapping("comDelete.bo")
-	public String deleteCommunity(Board b,HttpSession session){
+	@RequestMapping("delete.bo")
+	public String deleteComAndCol(Board b,HttpSession session){
 		
 		int bno = b.getBno();
 		String imgPath = b.getImgPath();
 		String cagetory = b.getCategory();
 		
-		int result = bService.deleteCommunity(bno);
+		int result = bService.deleteComAndCol(bno);
 		
 		if(result>0) {
 			//게시글 삭제시첨부파일도 지우기
@@ -470,8 +471,6 @@ public class BoardController {
 	 */
 	@RequestMapping("report.bo")
 	public ModelAndView reportCommunity(Board b, Report r,ModelAndView mv,HttpSession session) {
-		
-		System.out.println(r);
 		
 		int result = bService.reportCommunity(r);
 		int bno = b.getBno();
@@ -549,8 +548,6 @@ public class BoardController {
 	public ModelAndView colDetail(ModelAndView mv,Board board) {
 		
 		int bno = board.getBno();
-		int mno = board.getMno();
-		
 		
 		// 게시글 조회수 증가 
 		int result = bService.increaseCount(bno);
