@@ -384,7 +384,7 @@
     <script>
     
  		// 좋아요 가장 많은 Top4 게시글 조회로 이동
-	    $(function(){
+	   $(function(){
 			topBoardList();
 	
 			$(document).on("click",".thumbnail",function(){
@@ -400,12 +400,20 @@
     			url:"columnTop4.bo",
     			success:function(list){
     				var value=""
-    				
-    				for(var i in list){
+    				// 비회원이 게시글 클릭했을 경우 변수에 담아서 mno=0으로 보내기
+   					var nUser = ${empty loginUser};
+					
+   					for(var i in list){
     					value+=
 							'<div class="thumbnail">'
-						   +   '<input type="hidden" class="mno" value="${loginUser.memNo}">'
-						   +   '<input type="hidden" class="col-bno" value="'+list[i].bno+'">'
+						   +   '<input type="hidden" class="mno" value="';
+							if(nUser == true){
+								value+= '0">';
+							}else{
+								value+= '${loginUser.memNo}">';
+							}
+						   value+=
+						    	'<input type="hidden" class="col-bno" value="'+list[i].bno+'">'
 		    	           +     '<div>'
 		    	           +         '<img src="';
 		    	           
