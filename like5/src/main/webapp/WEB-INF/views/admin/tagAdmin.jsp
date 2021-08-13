@@ -85,12 +85,11 @@
 		            <h5><b>관리자 전용 TAG관리 페이지</b> </h5>
 		            <button id="addTag"  data-toggle="modal" data-target="#insertModal">추가하기 </button>
 		            <br><br>
-		            <table class="table tagTable">
+		            <table class="table tagTable" width="850px">
 		                <thead style="text-align: center;">
 		                    <tr>
 		                        <th>TAG번호</th>
 		                        <th>TAG명</th>
-		                        <th>총 게시글 수</th>
 		                        <th>수정하기</th>
 		                        <!-- 사실 수정하기 버튼 눌렀을 때 해당 TAG명을 수정할 수 있는 방법은 모르겠음...modal?-->
 		                    </tr>
@@ -100,7 +99,6 @@
 			                    <tr>
 			                        <td>${t.tagNo }</td>
 			                        <td>${t.tagName }</td>
-			                        <td>124</td>
 			                        <td>
 			                        		<button id="updateTag"  data-toggle="modal" data-target="#updateModal">수정하기</button>
 			                        		<input type="hidden" id="tagNo" name="tagNo" value="${t.tagNo}">
