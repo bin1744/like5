@@ -142,10 +142,7 @@
 								<!-- 글 작성자와 로그인한 회원이 일치할 경우 -->
 					            <table>
 					              <tr><td></td></tr>
-					              <tr>
-					              	<!-- 수정하기 GET 방식으로 연결 -->
-					              	<a href=""><td class="icon"><i class="fas fa-sync-alt"></i></td></a>
-					              </tr>
+					              <tr onclick="postFormSubmit(1)"><td class="icon"><i class="fas fa-sync-alt"></i></td></tr>
 					              <tr><td class="iconName">수정하기</td></tr>
 					              <tr><td class="icon"><i class="fas fa-share-alt" data-toggle="modal" data-target="#url-modal"></i></td></tr>
 					              <tr><td class="iconName">URL 공유</td></tr>
@@ -156,15 +153,18 @@
 					    	</c:otherwise>
 						</c:choose>
 						
-						<!-- 삭제하기 POST 방식으로 연결 -->
 						<form id="postForm" action="" method="post">
 							<input type="hidden" name="bno" value="${ b.bno }">
+							<input type="hidden" name="qnaStatus" value="${ b.status }">
 						</form>
 						
 						<script>
-						// 삭제하기 submit
-						function postFormSubmit(){
-							$("#postForm").attr("action", "qnaDelete.bo").submit();
+						function postFormSubmit(num){
+							if(num == 1){ // 수정하기
+								$("#postForm").attr("action", "qnaUpdateForm.bo").submit();
+							}else{ // 삭제하기
+								$("#postForm").attr("action", "qnaDelete.bo").submit();
+							}
 						}
 						</script>
 						
@@ -571,7 +571,7 @@
 						<p style="font-size: 9px;">(삭제하기 버튼 클릭 시 글이 삭제됩니다.)</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger btn-sm" onclick="postFormSubmit()">삭제하기</button>
+						<button type="button" class="btn btn-danger btn-sm" onclick="postFormSubmit(2)">삭제하기</button>
 						<button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">취소</button>
 					</div>
 				</div>
