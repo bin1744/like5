@@ -362,8 +362,7 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	@Override
 	public int qnaUpdate(Board b) {
-		// TODO Auto-generated method stub
-		return 0;
+		return bDao.qnaUpdate(sqlSession, b);
 	}
 
 	/**

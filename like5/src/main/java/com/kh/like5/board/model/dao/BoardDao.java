@@ -350,4 +350,13 @@ public class BoardDao {
 	public int qnaDelete(SqlSessionTemplate sqlSession, int bno) {
 		return sqlSession.update("boardMapper.qnaDelete", bno);
 	}
+	
+	/**
+	 * [QnA] - QnaUpdateForm 게시글 update
+	 * @author Hansol
+	 */
+	public int qnaUpdate(SqlSessionTemplate sqlSession, Board b) {
+		System.out.println(b);
+		return sqlSession.update("boardMapper.qnaUpdate", b);
+	}
 }

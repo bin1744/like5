@@ -87,7 +87,7 @@ public class BoardController {
 	 * [한솔] QnaEnrollForm 게시글 임시저장 insert
 	 */
 	@RequestMapping("qnaStorageInsert.bo")
-	public String qnaStorageInsert(Board b, MultipartFile upfile, HttpSession session, Model model) {
+	public String qnaStorageInsert(Board b, HttpSession session, Model model) {
 		int result = bService.qnaStorageInsert(b);
 		
 		if(result > 0) {
@@ -138,6 +138,39 @@ public class BoardController {
 		}
 	}
 	
+	/** 
+	 * [한솔] QnaDatailView 게시글 수정하기 페이지 호출
+	 */
+	@RequestMapping("qnaUpdateForm.bo")
+	public ModelAndView qnaUpdateForm(Board b, int bno, ModelAndView mv) {	
+		Board qnaBoard = bService.qnaDetail(bno = b.getBno());
+		String qnaStatus = b.getStatus();
+		ArrayList<Tag> tagList = bService.tagList();
+		
+		mv.addObject("bno", bno)
+		  .addObject("status", qnaStatus)
+		  .addObject("tagList", tagList)
+		  .addObject("qnaBoard", qnaBoard)
+		  .setViewName("board/qna/qnaUpdateForm");
+		
+		return mv;
+	}
+	
+	/** 
+	 * [한솔] QnaUpdateForm 게시글 Update
+	 */
+	@RequestMapping("qnaUpdate.bo")
+	public String qnaUpdate(Board b, HttpSession session, Model model) {
+		int result = bService.qnaUpdate(b);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", " 게시글이 성공적으로 수정되었습니다. ");
+			return "redirect:qnaList.bo";
+		}else {
+			model.addAttribute("errorMsg", " 게시글 수정에 실패하였습니다. ");
+			return "common/errorPage";
+		}
+	}
 	
 
 	/* -------- 푸터 -------- */

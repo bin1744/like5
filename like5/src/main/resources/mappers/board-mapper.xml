@@ -883,6 +883,7 @@
 		select
 			   boa_no
 			 , mem_no
+			 , boa_category
 			 , boa_title
 			 , tag_name
 			 , boa_like
@@ -893,11 +894,12 @@
 			 , nickname
 			 , boa_enroll_date
 			 , boa_content
+			 , boa_status
 		  from board b
 		  join member using(mem_no)
 		 where
 		 	   boa_no = #{bno}
-		 	   and boa_category like 'QNA'
+		 	   and boa_category = 'QNA'
 	</select>
 	
 	<!-- [QnA] - QnaDetailView 게시글 delete -->
@@ -910,6 +912,18 @@
 		                    join reply r using (boa_no)
 		                   where (b.boa_status = 'Y' or b.boa_status = 'F')
 		                         and r.rep_adoption = 'N')
+	</update>
+	
+	<!-- [QnA] - QnaUpdateForm 게시글 update -->
+	<update id="qnaUpdate">
+		update board
+		   set
+		   	   boa_title = #{title}
+		   	 , tag_name = #{tag}
+		   	 , boa_content = #{content}
+		   	 , boa_status = 'Y'
+		   	 , boa_update_date = sysdate
+		 where boa_no = #{bno}
 	</update>
 
 
