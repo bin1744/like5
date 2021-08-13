@@ -414,6 +414,10 @@ public class BoardController {
 		return mv;
 	}
 	
+	
+	
+	
+	
 	/**
 	 * [커뮤니티 | 칼럼] - 게시글 수정하기
 	 * @author seong
@@ -637,7 +641,6 @@ public class BoardController {
 		
 		if(result>0) {
 			int decreaseCounts = bService.decreaseCounts(map);
-			System.out.println("성공적으로 감소");
 		}
 		
 		return result>0? "success" : "fail";
@@ -657,7 +660,7 @@ public class BoardController {
 	}
 	
 	/**
-	 * [ 칼럼 ] 임시저장
+	 * [ 칼럼 ] 임시저장 등록
 	 * @author seong
 	 */
 	@RequestMapping("colTemSave.bo")
@@ -674,6 +677,20 @@ public class BoardController {
 		
 		return mv;
 		
+	}
+	
+	/**
+	 * [ 칼럼 ] 임시저장 글 조회  -->
+	 * @author seong
+	 */
+	
+	@RequestMapping("selectTemSave.bo")
+	public ModelAndView selectTemSave(int bno,ModelAndView mv) {
+		
+		mv.addObject("b",bService.selectTemSave(bno))
+			.setViewName("board/column/colUpdateForm");;
+		
+		return mv;
 	}
 	
 	

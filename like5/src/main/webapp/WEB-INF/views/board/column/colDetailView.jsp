@@ -344,7 +344,7 @@
       
       
       
-             <!--삭제시 필요한 키값 숨겨서 보내기--> 
+             <!-- 필요한 키값 숨겨서 보내기--> 
             <form id="postFormSubmit" action="" method="post">
                 <input type="hidden" name="bno" value="${b.bno}">
 				<input type="hidden" name="imgPath" value="${b.imgPath}">

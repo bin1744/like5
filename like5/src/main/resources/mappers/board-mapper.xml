@@ -402,6 +402,8 @@
           and boa_status='Y'
 	</select>
 	
+
+	
 	<!-- [공통] 게시글 상세보기시 조회수 증가 -->
 	<update id="increaseCount">
 	     update 
@@ -751,6 +753,24 @@
 			    ,'F'
 			    )
 	</insert>
+	
+	<!-- [ 칼럼 ] - 임시저장 글 조회  -->
+	<select id="selectTemSave" resultMap="board">
+	  select
+            boa_no
+            ,mem_no
+             ,nickname
+             ,boa_category
+             ,boa_title
+             ,boa_content
+             ,boa_enroll_date
+             ,boa_img_path
+             ,boa_count
+        from board b
+                 join member using (mem_no)
+        where boa_no = #{bno}
+          and boa_status='F'
+	</select>
 	
 	
 	<!-- ********** 한솔 ********** -->

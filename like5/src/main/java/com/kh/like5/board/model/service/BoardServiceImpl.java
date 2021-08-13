@@ -281,12 +281,22 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	/**
-	 * [ 칼럼 ] 임시저장
+	 * [ 칼럼 ] 임시저장 등록
 	 * @author seong
 	 */
 	@Override
 	public int colStorageInsert(Board b) {
 		return bDao.colStorageInsert(sqlSession, b);
+	}
+	
+	/**
+	 * [ 칼럼 ] 임시저장 글 조회
+	 * @author seong
+	 */
+	
+	@Override
+	public Board selectTemSave(int bno) {
+		return bDao.selectTemSave(sqlSession, bno);
 	}
 	
 	
@@ -404,6 +414,8 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Tag> tagList() {
 		return bDao.tagList(sqlSession);
 	}
+
+
 
 	
 

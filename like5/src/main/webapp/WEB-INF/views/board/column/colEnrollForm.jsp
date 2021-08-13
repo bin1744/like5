@@ -84,7 +84,7 @@
                 </div>
                 <div id="colEnrollbtn" class="submit-btn">
                     <button  type="button" onclick="submit(2);" class="btn btn-outline-danger" disabled>임시저장</button>
-                   <button class="btn btn-danger" disabled><a data-toggle="modal" data-target="#thumbnail-modal">등록</a></button>
+                   <button class="btn btn-danger" disabled> <a data-toggle="modal" data-target="#thumbnail-modal">등록</a></button>
                 </div>
             </div>
 

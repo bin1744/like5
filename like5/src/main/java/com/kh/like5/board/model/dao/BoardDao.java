@@ -281,6 +281,14 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.colStorageInsert",b);
 	}
 	
+	/**
+	 * [ 칼럼 ] 임시저장 글 조회
+	 * @author seong
+	 */
+	public Board selectTemSave(SqlSessionTemplate sqlSession,int bno){
+		return sqlSession.selectOne("boardMapper.selectTemSave",bno);
+	}
+	
 	
 	//------------------ 한솔 -------------------------
 
