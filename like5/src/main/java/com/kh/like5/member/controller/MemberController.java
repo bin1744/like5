@@ -12,13 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.like5.admin.model.vo.Calculate;
 import com.kh.like5.board.model.vo.Board;
 import com.kh.like5.board.model.vo.Reply;
-import com.kh.like5.booking.model.vo.Booking;
+import com.kh.like5.common.model.vo.PageInfo;
+import com.kh.like5.common.template.Pagination;
 import com.kh.like5.member.model.service.MemberService;
 import com.kh.like5.member.model.vo.Customer;
 import com.kh.like5.member.model.vo.Member;
@@ -86,6 +88,22 @@ public class MemberController {
 		return mv;
 	}
 	
+	@RequestMapping("insertcalculate.me")
+	public ModelAndView insertcalculate(HttpSession session, Calculate c, ModelAndView mv) {
+		
+		int insertcalculate = mService.insertcalculate(c);
+		int memNo = c.getMemNo();
+		
+		if(c.getCalPrice() > 9999) { // 로그인 실패 => 에러페이지
+			mv.setViewName("redirect:myPage.me?memNo=" + memNo);
+		}else { // 로그인 성공 => 메인페이지
+			mv.addObject("errorMsg", "10,000원이상 정산신청해주세요!");
+			mv.setViewName("common/errorPage");
+		}
+
+		return mv;
+	}
+	
 	@RequestMapping("logout.me")
 	public String logoutMember(HttpSession session) {
 		session.invalidate();
@@ -93,9 +111,38 @@ public class MemberController {
 	}
 	
 	@RequestMapping("inquiry.me")
-	public String inquiry() {
+	public ModelAndView inquiry(ModelAndView mv, HttpSession session, Member m, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
 		
-		return "redirect:/";
+		int memNo = m.getMemNo();
+		int listCount = mService.inquiryCount(memNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Customer> list = mService.inquiry(pi, memNo);
+		
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .setViewName("member/memInquiryList");
+		
+		System.out.println(list);
+		
+      return mv;
+		
+	}
+	
+	@RequestMapping("donate.me")
+	public ModelAndView donate(ModelAndView mv, HttpSession session, Member m, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		
+		int memNo = m.getMemNo();
+		int listCount = mService.donateCount(memNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Sponsorship> list = mService.donate(pi, memNo);
+		
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .setViewName("member/memDonate");
+		
+      return mv;
 		
 	}
 	
@@ -112,12 +159,8 @@ public class MemberController {
 		ArrayList<Board> newlyList = mService.newlylist(memNo);
 		ArrayList<Reply> ansList = mService.anslist(memNo);
 		ArrayList<Board> tempSaveList = mService.tempSavelist(memNo);
+		Member memberInfor = mService.memberInfor(memNo);
 		
-		/*
-		 * 신원 공간 추가
-		 * ArrayList<Booking> blist = mService.myRecentBookList(memNo);
-		 */
-				
 		for(int i=0; i <sponList.size(); i++) {
 			price += 1000;
 		}
@@ -128,12 +171,13 @@ public class MemberController {
 		
 		settleable = price - settlement;
 		
+		session.setAttribute("price", price);
+		session.setAttribute("settleable", settleable);
+		session.setAttribute("memberInfor", memberInfor);
+		
 		mv.addObject("newlyList", newlyList)
 		  .addObject("ansList", ansList)
-		  .addObject("tempSavList", tempSaveList)
-		  .addObject("price", price)
-		  .addObject("settleable", settleable)
-		  //.addObject("blist", blist)
+		  .addObject("tempSaveList", tempSaveList)
 		  .setViewName("member/myPage");
 		
 		//System.out.println(newlyList);
@@ -141,22 +185,60 @@ public class MemberController {
 		//System.out.println(sponList);
 		//System.out.println(price);
 		//System.out.println(settleable);
+		//System.out.println(memberInfor);
 		
 		return mv;
 		
 	}
 	
-	@RequestMapping("reservation.me")
-	public String reservation() {
+	@RequestMapping("tempSaveListDetail.me")
+	public ModelAndView tempSaveListDetail(ModelAndView mv, HttpSession session, Member m, @RequestParam(value="currentPage", defaultValue="1") int currentPage){
+
+		int memNo = m.getMemNo();
+		int listCount = mService.tempSaveListCount(memNo);
 		
-		return "member/reservation";
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Board> list = mService.tempSaveListDetail(pi, memNo);
+		
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .setViewName("member/tempSaveListDetail");
+		
+      return mv;
 		
 	}
 	
-	@RequestMapping("donate.me")
-	public String donate() {
+	@RequestMapping("ansListDetail.me")
+	public ModelAndView ansListDetail(ModelAndView mv, HttpSession session, Member m, @RequestParam(value="currentPage", defaultValue="1") int currentPage){
+
+		int memNo = m.getMemNo();
+		int listCount = mService.ansListCount(memNo);
 		
-		return "member/donate";
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Board> list = mService.ansListDetail(pi, memNo);
+		
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .setViewName("member/ansListDetail");
+		
+      return mv;
+		
+	}
+	
+	@RequestMapping("memPostListDetail.me")
+	public ModelAndView memPostListDetail(ModelAndView mv, HttpSession session, Member m, @RequestParam(value="currentPage", defaultValue="1") int currentPage){
+
+		int memNo = m.getMemNo();
+		int listCount = mService.memPostListDetailCount(memNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Board> list = mService.memPostListDetail(pi, memNo);
+		
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .setViewName("member/memPostListDetail");
+		
+      return mv;
 		
 	}
 	
@@ -171,8 +253,8 @@ public class MemberController {
 	public String correctInfor(Member m, MultipartFile reupfile, HttpSession session, Model model, String bankName, String memPwd) {
 		
 		int memNo = m.getMemNo();
-		System.out.println(memNo);
-		System.out.println(bankName);
+		//System.out.println(memNo);
+		//System.out.println(bankName);
 		
 		if(!reupfile.getOriginalFilename().equals("")) {
 			// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기
