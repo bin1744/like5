@@ -273,6 +273,14 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.topBoardList");
 	}
 	
+	/**
+	 * [ 칼럼 ] 임시저장
+	 * @author seong
+	 */
+	public int colStorageInsert(SqlSessionTemplate sqlSession,Board b) {
+		return sqlSession.insert("boardMapper.colStorageInsert",b);
+	}
+	
 	
 	//------------------ 한솔 -------------------------
 

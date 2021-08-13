@@ -142,6 +142,9 @@ public interface BoardService {
 	// [ 칼럼 ] 관심 칼럼 조회
 	ArrayList<Board>topBoardList();
 	
+	// [ 칼럼 ] 임시저장
+	int colStorageInsert(Board b);
+	
 	
 	
 }

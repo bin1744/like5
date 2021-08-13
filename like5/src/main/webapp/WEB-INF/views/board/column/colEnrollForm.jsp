@@ -82,9 +82,9 @@
                 <div>
                     <button type="reset" class="btn btn-outline-danger">취소</button>
                 </div>
-                <div class="submit-btn">
-                    <button type="button" onclick="submit(2);" class="btn btn-outline-danger">임시저장</button>
-                    <a data-toggle="modal" data-target="#thumbnail-modal"><button class="btn btn-danger">등록</button></a>
+                <div id="colEnrollbtn" class="submit-btn">
+                    <button  type="button" onclick="submit(2);" class="btn btn-outline-danger" disabled>임시저장</button>
+                   <button class="btn btn-danger" disabled><a data-toggle="modal" data-target="#thumbnail-modal">등록</a></button>
                 </div>
             </div>
 
@@ -137,11 +137,12 @@
 	            /*토스트 UI 에디터 insert하기 */
 	            function submit(num){
 	            	
+	            	var $title = $("#content-title").val()
+            		var content = editor.getHTML();
+	            	
 	            	// 등록하기
-	            	if(num=1){
+	            	if(num==1){
 	            		// 제목과 내용 변수에 담아서 form에 담기
-	            		var $title = $("#content-title").val()
-	            		var content = editor.getHTML();
 		            	$("#insertColumn").children().eq(2).attr("value",$title);
 		            	$("#insertColumn").children().eq(3).attr("value",content);
 
@@ -149,11 +150,12 @@
 	            		$("#insertColumn").attr("action","insert.bo").submit();
 	            	}else{
 	            		//임시저장
-	            		
+            			$("#insertColumn").children().eq(2).attr("value",$title);
+		            	$("#insertColumn").children().eq(3).attr("value",content);
+	            		$("#insertColumn").attr("action","colTemSave.bo").submit();
 	            		
 	            	}
-	            	
-	            	
+	            
 	            }
             
             </script>
@@ -209,12 +211,24 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
 
+        
+        // 제목 글자수 제한 (5글자 이상에만 작성 버튼 활성화)
+        $(function(){
+        	
+        	var $titleInput = $("#content-title");
+        	
+        	$titleInput.keyup(function(){
+        		if($titleInput.val().length>=5){
+        			$("#colEnrollbtn").children().attr("disabled",false);
+        		}
+        	})
+        	
+        });
+        
 
         /*칼럼-제목-글자수 실시간 카운팅*/
         $('#content-title').keyup(function(e){
             var title = $(this).val();
-
-            
             if(title.trim() != 0){
                 $('#counting-title').html(title.length+" / 49");  
             }else{
@@ -228,13 +242,7 @@
                 $('#counting-title').html("49 / 49");
             }
         });
-        
-        /*임시저장 alert*/
-        function temSave(){
-            alert("성공적으로 임시저장 되었습니다👍");
-            /*커뮤니티-전체보기 페이지로 이동*/
-            location.href="colList.bo";
-        }
+     
 
 
     </script>

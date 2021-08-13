@@ -653,11 +653,30 @@ public class BoardController {
 	@RequestMapping(value="columnTop4.bo",produces="application/json; charset=utf-8")
 	public String topBoardList() {
 		ArrayList<Board>list = bService.topBoardList();
-		
-		System.out.println("top4내용 조회");
-		
 		return new Gson().toJson(list);
 	}
+	
+	/**
+	 * [ 칼럼 ] 임시저장
+	 * @author seong
+	 */
+	@RequestMapping("colTemSave.bo")
+	public ModelAndView colStorageInsert(Board b,ModelAndView mv,HttpSession session) {
+		
+		int result = bService.colStorageInsert(b);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "임시 저장 성공!");
+			mv.setViewName("redirect:colList.bo");
+		}else {
+			session.setAttribute("alertMsg", "임시 저장 실패 😅");
+		}
+		
+		return mv;
+		
+	}
+	
+	
 	
 	//-----------------------------------------------------------
 	

@@ -280,6 +280,15 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.topBoardList(sqlSession);
 	}
 	
+	/**
+	 * [ 칼럼 ] 임시저장
+	 * @author seong
+	 */
+	@Override
+	public int colStorageInsert(Board b) {
+		return bDao.colStorageInsert(sqlSession, b);
+	}
+	
 	
 	//------------------ 한솔 -------------------------
 	
@@ -395,6 +404,8 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Tag> tagList() {
 		return bDao.tagList(sqlSession);
 	}
+
+	
 
 
 
