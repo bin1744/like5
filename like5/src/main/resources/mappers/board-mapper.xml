@@ -525,9 +525,10 @@
 		    , boa_content=#{content}
 		    , boa_img_path =#{imgPath}
 		    , boa_update_date = sysdate
+		    , boa_status = 'Y'
 		where 
 			boa_no = #{bno}
-		and boa_status = 'Y'
+		and boa_status = 'Y' or boa_status='F'
 	</update>
 
 	<!-- [커뮤니티] - 게시글 신고 -->
@@ -727,7 +728,7 @@
 	</select>
 	
 	
-	<!-- [ 칼럼 ] 임시저장 -->
+	<!-- [ 칼럼 ] 임시저장 등록 -->
 	<insert id="colStorageInsert">
 		insert into 
 			board
@@ -754,7 +755,7 @@
 			    )
 	</insert>
 	
-	<!-- [ 칼럼 ] - 임시저장 글 조회  -->
+	<!-- [ 칼럼 ]  임시저장 글 조회  -->
 	<select id="selectTemSave" resultMap="board">
 	  select
             boa_no

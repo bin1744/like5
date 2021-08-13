@@ -208,7 +208,7 @@
                       </thead>
                       <tbody>
                         <c:forEach var="tempSaveList" items="${ tempSaveList }">
-	                      <tr onclick="location.href='updateForm.bo?bno=${ tempSaveList.bno }'">
+	                      <tr onclick="location.href='selectTemSave.bo?bno=${ tempSaveList.bno }'">
 	                        <td><fmt:formatDate pattern="yy/MM/dd" value="${ tempSaveList.enrollDate }"></fmt:formatDate></td>
 	                        <td>${ tempSaveList.title }</td>
 	                        <td>${ tempSaveList.category }</td>
