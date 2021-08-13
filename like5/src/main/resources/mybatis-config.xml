@@ -29,7 +29,7 @@
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/admin-mapper.xml"/>
 		<mapper resource="/mappers/board-mapper.xml"/>
-		<mapper resource="/mappers/calculate-mapper"/>
+		<mapper resource="/mappers/calculate-mapper.xml"/>
 		<mapper resource="/mappers/sponsorship-mapper.xml"/>
 		<mapper resource="/mappers/customer-mapper.xml"/>
 		<mapper resource="/mappers/tag-mapper.xml"/>
