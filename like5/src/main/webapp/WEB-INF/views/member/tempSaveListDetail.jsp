@@ -77,10 +77,17 @@
       </div>
 
       <div id="sidebar">
-        <div id="profile">
-          <img src="https://i.imgur.com/pO4OGIl.jpg" alt="">
+       <div id="profile">
+        <c:choose>
+	        <c:when test="${ empty memberInfor.memProfile }">
+	         	 <img src="https://i.imgur.com/pO4OGIl.jpg" alt="">
+	         </c:when>
+	         <c:otherwise>
+	         	<img src="${ memberInfor.memProfile }" alt="">
+	         </c:otherwise>
+	    </c:choose>
           <div>
-            	${loginUser.nickName} 님
+            	${memberInfor.nickName} 님
           </div>
         </div>
          <div id="sidmenu">  
@@ -105,14 +112,14 @@
                 <div id="meminfo">
                     <div>
                         <div>
-                            	${loginUser.memName} 님
+                            	${memberInfor.memName} 님
                             <button id="change" type="button" onclick="location.href='correctInfor.me'">정보수정</button>
                         </div>
                         <div>
-                            	이메일 : ${loginUser.email}
+                            	이메일 : ${memberInfor.email}
                         </div>
                         <div>
-                            	닉네임 : ${loginUser.nickName}
+                            	닉네임 : ${memberInfor.nickName}
                         </div>
                     </div>
                 </div>
@@ -129,7 +136,7 @@
                             	정산 가능한 금액 : <fmt:formatNumber value="${ settleable }" pattern="#,###,###"/>
                         </div>
                         <div>
-                            	정산 계좌 : ${ loginUser.bank } ${ loginUser.accountNum }
+                            	정산 계좌 : ${ memberInfor.bank } ${ memberInfor.accountNum }
                         </div>
                     </div>
                 </div>
@@ -148,13 +155,24 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <c:forEach var="list" items="${ list }">
-	                      <tr>
-	                        <td><fmt:formatDate pattern="yy/MM/dd" value="${ list.enrollDate }"></fmt:formatDate></td>
-	                        <td>${ list.title }</td>
-	                        <td>${ list.category }</td>
-	                      </tr>
-                      </c:forEach>
+                    <c:forEach var="list" items="${ list }">
+	                  		<c:choose>
+		                  		<c:when test="${ list.category eq 'QNA' }">
+			                      <tr onclick="location.href='qnaUpdateForm.bo?bno=${ list.bno }'">
+			                        <td><fmt:formatDate pattern="yy/MM/dd" value="${ list.enrollDate }"></fmt:formatDate></td>
+			                        <td>${ list.title }</td>
+			                        <td>${ list.category }</td>
+			                      </tr>
+			                  	</c:when>
+			                  	<c:when test="${ list.category eq '칼럼' }">
+			                  		<tr onclick="location.href='selectTemSave.bo?bno=${ list.bno }'">
+			                        	<td><fmt:formatDate pattern="yy/MM/dd" value="${ list.enrollDate }"></fmt:formatDate></td>
+			                        	<td>${ list.title }</td>
+			                        	<td>${ list.category }</td>
+			                      	</tr>
+			                  	</c:when>
+		                	</c:choose>
+	                	</c:forEach>
                     </tbody>
                   </table>
                   <div id="pagingArea">

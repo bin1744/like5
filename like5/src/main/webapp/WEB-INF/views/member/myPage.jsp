@@ -207,13 +207,24 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <c:forEach var="tempSaveList" items="${ tempSaveList }">
-	                      <tr onclick="location.href='selectTemSave.bo?bno=${ tempSaveList.bno }'">
-	                        <td><fmt:formatDate pattern="yy/MM/dd" value="${ tempSaveList.enrollDate }"></fmt:formatDate></td>
-	                        <td>${ tempSaveList.title }</td>
-	                        <td>${ tempSaveList.category }</td>
-	                      </tr>
-                      </c:forEach>
+	                  	<c:forEach var="tempSaveList" items="${ tempSaveList }">
+	                  		<c:choose>
+		                  		<c:when test="${ tempSaveList.category eq 'QNA' }">
+			                      <tr onclick="location.href='qnaUpdateForm.bo?bno=${ tempSaveList.bno }'">
+			                        <td><fmt:formatDate pattern="yy/MM/dd" value="${ tempSaveList.enrollDate }"></fmt:formatDate></td>
+			                        <td>${ tempSaveList.title }</td>
+			                        <td>${ tempSaveList.category }</td>
+			                      </tr>
+			                  	</c:when>
+			                  	<c:when test="${ tempSaveList.category eq '칼럼' }">
+			                  		<tr onclick="location.href='selectTemSave.bo?bno=${ tempSaveList.bno }'">
+			                        	<td><fmt:formatDate pattern="yy/MM/dd" value="${ tempSaveList.enrollDate }"></fmt:formatDate></td>
+			                        	<td>${ tempSaveList.title }</td>
+			                        	<td>${ tempSaveList.category }</td>
+			                      	</tr>
+			                  	</c:when>
+		                	</c:choose>
+	                	</c:forEach>
                     </tbody>
                   </table>
                 </div>
@@ -236,11 +247,22 @@
                         </thead>
                         <tbody>
                           <c:forEach var="ansList" items="${ ansList }">
-		                      <tr onclick="location.href='comUpdateForm.bo?bno=${ ansList.reply.boaNo }'">
-		                        <td><fmt:formatDate pattern="yy/MM/dd" value="${ ansList.reply.repEnrollDate }"></fmt:formatDate></td>
-		                        <td>${ ansList.reply.repContent }</td>
-		                        <td>${ ansList.board.category }</td>
-		                      </tr>
+	                          <c:choose>
+			                  		<c:when test="${ ansList.board.category eq 'QNA' }">
+				                      <tr onclick="location.href='qnaDetail.bo?bno=${ ansList.reply.boaNo }'">
+				                        <td><fmt:formatDate pattern="yy/MM/dd" value="${ ansList.reply.repEnrollDate }"></fmt:formatDate></td>
+				                        <td>${ ansList.reply.repContent }</td>
+				                        <td>${ ansList.board.category }</td>
+				                      </tr>
+				                    </c:when>
+				                    <c:when test="${ ansList.board.category eq '일상' || ansList.board.category eq '스터디모집' }">
+				                      <tr onclick="location.href='comDetail.bo?bno=${ ansList.reply.boaNo }'">
+				                        <td><fmt:formatDate pattern="yy/MM/dd" value="${ ansList.reply.repEnrollDate }"></fmt:formatDate></td>
+				                        <td>${ ansList.reply.repContent }</td>
+				                        <td>${ ansList.board.category }</td>
+				                      </tr>
+				                    </c:when>
+				          	</c:choose>
                       	  </c:forEach>
                         </tbody>
                       </table>
