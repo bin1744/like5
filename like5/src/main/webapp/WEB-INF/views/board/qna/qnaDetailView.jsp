@@ -469,50 +469,57 @@
 
 
 		<!-- 신고하기 모달창 -->
-		<div class="modal fade" id="report-modal">
-			<div class="modal-dialog modal-dialog-centered modal-sm">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">🚨 <b>신고하기</b></h5>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-					<div class="modal-body">
-						<div class="report-user"><b>작성자 : </b> 글/댓글 작성자 닉네임</div>
-						<div class="modal-choice">
-							<table>
-								<tr>
-									<td style="font-size: 14px; padding-right: 10px;"><b>사유선택 :</b></td>
-									<td rowspan="2" style="font-size: 13px; padding-bottom: 18px;">
-										&nbsp;여러 사유에 해당되는 경우,<br>&nbsp;대표 사유를 선택해주세요.
-									</td>
-								</tr>
-								<tr><td rowspan="5"></td></tr>
-								<tr>
-									<td><input type="radio" id="f-option" name="selector">
-										<label for="f-option">홍보성 게시글</label></td>
-								</tr>
-								<tr>
-									<td><input type="radio" id="s-option" name="selector">
-										<label for="s-option">욕설 및 비방</label></td>
-								</tr>
-								<tr>
-									<td><input type="radio" id="t-option" name="selector">
-										<label for="t-option">명예훼손 및 사생활 침해</label></td>
-								</tr>
-								<tr>
-									<td><input type="radio" id="o-option" name="selector">
-										<label for="o-option">기타</label></td>
-								</tr>
-							</table>
+		<form action="report.bo" method="post">
+			<!-- 신고하기 insert 시 넘겨줄 값 -->
+            <input type="hidden" name="mno" value="${loginUser.memNo}">
+    	   	<input type="hidden" name="refNo" value="${b.bno}">
+      		<input type="hidden" name="category" value="${b.category}">
+			
+			<div class="modal fade" id="report-modal">
+				<div class="modal-dialog modal-dialog-centered modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">🚨 <b>신고하기</b></h5>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">신고하기</button>
-						<button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">취소</button>
+						<div class="modal-body">
+							<div class="report-user">&nbsp;<b>${ b.nickname }</b>님을 신고하시겠어요?</div>
+							<div class="modal-choice">
+								<table>
+									<tr>
+										<td style="font-size: 14px; padding-right: 10px;"><b>사유선택 :</b></td>
+										<td rowspan="2" style="font-size: 13px; padding-bottom: 18px;">
+											&nbsp;여러 사유에 해당되는 경우,<br>&nbsp;대표 사유를 선택해주세요.
+										</td>
+									</tr>
+									<tr><td rowspan="5"></td></tr>
+									<tr>
+										<td><input type="radio" id="a-option" name="reason" value="홍보성 게시글">
+											<label for="a-option">홍보성 게시글</label></td>
+									</tr>
+									<tr>
+										<td><input type="radio" id="b-option" name="reason" value="욕설 및 비방">
+											<label for="b-option">욕설 및 비방</label></td>
+									</tr>
+									<tr>
+										<td><input type="radio" id="c-option" name="reason" value="명예훼손 및 사생활 침해">
+											<label for="c-option">명예훼손 및 사생활 침해</label></td>
+									</tr>
+									<tr>
+										<td><input type="radio" id="d-option" name="reason" value="기타">
+											<label for="d-option">기타</label></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-danger btn-sm">신고하기</button>
+							<button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">취소</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div><!-- 신고하기 모달창 끝 -->
+		</form><!-- 신고하기 모달창 끝 -->
 
 
 		<!-- 후원하기 모달창 -->
