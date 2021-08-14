@@ -168,7 +168,7 @@
 			                    	<tr onclick="location.href='csDetail.ad?csNo=${ list.csNo }'">
 			                    		<td><fmt:formatDate pattern="yy/MM/dd" value="${ list.regDate }"/></td>
 								        <td>${ list.csTitle }</td>
-								        <td>답변완료</td>
+								        <td style="color: rgb(220, 53, 69);">답변완료</td>
 								    </tr>
 						    	</c:when>
 						    </c:choose>
