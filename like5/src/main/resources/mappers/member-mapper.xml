@@ -484,7 +484,7 @@
 		where user_status='N'
 	</select>
 
-	<select id="selectMemList" resultMap="MergerMemSponResultSet">
+	<select id="selectMemList" resultMap="memberResult">
 		select
 		      mem_no
 		    , email
