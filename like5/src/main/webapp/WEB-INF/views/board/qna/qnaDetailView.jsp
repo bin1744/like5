@@ -565,7 +565,7 @@
 	            pay_method : 'card',
 	            merchant_uid : 'merchant_' + new Date().getTime(),
 	            name : 'QnA 답변 후원하기',
-	            amount : 100,
+	            amount : 1000,
 	            buyer_email : '${ loginUser.email }',
 	            buyer_name : '${ loginUser.memName }',
 	            buyer_tel : '010-1234-5678'
