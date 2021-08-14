@@ -75,4 +75,6 @@ public interface BookingService {
 	// 13. 공간예약 선택 삭제 기능
 	public void delete(String bookingNo);
 	
+	// 14. 공간예약 상세조회
+	Booking selectOfficeSpace(int bookingNo);
 }

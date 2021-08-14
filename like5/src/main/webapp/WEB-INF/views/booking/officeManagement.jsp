@@ -62,12 +62,6 @@
         text-align: center;
     }
 
-    aside li a.active {
-        background-color: rgb(220, 53, 69);
-        color: white;
-        text-decoration: none;
-    }
-
     aside li a:hover:not(.active) {
         background-color: rgb(220, 53, 69);
         color: white;
@@ -129,6 +123,14 @@
 				});
 			}
 		}
+		
+		$(function(){
+    		$("#report-list>tbody>tr").click(function(){
+    			//location.href="Space2.bo?bno=" + $(this).children(".bno").text();
+    			location.href="Space2.bo?bno=" + $(this).children().eq(0).find("input").val();
+    			
+    		})
+    	})
 	</script>
 </head>
 <body>
