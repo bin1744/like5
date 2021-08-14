@@ -170,15 +170,16 @@ public class MemberDao {
 	public int insertInquiry(SqlSessionTemplate sqlSession, Customer c) {
 		return sqlSession.insert("memberMapper.insertInquiry",c);
 	}
+	
+	
+	/**
+	 * [QnA, 칼럼] - QnA, 칼럼 후원 insert
+	 * @author Hansol
+	 */
+	public int sponInsert(SqlSessionTemplate sqlSession, Sponsorship s) {
+		return sqlSession.insert("sponsorshipMapper.sponInsert", s);
+	}
 
-	
-
-	
-
-	
-
-	
-	
 	
 	/*신원 최근 공간 예약 리스트 조회
 	public ArrayList<Booking> myRecentBookList(SqlSessionTemplate sqlSession, int memNo){

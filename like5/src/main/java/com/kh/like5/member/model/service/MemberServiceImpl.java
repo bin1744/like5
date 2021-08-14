@@ -21,7 +21,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private MemberDao mDao;
-	
+
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
@@ -179,6 +179,15 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.calculate(sqlSession, memNo);
 		
 	}
+	
+	/**
+	 * [QnA, 칼럼] - QnA, 칼럼 후원 insert	 @author Hansol
+	 */
+	@Override
+	public int sponInsert(Sponsorship s) {
+		return mDao.sponInsert(sqlSession, s);
+	}
+	
 /*
 	@Override
 	public ArrayList<Booking> myRecentBookList(int memNo) {
@@ -186,6 +195,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 */
+
 
 
 

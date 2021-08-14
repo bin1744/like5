@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -350,5 +351,25 @@ public class MemberController {
 	}
 	
 	
+	//------------------------------- [한솔] ----------------------------------
+	
+	/**
+	 * [QnA, 칼럼] - QnA, 칼럼 후원 insert
+	 * @author Hansol
+	 */
+	
+	@RequestMapping("sponInsert.me")
+	public String sponInsert(Sponsorship s, HttpSession session, Model model, HttpServletRequest request) {
+		int result = mService.sponInsert(s);
+		String referer = (String)request.getHeader("referer");
+
+		if(result > 0) {
+			session.setAttribute("alertMsg", " 후원 결제가 성공적으로 완료되었습니다. ");
+			return "redirect:" + referer;
+		}else {
+			model.addAttribute("errorMsg", " 후원 결제에 실패하였습니다. ");
+			return "common/errorPage";
+		}
+	}
 	
 }

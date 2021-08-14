@@ -9,6 +9,10 @@
 
 <!-- qnaDetailView.css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/qnaDetailView.css" />
+
+<!-- i'mport library -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 	
 </head>
 
@@ -471,9 +475,9 @@
 		<!-- 신고하기 모달창 -->
 		<form action="report.bo" method="post">
 			<!-- 신고하기 insert 시 넘겨줄 값 -->
-            <input type="hidden" name="mno" value="${loginUser.memNo}">
-    	   	<input type="hidden" name="refNo" value="${b.bno}">
-      		<input type="hidden" name="category" value="${b.category}">
+            <input type="hidden" name="mno" value="${ loginUser.memNo }">
+    	   	<input type="hidden" name="refNo" value="${ b.bno }">
+      		<input type="hidden" name="category" value="${ b.category }">
 			
 			<div class="modal fade" id="report-modal">
 				<div class="modal-dialog modal-dialog-centered modal-sm">
@@ -523,7 +527,7 @@
 
 
 		<!-- 후원하기 모달창 -->
-		<div class="modal fade" id="sponsorship-modal">
+		<div class="modal fade" id="sponsorship-modal">      		
 			<div class="modal-dialog modal-dialog-centered modal-sm">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -536,11 +540,62 @@
 						<p style="font-size: 9px;">(OK 버튼 클릭 시 결제창으로 이동합니다.)</p>
 					</div>
 					<div class="modal-footer" style="justify-content: center;">
-						<button type="submit" class="btn btn-danger btn-block">OK</button>
+						<button type="button" id="payment" class="btn btn-danger btn-block">OK</button>
 					</div>
 				</div>
 			</div>
 		</div><!-- 후원하기 모달창 끝 -->
+		
+		<!-- 후원하기 insert 시 넘겨줄 값 -->
+		<form id="sponForm" action="sponInsert.me" method="post">
+            <input type="hidden" name="memNo" value="${ loginUser.memNo }">
+            <input type="hidden" name="smemNo" value="${ b.mno }">
+            <input type="hidden" name="sponCategory" value="1">
+            <input type="hidden" name="refBoaNo" value="${ b.bno }">
+		</form>
+		
+		<script>
+	    // 아임포트 결제 js
+		$("#payment").click(function(){
+	        var IMP = window.IMP;
+	        IMP.init('imp33726702');
+	        
+	        IMP.request_pay({
+	            pg : 'html5_inicis',
+	            pay_method : 'card',
+	            merchant_uid : 'merchant_' + new Date().getTime(),
+	            name : 'QnA 답변 후원하기',
+	            amount : 100,
+	            buyer_email : '${ loginUser.email }',
+	            buyer_name : '${ loginUser.memName }',
+	            buyer_tel : '010-1234-5678'
+	        }, function (rsp) {
+       			console.log(rsp);       			
+	    		if ( rsp.success ) {
+	    	    	jQuery.ajax({
+	    	    		url: "/payments/complete",
+	    	    		type: 'POST',
+	    	    		dataType: 'json',
+	    	    		data: {
+	    		    		imp_uid : rsp.imp_uid
+	    	    		}
+	                }).done(function(data) {
+	                    if ( everythings_fine ) {
+	                    	console.log(data);
+	                    } else {
+	                        alert(' 결제가 진행되지 않았습니다. 다시 시도해주세요. ');
+	                    }
+	                });
+            		$("#sponForm").submit();
+	            } else {
+	                var msg = ' 결제에 실패하였습니다. ';
+	                msg += ' \n 에러 원인 : ' + rsp.error_msg;
+	
+	                alert(msg);
+	            }
+        	});
+		});
+	    </script>
 
 
 		<!-- 채택하기 모달창 -->

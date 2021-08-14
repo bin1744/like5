@@ -63,6 +63,11 @@ public interface MemberService {
 
 	Member memberInfor(int memNo);
 	
+	/**
+	 * [QnA, 칼럼] - QnA, 칼럼 후원 insert	@author Hansol
+	 */
+	int sponInsert(Sponsorship s);
+	
 	//공간리스트(신원)
 	//ArrayList<Booking> myRecentBookList(int memNo);
 	
