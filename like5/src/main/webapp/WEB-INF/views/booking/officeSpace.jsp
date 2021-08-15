@@ -166,10 +166,12 @@
 			<div class="content-area5">
 				<table id="tablelist2">
 					<tr>
-						<td><input type="text" name="startDate" value="${bi.startDate}"></td>
+						<td>입주 시작일 : <input type="text" name="startDate" value="${bi.startDate}"></td>
+						<td>인원 수 : ${bi.person}</td>
 					</tr>
 					<tr>
-						<td><input type="text" name="endDate" value="${bi.endDate}"></td>
+						<td>입주 마지막일 :<input type="text" name="endDate" value="${bi.endDate}"></td>
+						<td>요청 사항 : </td>
 					</tr>
 				</table>
 			</div>
@@ -214,8 +216,7 @@
 				<hr>
 
 				<div id="buttons2">
-					<button class="btn btn-primary btn-sm" onclick="">수정하기</button>
-					<button class="btn btn-danger btn-sm" onclick="">취소하기</button>
+					<button class="btn btn-danger btn-sm" onclick="">뒤로가기</button>
 				</div>
 
 		</div>
@@ -223,31 +224,5 @@
 	</div>
 
 </div>
-<script>
-var startDate = localStorage.getItem("startDate");
-var endDate = localStorage.getItem("endDate");
-console.log(startDate);
-$.when($.ready).then(function(){
-   $("input[name=startDate]").val(startDate);
-   $("input[name=endDate]").val(endDate);
-   
-   flatpickr(".startDate",{
-	    locale:"ko",
-	    altInput:true,
-	    altFormat:"Y F d\\일",
-	    minDate:"today",
-	    dateFormat:"Y-m-d"
-	});
-
-	flatpickr(".endDate",{
-	    locale:"ko",
-	    clickOpens: true,
-	    altInput:true,
-	    altFormat:"Y F d\\일",
-	    minDate:"today",
-	    dateFormat:"Y-m-d"
-	});
-})
-</script>  
 </body>
 </html>

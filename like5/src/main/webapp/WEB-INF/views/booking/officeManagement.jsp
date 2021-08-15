@@ -155,7 +155,7 @@
         <div class="content-area">    
             <h4><b>예약관리</b></h4> 
             <div class="buttons">
-                <input type="button" value="선택삭제" class="btn btn-primary btn-sm" onclick="deleteValue();">
+                <input type="button" value="취소하기" class="btn btn-primary btn-sm" onclick="deleteValue();">
             </div>
 
 			<div class="table">
