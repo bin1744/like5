@@ -415,7 +415,7 @@
          and boa_status='Y'
 	</update>
 	
-	<!-- @@@댓글 | 대댓글 전체 조회 -->
+	<!-- 댓글 | 대댓글 전체 조회 -->
 	<select id="replyList" resultMap="reply">
 		select 
      		   rep_no
@@ -443,18 +443,23 @@
 	<insert id="insertReply">
 		insert into 
 			reply
-			    (rep_no
-			    ,boa_no
-			    ,mem_no
-			    ,rep_content
-			    ,rep_enroll_date
+			    ( rep_no
+			    , boa_no
+			    , mem_no
+			    , rep_content
+			    , rep_enroll_date
+			    , boa_category
 			    )
-	    	values
-			    (seq_rno.nextval
-			    ,#{boaNo}
-			    ,#{memNo}
-			    ,#{repContent}
-			    ,sysdate
+	       values
+			    ( seq_rno.nextval
+			    , #{boaNo}
+			    , #{memNo}
+			    , #{repContent}
+			    , sysdate
+			    , (select boa_category
+			    	 from board
+			    	where boa_no in (select #{boaNo}
+			    					   from reply))
 			    )
 	</insert>
 	
@@ -464,23 +469,28 @@
 		insert into 
 		   reply
 		    (
-			    rep_no
-			    ,boa_no
-			    ,mem_no
-			    ,rep_content
-			    ,rep_enroll_date
-			    ,ref_rep_no
-			    ,ref_level
-			    )
+			  rep_no
+			, boa_no
+			, mem_no
+			, rep_content
+			, rep_enroll_date
+			, ref_rep_no
+			, ref_level
+			, boa_category
+			)
 		    values
 		    (
-			    seq_rno.nextval
-			    ,#{boaNo}
-			    ,#{memNo}
-			    ,#{repContent}
-			    ,sysdate
-			    ,#{refRepNo}
-			    ,2
+			  seq_rno.nextval
+			 , #{boaNo}
+			 , #{memNo}
+			 , #{repContent}
+			 , sysdate
+			 , #{refRepNo}
+			 , 2
+			 , (select boa_category
+			    	 from board
+			    	where boa_no in (select #{boaNo}
+			    					   from reply))
 		    )
 	</insert>
 	
