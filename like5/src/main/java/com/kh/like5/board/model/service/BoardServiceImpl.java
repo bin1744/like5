@@ -113,7 +113,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * [커뮤니티] 댓글 | 대댓글 전체 조회
+	 * [커뮤니티, QnA] 댓글 | 대댓글 전체 조회
 	 * @author seong
 	 */
 	@Override
@@ -122,7 +122,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	/**
-	 * [커뮤니티] 댓글 작성하기
+	 * [커뮤니티, QnA] 댓글 작성하기
 	 * @author seong
 	 */
 	
@@ -132,7 +132,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * [커뮤니티] 대댓글 작성하기
+	 * [커뮤니티, QnA] 대댓글 작성하기
 	 * @author seong
 	 */
 	@Override

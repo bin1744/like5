@@ -25,8 +25,7 @@ public interface BoardService {
 	int qnaInsert(Board b);
 	
 	// 3. 게시글 상세조회
-	// 상세조회 요청 시 조회수 증가 (중복이어서 주석처리 / 추후 삭제 예정)
-	// int increaseCount(int bno);
+	// 상세조회 요청 시 조회수 증가 (중복이어서 작성 X)
 	// 실제 게시글 조회
 	Board qnaDetail(int bno);
 	

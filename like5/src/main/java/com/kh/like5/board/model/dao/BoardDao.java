@@ -109,7 +109,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 * [커뮤니티] 댓글 | 대댓글 전체 조회
+	 * [커뮤니티, QnA] 댓글 | 대댓글 전체 조회
 	 * @author seong
 	 */
 	
@@ -119,7 +119,7 @@ public class BoardDao {
 	
 	
 	/**
-	 * [커뮤니티] 댓글 작성하기
+	 * [커뮤니티, QnA] 댓글 작성하기
 	 * @author seong
 	 */
 	
@@ -128,7 +128,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 * [커뮤니티] 대댓글 작성
+	 * [커뮤니티, QnA] 대댓글 작성
 	 * @author seong
 	 */
 	public int insertReplies(SqlSessionTemplate sqlSession,Reply r) {
