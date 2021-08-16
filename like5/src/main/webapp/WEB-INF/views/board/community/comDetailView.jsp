@@ -21,12 +21,9 @@
     <div class="innerOuter" style="margin-top:50px;padding-left:50px">
         <!--댓글창까지 전체 감싸는 div-->
         <div class="talk-main-col">
-            
             <div class="content-wrapper">
                 <div class="TalkContentHeaderModule">
                     <div>
-
-
                         <h3><b>커뮤니티</b></h3><br>
                         <div class="content-header">
                             <div class="content-header-top">
@@ -38,7 +35,6 @@
                                     <span>${b.enrollDate} |</span>
                                     <span>${b.nickname}</span>
                                 </div>
-                                
                                 <div class="rigth-items">
                                     <span>조회 ${b.count }  </span>
                                     <c:choose>
@@ -57,7 +53,7 @@
 								<div>
 									<img src="${b.imgPath}" style="width:300px;height:300px;">
 								</div>
-								${b.content }
+								${b.content}
                        		</c:when>
                        		<c:otherwise>
                        			<div style="height:500px">${b.content}</div>
@@ -65,7 +61,7 @@
                        		</c:choose>
                         </div>
                         
-                        <!--글작성자에게만 보여지는 버튼-->
+                        <!--글 작성자에게만 보여지는 버튼-->
                         <c:choose>
                         	<c:when test="${loginUser.memNo eq b.mno}">
                         		<div class="content-footer" align="center">
@@ -74,15 +70,12 @@
 	                        	</div>
                         	</c:when>
                         </c:choose>
-	                        
-                        
-     
-	                       		 
                         <hr>
                     </div>
                 </div>
             </div>
             
+            <!-- 수정/삭제시 필요한 값들을 form에 담아 원하는 url로 전송 -->
             <form id="postForm" action="" method="post">
 				<input type="hidden" name="bno" value="${b.bno}">
 				<input type="hidden" name="imgPath" value="${b.imgPath}">
@@ -91,9 +84,9 @@
 					
 			<script>
 				function postFormSubmit(num){
-					if(num==1){ // 수정하기
+					if(num==1){ 
+						// 수정하기
 						$("#postForm").attr("action","updateForm.bo").submit();
-					 	// 선택된 요소에 액션값 부여하고, 바로 submit 시키기 == 메소드 체이닝
 					}else{ // 삭제하기
 						$("#postForm").attr("action","delete.bo").submit();
 					}
@@ -101,7 +94,7 @@
 			</script>
             
             
-           		<!-- 삭제하기 모달창 -->
+           	<!-- 삭제하기 모달창 -->
                <div class="container">
                    <!-- The Modal -->
                    <div class="modal fade" id="delete-modal">
@@ -142,10 +135,8 @@
 
 
             <form action="report.bo" method="post" style="margin-top: 0px;" >
-            
                 <!--신고하기 모달창-->
                 <div class="container">
-                   
                     <!-- The Modal -->
                     <div class="modal fade" id="report-modal">
                     <input type="hidden" name="mno" value="${loginUser.memNo}">
@@ -238,10 +229,13 @@
 							<div id="answerComment"></div>
 							
                             <script >
+                            
+                            	// 댓글 조회
                             	$(function(){
                             		selectReplyList();
                             	})
 						       	
+                            	// Ajax로 댓글 조회
                             	function selectReplyList(){
 
                             		var repNo=[];
@@ -256,8 +250,9 @@
                             				$("#rcount").text(list.length);
                             				
                             				var value="";
-                            				
+                            				// reflevel이 1일 경우 댓글 | 2일경우 대댓글 
                             				for(var i in list){
+                            					// 댓글 조회
                             					if(list[i].refLevel == 1){
 
                             						  value += 
@@ -330,62 +325,73 @@
 	                            					}
                             					}
                             				}
-                            			},error:function(){
-                            				console.log("ajax통신실패");
                             			}
                             		})
                             		}
                             	
-                            	// Ajax 댓글 작성하기
-                            	function insertReply(){
-                            		
-                            		if($("#comment").val().trim().length != 0){
-                            			// 댓글일때
-                            				$.ajax({
-                                				url:"insertReply.bo",
-                                				data:{
-                                					boaNo :${b.bno}
-                                					,repContent : $("#comment").val()
-                                					,memNo : '${loginUser.memNo}'
-                                				},success:function(status){
-                                					
-                        	      					if(status == "success"){
-                        	      						// 댓글 리스트 갱신해야함
-                        	      						selectReplyList();
-                        	      						// 작성해놓은 댓글도 지워야함
-                        	      						$("#comment").val("");
-                        	      					}
-                                				}, error:function(){
-                        	      					console.log("댓글 작성용 AJAX 통신 실패");
-                        	      				}
-                                			})
-                            		}
-                            	}
-                            	
-                               // Ajax 대댓글 작성하기
-                            	function insertReplies(repNo){
-                            		if($("#insertReplies").val().trim().length != 0){
-                            				// 대댓글일때
-                            				$.ajax({
-                                				url:"insertReplies.bo",
-                                				data:{
-                                					boaNo : ${b.bno}
-                                					,repContent : $("#insertReplies").val()
-                                					,memNo : '${loginUser.memNo}'
-                                					,refRepNo : repNo
-                                				},success:function(status){
-                        	      					if(status == "success"){
-                        	      						// 전체 댓글 리스트 갱신해야함
-                        	      						selectReplyList();
-                        	      						// 작성해놓은 대댓글도 지워야함
-                        	      						$("#insertReplies").val("");
-                        	      					}
-                                				}, error:function(){
-                        	      					console.log("댓글 작성용 AJAX 통신 실패");
-                        	      				}
-                                			})
-                            		}
-                            	}
+	                            	// Ajax 댓글 작성하기
+	                            	function insertReply(){
+	                            		
+	                            		if($("#comment").val().trim().length != 0){
+	                            			// 댓글일때
+	                            				$.ajax({
+	                                				url:"insertReply.bo",
+	                                				data:{
+	                                					boaNo :${b.bno}
+	                                					,repContent : $("#comment").val()
+	                                					,memNo : '${loginUser.memNo}'
+	                                				},success:function(status){
+	                                					
+	                        	      					if(status == "success"){
+	                        	      						//  전체 댓글 리스트 갱신
+	                        	      						selectReplyList();
+	                        	      						// 작성해놓은 댓글 삭제
+	                        	      						$("#comment").val("");
+	                        	      					}
+	                                				}
+	                                			})
+	                            		}
+	                            	}
+	                            	
+	                               // Ajax 대댓글 작성하기
+	                            	function insertReplies(repNo){
+	                            		if($("#insertReplies").val().trim().length != 0){
+	                            				// 대댓글일때
+	                            				$.ajax({
+	                                				url:"insertReplies.bo",
+	                                				data:{
+	                                					boaNo : ${b.bno}
+	                                					,repContent : $("#insertReplies").val()
+	                                					,memNo : '${loginUser.memNo}'
+	                                					,refRepNo : repNo
+	                                				},success:function(status){
+	                        	      					if(status == "success"){
+	                        	      						// 전체 댓글 리스트 갱신
+	                        	      						selectReplyList();
+	                        	      						// 작성해놓은 대댓글 삭제
+	                        	      						$("#insertReplies").val("");
+	                        	      					}
+	                                				}
+	                                			})
+	                            		}
+	                            	}
+	                               
+	                         	   /*대댓글 문구 변경*/
+	                           	  $(document).on("click", ".comments", function(){
+	                           		  var a = $(this).text();
+	                           		  if(a=='취소하기'){
+	                           			  $(this).text("대댓글 달기");
+	                           		  }else{
+	                           			  $(this).text("취소하기");
+	                           		  }
+	                             	 });
+	                          	   
+	                          	   /*원댓글 번호를 대댓글의 참조 댓글 번호로 가져오는 구문*/
+	                           	   $(document).on("click",".insert-comments",function(){
+	                          	      insertReplies($(this).prev().val());
+	                          	   });
+	                          	   
+	                          	   
                             </script>
                         </div>
                     </div>
@@ -395,23 +401,6 @@
     </div>
 
     
-                            
-    <script>
-	   /*대댓글 문구 변경*/
- 	  $(document).on("click", ".comments", function(){
- 		  var a = $(this).text();
- 		  if(a=='취소하기'){
- 			  $(this).text("대댓글 달기");
- 		  }else{
- 			  $(this).text("취소하기");
- 		  }
-   	 });
-	   
- 	   $(document).on("click",".insert-comments",function(){
-	      insertReplies($(this).prev().val());
-	   });
-    </script>
-
 	<!--푸터바-->
 	<jsp:include page="../../common/footer.jsp" />
 
