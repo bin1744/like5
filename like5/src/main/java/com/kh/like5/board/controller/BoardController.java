@@ -617,7 +617,7 @@ public class BoardController {
 	
 	@RequestMapping("colOrderByCount.bo")
 	public ModelAndView colOrderByCount(ModelAndView mv,@RequestParam(value="currentPage",defaultValue="1")
-										int currentPage, String condition) {
+										int currentPage, String condition,String flag) {
 		
 	int listCount = bService.colListCount();
 	PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 9);
@@ -628,6 +628,7 @@ public class BoardController {
 		.addObject("colList",colList)
 		.addObject("condition",condition)
 		.addObject("listCount",listCount)
+		.addObject("flag",flag)
 		.setViewName("board/column/colListView");
 	  return mv;
 	}
