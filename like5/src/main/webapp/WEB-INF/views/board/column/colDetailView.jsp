@@ -168,7 +168,7 @@
 			<form id="sponForm" action="sponInsert.me" method="post">
 	            <input type="hidden" name="memNo" value="${ loginUser.memNo }">
 	            <input type="hidden" name="smemNo" value="${ b.mno }">
-	            <input type="hidden" name="sponCategory" value="1">
+	            <input type="hidden" name="sponCategory" value="2">
 	            <input type="hidden" name="refBoaNo" value="${ b.bno }">
 			</form>       
 
