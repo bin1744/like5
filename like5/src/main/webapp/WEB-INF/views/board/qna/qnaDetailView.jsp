@@ -104,13 +104,13 @@
 									<c:choose>
 										<c:when test="${!empty loginUser}">
 											<tr>
-												<td class="icon"><i class="far fa-thumbs-up" id="like"></i>
+												<td class="icon" onclick="likeAndScrap(1);"><i class="far fa-thumbs-up" id="like"></i>
 													<i class="fas fa-thumbs-up" id="selected-like" style="display: none; color: rgb(220, 53, 69);"></i>
 												</td>
 											</tr>
 											<tr><td class="iconName">좋아요</td></tr>
 											<tr>
-												<td class="icon"><i class="far fa-bookmark" id="scrap"></i>
+												<td class="icon" onclick="likeAndScrap(2);"><i class="far fa-bookmark" id="scrap"></i>
 													<i class="fas fa-bookmark" id="selected-scrap" style="display: none; color: rgb(220, 53, 69);"></i>
 												</td>
 											</tr>
@@ -175,9 +175,9 @@
 					</div><!-- 우측 아이콘 옵션 끝 -->
 				</div><!-- 게시글 상세 영역 끝 -->
 			</div><!-- 페이지 중단 게시글 디테일 영역 끝 -->
-			
+						
 			<script>
-			//좋아요 아이콘 클릭 시 아이콘 변경
+			<%--좋아요 아이콘 클릭 시 아이콘 변경
 			$('[class$=fa-thumbs-up]').click(function() {
 				if ($('#selected-like').css('display') == 'none') {
 					$('#selected-like').css('display', '');
@@ -197,7 +197,90 @@
 					$('#selected-scrap').css('display', 'none');
 					$('#scrap').css('display', '');
 				}
-			})
+			})--%>
+			
+			// 좋아요(1), 스크랩(2) insert/delete js
+			function likeAndScrap(num){
+				if(num == 1){
+					// 좋아요 버튼 클릭 시 like 테이블에 insert
+					$("#like").click(function(){
+						$.ajax({
+							url: "likeAndScrap.bo",
+							data: {
+								bno: ${ b.bno },
+								mno: ${ loginUser.memNo },
+								condition: "like",
+							}
+							,success: function(status){
+								if(status == "success"){
+									alertify.alert("좋아요 성공!🎉");
+									$('#selected-like').css('display', '');
+                					$('#like').css('display', 'none');
+								}
+							}
+						})
+					})
+					
+					// 좋아요 비활성화 버튼 클릭 시 like 테이블에서 delete
+					$("#selected-like").click(function(){
+						$.ajax({
+							url: "UnlikeAndUnScrap.bo",
+							data: {
+								bno: ${ b.bno },
+								mno: ${ loginUser.memNo },
+								condition: "like",
+							}
+							,success: function(status){
+								if(status == "success"){
+									alertify.alert("좋아요 해제😅");
+									$('#like').css('display','');
+            						$('#selected-like').css('display','none');
+								}
+							}
+						})
+					})
+				}
+				
+				if(num == 2){
+					// 스크랩 버튼 클릭 시 like 테이블에 insert
+					$("#scrap").click(function(){
+						$.ajax({
+							url: "likeAndScrap.bo",
+							data: {
+								bno: ${ b.bno },
+								mno: ${ loginUser.memNo },
+								condition: "scrap",
+							}
+							,success: function(status){
+								if(status == "success"){
+									alertify.alert("스크랩 성공!🎉");
+									$('#selected-scrap').css('display', '');
+                					$('#scrap').css('display', 'none');
+								}
+							}
+						})
+					})
+					
+					// 스크랩 비활성화 버튼 클릭 시 like 테이블에서 delete
+					$("#selected-like").click(function(){
+						$.ajax({
+							url: "UnlikeAndUnScrap.bo",
+							data: {
+								bno: ${ b.bno },
+								mno: ${ loginUser.memNo },
+								condition: "scrap",
+							}
+							,success: function(status){
+								if(status == "success"){
+									alertify.alert("스크랩 해제😅");
+									$('#scrap').css('display','');
+            						$('#selected-scrap').css('display','none');
+								}
+							}
+						})
+					})
+				}
+			}
 			</script>
 			
 			
