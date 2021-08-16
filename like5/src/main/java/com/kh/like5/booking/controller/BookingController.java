@@ -429,4 +429,17 @@ public class BookingController {
         }
         return "redirect:space.bo";
     }
+	
+	/*예약관리 리스트 상세조회*/
+	@RequestMapping("Space2.bo")
+	public ModelAndView selectOfficeSpace(int bno, ModelAndView mv) {
+		int bookingNo = bno;
+		
+		Booking bi = bService.selectOfficeSpace(bookingNo);
+		
+		mv.addObject("bi", bi).setViewName("booking/officeSpace");
+		System.out.println(bi);
+		return mv;
+	}
+	
 }

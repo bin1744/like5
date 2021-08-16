@@ -148,4 +148,9 @@ public class BookingDao {
 	public void delete(SqlSessionTemplate sqlSession, String bookingNo) {
 		sqlSession.delete("bookingMapper.delete", bookingNo);
 	}
+	
+	/*예약 관리 리스트 상세 조회*/
+	public Booking selectOfficeSpace(SqlSessionTemplate sqlSession, int bookingNo) {
+		return sqlSession.selectOne("bookingMapper.selectOfficeSpace", bookingNo);
+	}
 }

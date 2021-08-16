@@ -109,7 +109,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 * [커뮤니티] 댓글 | 대댓글 전체 조회
+	 * [커뮤니티, QnA] 댓글 | 대댓글 전체 조회
 	 * @author seong
 	 */
 	
@@ -119,7 +119,7 @@ public class BoardDao {
 	
 	
 	/**
-	 * [커뮤니티] 댓글 작성하기
+	 * [커뮤니티, QnA] 댓글 작성하기
 	 * @author seong
 	 */
 	
@@ -128,7 +128,7 @@ public class BoardDao {
 	}
 	
 	/**
-	 * [커뮤니티] 대댓글 작성
+	 * [커뮤니티, QnA] 대댓글 작성
 	 * @author seong
 	 */
 	public int insertReplies(SqlSessionTemplate sqlSession,Reply r) {
@@ -264,6 +264,31 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.decreaseCounts",map);
 	}
 	
+
+	/**
+	 * Ajax [ 칼럼 ] 관심 칼럼 조회
+	 * @author seong
+	 */
+	public ArrayList<Board>topBoardList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("boardMapper.topBoardList");
+	}
+	
+	/**
+	 * [ 칼럼 ] 임시저장
+	 * @author seong
+	 */
+	public int colStorageInsert(SqlSessionTemplate sqlSession,Board b) {
+		return sqlSession.insert("boardMapper.colStorageInsert",b);
+	}
+	
+	/**
+	 * [ 칼럼 ] 임시저장 글 조회
+	 * @author seong
+	 */
+	public Board selectTemSave(SqlSessionTemplate sqlSession,int bno){
+		return sqlSession.selectOne("boardMapper.selectTemSave",bno);
+	}
+	
 	
 	//------------------ 한솔 -------------------------
 
@@ -316,5 +341,22 @@ public class BoardDao {
 	 */
 	public Board qnaDetail(SqlSessionTemplate sqlSession, int bno) {
 		return sqlSession.selectOne("boardMapper.qnaDetail", bno);
+	}
+	
+	/**
+	 * [QnA] - QnaDetailView 게시글 delete
+	 * @author Hansol
+	 */
+	public int qnaDelete(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.update("boardMapper.qnaDelete", bno);
+	}
+	
+	/**
+	 * [QnA] - QnaUpdateForm 게시글 update
+	 * @author Hansol
+	 */
+	public int qnaUpdate(SqlSessionTemplate sqlSession, Board b) {
+		System.out.println(b);
+		return sqlSession.update("boardMapper.qnaUpdate", b);
 	}
 }

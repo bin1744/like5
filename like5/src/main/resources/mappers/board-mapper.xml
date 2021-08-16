@@ -402,6 +402,8 @@
           and boa_status='Y'
 	</select>
 	
+
+	
 	<!-- [공통] 게시글 상세보기시 조회수 증가 -->
 	<update id="increaseCount">
 	     update 
@@ -415,40 +417,49 @@
 	
 	<!-- 댓글 | 대댓글 전체 조회 -->
 	<select id="replyList" resultMap="reply">
-		 select 
-	            rep_no
-	            ,boa_no
-	            ,nickname
-	            ,rep_content
-	            ,rep_enroll_date
-	            ,rep_adoption
-	            ,rep_status
-	            ,ref_rep_no
-	            ,ref_level
-	        from reply
-	        join member using(mem_no)
-	        where boa_no = #{bno}
-         	start with ref_rep_no = 0 
-            connect by prior rep_no = ref_rep_no
-	        order siblings by rep_enroll_date desc
+		select 
+     		   rep_no
+     		   , boa_no
+     		   , mem_no
+     		   , nickname
+     		   , rep_content
+     		   , rep_enroll_date
+     		   , rep_adoption
+     		   , rep_status
+     		   , ref_rep_no
+     		   , ref_level
+     		   , (select boa_category
+     		   		from board b
+     		   	   where r.boa_no = b.boa_no) category
+		  from reply r
+		  join member using(mem_no)
+		 where boa_no = #{bno}
+		 start with ref_rep_no = 0 
+	   connect by prior rep_no = ref_rep_no
+		 order siblings by rep_enroll_date desc
 	</select>
 	
 	<!-- 댓글 작성하기 -->
 	<insert id="insertReply">
 		insert into 
 			reply
-			    (rep_no
-			    ,boa_no
-			    ,mem_no
-			    ,rep_content
-			    ,rep_enroll_date
+			    ( rep_no
+			    , boa_no
+			    , mem_no
+			    , rep_content
+			    , rep_enroll_date
+			    , boa_category
 			    )
-	    	values
-			    (seq_rno.nextval
-			    ,#{boaNo}
-			    ,#{memNo}
-			    ,#{repContent}
-			    ,sysdate
+	       values
+			    ( seq_rno.nextval
+			    , #{boaNo}
+			    , #{memNo}
+			    , #{repContent}
+			    , sysdate
+			    , (select boa_category
+			    	 from board
+			    	where boa_no in (select #{boaNo}
+			    					   from reply))
 			    )
 	</insert>
 	
@@ -458,23 +469,28 @@
 		insert into 
 		   reply
 		    (
-			    rep_no
-			    ,boa_no
-			    ,mem_no
-			    ,rep_content
-			    ,rep_enroll_date
-			    ,ref_rep_no
-			    ,ref_level
-			    )
+			  rep_no
+			, boa_no
+			, mem_no
+			, rep_content
+			, rep_enroll_date
+			, ref_rep_no
+			, ref_level
+			, boa_category
+			)
 		    values
 		    (
-			    seq_rno.nextval
-			    ,#{boaNo}
-			    ,#{memNo}
-			    ,#{repContent}
-			    ,sysdate
-			    ,#{refRepNo}
-			    ,2
+			  seq_rno.nextval
+			 , #{boaNo}
+			 , #{memNo}
+			 , #{repContent}
+			 , sysdate
+			 , #{refRepNo}
+			 , 2
+			 , (select boa_category
+			    	 from board
+			    	where boa_no in (select #{boaNo}
+			    					   from reply))
 		    )
 	</insert>
 	
@@ -523,12 +539,13 @@
 		    , boa_content=#{content}
 		    , boa_img_path =#{imgPath}
 		    , boa_update_date = sysdate
+		    , boa_status = 'Y'
 		where 
 			boa_no = #{bno}
-		and boa_status = 'Y'
+		and boa_status = 'Y' or boa_status='F'
 	</update>
 
-	<!-- [커뮤니티] - 게시글 신고 -->
+	<!-- [커뮤니티, QnA] - 게시글 신고 -->
 	<insert id="reportCommunity">
 		insert into 
 		report
@@ -576,6 +593,7 @@
 	                 join member using (mem_no)
 	        where regexp_like (boa_category,'칼럼')
 	          and boa_status='Y'
+	         order by boa_enroll_date desc
 	</select>
 	
 	<!-- 최신 | 조회수 | 댓글수 기준으로 조회 -->	
@@ -713,6 +731,61 @@
 			boa_no = #{bno}
     </update>
 	
+	<!-- [ 칼럼 ] 관심 칼럼 조회 -->
+	<select id="topBoardList" resultMap="board">
+		select rownum, b.*
+		from (select boa_no, boa_title, boa_img_path
+		        from board
+		        where boa_status='Y'
+		        order by boa_like desc) b
+		where rownum between 1 and 4
+	</select>
+	
+	
+	<!-- [ 칼럼 ] 임시저장 등록 -->
+	<insert id="colStorageInsert">
+		insert into 
+			board
+			    (
+		    	boa_no
+			    ,mem_no
+			    ,boa_category
+			    ,boa_title
+			    ,boa_content
+			    ,boa_enroll_date
+			    ,boa_img_path
+			    ,boa_status
+			    )
+		    values
+	    		(
+			    seq_bno.nextval
+			    ,#{mno}
+			    ,#{category}
+			    ,#{title}
+			    ,#{content}
+			    ,sysdate
+			    ,#{imgPath}
+			    ,'F'
+			    )
+	</insert>
+	
+	<!-- [ 칼럼 ]  임시저장 글 조회  -->
+	<select id="selectTemSave" resultMap="board">
+	  select
+            boa_no
+            ,mem_no
+             ,nickname
+             ,boa_category
+             ,boa_title
+             ,boa_content
+             ,boa_enroll_date
+             ,boa_img_path
+             ,boa_count
+        from board b
+                 join member using (mem_no)
+        where boa_no = #{bno}
+          and boa_status='F'
+	</select>
 	
 	
 	<!-- ********** 한솔 ********** -->
@@ -824,6 +897,7 @@
 		select
 			   boa_no
 			 , mem_no
+			 , boa_category
 			 , boa_title
 			 , tag_name
 			 , boa_like
@@ -834,13 +908,38 @@
 			 , nickname
 			 , boa_enroll_date
 			 , boa_content
+			 , boa_status
 		  from board b
 		  join member using(mem_no)
 		 where
 		 	   boa_no = #{bno}
-		 	   and boa_category like 'QNA'
+		 	   and boa_category = 'QNA'
 	</select>
 	
+	<!-- [QnA] - QnaDetailView 게시글 delete -->
+	<!-- 임시저장 또는 등록된 게시글 중 채택된 댓글이 없을 경우만 delete 가능 -->
+	<update id="qnaDelete">
+		update board
+		   set boa_status = 'N'
+		 where boa_no in (select #{bno}
+		                    from board b
+		                    join reply r using (boa_no)
+		                   where (b.boa_status = 'Y' or b.boa_status = 'F')
+		                         and r.rep_adoption = 'N')
+	</update>
+	
+	<!-- [QnA] - QnaUpdateForm 게시글 update -->
+	<update id="qnaUpdate">
+		update board
+		   set
+		   	   boa_title = #{title}
+		   	 , tag_name = #{tag}
+		   	 , boa_content = #{content}
+		   	 , boa_status = 'Y'
+		   	 , boa_update_date = sysdate
+		 where boa_no = #{bno}
+	</update>
+
 
 
 </mapper>

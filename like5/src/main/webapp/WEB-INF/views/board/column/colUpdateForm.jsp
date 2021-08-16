@@ -160,16 +160,15 @@
 	    function submit(){
 	    	
 	    	// 수정하기
-	    	if(num=1){
-	    		// 제목과 내용 변수에 담아서 form에 담기
-	    		var $title = $("#content-title").val()
-	    		var content = editor.getHTML();
-	        	$("#updateColumn").children().eq(2).attr("value",$title);
-	        	$("#updateColumn").children().eq(3).attr("value",content);
-	
-	        	//form을 submit하기
-	    		$("#updateColumn").attr("action","update.bo").submit();
-	    	}
+    		// 제목과 내용 변수에 담아서 form에 담기
+    		var $title = $("#content-title").val()
+    		var content = editor.getHTML();
+        	$("#updateColumn").children().eq(2).attr("value",$title);
+        	$("#updateColumn").children().eq(3).attr("value",content);
+
+        	//form을 submit하기
+    		$("#updateColumn").attr("action","update.bo").submit();
+    	
 	    	
 	    };
     
@@ -177,7 +176,6 @@
 
         /*첨부파일-div 영역 클릭시 첨부파일 등록*/
         $(function(){
-            
             $("#file-area").hide();
             $("#thumbnail").click(function(){
                 $("#thumbnail1").click();	
@@ -230,12 +228,6 @@
             }
         });
         
-        /*임시저장 alert*/
-        function temSave(){
-            alert("성공적으로 임시저장 되었습니다👍");
-            /*커뮤니티-전체보기 페이지로 이동*/
-            location.href="colList.bo";
-        }
 
 
     </script>

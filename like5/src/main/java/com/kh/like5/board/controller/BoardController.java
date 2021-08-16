@@ -87,7 +87,7 @@ public class BoardController {
 	 * [한솔] QnaEnrollForm 게시글 임시저장 insert
 	 */
 	@RequestMapping("qnaStorageInsert.bo")
-	public String qnaStorageInsert(Board b, MultipartFile upfile, HttpSession session, Model model) {
+	public String qnaStorageInsert(Board b, HttpSession session, Model model) {
 		int result = bService.qnaStorageInsert(b);
 		
 		if(result > 0) {
@@ -103,7 +103,7 @@ public class BoardController {
 	 * [한솔] QnaDetailView 게시글 상세 페이지
 	 */
 	@RequestMapping("qnaDetail.bo")
-	public ModelAndView qnaDetail(int bno, ModelAndView mv)  {
+	public ModelAndView qnaDetail(int bno, ModelAndView mv) {
 		// 조회수 증가
 		int result = bService.increaseCount(bno);
 		
@@ -122,7 +122,55 @@ public class BoardController {
 		return mv;
 	}
 	
-
+	/** 
+	 * [한솔] QnaDetailView 게시글 delete
+	 */
+	@RequestMapping("qnaDelete.bo")
+	public String qnaDelete(int bno, Model model, HttpSession session) {
+		int result = bService.qnaDelete(bno);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", " 게시글이 삭제되었습니다. ");
+			return "redirect:qnaList.bo";
+		}else {
+			model.addAttribute("errorMsg", " 게시글 삭제에 실패하였습니다. ");
+			return "common/errorPage";
+		}
+	}
+	
+	/** 
+	 * [한솔] QnaDatailView 게시글 수정하기 페이지 호출
+	 */
+	@RequestMapping("qnaUpdateForm.bo")
+	public ModelAndView qnaUpdateForm(Board b, int bno, ModelAndView mv) {	
+		Board qnaBoard = bService.qnaDetail(bno = b.getBno());
+		String qnaStatus = b.getStatus();
+		ArrayList<Tag> tagList = bService.tagList();
+		
+		mv.addObject("bno", bno)
+		  .addObject("status", qnaStatus)
+		  .addObject("tagList", tagList)
+		  .addObject("qnaBoard", qnaBoard)
+		  .setViewName("board/qna/qnaUpdateForm");
+		
+		return mv;
+	}
+	
+	/** 
+	 * [한솔] QnaUpdateForm 게시글 Update
+	 */
+	@RequestMapping("qnaUpdate.bo")
+	public String qnaUpdate(Board b, HttpSession session, Model model) {
+		int result = bService.qnaUpdate(b);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", " 게시글이 성공적으로 수정되었습니다. ");
+			return "redirect:qnaList.bo";
+		}else {
+			model.addAttribute("errorMsg", " 게시글 수정에 실패하였습니다. ");
+			return "common/errorPage";
+		}
+	}
 	
 
 	/* -------- 푸터 -------- */
@@ -399,6 +447,10 @@ public class BoardController {
 		return mv;
 	}
 	
+	
+	
+	
+	
 	/**
 	 * [커뮤니티 | 칼럼] - 게시글 수정하기
 	 * @author seong
@@ -622,10 +674,56 @@ public class BoardController {
 		
 		if(result>0) {
 			int decreaseCounts = bService.decreaseCounts(map);
-			System.out.println("성공적으로 감소");
 		}
 		
 		return result>0? "success" : "fail";
+	}
+	
+	
+	/**
+	 * Ajax [ 칼럼 ] 관심 칼럼 조회
+	 * @author seong
+	 */
+	
+	@ResponseBody
+	@RequestMapping(value="columnTop4.bo",produces="application/json; charset=utf-8")
+	public String topBoardList() {
+		ArrayList<Board>list = bService.topBoardList();
+		return new Gson().toJson(list);
+	}
+	
+	/**
+	 * [ 칼럼 ] 임시저장 등록
+	 * @author seong
+	 */
+	@RequestMapping("colTemSave.bo")
+	public ModelAndView colStorageInsert(Board b,ModelAndView mv,HttpSession session) {
+		
+		int result = bService.colStorageInsert(b);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "임시 저장 성공!");
+			mv.setViewName("redirect:colList.bo");
+		}else {
+			session.setAttribute("alertMsg", "임시 저장 실패 😅");
+		}
+		
+		return mv;
+		
+	}
+	
+	/**
+	 * [ 칼럼 ] 임시저장 글 조회  -->
+	 * @author seong
+	 */
+	
+	@RequestMapping("selectTemSave.bo")
+	public ModelAndView selectTemSave(int bno,ModelAndView mv) {
+		
+		mv.addObject("b",bService.selectTemSave(bno))
+			.setViewName("board/column/colUpdateForm");;
+		
+		return mv;
 	}
 	
 	

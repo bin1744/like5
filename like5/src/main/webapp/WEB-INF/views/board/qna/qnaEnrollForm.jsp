@@ -93,14 +93,15 @@
 						<!-- 버튼 영역 -->
 						<div class="w3-container w3-right-align w3-margin-top">
 							<button type="button" onclick="storage()" class="w3-button w3-white w3-border w3-border-gray w3-round">임시저장</button>
-							<button type="submit" onclick="formTest()" class="btn btn-danger" id="submitButton">작성하기</button>
+							<button type="submit" class="btn btn-danger" id="submitButton">작성하기</button>
 						</div><!-- 버튼 영역 끝 -->
 					</form><!-- 제목, 태그, 본문 작성 영역 끝 -->
 				</div><!-- 좌측 글쓰기 영역 끝 -->
 				
 				<script>
 				// 작성하기 버튼 클릭 시 유효성 검사
-				(function formTest() {
+				(function() {
+					'use strict';
 					window.addEventListener('load', function() {
 						var forms = document.getElementsByClassName('qnaWrite');
 						var validation = Array.prototype.filter.call(forms, function(form) {
@@ -116,9 +117,11 @@
 				})();
 				
 				// 임시저장 클릭 시 qnaStorageInsert.bo로 값 제출
-				function storage(num){
+				function storage(){
 					$("#enrollForm").attr("action", "qnaStorageInsert.bo").submit();
 				}
+
+				// 사용자가 입력한 태그 데이터 검사
 				</script>
 	
 				<!-- 우측 설명 영역 & 팁 아코디언 -->

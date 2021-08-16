@@ -113,7 +113,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * [커뮤니티] 댓글 | 대댓글 전체 조회
+	 * [커뮤니티, QnA] 댓글 | 대댓글 전체 조회
 	 * @author seong
 	 */
 	@Override
@@ -122,7 +122,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	/**
-	 * [커뮤니티] 댓글 작성하기
+	 * [커뮤니티, QnA] 댓글 작성하기
 	 * @author seong
 	 */
 	
@@ -132,7 +132,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * [커뮤니티] 대댓글 작성하기
+	 * [커뮤니티, QnA] 대댓글 작성하기
 	 * @author seong
 	 */
 	@Override
@@ -270,6 +270,34 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.decreaseCounts(sqlSession, map);
 	}
 
+
+	/**
+	 * Ajax [ 칼럼 ] 관심 칼럼 조회
+	 * @author seong
+	 */
+	@Override
+	public ArrayList<Board> topBoardList() {
+		return bDao.topBoardList(sqlSession);
+	}
+	
+	/**
+	 * [ 칼럼 ] 임시저장 등록
+	 * @author seong
+	 */
+	@Override
+	public int colStorageInsert(Board b) {
+		return bDao.colStorageInsert(sqlSession, b);
+	}
+	
+	/**
+	 * [ 칼럼 ] 임시저장 글 조회
+	 * @author seong
+	 */
+	
+	@Override
+	public Board selectTemSave(int bno) {
+		return bDao.selectTemSave(sqlSession, bno);
+	}
 	
 	
 	//------------------ 한솔 -------------------------
@@ -325,8 +353,7 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	@Override
 	public int qnaDelete(int bno) {
-		// TODO Auto-generated method stub
-		return 0;
+		return bDao.qnaDelete(sqlSession, bno);
 	}
 
 	/**
@@ -335,8 +362,7 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	@Override
 	public int qnaUpdate(Board b) {
-		// TODO Auto-generated method stub
-		return 0;
+		return bDao.qnaUpdate(sqlSession, b);
 	}
 
 	/**
@@ -387,6 +413,12 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Tag> tagList() {
 		return bDao.tagList(sqlSession);
 	}
+
+
+
+	
+
+
 
 
 

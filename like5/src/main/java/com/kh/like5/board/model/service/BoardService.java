@@ -25,8 +25,7 @@ public interface BoardService {
 	int qnaInsert(Board b);
 	
 	// 3. 게시글 상세조회
-	// 상세조회 요청 시 조회수 증가 (중복이어서 주석처리 / 추후 삭제 예정)
-	// int increaseCount(int bno);
+	// 상세조회 요청 시 조회수 증가 (중복이어서 작성 X)
 	// 실제 게시글 조회
 	Board qnaDetail(int bno);
 	
@@ -136,12 +135,17 @@ public interface BoardService {
 	//  [ 스크랩 | 좋아요 ]  해제
 	int UnlikeAndUnScrap(HashMap<String,Object>map);
 	
+	// [ 스크랩 | 좋아요 ] count 감소
 	int decreaseCounts(HashMap<String,Object>map);
 	
-	//[칼럼] - 글 수정하기
+	// [ 칼럼 ] 관심 칼럼 조회
+	ArrayList<Board>topBoardList();
 	
-	//[칼럼] - 삭제하기
+	// [ 칼럼 ] 임시저장 등록 
+	int colStorageInsert(Board b);
 	
+	// [ 칼럼 ] 임시저장 글 조회  
+	Board selectTemSave(int bno);
 	
 	
 }

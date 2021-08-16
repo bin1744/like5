@@ -183,4 +183,9 @@ public class BookingServiceImpl implements BookingService{
 		
 	}
 
+	@Override
+	public Booking selectOfficeSpace(int bookingNo) {
+		return bDao.selectOfficeSpace(sqlSession, bookingNo);
+	}
+
 }
