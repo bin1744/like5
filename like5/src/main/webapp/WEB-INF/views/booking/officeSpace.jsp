@@ -29,11 +29,11 @@
 	}
 	.content-area5{
 		/* border: 1px solid blueviolet; */
-		width:100%;
+		width:95%;
 	}
 	.content-area6{
 		/* border: 1px solid blueviolet; */
-		width:95%;
+		width:100%;
 		margin-left:20px;
 	}
 	.content-area7{
@@ -56,7 +56,7 @@
 	}
 	#tablelist2{
 		/* border: 1px solid black; */
-		width:50%;
+		width:60%;
 		height:80px;
 	}
 	#tablelist3{
@@ -166,12 +166,13 @@
 			<div class="content-area5">
 				<table id="tablelist2">
 					<tr>
-						<td>입주 시작일 : <input type="text" name="startDate" value="${bi.startDate}"></td>
-						<td>인원 수 : ${bi.person}</td>
+						<td><b>입주 시작일 :</b></td>
+						<td><input type="text" name="startDate" value="${bi.startDate}"></td>
+						<td><b>인원 수 :</b> ${bi.person}</td>
 					</tr>
 					<tr>
-						<td>입주 마지막일 :<input type="text" name="endDate" value="${bi.endDate}"></td>
-						<td>요청 사항 : </td>
+						<td><b>입주 마지막일 :</b></td>
+						<td><input type="text" name="endDate" value="${bi.endDate}"></td>
 					</tr>
 				</table>
 			</div>
@@ -216,7 +217,7 @@
 				<hr>
 
 				<div id="buttons2">
-					<button class="btn btn-danger btn-sm" onclick="">뒤로가기</button>
+					<button class="btn btn-danger btn-sm" onclick="history.back()">뒤로가기</button>
 				</div>
 
 		</div>
