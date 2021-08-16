@@ -153,7 +153,7 @@
                                 
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                   		 <p><b>${b.nickname }<b>님을 신고하시겠어요?</p>
+                                   		 <p><b>${b.nickname}<b>님을 신고하시겠어요?</p>
                                     <div class="modal-content" style="border:1px solid grey;width: 100%;height: 100%; border-radius: 5px;">
                                         <div>
                                             <b><span style="font-size: 15px;">사유 선택 : </span></b>
@@ -266,7 +266,7 @@
                                                     +              '<div class="user-info" style="display: inline-block;width: 90%;">'
                                                     +                  '<div class="test">' 
                                                     +                      '<span>'+'<a href="" class="aTags">' + list[i].nickname + '</a>'+'</span>'
-                                                    +                      '<span style="float: right;">'+'<a href="" class="aTags" data-toggle="modal" data-target="#report-reply-modal">'+'<img src="">'+"🚨신고"+'</a>'+'</span>'
+                                                    +                      '<span style="float: right;">'+'<a href="" class="aTags" data-toggle="modal" data-target="#report-modal">'+'<img src="">'+"🚨신고"+'</a>'+'</span>'
                                                     +                   '</div>'
                                                     +                  '<div>' + list[i].repEnrollDate + '</div>'
                                                     +              '</div>'

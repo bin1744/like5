@@ -444,7 +444,6 @@ public class BoardController {
 	@RequestMapping(value="rlist.bo",produces="application/json; charset=utf-8")
 	public String selectReplyList(int bno) {
 		ArrayList<Reply>list = bService.selectReplyList(bno);
-		System.out.println(list);
 		return new Gson().toJson(list);
 	}
 	
