@@ -98,9 +98,9 @@
             <div class="admin-content">
                 <div class="button-box">
                     <button class="btn btn-primary btn-sm" type="button"><a href="insertForm.bk">추가하기</a></button>
-                    <button class="btn btn-warning btn-sm" type="button">삭제하기</button>
+                    <button class="btn btn-warning btn-sm" type="button" id="deleteOffice">삭제하기</button>
                 </div>
-                <table id="officeList" border="1">
+                <table class="table" id="officeList">
                 	<thead>
                 	<tr>
                         <th>#</th>
@@ -195,6 +195,23 @@
 		$("#officeList tbody tr").click(function(){
 			location.href="detail.bk?ono=" + $(this).children().eq(1).text();
 		})
+		
+		//eventBubbling
+		$("input:checkbox").click(function(event,error){
+    		event.stopPropagation();
+   		});
+		
+		var checked = [];
+		//check된것의 officeNo들 다 모으기
+		$("input:checkbox").change(function(){
+			checked.push($(this).parent().next().text());
+		});
+		
+		//삭제하기 버튼 이벤트
+		$("#deleteOffice").click(function(){
+			location.href="#"
+		})
+		
 	})
 </script>
 </body>
