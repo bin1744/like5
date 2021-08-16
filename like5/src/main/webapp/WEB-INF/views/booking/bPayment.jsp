@@ -68,7 +68,7 @@
     .date-title {
       font-weight: 800;
     }
-    .date-content button,
+    .date-content a,
     .person-content button {
       border: none;
       background-color: #ffff;
@@ -300,7 +300,7 @@
                 <div class="dateprint" id="dates"></div>
                 <input type="hidden" id="sd" name="startDate">
 				<input type="hidden" id="ed" name="endDate">                
-                <button class="editdate" type="button">수정</button>
+                <a class="editdate">수정</a>
               </div>
             </div>
             <div class="person-section">
@@ -567,7 +567,7 @@
 	  flatpickr(editdate ,{
           locale: "ko",
           mode: "range",
-          dateFormat: "Y F d\\일",
+          dateFormat: "Y\\년 F d\\일",
           minDate: "today",
           dateFormat: "Y-m-d",
           disable: [
@@ -608,20 +608,6 @@
 	  });
 	  
       $(function(){
-
-    	 <%-- 
-        $(".editdate").flatpickr({
-          locale: "ko",
-          mode: "range",
-          dateFormat: "Y F d\\일",
-          minDate: "today",
-          dateFormat: "Y-m-d",
-          onChange: function (selectedDates, dateStr, instance) {
-            $(".dateprint").text(dateStr);
-          },
-          clickOpens: true
-        });
-    	  --%> 
     	  
         $(".close").on("click", function () {
               $("#person-modal").removeClass("show-modal");
