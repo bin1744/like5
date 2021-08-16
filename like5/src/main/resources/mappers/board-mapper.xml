@@ -940,6 +940,15 @@
 		 where boa_no = #{bno}
 	</update>
 	
+	<!-- [QnA] - QnaDetailView 답변(댓글) 채택 -->
+	<update id="adoptionReply">
+		update reply
+		   set rep_adoption = 'Y'
+		 where rep_no = #{repNo}
+	</update>
+	
+	
+	
 	<!--            동규                             -->
 
 	<select id="itNewsSearchCount" resultType="_int">

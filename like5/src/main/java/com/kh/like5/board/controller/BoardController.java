@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,6 +169,23 @@ public class BoardController {
 			return "redirect:qnaList.bo";
 		}else {
 			model.addAttribute("errorMsg", " 게시글 수정에 실패하였습니다. ");
+			return "common/errorPage";
+		}
+	}
+	
+	/** 
+	 * [한솔] QnaDetailView 답변(댓글) 채택
+	 */
+	@RequestMapping("adoptionReply.bo")
+	public String adoptionReply(int repNo, Model model, HttpSession session, HttpServletRequest request) {
+		int result = bService.adoptionReply(repNo);
+		String referer = (String)request.getHeader("referer");
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", " 답변이 채택되었습니다. ");
+			return "redirect:" + referer;
+		}else {
+			model.addAttribute("errorMsg", " 답변 채택에 실패하였습니다. ");
 			return "common/errorPage";
 		}
 	}

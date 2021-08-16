@@ -214,7 +214,6 @@
 				selectReplyList();
 			})
 			
-			
 			<%-- 댓글 리스트 --%>
 			function selectReplyList(){
 				
@@ -236,7 +235,6 @@
 						var value = "";
 						
 						for(var i in list){
-							if(list[i].refLevel == 1){
 								// 원댓글 html
 								value += 
 								'<div class="replyLv1">'
@@ -244,29 +242,19 @@
 								+	'<!-- 채택된 답변일 경우, 내가 작성한 댓글일 경우 → .replyInfo 배경색 변경 -->'
 								+	'<div class="replyInfo">'
 								+		'<table>'
-								+			'<tr class="replyInfo1">'
+								+			'<tr class="replyInfo1" style="color:red;">'
+								+			'<tr class="replyInfo1" style="color:red;">'
 								+				'<td class="tableBlank" rowspan="2"></td>'
 								+				'<td class="replyUser1" rowspan="2"><i class="far fa-user-circle"></i></td>'
 								+				'<td class="replyUser2">' + list[i].nickname + '</td>'
-								+				'<td class="replyAdoption" rowspan="2">'
+								+				'<td class="replyAdoption" rowspan="2" colspan="2">'
 								+					'<!-- 글 작성자와 로그인한 회원이 일치할 경우 채택하기 버튼 보여짐 -->'
-													<c:choose>
-														<c:when test="${loginUser.memNo eq b.mno}">
-								+							'<button type="button" class="btn text-muted btn-lg" data-toggle="modal" data-target="#adoption-modal">'
-								+								'<i class="far fa-check-square text-muted"></i>&nbsp;&nbsp;&nbsp;채택하기'
-								+							'</button>'
-														</c:when>
-													</c:choose>
-								+				'</td>'
-								+				'<!-- 로그인 한 회원만 대댓글 달기 버튼 활성화 가능 -->'
-								+			'<td class="reReply" rowspan="2">'
-													<c:choose>
-														<c:when test="${!empty loginUser}">
-								+							'<button type="button" class="btn text-muted btn-lg">'
-								+								'<i class="far fa-plus-square text-muted"></i>&nbsp;&nbsp;&nbsp;대댓글 달기'
-								+							'</button>'
-														</c:when>
-													</c:choose>
+													<c:if test="${loginUser.memNo eq b.mno}">
+								+						'<input type="hidden" value="' + list[i].repNo + '">'								
+								+						'<button type="button" class="btn text-muted btn-lg" id="adopModal" data-toggle="modal" data-target="#adoption-modal">'
+								+							'<i class="far fa-check-square text-muted"></i>&nbsp;&nbsp;&nbsp;채택하기'
+								+						'</button>'
+													</c:if>
 								+				'</td>'
 								+				'<td class="tableBlank" rowspan="2"></td>'
 								+			'</tr>'
@@ -287,154 +275,49 @@
 								
 								+		'<!-- 우측 아이콘 옵션 -->'
 								+		'<div class="replyIcon">'
-											<c:choose>
-												<c:when test="${loginUser.memNo ne b.mno}">
-								+					'<!-- 답변 작성자와 로그인한 회원이 불일치할 경우 -->'
 								+					'<table>'
 								+						'<tr><td class="rIcon"></td></tr>'
 														<c:choose>
 															<c:when test="${!empty loginUser}">
-								+								'<tr>'
-								+									'<td class="rIcon"><i class="far fa-heart" data-toggle="modal" data-target="#sponsorship-modal"></i></td>'
-								+								'</tr>'
-								+								'<tr><td class="rIconName">후원하기</td></tr>'
-								+								'<tr>'
-								+									'<td class="rIcon"><i class="far fa-thumbs-down" data-toggle="modal" data-target="#report-modal"></i></td>'
-								+								'</tr>'
-								+								'<tr><td class="rIconName">신고하기</td></tr>'
+																<c:choose>
+																	<c:when test="${loginUser.memNo eq list[i].memNo}">
+								+										'<!-- 로그인 유저의 회원번호와 댓글 작성자의 회원번호가 일치할 때 -->'
+								+	                					//'<table>'
+								+		                					'<tr><td class="rIcon"><i class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></i></td></tr>'
+								+		                					'<tr><td class="rIconName">삭제하기</td></tr>'
+								+	                					//'</table>'
+																	</c:when>
+																	<c:otherwise>
+								+										'<!-- 로그인 유저가 작성한 댓글이 아닐 때 -->'
+								+										'<tr>'
+								+											'<td class="rIcon"><i class="far fa-heart" data-toggle="modal" data-target="#sponsorship-modal"></i></td>'
+								+										'</tr>'
+								+										'<tr><td class="rIconName">후원하기</td></tr>'
+								+										'<tr>'
+								+											'<td class="rIcon"><i class="far fa-thumbs-down" data-toggle="modal" data-target="#report-modal"></i></td>'
+								+										'</tr>'
+								+										'<tr><td class="rIconName">신고하기</td></tr>'
+																	</c:otherwise>
+																</c:choose>
 															</c:when>
 															<c:otherwise>
-								+								'<tr onClick="loginAlert()">'
-								+									'<td class="rIcon"><i class="far fa-heart"></i></td>'
-								+								'</tr>'
+								+								'<!-- 로그인 값이 없을 경우 -->'
+								+								'<tr onClick="loginAlert()"><td class="rIcon"><i class="far fa-heart"></i></td></tr>'
 								+								'<tr><td class="rIconName">후원하기</td></tr>'
-								+								'<tr onClick="loginAlert()">'
-								+									'<td class="rIcon"><i class="far fa-thumbs-down"></i></td>'
-								+								'</tr>'
+								+								'<tr onClick="loginAlert()"><td class="rIcon"><i class="far fa-thumbs-down"></i></td></tr>'
 								+								'<tr><td class="rIconName">신고하기</td></tr>'
 															</c:otherwise>
 														</c:choose>
 								+						'<tr><td></td></tr>'
 								+					'</table>'
-												</c:when>
-												<c:otherwise>
-								+					'<!-- 답변 작성자와 로그인한 회원이 일치할 경우 -->'
-								+	                '<table>'
-								+		                '<tr><td class="rIcon"><i class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></i></td></tr>'
-								+		                '<tr><td class="rIconName">삭제하기</td></tr>'
-								+	                '</table>'
-									        	</c:otherwise>
-							                </c:choose>
 								+		'</div><!-- 우측 아이콘 옵션 끝 -->'
 								+	'</div><!-- 답변 상세 영역 끝 -->'
 								+'</div><!-- 원댓글 영역 끝 -->'
-								
-								+'<!-- 원댓글에 대댓글 달기 / 대댓글 작성 취소하기 -->'
-								+'<div class="writeReReply" id="writeReReply" style="display:none;">'
-								+	'<!-- 대댓글 작성자 정보 영역 -->'
-								+	'<div class="userInfo">'
-								+		'<table>'
-								+			'<tr class="loginUserInfo">'
-								+				'<td class="tableBlank"></td>'
-								+				'<td class="userInfo1"><i class="far fa-user-circle"></i></td>'
-								+				'<td class="userInfo2">' + list[i].nickname + '</td>'
-								+				'<td class="userInfo3">'
-								+					'<button type="button" class="btn btn-danger" onclick="return validate();"><a href="">작성하기</a></button>'
-								+				'</td>'
-								+			'</tr>'
-								+		'</table>'
-								+	'</div>'
-								
-								+	'<!--  대댓글 작성 영역 -->'
-								+	'<div class="userWrite1">'
-								+		'<!-- 마크다운 API가 들어올 자리 -->'
-								+		'<div>'
-								+			'<textarea class="form-control" rows="5"></textarea>'
-								+		'</div><!-- 마크다운 API가 들어올 자리 끝-->'
-								+	'</div><!-- 답변 상세 영역 끝  -->'
-								+'</div><!-- 원댓글에 대댓글 달기 / 대댓글 작성 취소하기 끝 -->'
-							
+
 								// html 메소드를 이용해 id가 해당 값인 요소 안에 리스트 출력
 								$("#qnaBottom").html(value);
 								// [Array.prototype.push()] 배열의 끝에 하나 이상의 요소를 추가하고, 새로운 배열 길이 반환
 								repNo.push(list[i].repNo);
-							
-							}else{
-								if(list[i].refLevel != -1){
-									// 대댓글 html
-									value +=
-									'<!-- 대댓글 영역 -->'
-									+'<div class="replyLv2">'
-									+	'<!-- 답변자 정보 영역 -->'
-									+	'<div class="replyInfo">'
-									+		'<table>'
-									+			'<tr class="replyInfo1">'
-									+				'<td class="tableBlank" rowspan="2"></td>'
-									+				'<td class="replyUser1" rowspan="2"><i class="far fa-user-circle"></i></td>'
-									+				'<td class="replyUser2">' + list[i].nickname + '</td>'
-									+			'</tr>'
-									+			'<tr class="replyInfo2">'
-									+				'<td class="replyUser3">' + list[i].repEnrollDate + '</td>'
-									+			'</tr>'
-									+		'</table>'
-									+	'</div><!-- 답변자 정보 영역 끝 -->'
-									
-									+	'<!-- 답변 상세 영역 -->'
-									+	'<div class="replyDetail">'
-									+		'<!-- 좌측 답변 본문 -->'
-									+		'<div class="replyContent">'
-									+			'<div class="replyContentData">'
-													+ list[i].repContent
-									+			'</div>'
-									+		'</div><!-- 좌측 답변 본문 끝 -->'
-									
-									+		'<!-- 우측 아이콘 옵션 -->'
-									+		'<div class="replyIcon">'
-									+			'<!-- 답변 작성자와 로그인 한 회원이 불일치할 경우 -->'
-												<c:choose>
-													<c:when test="${ b.mno ne r.memNo }">
-									+					'<table>'
-									+						'<tr><td class="rIcon"></td></tr>'
-															<c:choose>
-																<c:when test="${!empty loginUser}">
-																	'<tr>'
-									+									'<td class="rIcon"><i class="far fa-heart" data-toggle="modal" data-target="#sponsorship-modal"></i></td>'
-									+								'</tr>'
-									+								'<tr><td class="rIconName">후원하기</td></tr>'
-									+								'<tr>'
-									+									'<td class="rIcon"><i class="far fa-thumbs-down" data-toggle="modal" data-target="#report-modal"></i></td>'
-									+								'</tr>'
-									+								'<tr><td class="rIconName">신고하기</td></tr>'
-																</c:when>
-																<c:otherwise>
-									+								'<tr onClick="loginAlert()">'
-									+									'<td class="rIcon"><i class="far fa-heart"></i></td>'
-									+								'</tr>'
-									+								'<tr><td class="rIconName">후원하기</td></tr>'
-									+								'<tr onClick="loginAlert()">'
-									+									'<td class="rIcon"><i class="far fa-thumbs-down"></i></td>'
-									+								'</tr>'
-									+								'<tr><td class="rIconName">신고하기</td></tr>'
-																</c:otherwise>
-															</c:choose>
-									+						'<tr><td></td></tr>'
-									+					'</table>'
-													</c:when>
-													<c:otherwise>
-									+	                '<table>'
-									+		                '<tr><td></td></tr>'
-									+		                '<tr><td class="rIcon"><i class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></i></td></tr>'
-									+		                '<tr><td class="rIconName">삭제하기</td></tr>'
-									+	                '</table>'
-										        	</c:otherwise>
-										    	</c:choose>
-									+		'</div><!-- 우측 아이콘 옵션 끝 -->'
-									+	'</div><!-- 답변 상세 영역 끝 -->'
-									+'</div><!-- 대댓글 영역 끝-->'
-									
-									$("#qnaBottom").html(value);
-								}
-							}
 						}
 					},error: function(){
 						// 리스트 조회 실패 시
@@ -442,18 +325,6 @@
 					}
 			})
 			}
-			
-
-			<%-- 대댓글 달기 클릭 시 나타나는 작성 영역 슬라이드 업&다운 --%>
-	        $(function(){
-	            $('.reReply').click(function(){
-						if($('#writeReReply').css('display') == "none"){
-	                    $('#writeReReply').slideDown();
-	                }else{
-	                    $('#writeReReply').slideUp();
-	                }
-	            })
-	        })
 			</script><!-- 댓글 js 끝 -->
 
 			<!-- 답변을 작성할 수 있는 영역(항상 보여짐) -->
@@ -498,12 +369,13 @@
 					<c:choose>
 						<c:when test="${!empty loginUser}">
 							<div>
-								<textarea class="form-control" rows="5"></textarea>
+								<!-- api 구현 끝나면 style 지우기 -->
+								<textarea rows="5" id="userReply1" style="width:100%;"></textarea>
 							</div>
 						</c:when>
 						<c:otherwise>
 							<div>
-								<textarea class="form-control" rows="5" placeholder=" 로그인 후 이용해주세요. " disabled></textarea>
+								<textarea rows="5" id="userReply1" placeholder=" 로그인 후 이용해주세요. " disabled></textarea>
 							</div>
 						</c:otherwise>
 					</c:choose>
@@ -511,19 +383,40 @@
 
 				<!-- 답변달기 관련 하단부 -->
 				<div class="userWrite2">
-					<c:choose>
-						<c:when test="${!empty loginUser}">
-							<button type="submit" class="btn btn-danger" onclick="return validate();">
-								<a href="">답변달기</a>
-							</button>
-						</c:when>
-						<c:otherwise>
-							<button type="button" class="btn btn-danger" onClick="loginAlert()">답변달기</button>
-						</c:otherwise>
-					</c:choose>
+					<c:if test="${!empty loginUser}">
+						<button class="btn btn-danger" onclick="addReply();">답변달기</button>
+					</c:if>
 				</div><!-- 답변달기 버튼 끝 -->
 			</div><!-- 답변달기 관련 하단부 끝 -->
 		</div><!-- 답변을 작성할 수 있는 영역(항상 보여짐) 끝 -->
+		
+		<script>
+		function addReply(){
+			// 공백, 빈문자열 유효성 검사
+			if($("#userReply1").val().trim().length != 0){
+				$.ajax({
+					url: "insertReply.bo",
+					data: {
+						boaNo: ${b.bno},
+						repContent: $("#userReply1").val(),
+						memNo: '${ loginUser.memNo }'
+						// repNo 추가하기
+					}, success: function(status){
+						// 성공적으로 insert했을 경우 db 호출하여 리스트 갱신 후 value값 초기화
+						if(status == "success"){
+							selectReplyList();
+							$("#userReply1").val("");
+						}
+					}, error: function(){
+						console.log(" 원댓글 작성용 ajax 통신 실패  ");
+					}
+				})
+			}else{
+				//빈 문자열로 등록을 요청했을 경우
+				alert(" 댓글 내용 작성 후 등록을 요청해주세요. ");
+			}
+		}
+		</script>
 
 
 		<!-- 신고하기 모달창 -->
@@ -665,12 +558,25 @@
 						<br><br>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">채택하기</button>
+						<button type="button" class="btn btn-danger btn-sm" id="repAdop">채택하기</button>
 						<button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">취소</button>
 					</div>
 				</div>
 			</div>
 		</div><!-- 채택하기 모달창 끝 -->
+		
+		<script>
+		$(document).on("click", "#adopModal", function(){
+			// 댓글의 채택하기 클릭 시 해당 댓글의 댓글번호 가져와 repNo 변수에 담음
+			repNo = ($(this).prev().val());
+			
+			// 모달 내의 채택하기 버튼 클릭 시 insert 실행
+			document.getElementById("repAdop").onclick = function(){
+				location.href="adoptionReply.bo?repNo=" + repNo;
+			}
+		});
+		</script>
+		
 		
 		
 		<!-- 삭제하기 모달창 -->
