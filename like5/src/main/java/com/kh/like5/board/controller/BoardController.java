@@ -211,12 +211,65 @@ public class BoardController {
 	
 	//-------------------동규-------------------------
 	
+	@RequestMapping("itNews.bo")
+	public ModelAndView itNews(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		int listCount = bService.itNewsCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Board> itNews = bService.itNews(pi);
+		
+		
+		mv.addObject("pi", pi)
+		  .addObject("itNews", itNews)
+		  .setViewName("board/itNews/itNewsList");
+		
+		
+		return mv;
+				
+	}
 	
 	
+	@RequestMapping("itNewsDetail.bo")
+	public ModelAndView itNewsDetail(int bno, ModelAndView mv) {
+		
+		int result = bService.increaseCount(bno);
+		
+		if(result > 0) {
+			Board b = bService.itNewsDetail(bno);
+			
+			mv.addObject("b", b)
+			  .setViewName("board/itNews/itNewsDetail");
+		}else {
+			// 상세조회 실패 시
+			mv.addObject("errMsg", " 게시글 상세조회에 실패하였습니다. ")
+			  .setViewName("common/errorPage");
+		}
+		
+		return mv;
 	
+	}
 	
-	
-	
+	@RequestMapping("itNewsSearch.bo")
+	public ModelAndView itNewsSearch(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, String condition) {
+		
+		HashMap<String,String>map = new HashMap<>();
+		map.put("condition", condition);
+		
+		int listCount = bService.itNewsSearchCount(map);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Board> itNews = bService.itNewsSearch(pi,map);
+		
+		
+		mv.addObject("pi", pi)
+		  .addObject("itNews", itNews)
+		  .addObject("condition",condition)
+		  .setViewName("board/itNews/itNewsList");
+		
+		
+		return mv;
+				
+	}
 	
 	
 	

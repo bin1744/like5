@@ -148,4 +148,18 @@ public interface BoardService {
 	Board selectTemSave(int bno);
 	
 	
+	//-------------------동규-------------------------
+	
+	// [itNews] 전체 목록 리스트 조회
+	ArrayList<Board> itNews(PageInfo pi);
+						
+	// 전체 목록 리스트 페이징 처리시 필요한 게시글 전체 count
+	int itNewsCount();
+			
+	Board itNewsDetail(int bno);
+			
+	int itNewsSearchCount(HashMap<String, String> map);
+			
+	ArrayList<Board> itNewsSearch(PageInfo pi, HashMap<String, String> map);
+	
 }

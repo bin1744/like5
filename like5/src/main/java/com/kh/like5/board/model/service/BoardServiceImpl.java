@@ -415,7 +415,42 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 
+	//-------------------동규-------------------------
+	
+	@Override
+	public ArrayList<Board> itNews(PageInfo pi) {
+						
+	return bDao.itNews(sqlSession, pi);
+						
+	}
 
+	@Override
+	public int itNewsCount() {
+						
+		return bDao.itNewsCount(sqlSession);
+						
+	}
+
+	@Override
+	public Board itNewsDetail(int bno) {
+				
+		return bDao.itNewsDetail(sqlSession, bno);
+				
+	}
+
+	@Override
+	public int itNewsSearchCount(HashMap<String, String> map) {
+			
+		return bDao.itNewsSearchCount(sqlSession, map);
+			
+	}
+
+	@Override
+	public ArrayList<Board> itNewsSearch(PageInfo pi, HashMap<String, String> map) {
+
+		return bDao.itNewsSearch(sqlSession, pi, map);
+			
+	}
 	
 
 

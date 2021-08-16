@@ -359,4 +359,43 @@ public class BoardDao {
 		System.out.println(b);
 		return sqlSession.update("boardMapper.qnaUpdate", b);
 	}
+	
+	//-----------------동규----------------
+	
+	public int itNewsCount(SqlSessionTemplate sqlSession) {
+				
+		return sqlSession.selectOne("boardMapper.itNewsCount");
+				
+	}
+
+	public ArrayList<Board> itNews(SqlSessionTemplate sqlSession, PageInfo pi) {
+				
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+			
+		return (ArrayList)sqlSession.selectList("boardMapper.itNews", null, rowBounds);
+				
+	}
+
+	public Board itNewsDetail(SqlSessionTemplate sqlSession, int bno) {
+				
+		return sqlSession.selectOne("boardMapper.itNewsDetail", bno);
+				
+	}
+
+	public int itNewsSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+			
+		return sqlSession.selectOne("boardMapper.itNewsSearchCount", map);
+			
+	}
+
+	public ArrayList<Board> itNewsSearch(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
+			
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+				
+		return (ArrayList)sqlSession.selectList("boardMapper.itNewsSearch", map, rowBounds);
+			
+	}
+	
 }
