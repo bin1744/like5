@@ -222,7 +222,7 @@ public class BookingController {
 	
 	@RequestMapping("deleteOffice.bk")
 	public String deleteOffice(int ono, HttpSession session , HttpServletRequest request, Model model) {
-		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
+		//int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
 		String offImgPath = ((Office)request.getSession().getAttribute("ott")).getOffImgPath();
 		ArrayList<Attachment> list = ((ArrayList)request.getSession().getAttribute("alist"));
 		System.out.println(list);
