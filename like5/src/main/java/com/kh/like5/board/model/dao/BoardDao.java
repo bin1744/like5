@@ -230,6 +230,15 @@ public class BoardDao {
 		return sqlSession.selectOne("boardMapper.scrapCount",b);
 	}
 	
+	/**
+	 *  게시글 상세 조회 시 로그인한 회원의  후원 여부
+	 * @author seong
+	 */
+	
+	public int sponsorCount(SqlSessionTemplate sqlSession,Board b) {
+		return sqlSession.selectOne("boardMapper.sponsorCount",b);
+	}
+	
 	
 	/**
 	 * [ 스크랩 | 좋아요 ]  등록

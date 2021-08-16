@@ -117,14 +117,17 @@ public interface BoardService {
 	// 최신 | 조회수 | 좋아요 순 조회
 	ArrayList<Board>colOrderByCount(PageInfo pi,String condition);
 		
-	// [칼럼] - 전체 목록 리스트 조회
+	// [칼럼] 전체 목록 리스트 조회
 	ArrayList<Board>colList(PageInfo pi);
 	
-	// [좋아요] - 게시글 상세 조회 시 로그인한 회원의  좋아요 여부
+	// [좋아요] 게시글 상세 조회 시 로그인한 회원의  좋아요 여부
 	int likesCount(Board b);
 	
-	// [스크랩] - 게시글 상세 조회 시 로그인한 회원의  스크랩 여부
+	// [스크랩] 게시글 상세 조회 시 로그인한 회원의  스크랩 여부
 	int scrapCount(Board b);
+	
+	// [후원] 게시글 상세 조회 시 로그인한 회원의  후원 여부
+	int sponsorCount(Board b);
 	
 	//  [ 스크랩 | 좋아요 ]  등록
 	int likeAndScrap(HashMap<String,Object>map);

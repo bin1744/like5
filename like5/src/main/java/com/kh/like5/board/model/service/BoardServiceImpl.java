@@ -229,6 +229,17 @@ public class BoardServiceImpl implements BoardService {
 	public int scrapCount(Board b) {
 		return bDao.scrapCount(sqlSession, b);
 	}
+	
+	/**
+	 *  게시글 상세 조회 시 로그인한 회원의  후원 여부
+	 * @author seong
+	 */
+	
+	@Override
+	public int sponsorCount(Board b) {
+		return bDao.sponsorCount(sqlSession, b);
+	}
+	
 
 	/**
 	 * Ajax로 좋아요 | 스크랩 등록
@@ -451,6 +462,7 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.itNewsSearch(sqlSession, pi, map);
 			
 	}
+
 	
 
 

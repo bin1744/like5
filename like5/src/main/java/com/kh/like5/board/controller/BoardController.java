@@ -426,6 +426,7 @@ public class BoardController {
 	@RequestMapping(value="rlist.bo",produces="application/json; charset=utf-8")
 	public String selectReplyList(int bno) {
 		ArrayList<Reply>list = bService.selectReplyList(bno);
+		System.out.println(list);
 		return new Gson().toJson(list);
 	}
 	
@@ -663,19 +664,26 @@ public class BoardController {
 		if(result>0) {
 			Board b = bService.boardDetail(bno);
 			
-			// 게시글 상세 조회 시 로그인한 회원이 해당 게시글에 좋아요와 스크랩을 확인하기
+			// 게시글 상세 조회 시 로그인한 회원이 해당 게시글 (좋아요,스크랩,후원)여부 확인
 			int likesCount = bService.likesCount(board);
 			int scrapCount = bService.scrapCount(board);
+			int sponsorCount = bService.sponsorCount(board);
 			
+			// 좋아요 여부
 			if(likesCount!=0) {
 				mv.addObject("likes",likesCount);
 			} 
 			
+			// 스크랩 여부
 			if(scrapCount !=0) {
 				mv.addObject("scrap",scrapCount);
 			}
 			
-			// 둘 다 0일 때 보여지는 화면
+			// 후원 여부
+			if(sponsorCount!=0) {
+				mv.addObject("sponsor",sponsorCount);
+			}
+			
 			mv.addObject("b",b).setViewName("board/column/colDetailView");
 			
 		}else {

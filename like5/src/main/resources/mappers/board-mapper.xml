@@ -42,6 +42,7 @@
         <result column="ref_rep_no" property="refRepNo" />
         <result column="ref_level" property="refLevel" />
         <result column="nickname" property="nickname" />
+        <result column="mem_profile" property="memProfile" />
     </resultMap>
 
     <!-- [재환] 관리자단 게시글 개수 조회 -->
@@ -431,6 +432,7 @@
      		   , (select boa_category
      		   		from board b
      		   	   where r.boa_no = b.boa_no) category
+     		   ,mem_profile
 		  from reply r
 		  join member using(mem_no)
 		 where boa_no = #{bno}
@@ -647,6 +649,18 @@
 			mem_no = #{mno}
 		and 
 			boa_no = #{bno}
+    </select>
+    
+    <!-- 게시글 상세 조회 시 로그인한 회원의  후원 여부  -->
+    <select id="sponsorCount" resultType="_int">
+    	 select 
+    		count(*)
+		from 
+			sponsorship
+		where 
+			mem_no = #{mno}
+		and 
+			ref_boa_no = #{bno}
     </select>
     
     <!--[ 스크랩 | 좋아요 ]  등록 -->
