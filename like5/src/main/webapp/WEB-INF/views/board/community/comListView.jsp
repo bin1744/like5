@@ -71,7 +71,6 @@
 	        				// 스터디 모집으로 조회
 		        			// input type hidden 요소의 value를 study로 지정하기 
 	        				$("#comOrderByCategory").children("input[type=hidden]").attr("value","study");
-	        				
 	        				$("#comOrderByCategory").attr("action","comOrderByCategory.bo").submit();
 	        			}
 	        		}
@@ -88,17 +87,17 @@
                 <div><h2 class="content-header"><b>전체</b> &nbsp;&nbsp;</h2></div>
                 <div class="talk-filter-box-inner" id="selectOption" style="width:88%">
                 	<c:choose>
-                		<c:when test="${empty flag }">
+                		<c:when test="${empty flag}">
                 			<div onclick="comOrderByCount(1)" class="talk-filter-item on">최신순</div>
                 			<div onclick="comOrderByCount(2)" class="talk-filter-item " >조회순</div>
                 			<div onclick="comOrderByCount(3)" class="talk-filter-item ">댓글순</div>
               			</c:when>
-              			<c:when test="${flag eq 'views' }">
+              			<c:when test="${flag eq 'views'}">
               				<div onclick="comOrderByCount(1)" class="talk-filter-item ">최신순</div>
                 			<div onclick="comOrderByCount(2)" class="talk-filter-item on" >조회순</div>
                 			<div onclick="comOrderByCount(3)" class="talk-filter-item ">댓글순</div>
               			</c:when>
-              			<c:when test="${flag eq 'reply' }">
+              			<c:when test="${flag eq 'reply'}">
               				<div onclick="comOrderByCount(1)" class="talk-filter-item ">최신순</div>
                 			<div onclick="comOrderByCount(2)" class="talk-filter-item " >조회순</div>
                 			<div onclick="comOrderByCount(3)" class="talk-filter-item on">댓글순</div>
@@ -186,14 +185,6 @@
                  
              })
              
-            function test1(){
-            	
-            	var test1 = ${flag}
-            	
-           		console.log(test1);
-            	
-            }
-          
    		   	function comOrderByCount(condition){
    	    		// 전체 조회할 때
    	    		if(condition==1){
@@ -242,8 +233,7 @@
                                 </select>
                             </div>
                             <input type="text" class="form-control" name="keyword"  placeholder="원하는 정렬 기준으로 검색해보세요!" style="width:300px">
-                            <i class="fas fa-search" style="margin-top:10px"></i>
-                            <button><i class="fa fa-search"></i></button>
+                          <div onclick="submit();"><i class="fas fa-search" style="margin-top:10px"></i></div>
                         </div>
                     <!--카테고리 끝--> 
                     </div>
@@ -255,6 +245,12 @@
                 			$("option[value=${condition}]").attr("selected",true);
                 		}
                 	})
+                	
+                	//키워드 검색 기능 submit
+                	function submit(){
+                		$("#comSearchForm").submit();
+                	}
+                	
                 </script>
                 
                 <!--검색 끝-->
