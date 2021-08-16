@@ -368,8 +368,8 @@ public class BoardController {
 	 */
 	@RequestMapping("comOrderByCount.bo")
 	public ModelAndView comOrderByCount(ModelAndView mv,@RequestParam(value="currentPage",defaultValue="1")
-										int currentPage, String condition) {
-			
+										int currentPage, String condition,String flag) {
+		
 		int listCount = bService.comListCount();
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
 		ArrayList<Board>comList = bService.comOrderByCount(pi, condition);
@@ -378,6 +378,7 @@ public class BoardController {
 		.addObject("comList",comList)
 		.addObject("condition",condition)
 		.addObject("listCount",listCount)
+		.addObject("flag",flag)
 		.setViewName("board/community/comListView");
 		return mv;
 	}
