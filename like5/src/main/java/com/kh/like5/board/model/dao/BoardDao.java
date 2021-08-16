@@ -369,6 +369,16 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.qnaUpdate", b);
 	}
 	
+	
+	/**
+	 * [QnA] - QnaDetailView 답변(댓글) 채택
+	 * @author Hansol
+	 */
+	public int adoptionReply(SqlSessionTemplate sqlSession, int repNo) {
+		return sqlSession.update("boardMapper.adoptionReply", repNo);
+	}
+	
+	
 	//-----------------동규----------------
 	
 	public int itNewsCount(SqlSessionTemplate sqlSession) {

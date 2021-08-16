@@ -424,8 +424,18 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Tag> tagList() {
 		return bDao.tagList(sqlSession);
 	}
+	
+	/**
+	 * [QnA] - QnaDetailView 답변(댓글) 채택
+	 * @author Hansol
+	 */
+	@Override
+	public int adoptionReply(int repNo) {
+		return bDao.adoptionReply(sqlSession, repNo);
+	}
+	
 
-
+	
 	//-------------------동규-------------------------
 	
 	@Override
@@ -479,29 +489,5 @@ public class BoardServiceImpl implements BoardService {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-	
-	
 	
 }
