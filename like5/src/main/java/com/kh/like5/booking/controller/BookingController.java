@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -83,7 +84,7 @@ public class BookingController {
 		//attachment에도 접근해서 list로 가져와서 화면에 뿌려줘야함...
 		Office o = bService.selectOffice(officeNo);
 		ArrayList<Attachment> list = bService.selectOfficeAtt(officeNo);
-		//System.out.println(list);
+		System.out.println(list);
 		if(o != null) {
 			session.setAttribute("ott", o);
 			session.setAttribute("alist", list);
@@ -129,7 +130,7 @@ public class BookingController {
 		//System.out.println(list);
 		int result = bService.insertOffice(o, list);
 		
-		if(result > 0) {
+		if(result > 0) {//오피스만 수정했을때 업로드 성공했는데 실패 페이지가 뜸 왜죠?
 			session.setAttribute("alertMsg", "업로드 성공");
 			return "redirect:list.bk";
 		} else {
@@ -159,7 +160,7 @@ public class BookingController {
 	}
 	
 	@RequestMapping("updateOf.bk")
-	public String updateOffice(Office o, Attachment att, HttpServletRequest request, HttpSession session, MultipartFile[] refile, Model model) {
+	public String updateOffice(Office o, HttpServletRequest request, HttpSession session, MultipartFile[] refile, Model model) {
 		//facility 부분 가져오기
 		String[] facilityArr = request.getParameterValues("facility");
 		String facility ="";
@@ -168,18 +169,9 @@ public class BookingController {
 		}
 		o.setFacility(facility);
 		ArrayList<Attachment> list = new ArrayList<>();
-		
-		/*
-		if(o.getOffImgPath() != null) {
-			System.out.println(o.getOffImgPath());
-			new File(session.getServletContext().getRealPath(o.getOffImgPath())).delete();
-			String changeName = saveFile(file, session);
-			o.setOffImgPath("resources/images/" + changeName);
-		}
-		*/
-		
-		//새 첨부파일
+		Attachment att = null;
 		for(int i=0; i<refile.length; i++) {
+			//refile이 비지 않았다면!
 			if(!refile[i].getOriginalFilename().equals("")) {
 				att = new Attachment();
 				if( i==0 ) {
@@ -187,8 +179,9 @@ public class BookingController {
 					new File(session.getServletContext().getRealPath(o.getOffImgPath())).delete();
 					String changeName = saveFile(refile[i], session);
 					o.setOffImgPath("resources/images/" + changeName);
-				} else if(att.getFileNo() != 0) {//기존파일이 존재할경우
-					//System.out.println(att.getFilePath());//왜 두개가 찍히니--> 배열로 안 가져오니까
+					continue;
+				} else if(i!=0 && att.getFileNo() != 0) {//기존파일이 존재할경우
+					System.out.println(att.getFilePath());//왜 두개가 찍히니--> 배열로 안 가져오니까
 					String filePath[] = att.getFilePath().split(",");
 					//기존 것 삭제
 					new File(session.getServletContext().getRealPath(filePath[0])).delete();
@@ -204,11 +197,14 @@ public class BookingController {
 					att.setRefFno(o.getOfficeNo());
 				}
 				list.add(att);
-				System.out.println(list);
 			}
 		}
-		
+		/*att에 값이 없을 경우 추가 못하게해야함
+		if(att.getRefFno()==0) {
+			list.remove(att);
+		}*/
 		int result = bService.updateOffice(o, list);
+		
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "업데이트성공");
@@ -256,6 +252,44 @@ public class BookingController {
 				return "common/errorPage";
 			}
 		}
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="deleteOffices.bk", produces="application/json; charset=utf-8")
+	public String deleteOffices(int[] checked, HttpSession session , HttpServletRequest request, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		System.out.println("checked: " + checked[0]);
+		//String[] officeNos = checked.split(",");
+		//System.out.println("officeNos: " + checked);
+		if(checked != null) {
+			
+			//오피스 번호로 삭제전에 offImgPath 조회하기
+			String[] offImgPaths = bService.selectOffImgPaths(checked);
+			
+			//오피스 번호로 첨부파일들 filePath조회
+			ArrayList<Attachment> filePaths = bService.selectFilePaths(checked);
+			
+			int result = bService.deleteOffices(checked);
+			//삭제성공시 물리적 루트에서 사진 삭제
+			if(result > 0) {
+				for(int i=0; i<offImgPaths.length; i++) {
+					System.out.println(offImgPaths[i]);
+					System.out.println(filePaths.get(i).getFilePath());
+					new File(session.getServletContext().getRealPath(offImgPaths[i])).delete();
+					new File(session.getServletContext().getRealPath(filePaths.get(i).getFilePath())).delete();
+				}
+			} else {
+				session.setAttribute("errorMsg", "삭제 실패");
+				return "common/errorPage";
+			}
+		}
+		
+		//다시 삭제된 리스트조회하기
+		int listCount = bService.selectListCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Office> list = bService.selectListAll(pi);
+		session.setAttribute("alertMsg", "삭제 성공");
+		return new Gson().toJson(list);
 		
 	}
 	

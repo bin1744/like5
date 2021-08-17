@@ -38,6 +38,15 @@ public interface BookingService {
 	int deleteOffice(int ono);
 	int deleteOfficeWithAtt(int ono);
 
+	//5.1 오피스 imgPath조회
+	String[] selectOffImgPaths(int[] checked);
+	
+	//5.2 오피스 attachment path조회
+	ArrayList<Attachment> selectFilePaths(int[] checked);
+	
+	//5.3 오피스 배열로 삭제
+	int deleteOffices(int[] checked);
+	
 	//6.검색 + 페이징(관리자)
 	int selectSearchListCount(HashMap<String, String> map);
 	ArrayList<Office> selectSearchList(HashMap<String, String> map, PageInfo pi);

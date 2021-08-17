@@ -146,8 +146,10 @@
 	 from  attachment
     where  ref_bno = 9
       and  ref_fno = #{officeNo}
+      and status='Y'
 
   </select>
+  
   <insert id="insertOffice" parameterType="Office">
  	insert
  	  into office
@@ -189,9 +191,9 @@
 	  )
 	values
 	(
-		   seq_ano.nextval
+		   SEQ_ANO.nextval
 		 , 9
-		 , seq_fno.currval
+		 , SEQ_FNO.currval
 		 , default
 		 , default
 		 , #{filePath}
@@ -233,6 +235,34 @@
   	   and ref_fno = #{ono}
   </delete>
   
+  <select id="selectOffImgPaths" parameterType="int" resultType="string">
+  	select
+  		  off_img_path
+  	 from office
+  	where office_no = #{officeNo}
+  </select>
+  
+  <select id="selectFilePaths" parameterType="Attachment" resultMap="attachmentResultSet">
+  	select
+  		  file_path
+  	 from attachment
+  	where ref_bno = 9
+  	  and ref_fno = #{officeNo}
+  </select>
+  
+  <delete id="deleteOffices" parameterType="int">
+  	delete
+  	  from office
+  	 where office_no = #{officeNo}
+  </delete>
+  
+  <delete id="deleteFilePaths" parameterType="int">
+  	delete
+  	  from attachment
+  	 where ref_bno = 9
+  	   and ref_fno = #{officeNo}
+  </delete>
+  
   <update id="updateOfficeAtt" parameterType="Attachment">
 	update
 		   attachment
@@ -246,11 +276,15 @@
   <update id="updateOffice" parameterType="Office">
 	update
 		   office
-	  set  status = #{filePath}
-	where  file_no = #{fileNo}
-	  and  ref_fno = #{refFno}
-	  and  ref_bno = 9
-	  and  status = 'Y'
+	  set  off_img_path = #{offImgPath}
+	  	 , branch = #{branch}
+	  	 , manager = #{manager}
+	  	 , facility = #{facility}
+	  	 , address= #{address}
+	  	 , type_Name= #{typeName}
+	  	 , person = #{person}
+	  	 , price = #{price}
+	where  office_no = #{officeNo}
   </update>
   
   <!-- 첨부파일 조회 + 사진 -->

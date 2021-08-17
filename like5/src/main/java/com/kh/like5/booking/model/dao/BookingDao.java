@@ -60,6 +60,7 @@ public class BookingDao {
 		}
 		return result;
 	}
+	/*
 	public int insertOfficeReAtt(SqlSessionTemplate sqlSession, ArrayList<Attachment> list) {
 		int result = 0;
 		for(Attachment att : list) {
@@ -67,15 +68,24 @@ public class BookingDao {
 		}
 		return result;
 	}
+	*/
+	
 	public int updateOffice(SqlSessionTemplate sqlSession, Office o) {
 		return sqlSession.update("bookingMapper.updateOffice", o);
 	}
 
 	public int updateOfficeAtt(SqlSessionTemplate sqlSession, ArrayList<Attachment> list) {
 		int result = 0;
+		System.out.println("처음"+list);
 		for(Attachment att : list) {
-			result = sqlSession.update("bookingMapper.updateOfficeAtt", att);
+			if(att.getFileNo()!=0) {
+				result = sqlSession.update("bookingMapper.updateOfficeAtt", att);
+			} else if(att.getRefFno() != 0) {
+				result = sqlSession.insert("bookingMapper.insertOfficeReAtt", att);
+			}
+			
 		}
+		System.out.println("끝" + list);
 		return result;
 	}
 
@@ -87,6 +97,42 @@ public class BookingDao {
 		return sqlSession.delete("bookingMapper.deleteOfficeAtt", ono);
 	}
 	
+	public String[] selectOffImgPaths(SqlSessionTemplate sqlSession, int[] checked) {
+		String[] offImgPaths = null;
+		for(int i=0; i<checked.length; i++) {
+			System.out.println("for" + checked[i]);
+			int officeNo = checked[i];
+			offImgPaths[i] += sqlSession.selectOne("bookingMapper.selectOffImgPaths", officeNo);
+		}
+		System.out.println("offImgPaths: "+offImgPaths);
+		return offImgPaths;
+	}
+	
+	public ArrayList<Attachment> selectFilePaths(SqlSessionTemplate sqlSession, int[] checked) {
+		ArrayList<Attachment> filePaths= null;
+		for(int officeNo : checked) {
+			filePaths = (ArrayList)sqlSession.selectList("bookingMapper.selectFilePaths",officeNo);
+		}
+		return filePaths;
+	}
+	
+	public int deleteOffices(SqlSessionTemplate sqlSession, int[] checked) {
+		int result = 0;
+		for(int officeNo : checked) {
+			result = sqlSession.delete("bookingMapper.deleteOffices", officeNo);
+		}
+		//System.out.println("result1: " + result);
+		return result;
+	}
+	
+	public int deleteFilePaths(SqlSessionTemplate sqlSession, int[] checked) {
+		int result = 0;
+		for(int officeNo:checked) {
+			result = sqlSession.delete("bookingMapper.deleteFilePaths", officeNo);
+		}
+		//System.out.println("result2: " + result);
+		return result;
+	}
 	/*추가 - 첨부파일 조회 + 사진*/
 	public ArrayList<Attachment> selectList(SqlSessionTemplate sqlSession, int refFno){
 		/*System.out.println(refFno);*/
