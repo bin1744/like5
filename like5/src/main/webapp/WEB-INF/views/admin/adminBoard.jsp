@@ -144,9 +144,15 @@
             <tbody>
                 <c:forEach var="b" items="${list}">
                     <tr>
+
                         <td class="bno">${b.bno}</td>
                         <td>${b.category}</td>
-                        <td><a href="">${b.title}</a></td>
+                        <td id="title">
+                            ${b.title}
+                            <input type="hidden" id="mno" value="${b.mno}">
+                            <input type="hidden" id="bno" value="${b.bno}">
+                            <input type="hidden" id="category" value="${b.category}">
+                        </td>
                         <td>${b.nickname}</td>
                         <td>${b.enrollDate}</td>
                         <td><button class="btn btn-outline-danger btn-sm" onclick="deleteBoard('${b.bno}')">삭제</button></td>
@@ -156,6 +162,28 @@
         </table>
 
         <script>
+            $(document).on("click", "#title", function(){
+                mno = ($(this).children('#mno').val());
+                bno = ($(this).children('#bno').val());
+                category = ($(this).children('#category').val());
+
+                if(category === 'IT트렌드' || category === '컨퍼런스') {
+                    location.href="itNewsDetail.bo?bno=" + bno;
+                } else if(category === '일상' || category ===  '스터디모집') {
+                    location.href="comDetail.bo?bno=" + bno;
+                } else if(category === 'QNA') {
+                    location.href="qnaDetail.bo?bno=" + bno;
+                } else if(category === '칼럼'){
+                    location.href="colDetail.bo?bno=" + bno + "&mno=" + mno;
+                }
+
+                console.log(mno);
+            });
+        </script>
+
+
+        <script>
+
             function deleteBoard(bno){
                 if(!confirm("해당 게시글을 삭제하시겠습니까?")){
                     alert("취소하셨습니다.")
