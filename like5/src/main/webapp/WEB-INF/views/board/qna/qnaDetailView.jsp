@@ -14,6 +14,9 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 	
+<!--토스트 UI-->
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css" />	
+	
 </head>
 
 <body>
@@ -90,9 +93,39 @@
 					<!-- 좌측 게시글 본문 -->
 					<div class="qnaContent">
 						<div class="contentData">
-							<!-- 본문 내용 데이터값 -->${ b.content }
+							<div id="editor" style="display:none;">${b.content}</div>
+                			<div id="viewer"></div>
 						</div>
 					</div><!-- 좌측 게시글 본문 끝 -->
+
+			      <!--토스트 UI-->
+		    	  <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+		    
+		    	  <script>
+				    
+					    $(function(){
+				        	ToView();
+				        })
+				        
+				        /*토스트 UI */
+			    		const content = [].join('\n');
+			    	    const editor = new toastui.Editor({
+				               el: document.querySelector('#editor'),
+				           });
+			    	    /*토스트 UI 뷰어 */	
+				        const viewer = toastui.Editor.factory({
+				            el: document.querySelector('#viewer'),
+				            viewer: true,
+				            height: '500px',
+				            initialValue: content
+				        });
+		
+				        function ToView()
+				        {
+				            viewer.setMarkdown(editor.getHTML());
+				        };
+			        </script>
+		    	
 
 					<!-- 우측 아이콘 옵션 -->
 					<div class="qnaIcon">
@@ -448,12 +481,14 @@
 
 				<!-- 답변 상세 영역 -->
 				<div class="userWrite1">
-					<!-- 마크다운 API가 들어올 자리 -->
+				
+				
 					<c:choose>
 						<c:when test="${!empty loginUser}">
 							<div>
 								<!-- api 구현 끝나면 style 지우기 -->
-								<textarea rows="5" id="userReply1" style="width:100%;"></textarea>
+								<div id="editor2"></div>
+								<!-- <textarea rows="5" style="width:100%;" ></textarea> -->
 							</div>
 						</c:when>
 						<c:otherwise>
@@ -462,6 +497,18 @@
 							</div>
 						</c:otherwise>
 					</c:choose>
+					<!-- 댓글 토스트 UI -->
+					<script>
+					   const Editor2 = toastui.Editor;
+				       const editor2 = new Editor2({
+				            el: document.querySelector('#editor2'),
+				            height: '400px',
+				            previewStyle: 'vertical',
+				            initialValue: '소중한 답변 감사합니다 😁',
+				            language: 'ko',
+				        });
+					</script>
+					
 				</div><!-- 답변 상세 영역 끝  -->
 
 				<!-- 답변달기 관련 하단부 -->
@@ -474,32 +521,35 @@
 		</div><!-- 답변을 작성할 수 있는 영역(항상 보여짐) 끝 -->
 		
 		<script>
-		function addReply(){
-			// 공백, 빈문자열 유효성 검사
-			if($("#userReply1").val().trim().length != 0){
-				$.ajax({
-					url: "insertReply.bo",
-					data: {
-						boaNo: ${b.bno},
-						repContent: $("#userReply1").val(),
-						memNo: '${ loginUser.memNo }'
-						// repNo 추가하기
-					}, success: function(status){
-						// 성공적으로 insert했을 경우 db 호출하여 리스트 갱신 후 value값 초기화
-						if(status == "success"){
-							selectReplyList();
-							$("#userReply1").val("");
-						}
-					}, error: function(){
-						console.log(" 원댓글 작성용 ajax 통신 실패  ");
-					}
-				})
-			}else{
-				//빈 문자열로 등록을 요청했을 경우
-				alert(" 댓글 내용 작성 후 등록을 요청해주세요. ");
-			}
-		}
-		</script>
+	      function addReply(){
+	    	 
+	    	  var content = editor2.getHTML();
+	    	  
+	         // 공백, 빈문자열 유효성 검사
+	         if(content != null){
+	            $.ajax({
+	               url: "insertReply.bo",
+	               data: {
+	                  boaNo: ${b.bno},
+	                  repContent: content,
+	                  memNo: '${ loginUser.memNo }'
+	                  // repNo 추가하기
+	               }, success: function(status){
+	                  // 성공적으로 insert했을 경우 db 호출하여 리스트 갱신 후 value값 초기화
+	                  if(status == "success"){
+	                     selectReplyList();
+	                     editor2.setHTML("소중한 답변 감사합니다 😁");
+	                  }
+	               }, error: function(){
+	                  console.log(" 원댓글 작성용 ajax 통신 실패  ");
+	               }
+	            })
+	         }else{
+	            //빈 문자열로 등록을 요청했을 경우
+	            alert(" 댓글 내용 작성 후 등록을 요청해주세요. ");
+	         }
+	      }
+	      </script>
 
 
 		<!-- 신고하기 모달창 -->
