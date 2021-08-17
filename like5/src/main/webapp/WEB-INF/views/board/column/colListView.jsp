@@ -29,9 +29,23 @@
                 <div>
                     <div id="column-select-btn">
                         <div class="column-filter-box-inner" id="selectOption" >
-                            <div onclick="colOrderByCount(1)" class="column-filter-item on">최신순</div>
-                            <div onclick="colOrderByCount(2)" class="column-filter-item " >조회순</div>
-                            <div onclick="colOrderByCount(3)" class="column-filter-item ">좋아요순</div>
+                        	<c:choose>
+	                        	<c:when test="${empty flag }">
+		                        	<div onclick="colOrderByCount(1)" class="column-filter-item on">최신순</div>
+		                            <div onclick="colOrderByCount(2)" class="column-filter-item " >조회순</div>
+		                            <div onclick="colOrderByCount(3)" class="column-filter-item ">좋아요순</div>
+	                        	</c:when>
+	                        	<c:when test="${flag eq 'views' }">
+		                        	<div onclick="colOrderByCount(1)" class="column-filter-item ">최신순</div>
+		                            <div onclick="colOrderByCount(2)" class="column-filter-item on" >조회순</div>
+		                            <div onclick="colOrderByCount(3)" class="column-filter-item ">좋아요순</div>
+	                        	</c:when>
+	                        	<c:when test="${flag eq 'likes' }">
+		                            <div onclick="colOrderByCount(1)" class="column-filter-item ">최신순</div>
+		                            <div onclick="colOrderByCount(2)" class="column-filter-item " >조회순</div>
+		                            <div onclick="colOrderByCount(3)" class="column-filter-item on">좋아요순</div>
+	                            </c:when>
+                            </c:choose>
                         </div>
                     </div>
                 </div>
@@ -80,14 +94,14 @@
    	    			if(condition==2){
    	    				//input type hidden 요소의 value를 daily로 지정하기
    	    				$("#colOrderByCount").children("input[type=hidden]").attr("value","views");
-   	    				$("#colOrderByCount").attr("action","colOrderByCount.bo?")
+   	    				$("#colOrderByCount").attr("action","colOrderByCount.bo?flag=views")
    	    				.submit();
 
    	    			}else{
    	    				// 댓글수
    	        			// input type hidden 요소의 value를 study로 지정하기 
    	    				$("#colOrderByCount").children("input[type=hidden]").attr("value","likes");
-   	    				$("#colOrderByCount").attr("action","colOrderByCount.bo?")
+   	    				$("#colOrderByCount").attr("action","colOrderByCount.bo?flag=likes")
    	    				.submit();
    	    			}
    	    		}
@@ -164,14 +178,14 @@
 	                            	<c:choose>
 	                            		<c:when test="${!empty condition}">
 		                            		<li class="page-item">
-				                            	<a class="page-link" href="colOrderByCount.bo?currentPage=${pi.currentPage-1}&condition=${condition}" aria-label="Previous">
+				                            	<a class="page-link" href="colOrderByCount.bo?currentPage=${pi.currentPage-1}&condition=${condition}&flag=${condition}" aria-label="Previous">
 				                            		<span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
 				                            	</a>
 			                            	</li>
 	                            		</c:when>
 	                            		<c:otherwise>
 		                           			<li class="page-item">
-				                            	<a class="page-link" href="colList.bo?currentPage=${pi.currentPage-1}" aria-label="Previous">
+				                            	<a class="page-link" href="colList.bo?currentPage=${pi.currentPage-1}&flag=${condition}" aria-label="Previous">
 				                            		<span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>
 				                            	</a>
 			                            	</li>
@@ -184,10 +198,10 @@
                             <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
                            		 <c:choose>
                            		 <c:when test="${!empty condition}"> 
-		                           	<li class="page-item"><a class="page-link" href="colOrderByCount.bo?currentPage=${ p }&condition=${condition}">${ p }</a></li>
+		                           	<li class="page-item"><a class="page-link" href="colOrderByCount.bo?currentPage=${ p }&condition=${condition}&flag=${condition}">${ p }</a></li>
                            		 </c:when>
                            		 <c:otherwise>
-                           		 	 <li class="page-item"><a class="page-link" href="colList.bo?currentPage=${p}">${p}</a></li>
+                           		 	 <li class="page-item"><a class="page-link" href="colList.bo?currentPage=${p}&flag=${condition}">${p}</a></li>
                            		 </c:otherwise>
                            		 </c:choose>
                             </c:forEach>
@@ -206,14 +220,14 @@
 	                            <c:choose>
 	                            	<c:when test="${!empty condition}">
 			                             <li class="page-item">
-					                          <a class="page-link" href="colOrderByCount.bo?currentPage=${pi.currentPage+1}&condition=${condition}" aria-label="Previous">
+					                          <a class="page-link" href="colOrderByCount.bo?currentPage=${pi.currentPage+1}&condition=${condition}&flag=${condition}" aria-label="Previous">
 					                              <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
 					                          </a>
 				                          </li>
 			                          </c:when>
 			                          <c:otherwise>
 		                          		 <li class="page-item">
-					                          <a class="page-link" href="colList.bo?currentPage=${pi.currentPage+1}" aria-label="Next">
+					                          <a class="page-link" href="colList.bo?currentPage=${pi.currentPage+1}&flag=${condition}" aria-label="Next">
 					                              <span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span>
 					                          </a>
 				                          </li>

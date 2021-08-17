@@ -229,6 +229,17 @@ public class BoardServiceImpl implements BoardService {
 	public int scrapCount(Board b) {
 		return bDao.scrapCount(sqlSession, b);
 	}
+	
+	/**
+	 *  게시글 상세 조회 시 로그인한 회원의  후원 여부
+	 * @author seong
+	 */
+	
+	@Override
+	public int sponsorCount(Board b) {
+		return bDao.sponsorCount(sqlSession, b);
+	}
+	
 
 	/**
 	 * Ajax로 좋아요 | 스크랩 등록
@@ -413,8 +424,54 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Tag> tagList() {
 		return bDao.tagList(sqlSession);
 	}
+	
+	/**
+	 * [QnA] - QnaDetailView 답변(댓글) 채택
+	 * @author Hansol
+	 */
+	@Override
+	public int adoptionReply(int repNo) {
+		return bDao.adoptionReply(sqlSession, repNo);
+	}
+	
 
+	
+	//-------------------동규-------------------------
+	
+	@Override
+	public ArrayList<Board> itNews(PageInfo pi) {
+						
+	return bDao.itNews(sqlSession, pi);
+						
+	}
 
+	@Override
+	public int itNewsCount() {
+						
+		return bDao.itNewsCount(sqlSession);
+						
+	}
+
+	@Override
+	public Board itNewsDetail(int bno) {
+				
+		return bDao.itNewsDetail(sqlSession, bno);
+				
+	}
+
+	@Override
+	public int itNewsSearchCount(HashMap<String, String> map) {
+			
+		return bDao.itNewsSearchCount(sqlSession, map);
+			
+	}
+
+	@Override
+	public ArrayList<Board> itNewsSearch(PageInfo pi, HashMap<String, String> map) {
+
+		return bDao.itNewsSearch(sqlSession, pi, map);
+			
+	}
 
 	
 
@@ -432,29 +489,5 @@ public class BoardServiceImpl implements BoardService {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-	
-	
 	
 }

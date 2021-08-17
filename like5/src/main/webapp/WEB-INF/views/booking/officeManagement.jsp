@@ -125,9 +125,9 @@
 		}
 		
 		$(function(){
-    		$("#report-list>tbody>tr").click(function(){
+    		$("#report-list>tbody>tr>td").click(function(){
     			//location.href="Space2.bo?bno=" + $(this).children(".bno").text();
-    			location.href="Space2.bo?bno=" + $(this).children().eq(0).find("input").val();
+    			location.href="Space2.bo?bno=" + $(this).parent().children().eq(0).find("input").val();
     			
     		})
     	})
@@ -175,7 +175,7 @@
 					<tbody>
 						<c:forEach var="list" items="${list}">
 							<tr>
-								<td><input name="RowCheck" type="checkbox" value="${ list.bookingNo }"></td>
+								<th><input name="RowCheck" type="checkbox" value="${ list.bookingNo }"></th>
 								<td>${ list.bookingNo }</td>
 								<td>${ list.branch }</td>
 								<td>${ list.memName }</td>

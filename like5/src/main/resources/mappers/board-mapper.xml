@@ -42,6 +42,7 @@
         <result column="ref_rep_no" property="refRepNo" />
         <result column="ref_level" property="refLevel" />
         <result column="nickname" property="nickname" />
+        <result column="mem_profile" property="memProfile" />
     </resultMap>
 
     <!-- [재환] 관리자단 게시글 개수 조회 -->
@@ -431,6 +432,7 @@
      		   , (select boa_category
      		   		from board b
      		   	   where r.boa_no = b.boa_no) category
+     		   ,mem_profile
 		  from reply r
 		  join member using(mem_no)
 		 where boa_no = #{bno}
@@ -647,6 +649,18 @@
 			mem_no = #{mno}
 		and 
 			boa_no = #{bno}
+    </select>
+    
+    <!-- 게시글 상세 조회 시 로그인한 회원의  후원 여부  -->
+    <select id="sponsorCount" resultType="_int">
+    	 select 
+    		count(*)
+		from 
+			sponsorship
+		where 
+			mem_no = #{mno}
+		and 
+			ref_boa_no = #{bno}
     </select>
     
     <!--[ 스크랩 | 좋아요 ]  등록 -->
@@ -939,7 +953,122 @@
 		   	 , boa_update_date = sysdate
 		 where boa_no = #{bno}
 	</update>
+	
+	<!-- [QnA] - QnaDetailView 답변(댓글) 채택 -->
+	<update id="adoptionReply">
+		update reply
+		   set rep_adoption = 'Y'
+		 where rep_no = #{repNo}
+	</update>
+	
+	
+	
+	<!--            동규                             -->
 
-
+	<select id="itNewsSearchCount" resultType="_int">
+		
+		select
+			   count(*)
+		  from board
+		 where 
+		 <choose>
+			<when test="condition == 'itT'">
+		 	   boa_category = 'IT트렌드'
+		 	</when>
+		 	<when test="condition == 'cun'">
+		 	   boa_category = '컨퍼런스'
+		 	</when>
+		 	<otherwise>
+		 		boa_category = 'IT트렌드' or boa_category = '컨퍼런스'
+		 	</otherwise>
+		 	</choose> 
+		 	   and boa_status = 'Y'
+		
+	</select>
+	
+	<select id="itNewsCount" resultType="_int">
+		
+		select
+			   count(*)
+		  from board
+		 where 
+		 	   boa_category = 'IT트렌드' or boa_category = '컨퍼런스'
+		 	   and boa_status = 'Y'
+		
+	</select>
+	
+	<select id="itNewsSearch" resultMap="board">
+	SELECT * FROM (
+			select
+		             boa_no
+				   , mem_no
+				   , boa_category
+				   , boa_status
+				   , boa_title
+				   , boa_content
+				   , boa_enroll_date
+				   , boa_update_date
+				   , boa_count
+				   , boa_like
+				   , boa_scrap
+				   , tag_name
+				   , boa_img_path
+		        from board b
+		       order by boa_No desc
+		      )where  
+		      <choose>
+					<when test="condition == 'itT'">
+				 	   boa_category = 'IT트렌드'
+				 	</when>
+				 	<when test="condition == 'cun'">
+				 	   boa_category = '컨퍼런스'
+				 	</when>
+				 	<otherwise>
+				 		boa_category = 'IT트렌드' or boa_category = '컨퍼런스'
+				 	</otherwise>
+			  </choose> 
+			 	 and boa_status = 'Y'
+	</select>
+	
+	<select id="itNews" resultMap="board">
+	SELECT * FROM (
+			select
+		             boa_no
+				   , mem_no
+				   , boa_category
+				   , boa_status
+				   , boa_title
+				   , boa_content
+				   , boa_enroll_date
+				   , boa_update_date
+				   , boa_count
+				   , boa_like
+				   , boa_scrap
+				   , tag_name
+				   , boa_img_path
+		        from board b
+		       order by boa_No desc
+		      )where boa_category = 'IT트렌드' or boa_category = '컨퍼런스'
+			 	 and boa_status = 'Y'
+	</select>
+	
+	<select id="itNewsDetail" resultMap="board">
+		select
+	             boa_no
+			   , mem_no
+			   , boa_category
+			   , boa_status
+			   , boa_title
+			   , boa_content
+			   , boa_enroll_date
+			   , boa_update_date
+			   , boa_count
+			   , boa_like
+			   , boa_scrap
+			   , tag_name
+			   , boa_img_path
+	        from board 
+	                 where boa_no = #{bno}
+	</select>
 
 </mapper>

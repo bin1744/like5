@@ -122,15 +122,32 @@
 	                    </div>
 	                    <div class="sponsorship"> 
 	                        <!--기본으로 보여지는 아이콘-->
-	                        <a data-toggle="modal" data-target="#sponsorship-modal"><i id="sponsorship" class="far fa-heart fa-2x"></i></a>
 	                        <!--후원하기 클릭시 변경되는 아이콘-->
-	                        <i id="selected-sponsorship" class="fas fa-heart fa-2x" style="display: none;"></i>
+	                        <c:choose>
+		                        <c:when test="${!empty sponsor}">
+			                        <i id="selected-sponsorship" class="fas fa-heart fa-2x" disabled onclick="alertSponsor();"></i>
+			                        <a data-toggle="modal" data-target="#sponsorship-modal"><i id="sponsorship" class="far fa-heart fa-2x" style="display:none;"></i></a>
+		                        </c:when>
+		                        <c:when test="${empty sponsor}">
+		                        	<i id="selected-sponsorship" class="fas fa-heart fa-2x" style="display:none;"></i>
+			                        <a data-toggle="modal" data-target="#sponsorship-modal"><i id="sponsorship" class="far fa-heart fa-2x"></i></a>
+		                        </c:when>
+	                        </c:choose>
 	                        <div>후원하기</div>
 	                    </div>
 	               	</div>
             	</div><br><hr>
             	</c:when>
             </c:choose>
+            
+            <script>
+            
+            //중복 후원 방지를 위한 alert
+            function alertSponsor(){
+            	alertify.alert("😉 이미 후원한 게시글입니다.");
+            }
+            
+            </script>
             
             <!--후원하기 모달창-->
             <!-- The Modal -->
@@ -168,7 +185,7 @@
 			<form id="sponForm" action="sponInsert.me" method="post">
 	            <input type="hidden" name="memNo" value="${ loginUser.memNo }">
 	            <input type="hidden" name="smemNo" value="${ b.mno }">
-	            <input type="hidden" name="sponCategory" value="1">
+	            <input type="hidden" name="sponCategory" value="2">
 	            <input type="hidden" name="refBoaNo" value="${ b.bno }">
 			</form>       
 
@@ -184,7 +201,7 @@
     	            pay_method : 'card',
     	            merchant_uid : 'merchant_' + new Date().getTime(),
     	            name : '칼럼 게시글 후원하기',
-    	            amount : 1000,
+    	            amount : 100,
     	            buyer_email : '${ loginUser.email }',
     	            buyer_name : '${ loginUser.memName }',
     	            buyer_tel : '010-1234-5678'
@@ -215,33 +232,6 @@
             	});
     		});
 
-    	    
-                /* 후원 아이콘 클릭시 변경되는 JS*/
-                /*후원의 경우 DB에 insert된다면 변경되게끔 구현하기*/
-                $('.sponsorship').click(function(){
-
-                if($('#selected-sponsorship').css('display')=='none'){
-                    $('#selected-sponsorship').css('display','block');
-                    $('#sponsorship').css('display','none');
-                }else{
-                    $('#selected-sponsorship').css('display','none');
-                    $('#sponsorship').css('display','block');
-                }
-
-                })
-                
-                /* 좋아요 | 스크랩 공통 모듈 [백업용]
-                function likeAndScrap(num){
-                	if(num == 1 ){
-                		$("#insertForm").children().eq(2).attr("value","like");
-                		$("#insertForm").attr("action","likeAndScrap.bo").submit();
-                	}else{
-                		$("#insertForm").children().eq(2).attr("value","scrap");
-                		$("#insertForm").attr("action","likeAndScrap.bo").submit();
-                	}
-                }
-                
-                */
 
                 // 1 = 좋아요 | 2 = 스크랩
                 function likeAndScrap(num){

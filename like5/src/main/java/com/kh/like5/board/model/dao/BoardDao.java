@@ -230,6 +230,15 @@ public class BoardDao {
 		return sqlSession.selectOne("boardMapper.scrapCount",b);
 	}
 	
+	/**
+	 *  게시글 상세 조회 시 로그인한 회원의  후원 여부
+	 * @author seong
+	 */
+	
+	public int sponsorCount(SqlSessionTemplate sqlSession,Board b) {
+		return sqlSession.selectOne("boardMapper.sponsorCount",b);
+	}
+	
 	
 	/**
 	 * [ 스크랩 | 좋아요 ]  등록
@@ -359,4 +368,53 @@ public class BoardDao {
 		System.out.println(b);
 		return sqlSession.update("boardMapper.qnaUpdate", b);
 	}
+	
+	
+	/**
+	 * [QnA] - QnaDetailView 답변(댓글) 채택
+	 * @author Hansol
+	 */
+	public int adoptionReply(SqlSessionTemplate sqlSession, int repNo) {
+		return sqlSession.update("boardMapper.adoptionReply", repNo);
+	}
+	
+	
+	//-----------------동규----------------
+	
+	public int itNewsCount(SqlSessionTemplate sqlSession) {
+				
+		return sqlSession.selectOne("boardMapper.itNewsCount");
+				
+	}
+
+	public ArrayList<Board> itNews(SqlSessionTemplate sqlSession, PageInfo pi) {
+				
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+			
+		return (ArrayList)sqlSession.selectList("boardMapper.itNews", null, rowBounds);
+				
+	}
+
+	public Board itNewsDetail(SqlSessionTemplate sqlSession, int bno) {
+				
+		return sqlSession.selectOne("boardMapper.itNewsDetail", bno);
+				
+	}
+
+	public int itNewsSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+			
+		return sqlSession.selectOne("boardMapper.itNewsSearchCount", map);
+			
+	}
+
+	public ArrayList<Board> itNewsSearch(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
+			
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+				
+		return (ArrayList)sqlSession.selectList("boardMapper.itNewsSearch", map, rowBounds);
+			
+	}
+	
 }
