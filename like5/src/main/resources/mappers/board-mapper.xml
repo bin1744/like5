@@ -52,11 +52,7 @@
 
     <!-- [재환] 관리자단 게시글 리스트 조회 -->
     <select id="getBoardList" resultMap="board">
-        select BOA_NO
-             , BOA_CATEGORY
-             , BOA_TITLE
-             , NICKNAME
-             , BOA_ENROLL_DATE
+        select *
         from board
         join member using(mem_no)
         where boa_status = 'Y'
