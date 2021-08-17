@@ -606,5 +606,49 @@
 				  	  by request_date desc)
 	where ROWNUM &lt;=3
 	</select>
+	
+	
+	<!-- ********** 한솔 ********** -->
+	<!-- [한솔] - 프로필 조회 시 유효한 게시글 총 개수 조회 -->
+	<select id="boListCount" resultType="_int">
+		select
+			   count(*)
+		  from board
+		 where 
+		 	   mem_no = #{memNo}
+		 	   and boa_status = 'Y'
+	</select>
+	
+	<!-- [QnA] - QnaList 사용자가 요청한 페이지에 뿌려줄 게시글 리스트 조회 -->
+	<select id="boList" resultMap="boardResultSet">
+		select
+			   boa_no
+			 , nickname
+			 , boa_title
+			 , boa_enroll_date
+			 , boa_count
+		  from board
+		  join member using (mem_no)
+		 where
+		 	   boa_status = 'Y'
+		 order by boa_enroll_date desc
+	</select>
+	
+	<!-- [QnA] - QnaList 사용자가 요청한 페이지에 뿌려줄 댓글 리스트 조회 -->
+	<select id="reList" resultMap="replyResultSet">
+		select
+			   rep_no
+			 , boa_no
+			 , mem_no
+			 , rep_content
+			 , rep_enrolldate
+	      from reply
+	      join board using (boa_no)
+	     where
+	           rep_status = 'N'
+	     order by rep_enroll_date desc
+	</select>
+	
+	
 </mapper>
 
