@@ -139,9 +139,9 @@
                 <div class="container">
                     <!-- The Modal -->
                     <div class="modal fade" id="report-modal">
-                    <input type="hidden" name="mno" value="${loginUser.memNo}">
-            	   	<input type="hidden" name="refNo" value="${b.bno}">
-              		<input type="hidden" name="category" value="${b.category}">
+	                    <input type="hidden" name="mno" value="${loginUser.memNo}">
+	            	   	<input type="hidden" name="refNo" value="${b.bno}">
+	              		<input type="hidden" name="category" value="${b.category}">
                         <div class="modal-dialog modal-dialog-centered modal-sm">
                             <div class="modal-content">
                             
@@ -153,7 +153,6 @@
                                 
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                   		 <p><b>${b.nickname}<b>님을 신고하시겠어요?</p>
                                     <div class="modal-content" style="border:1px solid grey;width: 100%;height: 100%; border-radius: 5px;">
                                         <div>
                                             <b><span style="font-size: 15px;">사유 선택 : </span></b>
@@ -266,7 +265,7 @@
                                                     +              '<div class="user-info" style="display: inline-block;width: 90%;">'
                                                     +                  '<div class="test">' 
                                                     +                      '<span>'+'<a href="" class="aTags">' + list[i].nickname + '</a>'+'</span>'
-                                                    +                      '<span style="float: right;">'+'<a href="" class="aTags" data-toggle="modal" data-target="#report-modal">'+'<img src="">'+"🚨신고"+'</a>'+'</span>'
+                                                    +                      '<span style="float: right;">'+'<a href="" class="aTags report" data-toggle="modal" data-target="#report-modal">'+'<img src="">'+"🚨신고"+'</a>'+'</span>'
                                                     +                   '</div>'
                                                     +                  '<div>' + list[i].repEnrollDate + '</div>'
                                                     +              '</div>'
@@ -292,7 +291,6 @@
                                                     +   '</div>'
                                                     +'</div>'
                                                    
-                                                    
                                                 	$("#replyResult").html(value);	
                                                     
                             						  repNo.push(list[i].repNo);
@@ -310,12 +308,13 @@
 	                                                   +             '</div>'
 	                                                   +            '<div class="user-info" style="display: inline-block; width: 90%;">'
 	                                                   +               ' <span>'+'<a href="" class="aTags">'+list[i].nickname+'</a>'+'</span>'
-	                                                   +                 '<span style="float: right;">'+'<a href="" class="aTags" data-toggle="modal" data-target="#report-modal"><img src="">'+'🚨신고'+'</a>'+'</span>'
+	                                                   +                 '<span style="float: right;">'+'<a href="" class="aTags report-re" data-toggle="modal" data-target="#report-modal"><img src="">'+'🚨신고'+'</a>'+'</span>'
 	                                                   +                 '<div>'+list[i].repEnrollDate +'</div>'
 	                                                   +             '</div>'
 	                                                   +         '</div>'
 	                                                   +         '<div class="comment-content">'
 	                                                   +             '<div>'+list[i].repContent+'</div>'
+	                                                   +			 '<input id="report-re" type="hidden" value="'+list[i].repNo+'">'
 	                                                   +         '</div>'
 	                                                   +     '</div>'
 	                                                   + '</div>'
@@ -389,6 +388,16 @@
 	                          	   /*원댓글 번호를 대댓글의 참조 댓글 번호로 가져오는 구문*/
 	                           	   $(document).on("click",".insert-comments",function(){
 	                          	      insertReplies($(this).prev().val());
+	                          	   });
+	                          	  
+	                          	  /*신고시 해당 댓글 번호가 insert 됨*/
+	                           	  $(document).on("click",".report",function(){
+	                          	     $("#report-modal").children().eq(1).val($(".insert-comments").prev().val());
+	                          	   });
+	                          	  
+	                           	  /*신고시 해당 대댓글 번호가 insert 됨*/
+	                           	  $(document).on("click",".report-re",function(){
+	                          	     $("#report-modal").children().eq(1).val($("#report-re").val());
 	                          	   });
 	                          	   
 	                          	   
