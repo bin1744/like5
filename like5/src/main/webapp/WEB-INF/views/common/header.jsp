@@ -174,12 +174,6 @@ tr, td{border:1px solid blue !important;}*/
 						<div style="margin-left: 80px;">
 							이메일 : <input type="email" id="email" name="email" style="margin-left: 17px;"><br>
 							비밀번호 : <input type="password" id="memPwd" name="memPwd" style="margin-left: 3px;">
-							<button type="button" style="border: 0px solid white; background-color: white;">
-								<img src="https://i.imgur.com/CsKaQmk.png" alt="">
-							</button>
-							<button type="button" style="border: 0px solid white; background-color: white;">
-								<img src="https://i.imgur.com/X4fyiID.png" alt="">
-							</button>
 						</div>
 					</div>
 
