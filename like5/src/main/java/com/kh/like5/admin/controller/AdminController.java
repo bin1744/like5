@@ -452,6 +452,23 @@ public class AdminController {
 
 	}
 
+	// 신고내역 삭제 기능
+	@RequestMapping("deleteReport.ad")
+	public String deleteReport(int rno, Model model, HttpSession session) {
+
+		int result= adService.deleteReport(rno);
+		System.out.println(rno);
+
+		if(result>0) { //제대로 삭제된 경우
+			session.setAttribute("alertMsg", "게시글 삭제 성공!");
+			return "redirect:customer.ad";
+		}else {
+			model.addAttribute("errorMsg", "게시글 삭제 실패");
+			return "common/errorPage";
+		}
+
+	}
+
 	// FAQ 페이지
 	@RequestMapping("faq.ad")
 	public ModelAndView faqList(ModelAndView mv) {

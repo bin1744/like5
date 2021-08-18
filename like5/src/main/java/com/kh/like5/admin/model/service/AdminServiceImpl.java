@@ -222,6 +222,11 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
+	public int deleteReport(int rno) {
+		return adDao.deleteReport(sqlSession, rno);
+	}
+
+	@Override
 	public ArrayList<Faq> getFaqList() {
 		return adDao.getFaqList(sqlSession);
 	}
