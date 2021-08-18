@@ -79,6 +79,9 @@ div{box-sizing:border-box;}
 
 /* to the top */
 #toTheTop{display:scroll; position:fixed; bottom:1.5rem; right:2rem; color:grey;}
+
+/*div{border:1px solid red !important;}
+tr, td{border:1px solid blue !important;}*/
 </style>
 </head>
 
@@ -139,10 +142,11 @@ div{box-sizing:border-box;}
 							<!-- 관리자 로그인 후 -->
 							<div id="after_login">
 								<div class="w3-dropdown-hover w3-center">
-									<button class="w3-button w3-white">${ loginUser.memName }</button>
+									<button class="w3-button">${ loginUser.memName }</button>
 									<div class="w3-dropdown-content w3-bar-block w3-border">
-										<a href="member.ad" class="w3-bar-item w3-button"><b>통합관리</b></a>
-										<a href="logout.me" class="w3-bar-item w3-button"><b>로그아웃</b></a>
+										<p><br><b>${ loginUser.memName }</b>님 환영합니다</p><hr>
+										<a class="dropdown" href="member.ad" class="w3-bar-item w3-button"><b>통합관리</b></a><br><br>
+										<a class="dropdown" href="logout.me" class="w3-bar-item w3-button"><b>로그아웃</b></a><br><br>
 									</div>
 								</div>
 							</div>
