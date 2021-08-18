@@ -102,7 +102,9 @@
 		    	  <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 		    
 		    	  <script>
-				        ToView();
+			    	 	 $(function(){
+				        	ToView();
+				        })
 				        
 				        /*토스트 UI */
 			    		const content = [].join('\n');
