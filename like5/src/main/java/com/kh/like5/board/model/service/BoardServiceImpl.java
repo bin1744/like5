@@ -473,6 +473,27 @@ public class BoardServiceImpl implements BoardService {
 			
 	}
 
+	@Override
+	public int insertItNews(Board b) {
+		
+		return bDao.insertItNews(sqlSession, b);
+
+	}
+
+	@Override
+	public int upadateItNews(Board b) {
+		
+		return bDao.upadateItNews(sqlSession, b);
+		
+	}
+
+	@Override
+	public int deleteItnews(int bno) {
+		
+		return bDao.deleteItnews(sqlSession, bno);
+		
+	}
+
 	
 
 

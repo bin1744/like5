@@ -52,7 +52,7 @@
                       <c:choose>
 	                    		<c:when test="${ loginUser.userStatus eq 'Y' }">
 			                        <button type="button" data-toggle="modal" data-target="#MyModal" style=" float: right; border: 2px solid rgb(220, 53, 69); background-color:rgb(220, 53, 69); color: white; border-radius:3px; margin-right: 300px; margin-top:10px;">삭제하기</button>
-			                        <button style=" float: right; border: 2px solid rgb(220, 53, 69); background-color: white; color: rgb(220, 53, 69); border-radius:3px; margin-top:10px;">수정하기</button>
+			                        <button type="button" onclick="location.href='upadateFormItNews.bo?bno=${ b.bno }'" style=" float: right; border: 2px solid rgb(220, 53, 69); background-color: white; color: rgb(220, 53, 69); border-radius:3px; margin-top:10px;">수정하기</button>
 		                        </c:when>
                         </c:choose>
                     </div>
@@ -81,7 +81,7 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" style="border: 2px solid rgb(220, 53, 69); background-color: white; color: rgb(220, 53, 69);">취소</button>
-                <button type="button" onclick="location.href='delete.me?memNo=${ loginUser.memNo }'" class="btn btn-secondary" data-dismiss="modal" style="background-color: rgb(220, 53, 69); color: white;">삭제하기</button>
+                <button type="button" onclick="location.href='deleteItnews.bo?bno=${ b.bno }'" class="btn btn-secondary" data-dismiss="modal" style="background-color: rgb(220, 53, 69); color: white;">삭제하기</button>
                 </div>
                 
             </div>

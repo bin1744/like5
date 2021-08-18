@@ -168,4 +168,10 @@ public interface BoardService {
 			
 	ArrayList<Board> itNewsSearch(PageInfo pi, HashMap<String, String> map);
 	
+	int insertItNews(Board b);
+	
+	int upadateItNews(Board b);
+	
+	int deleteItnews(int bno);
+	
 }

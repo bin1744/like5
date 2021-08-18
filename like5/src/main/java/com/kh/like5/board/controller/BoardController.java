@@ -290,18 +290,71 @@ public class BoardController {
 	}
 	
 	
+	@RequestMapping("insertItNewsForm.bo")
+	public String insertItNewsForm() {
+		
+		return "board/itNews/itNewsForm";
+		
+	}
+	
+	@RequestMapping("insertItNews.bo")
+	public String insertItNews(Board b, HttpSession session, Model model) {
+		
+		int result = bService.insertItNews(b);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", " 게시글이 성공적으로 등록되었습니다. ");
+			return "redirect:itNews.bo";
+		}else {
+			model.addAttribute("errorMsg", " 게시글 등록에 실패하였습니다. ");
+			return "common/errorPage";
+		}
+	}
+	
+	@RequestMapping("upadateItNews.bo")
+	public String upadateItNews(Board b, HttpSession session, Model model) {
+		
+		int result = bService.upadateItNews(b);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", " 게시글이 성공적으로 수정되었습니다. ");
+			return "redirect:itNews.bo";
+		}else {
+			model.addAttribute("errorMsg", " 게시글 수정에 실패하였습니다. ");
+			return "common/errorPage";
+		}
+	}
 	
 	
+	@RequestMapping("upadateFormItNews.bo")
+	public ModelAndView upadateformItNews(int bno, ModelAndView mv) {
+		
+		
+		Board b = bService.itNewsDetail(bno);
+			
+		mv.addObject("b", b)
+		  .setViewName("board/itNews/upadateformItNews");
+		
+		
+		return mv;
+	
+	}
 	
 	
+	@RequestMapping("deleteItnews.bo")
+	public String deleteItnews(int bno, HttpSession session, Model model) {
+			
+		int result = bService.deleteItnews(bno);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", " 게시글이 성공적으로 삭제되었습니다. ");
+			return "redirect:itNews.bo";
+		}else {
+			model.addAttribute("errorMsg", " 게시글 삭제에 실패하였습니다. ");
+			return "common/errorPage";
+		}
 	
-	
-	
-	
-	
-	
-	
-	
+	}
 	
 	
 	
