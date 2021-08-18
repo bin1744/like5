@@ -102,10 +102,7 @@
 		    	  <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 		    
 		    	  <script>
-				    
-					    $(function(){
-				        	ToView();
-				        })
+				        ToView();
 				        
 				        /*토스트 UI */
 			    		const content = [].join('\n');
@@ -120,8 +117,7 @@
 				            initialValue: content
 				        });
 		
-				        function ToView()
-				        {
+				        function ToView(){
 				            viewer.setMarkdown(editor.getHTML());
 				        };
 			        </script>
@@ -385,8 +381,9 @@
 								+		'<!-- 좌측 답변 본문 -->'
 								+		'<div class="replyContent">'
 								+			'<div class="replyContentData">'
-												+ list[i].repContent
+							    +                    list[i].repContent 
 								+			'</div>'
+								+           '<div class="viewer3">'+'</div>'
 								+		'</div><!-- 좌측 답변 본문 끝 -->'
 								
 								+		'<!-- 우측 아이콘 옵션 -->'
@@ -429,11 +426,11 @@
 								+		'</div><!-- 우측 아이콘 옵션 끝 -->'
 								+	'</div><!-- 답변 상세 영역 끝 -->'
 								+'</div><!-- 원댓글 영역 끝 -->'
+								// [Array.prototype.push()] 배열의 끝에 하나 이상의 요소를 추가하고, 새로운 배열 길이 반환
+								repNo.push(list[i].repNo);
 
 								// html 메소드를 이용해 id가 해당 값인 요소 안에 리스트 출력
 								$("#qnaBottom").html(value);
-								// [Array.prototype.push()] 배열의 끝에 하나 이상의 요소를 추가하고, 새로운 배열 길이 반환
-								repNo.push(list[i].repNo);
 						}
 					},error: function(){
 						// 리스트 조회 실패 시
