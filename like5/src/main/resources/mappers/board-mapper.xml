@@ -380,10 +380,10 @@
           and boa_status='Y'
      	<choose>
 	    	<when test="orderBy=='views'">
-	    		 order by boa_count desc,boa_enroll_date desc
+	    		 order by boa_count desc,boa_enroll_date 
 	    	</when>
 	    	<when test="orderBy=='reply'">
-	    		order by reply  desc,boa_enroll_date desc
+	    		order by reply  desc,boa_enroll_date 
     		</when>
     		<otherwise>
    			   order by boa_enroll_date desc
@@ -410,6 +410,7 @@
                  join member using (mem_no)
         where boa_no = #{bno}
           and boa_status='Y'
+          and regexp_like (boa_category,'칼럼|일상|스터디모집')
 	</select>
 	
 
@@ -625,10 +626,10 @@
 	          and boa_status='Y'
      	<choose>
 	    	<when test="orderBy=='views'">
-	    		 order by boa_count desc,boa_enroll_date desc
+	    		 order by boa_count desc,boa_enroll_date 
 	    	</when>
 	    	<when test="orderBy=='likes'">
-	    		order by boa_like desc,boa_enroll_date desc
+	    		order by boa_like desc,boa_enroll_date 
     		</when>
     		<otherwise>
    			   order by boa_enroll_date desc
@@ -760,8 +761,10 @@
 		from (select boa_no, boa_title, boa_img_path
 		        from board
 		        where boa_status='Y'
+		        and regexp_like (boa_category,'칼럼')
 		        order by boa_like desc) b
 		where rownum between 1 and 4
+		
 	</select>
 	
 	
