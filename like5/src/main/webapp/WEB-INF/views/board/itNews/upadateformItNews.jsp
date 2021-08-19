@@ -27,11 +27,20 @@
 
         <form id="" action="upadateItNews.bo" method="post">
         <input type="hidden" value="${b.bno}" name="bno" >
-       		
-       		<select name="category" id="">
-			    <option value="컨퍼런스" selected>컨퍼런스</option>
-			    <option value="IT트렌드">IT트렌드</option>
-		    </select>
+       		<c:choose>
+            	<c:when test="${ b.category eq '컨퍼런스'}">
+                	<select name="category" id="">
+		                <option value="컨퍼런스" selected>컨퍼런스</option>
+		                <option value="IT트렌드">IT트렌드</option>
+		            </select>
+            	</c:when>
+            	<c:when test="${ b.category eq 'IT트렌드'}">
+                	<select name="category" id="">
+		                <option value="컨퍼런스">컨퍼런스</option>
+		                <option value="IT트렌드" selected>IT트렌드</option>
+		            </select>
+            	</c:when>
+            </c:choose>
        		
             <br>
             <div class="content-header">
