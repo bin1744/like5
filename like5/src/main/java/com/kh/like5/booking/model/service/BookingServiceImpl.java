@@ -74,19 +74,6 @@ public class BookingServiceImpl implements BookingService{
 		int result1 = bDao.updateOffice(sqlSession, o);
 		System.out.println("서비스단list"+list);
 		int result2 = 1;
-		/*
-		if(!list.isEmpty()) {
-			for(Attachment att : list) {
-				//기존파일이 있을 때
-				if(att.getFileNo() != 0) {
-					result2 = bDao.updateOfficeAtt(sqlSession, list);
-				} else if(att.getRefFno() != 0){
-					//새로 파일 추가할때
-					result2 = bDao.insertOfficeReAtt(sqlSession, list);
-				}
-			}
-		}
-		*/
 		
 		if(!list.isEmpty()) {
 			result2 = bDao.updateOfficeAtt(sqlSession, list);
@@ -110,21 +97,21 @@ public class BookingServiceImpl implements BookingService{
 	}
 	
 	@Override
-	public String[] selectOffImgPaths(int[] checked){
-		return bDao.selectOffImgPaths(sqlSession, checked);
+	public String[] selectOffImgPaths(int[] officeNo){
+		return bDao.selectOffImgPaths(sqlSession, officeNo);
 	}
 	
 	@Override
-	public ArrayList<Attachment> selectFilePaths(int[] checked){
-		return bDao.selectFilePaths(sqlSession, checked);
+	public ArrayList<Attachment> selectFilePaths(int[] officeNo){
+		return bDao.selectFilePaths(sqlSession, officeNo);
 	}
 	
 	@Override
-	public int deleteOffices(int[] checked) {
-		int result1 = bDao.deleteOffices(sqlSession, checked);
+	public int deleteOffices(int[] officeNo) {
+		int result1 = bDao.deleteOffices(sqlSession, officeNo);
 		int result2 = 1;
-		if(!selectFilePaths(checked).isEmpty()) {
-			result2 = bDao.deleteFilePaths(sqlSession, checked);
+		if(!selectFilePaths(officeNo).isEmpty()) {
+			result2 = bDao.deleteFilePaths(sqlSession, officeNo);
 		}
 		return result1 * result2;
 	}

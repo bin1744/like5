@@ -160,7 +160,7 @@ public class BookingController {
 	}
 	
 	@RequestMapping("updateOf.bk")
-	public String updateOffice(Office o, HttpServletRequest request, HttpSession session, MultipartFile[] refile, Model model) {
+	public String updateOffice(Office o, HttpServletRequest request, HttpSession session, MultipartFile refileTop, MultipartFile[] refile, Model model) {
 		//facility 부분 가져오기
 		String[] facilityArr = request.getParameterValues("facility");
 		String facility ="";
@@ -168,28 +168,41 @@ public class BookingController {
 			facility = String.join(",", facilityArr);
 		}
 		o.setFacility(facility);
+		//오피스부분
+		if(!refileTop.getOriginalFilename().equals("")) {
+			System.out.println(o.getOffImgPath());
+			new File(session.getServletContext().getRealPath(o.getOffImgPath())).delete();
+			String changeName = saveFile(refileTop, session);
+			o.setOffImgPath("resources/images/" + changeName);
+		}
+
+		String[] path = request.getParameterValues("filePath");
+		String[] num = request.getParameterValues("fileNo");
+		int[] fnum = new int[num.length];
+		if(num != null) {
+			for(int i=0; i<num.length; i++) {
+				fnum[i] = Integer.parseInt(num[i]);
+				System.out.println("arr: " + fnum[i]);
+			}
+		}
+
 		ArrayList<Attachment> list = new ArrayList<>();
-		Attachment att = null;
+		
 		for(int i=0; i<refile.length; i++) {
-			//refile이 비지 않았다면!
+			//새 첨부파일
 			if(!refile[i].getOriginalFilename().equals("")) {
-				att = new Attachment();
-				if( i==0 ) {
-					//대표이미지 기존것  삭제 후 새로 저장
-					new File(session.getServletContext().getRealPath(o.getOffImgPath())).delete();
-					String changeName = saveFile(refile[i], session);
-					o.setOffImgPath("resources/images/" + changeName);
-					continue;
-				} else if(i!=0 && att.getFileNo() != 0) {//기존파일이 존재할경우
-					System.out.println(att.getFilePath());//왜 두개가 찍히니--> 배열로 안 가져오니까
-					String filePath[] = att.getFilePath().split(",");
-					//기존 것 삭제
-					new File(session.getServletContext().getRealPath(filePath[0])).delete();
+				Attachment att = new Attachment();
+
+				//기존 파일이 존재
+				if(!path[i].equals("")) {
+					System.out.println("p: " + path[i]);
+					System.out.println("fnum: "+fnum[i]);
+					new File(session.getServletContext().getRealPath(path[i])).delete();
 					String changeName = saveFile(refile[i], session);
 					//att에 저장
 					att.setFilePath("resources/images/" + changeName);
 					att.setRefFno(o.getOfficeNo());
-					att.setFileNo(att.getFileNo());
+					att.setFileNo(fnum[i]);
 				} else {
 					//기존 변경 없이 새파일을가져왔을경우
 					String changeName = saveFile(refile[i], session);
@@ -197,14 +210,11 @@ public class BookingController {
 					att.setRefFno(o.getOfficeNo());
 				}
 				list.add(att);
+				System.out.println(list);
 			}
 		}
-		/*att에 값이 없을 경우 추가 못하게해야함
-		if(att.getRefFno()==0) {
-			list.remove(att);
-		}*/
-		int result = bService.updateOffice(o, list);
 		
+		int result = bService.updateOffice(o, list);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "업데이트성공");
@@ -214,7 +224,6 @@ public class BookingController {
 			return "common/errorPage";
 		}
 	}
-	
 	
 	@RequestMapping("deleteOffice.bk")
 	public String deleteOffice(int ono, HttpSession session , HttpServletRequest request, Model model) {
@@ -254,28 +263,36 @@ public class BookingController {
 		}
 		
 	}
-	
-	@ResponseBody
-	@RequestMapping(value="deleteOffices.bk", produces="application/json; charset=utf-8")
-	public String deleteOffices(int[] checked, HttpSession session , HttpServletRequest request, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
-		System.out.println("checked: " + checked[0]);
-		//String[] officeNos = checked.split(",");
-		//System.out.println("officeNos: " + checked);
-		if(checked != null) {
+
+	@RequestMapping("deleteOffices.bk")
+	public String deleteOffices(HttpSession session , HttpServletRequest request, Model model,@RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		//officeNos 부분 가져오기
+		String[] officeArr = request.getParameterValues("officeNos");
+		//System.out.println("arr: " + officeArr.toString());
+		//parsing
+		int[] officeNo = new int[officeArr.length];
+		for(int i=0; i<officeArr.length; i++) {
+			officeNo[i] = Integer.parseInt(officeArr[i]);
+		}
+		//System.out.println("officeNos: "+officeNo);
+		if(officeArr != null) {
 			
 			//오피스 번호로 삭제전에 offImgPath 조회하기
-			String[] offImgPaths = bService.selectOffImgPaths(checked);
+			String[] offImgPaths = bService.selectOffImgPaths(officeNo);
 			
 			//오피스 번호로 첨부파일들 filePath조회
-			ArrayList<Attachment> filePaths = bService.selectFilePaths(checked);
+			ArrayList<Attachment> filePaths = bService.selectFilePaths(officeNo);
 			
-			int result = bService.deleteOffices(checked);
+			int result = bService.deleteOffices(officeNo);
 			//삭제성공시 물리적 루트에서 사진 삭제
 			if(result > 0) {
 				for(int i=0; i<offImgPaths.length; i++) {
-					System.out.println(offImgPaths[i]);
-					System.out.println(filePaths.get(i).getFilePath());
+					//System.out.println(i + " : " + offImgPaths[i]); 
 					new File(session.getServletContext().getRealPath(offImgPaths[i])).delete();
+				}
+				
+				for(int i=0; i<filePaths.size(); i++) {
+					//System.out.println(filePaths.get(i).getFilePath());
 					new File(session.getServletContext().getRealPath(filePaths.get(i).getFilePath())).delete();
 				}
 			} else {
@@ -286,11 +303,15 @@ public class BookingController {
 		
 		//다시 삭제된 리스트조회하기
 		int listCount = bService.selectListCount();
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
-		ArrayList<Office> list = bService.selectListAll(pi);
-		session.setAttribute("alertMsg", "삭제 성공");
-		return new Gson().toJson(list);
 		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		
+		ArrayList<Office> list = bService.selectListAll(pi);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		
+		return "booking/aOfficeList";
 	}
 	
 	/**
@@ -341,6 +362,7 @@ public class BookingController {
 	
 	@RequestMapping("research.bk")
 	public String research(Booking b, Model model) {
+		System.out.println("re: "+b);
 		ArrayList<Office> list = bService.selectOfficeList(b);
 
 		model.addAttribute("list",list);

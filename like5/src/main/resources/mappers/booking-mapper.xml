@@ -70,6 +70,7 @@
    							    and end_date in #{endDate}
    							    and branch like '%'||#{branch}||'%')
      and branch like '%'||#{branch}||'%'
+     and o.person = #{person}
   </select>
   
   <select id="autoComplete" parameterType="Office" resultMap="officeResultSet">
@@ -239,7 +240,7 @@
   	select
   		  off_img_path
   	 from office
-  	where office_no = #{officeNo}
+  	where office_no = #{check}
   </select>
   
   <select id="selectFilePaths" parameterType="Attachment" resultMap="attachmentResultSet">
@@ -247,20 +248,20 @@
   		  file_path
   	 from attachment
   	where ref_bno = 9
-  	  and ref_fno = #{officeNo}
+  	  and ref_fno = #{check}
   </select>
   
   <delete id="deleteOffices" parameterType="int">
   	delete
   	  from office
-  	 where office_no = #{officeNo}
+  	 where office_no = #{check}
   </delete>
   
   <delete id="deleteFilePaths" parameterType="int">
   	delete
   	  from attachment
   	 where ref_bno = 9
-  	   and ref_fno = #{officeNo}
+  	   and ref_fno = #{check}
   </delete>
   
   <update id="updateOfficeAtt" parameterType="Attachment">

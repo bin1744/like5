@@ -97,38 +97,38 @@ public class BookingDao {
 		return sqlSession.delete("bookingMapper.deleteOfficeAtt", ono);
 	}
 	
-	public String[] selectOffImgPaths(SqlSessionTemplate sqlSession, int[] checked) {
-		String[] offImgPaths = null;
-		for(int i=0; i<checked.length; i++) {
-			System.out.println("for" + checked[i]);
-			int officeNo = checked[i];
-			offImgPaths[i] += sqlSession.selectOne("bookingMapper.selectOffImgPaths", officeNo);
+	public String[] selectOffImgPaths(SqlSessionTemplate sqlSession, int[] officeNo) {
+		String[] offImgPaths = new String[officeNo.length];
+		for(int i=0; i<officeNo.length; i++) {
+			//System.out.println("for" + officeNo[i]);
+			int ckeck = officeNo[i];
+			offImgPaths[i] = sqlSession.selectOne("bookingMapper.selectOffImgPaths", ckeck);
 		}
-		System.out.println("offImgPaths: "+offImgPaths);
+		System.out.println("offImgPaths: " + offImgPaths);
 		return offImgPaths;
 	}
 	
-	public ArrayList<Attachment> selectFilePaths(SqlSessionTemplate sqlSession, int[] checked) {
+	public ArrayList<Attachment> selectFilePaths(SqlSessionTemplate sqlSession, int[] officeNo) {
 		ArrayList<Attachment> filePaths= null;
-		for(int officeNo : checked) {
-			filePaths = (ArrayList)sqlSession.selectList("bookingMapper.selectFilePaths",officeNo);
+		for(int check : officeNo) {
+			filePaths = (ArrayList)sqlSession.selectList("bookingMapper.selectFilePaths", check);
 		}
 		return filePaths;
 	}
 	
-	public int deleteOffices(SqlSessionTemplate sqlSession, int[] checked) {
+	public int deleteOffices(SqlSessionTemplate sqlSession, int[] officeNo) {
 		int result = 0;
-		for(int officeNo : checked) {
-			result = sqlSession.delete("bookingMapper.deleteOffices", officeNo);
+		for(int check : officeNo) {
+			result = sqlSession.delete("bookingMapper.deleteOffices", check);
 		}
 		//System.out.println("result1: " + result);
 		return result;
 	}
 	
-	public int deleteFilePaths(SqlSessionTemplate sqlSession, int[] checked) {
+	public int deleteFilePaths(SqlSessionTemplate sqlSession, int[] officeNo) {
 		int result = 0;
-		for(int officeNo:checked) {
-			result = sqlSession.delete("bookingMapper.deleteFilePaths", officeNo);
+		for(int check:officeNo) {
+			result = sqlSession.delete("bookingMapper.deleteFilePaths", check);
 		}
 		//System.out.println("result2: " + result);
 		return result;
