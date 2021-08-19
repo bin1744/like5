@@ -62,7 +62,7 @@
   		 , price
   		 , off_img_path
     from office o
-    join booking b on(o.office_no = b.office_no)
+    left join booking b on(o.office_no = b.office_no)
    where o.office_no not in (select distinct b.office_no
    							   from booking b
    							   join office o on(b.office_no = b.office_no)
