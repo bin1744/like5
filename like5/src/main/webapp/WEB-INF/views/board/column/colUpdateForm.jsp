@@ -53,7 +53,6 @@
                     <label for="comment"><b>내용</b></label>
                     <div id="editor">${b.content}</div>
                     <div id="viewer"></div>
-                    
                 </div>
             </div>
             

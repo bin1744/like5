@@ -197,12 +197,12 @@
                             <!-- 반복문 돌리기 -->
                             <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
                            		 <c:choose>
-                           		 <c:when test="${!empty condition}"> 
-		                           	<li class="page-item"><a class="page-link" href="colOrderByCount.bo?currentPage=${ p }&condition=${condition}&flag=${condition}">${ p }</a></li>
-                           		 </c:when>
-                           		 <c:otherwise>
-                           		 	 <li class="page-item"><a class="page-link" href="colList.bo?currentPage=${p}&flag=${condition}">${p}</a></li>
-                           		 </c:otherwise>
+	                           		 <c:when test="${!empty condition}"> 
+			                           	<li class="page-item"><a class="page-link" href="colOrderByCount.bo?currentPage=${ p }&condition=${condition}&flag=${condition}">${ p }</a></li>
+	                           		 </c:when>
+	                           		 <c:otherwise>
+	                           		 	 <li class="page-item"><a class="page-link" href="colList.bo?currentPage=${p}&flag=${condition}">${p}</a></li>
+	                           		 </c:otherwise>
                            		 </c:choose>
                             </c:forEach>
                             
