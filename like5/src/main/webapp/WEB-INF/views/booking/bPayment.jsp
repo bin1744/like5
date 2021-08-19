@@ -350,7 +350,7 @@
               	<h3>주소</h3>
               		<div class="address1">
 	              		<input type="text" id="sample6_postcode" placeholder="우편번호">
-					    <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+					    <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
               		</div>
               		<div class="address2">
               			<input type="text" id="sample6_address" placeholder="주소"><br>
@@ -428,13 +428,13 @@
               <div class="tdesc">만 13세 이상</div>
             </div>
             <div class="stp">
-              <button type="button" class="circle" onclick="minus();">
+              <button type="button" id="minus" class="circle" onclick="minus();">
                 <span>-</span>
               </button>
               <div id="pp2" class="howmany">
                 <input type="text" id="num1" value="${ o.person }" />
               </div>
-              <button type="button" class="circle" onclick="plus();">
+              <button type="button" id="plus" class="circle" onclick="plus();">
                 <span>+</span>
               </button>
             </div>
@@ -628,22 +628,25 @@
     	  history.back();
     	});
       
+      var addperson =  30000;
       function minus() {
         if (pp2.value > 0) {
           pp2.value = Number(pp2.value) - 1;
           let result = pp2.value;
           pp.innerHTML = result + " 명";
           $("input[name=person]").val(result);
+          $(".total-price").html("￦" + (${o.price} + (addperson-=30000)))
         }
       }
-      
+     
       function plus(){
         pp2.value = Number(pp2.value) + 1;
         let result = pp2.value;
         pp.innerHTML = result + " 명";
         $("input[name=person]").val(result);
+        $(".total-price").html("￦" + (${o.price} + (addperson+=30000)))
       }
-
+      
       window.onclick = (e) => {
         e.target === pmodal ? pmodal.classList.remove("show-modal") : false;
       };
