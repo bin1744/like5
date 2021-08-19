@@ -144,7 +144,7 @@
             <div id="post">
                 <div>
                     <div>
-                        	작성한 게시글
+                        	임시저장한 게시글
                     </div>
                     <table class="table">
                     <thead>

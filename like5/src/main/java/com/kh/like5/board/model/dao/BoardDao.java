@@ -425,7 +425,7 @@ public class BoardDao {
 
 	public int deleteItnews(SqlSessionTemplate sqlSession, int bno) {
 		
-		return sqlSession.insert("boardMapper.insertItNews", bno);
+		return sqlSession.insert("boardMapper.deleteItnews", bno);
 		
 	}
 

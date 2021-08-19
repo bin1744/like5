@@ -231,7 +231,7 @@
                 <div>
                     <div style="float: left;">
                       <div>
-                         	 최근 등록 답변
+                         	 최근 등록 댓글
                           <button onclick="location.href='ansListDetail.me?memNo=${loginUser.memNo}'" style="float: right; margin-right: 300px;">
                           	전체보기
                         </button>
