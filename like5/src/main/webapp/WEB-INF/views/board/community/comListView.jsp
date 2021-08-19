@@ -49,35 +49,33 @@
                 </div>
             </div>
             	
-            	
-       	<!-- 위의 a태그 클릭시  아래의 script에서 생성된 매핑값 넘기는 목적 -->
-       	<form id="comOrderByCategory" action="" method="post">
-       		<input type="hidden" name="condition" value="">
-       	</form>
-            	
-       	 <script>
-	        	function comOrderByCategory(condition){
-	        		// 전체 조회할 때
-	        		if(condition==1){
-	        			$("#comOrderByCategory").attr("action","comList.bo").submit();
-	        		// 일상 or 스터디 모집으로 조회
-	        		}else{
-	        			// 일상 카테고리 조회
-	        			if(condition==2){
-	        				//input type hidden 요소의 value를 daily로 지정하기
-	        				$("#comOrderByCategory").children("input[type=hidden]").attr("value","daily");
-	        				$("#comOrderByCategory").attr("action","comOrderByCategory.bo").submit();
-	        			}else{
-	        				// 스터디 모집으로 조회
-		        			// input type hidden 요소의 value를 study로 지정하기 
-	        				$("#comOrderByCategory").children("input[type=hidden]").attr("value","study");
-	        				$("#comOrderByCategory").attr("action","comOrderByCategory.bo").submit();
-	        			}
-	        		}
-	        	}
-     	</script>
-            	
-  
+	            	
+	       	<!-- 위의 a태그 클릭시  아래의 script에서 생성된 매핑값 넘기는 목적 -->
+	       	<form id="comOrderByCategory" action="" method="post">
+	       		<input type="hidden" name="condition" value="">
+	       	</form>
+	            	
+	       	 <script>
+		        	function comOrderByCategory(condition){
+		        		// 전체 조회할 때
+		        		if(condition==1){
+		        			$("#comOrderByCategory").attr("action","comList.bo").submit();
+		        		// 일상 or 스터디 모집으로 조회
+		        		}else{
+		        			// 일상 카테고리 조회
+		        			if(condition==2){
+		        				//input type hidden 요소의 value를 daily로 지정하기
+		        				$("#comOrderByCategory").children("input[type=hidden]").attr("value","daily");
+		        				$("#comOrderByCategory").attr("action","comOrderByCategory.bo").submit();
+		        			}else{
+		        				// 스터디 모집으로 조회
+			        			// input type hidden 요소의 value를 study로 지정하기 
+		        				$("#comOrderByCategory").children("input[type=hidden]").attr("value","study");
+		        				$("#comOrderByCategory").attr("action","comOrderByCategory.bo").submit();
+		        			}
+		        		}
+		        	}
+	     	</script>
             
         <!--카테고리 끝--> 
         </div>
@@ -115,7 +113,6 @@
   
         <!--메인 시작-->
         <div class="main" id="communityList">
-            
 	            <div class="talk-count-box" style="height: 100px; padding-top: 30px;">
 	            	<c:choose>
 	            		<c:when test="${!empty condition}">
@@ -170,11 +167,9 @@
 		            	</div>
 		          	  </div>
             		</c:forEach>
-
             <!--메인 끝-->
         </div>
         
-
 
         <script>
             
@@ -182,7 +177,6 @@
     		 $(document).on("click","#selectOption>div",function(){
                  $(this).toggleClass('on');
                  $(this).siblings().removeClass('on');
-                 
              })
              
    		   	function comOrderByCount(condition){
@@ -220,9 +214,9 @@
      
         <div style="display: inline-block; margin-left: 25%;  margin-top: 30px;" >
             <div id="search-area" >
+               
                 <!--키워드 검색-->
                 <form id="comSearchForm" action="comSearch.bo" method="Get">
-                    <!--카테고리 시작-->
                     <div class="community-header" > 
                         <div class="search-item-wrapper">
                             <div class="category-tag-header-wrapper"  style="margin-top:5px">
@@ -233,9 +227,8 @@
                                 </select>
                             </div>
                             <input type="text" class="form-control" name="keyword"  placeholder="원하는 정렬 기준으로 검색해보세요!" style="width:300px">
-                          <div onclick="submit();"><i class="fas fa-search" style="margin-top:10px"></i></div>
+                          	<div onclick="submit();"><i class="fas fa-search" style="margin-top:10px"></i></div>
                         </div>
-                    <!--카테고리 끝--> 
                     </div>
                 </form>
                 
@@ -250,14 +243,9 @@
                 	function submit(){
                 		$("#comSearchForm").submit();
                 	}
-                	
                 </script>
-                
-                <!--검색 끝-->
             </div>
             <div style="display:inline-block; margin-left: 30%;margin-bottom:50px; margin-top: 30px;">
-                <!--페이징바 컬러 변경 예정-->
-                <!--페이징 시작-->
                 <div id="pagingArea">
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
@@ -379,11 +367,8 @@
                         </ul>
                     </nav>
                 </div>
-                <!--페이징 끝-->
             </div>
         </div>
-        
-    <!--전체 감싸는 div-->
     </div>
 
      

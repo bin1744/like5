@@ -191,46 +191,46 @@
 
 
             <script>
-    	    // 아임포트 결제 js
-    		$("#payment").click(function(){
-    	        var IMP = window.IMP;
-    	        IMP.init('imp33726702');
-    	        
-    	        IMP.request_pay({
-    	            pg : 'html5_inicis',
-    	            pay_method : 'card',
-    	            merchant_uid : 'merchant_' + new Date().getTime(),
-    	            name : '칼럼 게시글 후원하기',
-    	            amount : 100,
-    	            buyer_email : '${ loginUser.email }',
-    	            buyer_name : '${ loginUser.memName }',
-    	            buyer_tel : '010-1234-5678'
-    	        }, function (rsp) {
-           			console.log(rsp);       			
-    	    		if ( rsp.success ) {
-    	    	    	jQuery.ajax({
-    	    	    		url: "/payments/complete",
-    	    	    		type: 'POST',
-    	    	    		dataType: 'json',
-    	    	    		data: {
-    	    		    		imp_uid : rsp.imp_uid
-    	    	    		}
-    	                }).done(function(data) {
-    	                    if ( everythings_fine ) {
-    	                    	console.log(data);
-    	                    } else {
-    	                        alert(' 결제가 진행되지 않았습니다. 다시 시도해주세요. ');
-    	                    }
-    	                });
-                		$("#sponForm").submit();
-    	            } else {
-    	                var msg = ' 결제에 실패하였습니다. ';
-    	                msg += ' \n 에러 원인 : ' + rsp.error_msg;
-    	
-    	                alert(msg);
-    	            }
-            	});
-    		});
+	    	    // 아임포트 결제 js
+	    		$("#payment").click(function(){
+	    	        var IMP = window.IMP;
+	    	        IMP.init('imp33726702');
+	    	        
+	    	        IMP.request_pay({
+	    	            pg : 'html5_inicis',
+	    	            pay_method : 'card',
+	    	            merchant_uid : 'merchant_' + new Date().getTime(),
+	    	            name : '칼럼 게시글 후원하기',
+	    	            amount : 100,
+	    	            buyer_email : '${ loginUser.email }',
+	    	            buyer_name : '${ loginUser.memName }',
+	    	            buyer_tel : '010-1234-5678'
+	    	        }, function (rsp) {
+	           			console.log(rsp);       			
+	    	    		if ( rsp.success ) {
+	    	    	    	jQuery.ajax({
+	    	    	    		url: "/payments/complete",
+	    	    	    		type: 'POST',
+	    	    	    		dataType: 'json',
+	    	    	    		data: {
+	    	    		    		imp_uid : rsp.imp_uid
+	    	    	    		}
+	    	                }).done(function(data) {
+	    	                    if ( everythings_fine ) {
+	    	                    	console.log(data);
+	    	                    } else {
+	    	                        alert(' 결제가 진행되지 않았습니다. 다시 시도해주세요. ');
+	    	                    }
+	    	                });
+	                		$("#sponForm").submit();
+	    	            } else {
+	    	                var msg = ' 결제에 실패하였습니다. ';
+	    	                msg += ' \n 에러 원인 : ' + rsp.error_msg;
+	    	
+	    	                alert(msg);
+	    	            }
+	            	});
+	    		});
 
 
                 // 1 = 좋아요 | 2 = 스크랩
@@ -379,8 +379,7 @@
                         </div>
                         </div>
                     </div>
-                
-            </div>
+           	 </div>
         </div>         
       
       
@@ -393,28 +392,23 @@
             </form>
       		<!--선택된 요소에 액션값 부여하고, 바로 submit 시키기-->     
               <script>
-               function postFormSubmit(num){
-                   if(num==1){ // 수정하기
-                       $("#postFormSubmit").attr("action","updateForm.bo").submit();
-                   }else{ // 삭제하기
-                       $("#postFormSubmit").attr("action","delete.bo").submit();
-                   }
-               }
+	               function postFormSubmit(num){
+	                   if(num==1){ // 수정하기
+	                       $("#postFormSubmit").attr("action","updateForm.bo").submit();
+	                   }else{ // 삭제하기
+	                       $("#postFormSubmit").attr("action","delete.bo").submit();
+	                   }
+	               }
               </script>
-                          
-
-        <!--관심 있을 만한 컬럼-->
-        <div class="column-footer" style="margin-top: 300px; margin-bottom:50px">
-            <div style="margin-left: 10px; margin-bottom: 30px;">
-                <h4><b>관심 있을 만한 칼럼</b></h4>
-            </div>
-            
-            <div id="likeCountTop4"></div>
-            
-            
-            <!--좋아요 수 TOP 4 썸네일 조회하기-->
-          
-        </div>   
+	
+	        <!--관심 있을 만한 컬럼-->
+	        <div class="column-footer" style="margin-top: 300px; margin-bottom:50px">
+	            <div style="margin-left: 10px; margin-bottom: 30px;">
+	                <h4><b>관심 있을 만한 칼럼</b></h4>
+	            </div>
+	            <div id="likeCountTop4"></div>
+	            <!--좋아요 수 TOP 4 썸네일 조회하기-->
+	        </div>   
     </div>
     
     <script>
@@ -432,7 +426,6 @@
     	// 좋아요 가장 많은 Top4 게시글 조회
     	function topBoardList(){
     		$.ajax({
-    			
     			url:"columnTop4.bo",
     			success:function(list){
     				var value=""
@@ -468,11 +461,8 @@
     			}, error:function(){
     				console.log("AJAX 통신 실패");
     			}
-    			
     		})
-    		
     	}
-    
     </script>
 
 	<!--푸터바-->

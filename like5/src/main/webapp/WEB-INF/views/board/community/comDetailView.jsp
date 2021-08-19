@@ -61,7 +61,7 @@
                        		</c:choose>
                         </div>
                         
-                        <!--글 작성자에게만 보여지는 버튼-->
+                        <!--글 작성자에게만 보여지는 수정 및 삭제 버튼-->
                         <c:choose>
                         	<c:when test="${loginUser.memNo eq b.mno}">
                         		<div class="content-footer" align="center">
@@ -180,7 +180,6 @@
                                             </div>
                                         </div>
                                         <div style="background-color: pink;">
-                                            
                                         </div>
                                     </div>
                                 </div>
@@ -192,14 +191,13 @@
                                         <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">취소</button>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>    
-            <!--댓글 전체 감싸는 영역-->
+            </form>   
             
+            <!--댓글 전체 감싸는 영역-->
             <div class="talk-commentbox-wrapper" style="margin-bottom:50px">
                 <div class="talk-comment-count-box"></div>
                 <div class="talk-newcomment-box">

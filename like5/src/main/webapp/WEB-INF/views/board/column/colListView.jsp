@@ -21,11 +21,9 @@
     <!--전체 감싸는 div-->
     <div class="innerOuter" style="margin-top:50px; padding-left:50px">
 
-
         <div class="TalkPageHeaderModule">
             <div class="column-filter-box-wrapper"  style="width: 280px;">
                 <div><h2 class="column-header"><b>칼럼</b> &nbsp;&nbsp;</h2></div>
-                
                 <div>
                     <div id="column-select-btn">
                         <div class="column-filter-box-inner" id="selectOption" >
@@ -55,15 +53,9 @@
 	 	<form id="colOrderByCount" action="" method="post">
        		<input type="hidden" name="condition" value="">
        	</form>
-       	
-       	
-       	
-       	
 
         <!--메인 시작-->
         <div class="main" id="columnList" style="width: 1000px; margin-top: 50px; margin-left: 0px;">
-        
-                
             <div style="margin-left:88%;">
             	<c:if test="${!empty loginUser}">
                 	<button id="insertColumn" class="btn btn-danger" onclick="insertColumn();">글작성</button>
@@ -71,7 +63,6 @@
             </div>
 
             <script>
-
                 /*글작성 버튼 클릭시 해당 페이지로 이동*/
                 function insertColumn(){
                    location.href="colEnrollForm.bo";
@@ -85,30 +76,27 @@
                 
                 
                	function colOrderByCount(condition){
-   	    		// 전체 조회할 때
-   	    		if(condition==1){
-   	    			$("#colOrderByCount").attr("action","colList.bo").submit();
-   	    		// 조회수
-   	    		}else{
-   	    			// 조회수 조회
-   	    			if(condition==2){
-   	    				//input type hidden 요소의 value를 daily로 지정하기
-   	    				$("#colOrderByCount").children("input[type=hidden]").attr("value","views");
-   	    				$("#colOrderByCount").attr("action","colOrderByCount.bo?flag=views")
-   	    				.submit();
-
-   	    			}else{
-   	    				// 댓글수
-   	        			// input type hidden 요소의 value를 study로 지정하기 
-   	    				$("#colOrderByCount").children("input[type=hidden]").attr("value","likes");
-   	    				$("#colOrderByCount").attr("action","colOrderByCount.bo?flag=likes")
-   	    				.submit();
-   	    			}
-   	    		}
-           	 }
-                
-                
-
+	   	    		// 전체 조회할 때
+	   	    		if(condition==1){
+	   	    			$("#colOrderByCount").attr("action","colList.bo").submit();
+	   	    		// 조회수
+	   	    		}else{
+	   	    			// 조회수 조회
+	   	    			if(condition==2){
+	   	    				//input type hidden 요소의 value를 daily로 지정하기
+	   	    				$("#colOrderByCount").children("input[type=hidden]").attr("value","views");
+	   	    				$("#colOrderByCount").attr("action","colOrderByCount.bo?flag=views")
+	   	    				.submit();
+	
+	   	    			}else{
+	   	    				// 댓글수
+	   	        			// input type hidden 요소의 value를 study로 지정하기 
+	   	    				$("#colOrderByCount").children("input[type=hidden]").attr("value","likes");
+	   	    				$("#colOrderByCount").attr("action","colOrderByCount.bo?flag=likes")
+	   	    				.submit();
+	   	    			}
+	   	    		}
+	           	 }
             </script>
 
 		
@@ -143,11 +131,11 @@
 		                    </div>
 		                </div>
                      </c:forEach>
-	           	</div>
+	           	  </div>
       
 			
 		
-			
+			<!-- 글번호와 mno를 넘겨주어 해당 칼럼에 좋아요와 스크랩 여부를 확인 -->
             <script>
 	            $(function(){
 	            	 $(".thumbnail").click(function(){
@@ -155,10 +143,7 @@
 	                })
 	            });
             </script>
-            
-                  
 
-            <!--🔥페이징바 컬러 변경 예정🔥-->
             <div style="display:inline-block; margin-left: 400px; margin-top: 50px; margin-bottom:50px">
                 <!--페이징 시작-->
                 <div id="pagingArea">

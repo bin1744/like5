@@ -57,7 +57,6 @@
                 </div>
             </div>
             <div class="file-upload" style="padding: 0px;">
-                <!--<button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">첨부파일 등록하기</button>-->
             
                 <div class="image-upload-wrap">
                 <input class="file-upload-input"  name="reupfile" type='file' onchange="readURL(this);" accept="image/*" />
@@ -145,9 +144,7 @@
 	
 	                $('.image-title').html(input.files[0].name);
 	                };
-	
 	                reader.readAsDataURL(input.files[0]);
-	
 	            } else {
 	                removeUpload();
 	            }
@@ -155,10 +152,11 @@
             
             // 업로드한 파일 수정 = 제거
             function removeUpload() {
-            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
-            $('.file-upload-content').hide();
-            $('.image-upload-wrap').show();
+	            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+	            $('.file-upload-content').hide();
+	            $('.image-upload-wrap').show();
             }
+            
             $('.image-upload-wrap').bind('dragover', function () {
                     $('.image-upload-wrap').addClass('image-dropping');
                 });
@@ -181,16 +179,9 @@
  	                $('.file-upload-content').show();
  	
  	                $('.image-title').html("해당 게시글(을)");
-          			 
           		}
-          		
           	})
-          	
-         
-    
-
         </script>
-
     </div>
     
     <!--푸터바-->

@@ -59,20 +59,18 @@
             </div>
             <div class="file-upload" style="padding: 0px;">
               
-                <!-- <button class="file-upload-btn"  type="button" onclick="$('.file-upload-input').trigger( 'click' )">첨부파일 등록하기</button> -->
-            
                 <div class="image-upload-wrap">
                 	<input class="file-upload-input" type='file' name="upfile" onchange="readURL(this);" accept="image/*" />
-                <div class="drag-text">
-                    <p>업로드하고 싶은 파일을 드래그 해보세요😜</p>
-                </div>
+	                <div class="drag-text">
+	                    <p>업로드하고 싶은 파일을 드래그 해보세요😜</p>
+	                </div>
                 </div>
 
                 <div class="file-upload-content">
-                <img class="file-upload-image" src="#" alt="your image" />
-                <div class="image-title-wrap">
-                    <button type="button" onclick="removeUpload()" class="remove-image"><span class="image-title"></span>를 수정하시겠어요?</button>
-                </div>
+	                <img class="file-upload-image" src="#" alt="your image" />
+	                <div class="image-title-wrap">
+	                    <button type="button" onclick="removeUpload()" class="remove-image"><span class="image-title"></span>를 수정하시겠어요?</button>
+	                </div>
                 </div>
                 
             </div>
@@ -93,7 +91,6 @@
         </form>    
 
         <script>
-
 
             /*커뮤니티-제목-글자수 실시간 카운팅*/
             $('#content-title').keyup(function(e){
@@ -120,13 +117,10 @@
             	var $titleInput = $("#content-title");
             	
             	$titleInput.keyup(function(){
-            		
             		if($titleInput.val().length>=5){
             			$("#comEnrollbtn :submit").attr("disabled",false);
             		}
-            		
             	})
-            	
             });
             
 
