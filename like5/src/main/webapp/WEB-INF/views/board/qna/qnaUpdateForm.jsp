@@ -9,6 +9,10 @@
 
 <!-- qnaDetailView.css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/qnaEnrollForm.css" />
+
+<!--토스트 UI-->
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css" />	
+
 	
 </head>
 
@@ -33,7 +37,7 @@
 						<!-- 작성자, 글번호 -->
 						<input type="hidden" class="form-group" id="qWriter" name="mno" value="${ qnaBoard.mno }"></input>
 						<input type="hidden" class="form-group" id="qBno" name="bno" value="${ qnaBoard.bno }"></input>
-						
+						<input type="hidden" name="content" value="">
 						<!-- 제목 영역 -->
 						<div class="form-group">
 							<label for="qTitle">
@@ -66,10 +70,23 @@
 								&nbsp;&nbsp;질문하고 싶은 내용을 입력해주세요!
 							</label>
 							<!-- 마크다운 API 들어올 곳  -->
-							<textarea class="form-control" id="qContent" name="content" value="${ qnaBoard.content }" rows="5" required>${ qnaBoard.content }</textarea>
+							 <div id="editor"  onkeyup="keyevent(this);" class="form-control" >${ qnaBoard.content }</div>
+                   			 <div id="viewer"></div>
+							<textarea class="form-control" id="qContent" rows="5" style="display:none;"></textarea>
 							<div class="valid-feedback">본문이 입력되었습니다.</div>
 							<div class="invalid-feedback">본문을 작성해주세요.</div>
 						</div><!-- 본문 영역 -->
+						
+						 <!--토스트 UI-->
+    					<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    					
+    					<script>
+    					  function keyevent(){
+  				        	var content = editor.getHTML();
+  				        	$("#updateForm").children().eq(2).attr("value",content);
+  				        }
+    					</script>
+    					
 						
 						<!-- 작성 주의사항 -->
 						<div class="alert alert-danger alert-dismissible">
@@ -124,6 +141,25 @@
 				function storage(){
 					$("#enrollForm").attr("action", "qnaStorageInsert.bo").submit();
 				}
+				
+			    /*토스트 UI */
+		        const content = [].join('\n');
+    		  	const Editor = toastui.Editor;
+		        const editor = new Editor({
+		            el: document.querySelector('#editor'),
+		            height: '600px',
+		            previewStyle: 'vertical',
+		            language: 'ko',
+		        });
+	            
+		        /*토스트 UI 뷰어 */	
+		        const viewer = toastui.Editor.factory({
+		            el: document.querySelector('#viewer'),
+		            viewer: true,
+		            height: '500px',
+		            initialValue: content
+		        });
+	
 
 				// 사용자가 입력한 태그 데이터 검사
 				</script>

@@ -172,7 +172,7 @@
 						          	</tr>
 	                    		</c:when>
 	                    		<c:when test="${ list.category eq '칼럼' }">
-	                    			<tr onclick="location.href='colDetail.bo?bno=${ list.bno }'">
+	                    			<tr onclick="location.href='colDetail.bo?bno=${ list.bno }&mno=${ loginUser.memNo }'">
 		                    			<td><fmt:formatDate pattern="yy/MM/dd" value="${ list.enrollDate }"/></td>
 						                <td>${ list.title }</td>
 						                <td>${ list.category }</td>

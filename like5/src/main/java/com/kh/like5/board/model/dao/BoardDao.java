@@ -416,5 +416,23 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.itNewsSearch", map, rowBounds);
 			
 	}
+
+	public int insertItNews(SqlSessionTemplate sqlSession, Board b) {
+
+		return sqlSession.insert("boardMapper.insertItNews", b);
+		
+	}
+
+	public int deleteItnews(SqlSessionTemplate sqlSession, int bno) {
+		
+		return sqlSession.insert("boardMapper.insertItNews", bno);
+		
+	}
+
+	public int upadateItNews(SqlSessionTemplate sqlSession, Board b) {
+		
+		return sqlSession.insert("boardMapper.upadateItNews", b);
+		
+	}
 	
 }

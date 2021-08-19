@@ -241,6 +241,11 @@ public class AdminDao {
 
 	}
 
+	// 신고내역 삭제 기능
+	public int deleteReport(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.delete("boardMapper.deleteReport", rno);
+	}
+
 	// FAQ 리스트 조회
 	public ArrayList<Faq> getFaqList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("adminMapper.getFaqList");

@@ -97,7 +97,7 @@
                         </form>
                         <c:choose>
                         	<c:when test="${ loginUser.userStatus eq 'Y' }">
-                        		<button style=" float: right;background-color:rgb(220, 53, 69); color: white; border-radius:3px; border: none; margin-right: 360px;">작성하기</button>
+                        		<button type="button" onclick="location.href='insertItNewsForm.bo'" style=" float: right;background-color:rgb(220, 53, 69); color: white; border-radius:3px; border: none; margin-right: 360px;">작성하기</button>
                         	</c:when>
                         </c:choose>
                     </div>

@@ -100,6 +100,9 @@ public interface AdminService {
 	int getSearchReportCount(HashMap<String, String> map);
 	ArrayList<Report> getSearchReportList(PageInfo pi, HashMap<String, String> map);
 
+	// 신고내역 삭제 기능
+	int deleteReport(int rno);
+
 	// FAQ 리스트 조회
 	ArrayList<Faq> getFaqList();
 

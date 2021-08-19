@@ -52,11 +52,7 @@
 
     <!-- [재환] 관리자단 게시글 리스트 조회 -->
     <select id="getBoardList" resultMap="board">
-        select BOA_NO
-             , BOA_CATEGORY
-             , BOA_TITLE
-             , NICKNAME
-             , BOA_ENROLL_DATE
+        select *
         from board
         join member using(mem_no)
         where boa_status = 'Y'
@@ -118,7 +114,10 @@
 
     <!-- [재환] 관리자단 신고내역 개수 조회 -->
     <select id="getReportCount" resultType="_int">
-        select count(*) from report
+        select count(*)
+        from report
+        join board on(REF_NO = BOA_NO)
+        where boa_status = 'Y'
     </select>
 
     <!-- [재환] 관리자단 신고내역 리스트 조회 -->
@@ -132,6 +131,7 @@
           from report
           join member using(MEM_NO)
           join board on(REF_NO = BOA_NO)
+         where boa_status = 'Y'
          order by REPORT_UNIQUE desc
     </select>
 
@@ -154,6 +154,7 @@
             </otherwise>
         </choose>
         like '%' || #{keyword} || '%'
+        and boa_status = 'Y'
     </select>
 
     <!-- [재환] 관리자단 검색된 신고내역 리스트 조회 -->
@@ -180,9 +181,17 @@
             </otherwise>
         </choose>
         like '%' || #{keyword} || '%'
+        and boa_status = 'Y'
         order
         by REPORT_UNIQUE desc
     </select>
+
+    <!-- [재환] 관리자단 신고내역 삭제 기능 -->
+    <update id="deleteReport">
+        update board
+           set boa_status = 'N'
+         where boa_no = #{rno}
+    </update>
 
     <!-- [재환] 관리자단 태그별 게시글 개수 조회 -->
     <select id="getTagCount" resultType="_int">
@@ -371,10 +380,10 @@
           and boa_status='Y'
      	<choose>
 	    	<when test="orderBy=='views'">
-	    		 order by boa_count desc,boa_enroll_date desc
+	    		 order by boa_count desc,boa_enroll_date 
 	    	</when>
 	    	<when test="orderBy=='reply'">
-	    		order by reply  desc,boa_enroll_date desc
+	    		order by reply  desc,boa_enroll_date 
     		</when>
     		<otherwise>
    			   order by boa_enroll_date desc
@@ -401,6 +410,7 @@
                  join member using (mem_no)
         where boa_no = #{bno}
           and boa_status='Y'
+          and regexp_like (boa_category,'칼럼|일상|스터디모집')
 	</select>
 	
 
@@ -616,10 +626,10 @@
 	          and boa_status='Y'
      	<choose>
 	    	<when test="orderBy=='views'">
-	    		 order by boa_count desc,boa_enroll_date desc
+	    		 order by boa_count desc,boa_enroll_date 
 	    	</when>
 	    	<when test="orderBy=='likes'">
-	    		order by boa_like desc,boa_enroll_date desc
+	    		order by boa_like desc,boa_enroll_date 
     		</when>
     		<otherwise>
    			   order by boa_enroll_date desc
@@ -751,8 +761,10 @@
 		from (select boa_no, boa_title, boa_img_path
 		        from board
 		        where boa_status='Y'
+		        and regexp_like (boa_category,'칼럼')
 		        order by boa_like desc) b
 		where rownum between 1 and 4
+		
 	</select>
 	
 	
@@ -1070,5 +1082,48 @@
 	        from board 
 	                 where boa_no = #{bno}
 	</select>
-
+	
+	<insert id="insertItNews">
+		insert
+		  into board
+		  	 (
+		  	   boa_no
+		  	 , mem_no
+		  	 , boa_category
+		  	 , boa_title
+		  	 , boa_content
+		  	 , boa_enroll_date
+		  	 )
+		 	 values
+		 	 (
+		 	   seq_bno.nextval
+		 	 , #{mno}
+		 	 , #{category}
+		 	 , #{title}
+		 	 , #{content}
+		 	 , sysdate
+		 	 )
+	</insert>
+	
+	<update id="deleteItnews">
+		update board
+		   set
+		   	   boa_status = 'N'
+		   	 , boa_update_date = sysdate
+		 where boa_no = #{bno}
+	</update>
+	
+	<update id="upadateItNews">
+		update board
+		   set
+		   	   boa_title = #{title}
+		   	 , boa_category = #{category}
+		   	 , boa_content = #{content}
+		   	 , boa_status = 'Y'
+		   	 , boa_update_date = sysdate
+		 where boa_no = #{bno}
+	</update>
+	
+	
+	
 </mapper>
