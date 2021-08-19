@@ -114,6 +114,15 @@
 	}
 	/*스크롤 이동*/
 	html {scroll-behavior: smooth; /* 부드럽게 */}
+	
+	.carousel-item{
+	width: 600px;
+	height: 400px;
+	object-fit: contain !important;
+	};
+	.fit{
+		object-fit: contain !important;
+	}
 </style>
 </head>
 <body>
@@ -150,11 +159,11 @@
            <!-- 슬라이드 부분 -->
 		   <div class="carousel-inner">
 			    <div class="carousel-item active">
-			    	<img src="${o.offImgPath}">
+			    	<img class="d-block w-100" src="${o.offImgPath}">
 			    </div>
 			    <c:forEach var="i" begin="1" end="${ fn:length(at)-1 }">
 				    <div class="carousel-item">
-				      <img src="${at.get(i).filePath}">
+				      <img class="d-block w-100" src="${at.get(i).filePath}">
 				    </div>
 				</c:forEach>
            </div>
