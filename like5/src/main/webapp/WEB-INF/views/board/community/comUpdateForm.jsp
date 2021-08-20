@@ -106,11 +106,11 @@
                 if(title.trim() != 0){
                     $('#counting-title').html(title.length+" / 49");    //글자수 실시간 카운팅
                 }else{
-                    alert("공백이 입력되었어요 😊 다시 입력해주세요 ");
+                	alertify.alert("공백이 입력되었어요 😊 다시 입력해주세요 ");
                     $('#counting-title').html(''); 
                 }
                 if (title.length > 49){
-                    alert("최대 49자까지 입력 가능합니다.");
+                	alertify.alert("최대 49자까지 입력 가능합니다.");
                     $(this).val(title.substring(0, 49));
                     $('#counting-title').html("49 / 49");
                 }
