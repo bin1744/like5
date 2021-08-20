@@ -408,7 +408,7 @@
   	 join office o on(b.office_no = o.office_no)
   	where mem_no = #{memNo}
   	order
-  	   by request_date desc
+  	   by bookin_no desc
 	</select>
 	
 	<select id="selectMyBook" parameterType="Booking" resultMap="bookingResultSet">
