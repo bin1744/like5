@@ -756,11 +756,93 @@
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 					<div class="modal-body" style="text-align: center;">
-						추후 URL 공유 작업 예정
+						<table style="width:100%; margin:20px 0 20px 0;">
+							<tr>
+								<td>
+									<a id="kakao-link-btn" href="javascript:kakaoShare()">
+										<img src="https://imgur.com/q3uqpyF.png" style="width:50px; height:50px; cursor:pointer;">
+									</a>
+								</td>
+								<td>
+									<a id="clip-btn" href="javascript:clipboardShare()">
+										<i class="fas fa-share-alt" style="font-size:35px; cursor:pointer;"></i>
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td style="font-size:13px; color:gray;"><br>카카오톡 공유하기</td>
+								<td style="font-size:13px; color:gray;"><br>URL 복사하기</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div><!-- URL 공유 모달창 끝 -->
+		
+		<!-- kakao sdk 호출 -->
+		<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+		
+		<script>
+		<%-- 카카오톡 공유하기 --%>
+		// SDK를 초기화
+		Kakao.init('fd6e08bcf943e50c7edc130fc7617ac2');
+		
+		// SDK 초기화 여부를 판단
+		console.log(Kakao.isInitialized());
+		
+		function kakaoShare() {
+		  Kakao.Link.sendDefault({
+		    objectType: 'feed',
+		    content: {
+		      title: 'LIKE5',
+		      description: '${ b.title }',
+		      imageUrl: 'https://imgur.com/undefined.png',
+		      link: {
+		        mobileWebUrl: 'http://localhost:8008/like5/qnaDetail.bo?bno=' + '${ b.bno }',
+		        webUrl: 'http://localhost:8008/like5/qnaDetail.bo?bno=' + '${ b.bno }',
+		      },
+		    },
+		    buttons: [
+		      {
+		        title: '웹으로 보기',
+		        link: {
+		          mobileWebUrl: 'http://localhost:8008/like5/qnaDetail.bo?bno=' + '${ b.bno }',
+		          webUrl: 'http://localhost:8008/like5/qnaDetail.bo?bno=' + '${ b.bno }',
+		        },
+		      },
+		    ],
+		    // 카카오톡 미설치 시 카카오톡 설치 경로이동
+		    installTalk: true,
+		  })
+		}
+		
+		
+		<%-- 로컬 URL 복사 --%>
+		//  클립보드 복사하기
+		function clipboardShare() {
+	   	    var tmpTextarea = document.createElement('textarea');
+           tmpTextarea.value = "http://localhost:8008/like5/qnaDetail.bo?bno=" + "${ b.bno }";
+           
+           tmpTextarea.setAttribute('readonly', '');
+           tmpTextarea.style.position = 'absolute';
+           tmpTextarea.style.left = '-9999px';
+           document.body.appendChild(tmpTextarea);
+           
+           // 해당 element의 value를 시스템 함수를 호출하여 복사
+           tmpTextarea.select();
+           tmpTextarea.setSelectionRange(0, 9999);
+           var successChk = document.execCommand('copy');
+           
+           document.body.removeChild(tmpTextarea);
+           
+           // 클립보드 성공여부 확인
+           if(!successChk){
+           		alert(" 클립보드 URL 복사에 실패하였습니다. ");
+           } else {
+           		alert(" 클립보드에 URL 복사가 완료되었습니다. ");
+           }
+		}
+		</script>
 
 	</div><!-- 전체를 감싸는 div 끝 -->
 
