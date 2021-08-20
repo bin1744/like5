@@ -178,11 +178,12 @@ public class BookingController {
 
 		String[] path = request.getParameterValues("filePath");
 		String[] num = request.getParameterValues("fileNo");
+		
 		int[] fnum = new int[num.length];
-		if(num != null) {
-			for(int i=0; i<num.length; i++) {
-				fnum[i] = Integer.parseInt(num[i]);
-				System.out.println("arr: " + fnum[i]);
+		for(int i=0; i<num.length; i++) {
+			if(!num[i].equals("")) {
+			fnum[i] = Integer.parseInt(num[i]);
+			System.out.println("arr: " + fnum[i]);
 			}
 		}
 
