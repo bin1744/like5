@@ -89,6 +89,7 @@
     border-radius: 8px;
     height: 100%;
     width: 100%;
+    object-fit:contain;
 	}
 	.line1,	.line2,	.line3,	.line4 {
 	  display: flex;
@@ -302,7 +303,7 @@
                 <hr>
                 <div class="button-box">
                     <button type="submit">작성하기</button>
-                    <button type="button"><a href="#">목록으로</a></button>
+                    <button type="button"><a href="list.bk">목록으로</a></button>
                 </div>
             </form>
         </div>

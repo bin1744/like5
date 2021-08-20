@@ -55,7 +55,7 @@
 	  display: flex;
 	  align-self: center;
 	  flex-direction: column;
-	  border: 1px solid black;
+	  border: 1px solid rgb(134,134,134);
 	  margin:30px 0 60px 0;
 	  min-width: 80%;
 	}
@@ -156,6 +156,25 @@
     .address1{display:flex;}
 	.address1 input[type=button]{width:30%}
 	.address1 input[type=text]{margin-right:5px;}
+	.office-title{display:flex; align-items:center;}
+	.backto {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      margin-right: 32px;
+      align-items: center;
+      position: relative;
+    }
+    .backto:hover {
+      background-color: #f7f7f7;
+      cursor: pointer;
+    }
+    .backto i {
+      color: rgb(34, 34, 34);
+      position: absolute;
+      top: 35%;
+      left: 35%;
+    }
 </style>
 </head>
 <body>
@@ -163,7 +182,9 @@
     <div class="innerOuter">
     
 	    <div class="sideBar">
-	        <div class="aside-title"><h3>통합관리</h3></div>
+	        <div class="aside-title">
+	        	<h3>통합관리</h3>
+	        </div>
 		    <aside>
 		        <ul>
 		            <li><a href="member.ad">회원관리</a></li>
@@ -179,6 +200,9 @@
         <div class="office-box">
             <form class="updateOffice" action="updateOf.bk" method="post" enctype="multipart/form-data">
                 <div class="office-title">
+                <div class="backto">
+	              <i class="fas fa-chevron-left"></i>
+	            </div>
                     <h1>${ o.typeName } ${ o.person }</h1>
                 </div>
                 <hr>
@@ -192,10 +216,25 @@
                     <c:choose>
                     	<%--리스트에 사진이 없을때 --%>
                     	<c:when test="${ list.isEmpty() }">
-                    		<div class="img2"><img id="img2"></div>
-                    		<div class="img2"><img id="img3"></div>
-                    		<div class="img2"><img id="img4"></div>
-                    		<div class="img2"><img id="img5"></div>
+                    		<div class="img2">
+                    		<img id="img2">
+                    		<input type="hidden" name="filePath" value="${ att.filePath }">
+                    		<input type="hidden" name="fileNo" value="${ att.fileNo }">
+                    		</div>
+                    		<div class="img2">
+                    		<img id="img3">
+                    		<input type="hidden" name="filePath" value="${ att.filePath }">
+                    		<input type="hidden" name="fileNo" value="${ att.fileNo }">
+                    		</div>
+                    		<div class="img2">
+                    		<img id="img4">
+                    		<input type="hidden" name="filePath" value="${ att.filePath }">
+                    		<input type="hidden" name="fileNo" value="${ att.fileNo }">
+                    		</div>
+                    		<div class="img2">
+                    		<img id="img5"><input type="hidden" name="filePath" value="${ att.filePath }">
+                    		<input type="hidden" name="fileNo" value="${ att.fileNo }">
+                    		</div>
                     	</c:when>
                     	<%--리스트에 사진이 1개일때--%>
                     	<c:when test="${fn:length(list) == 1}">
@@ -483,6 +522,10 @@
 	            }
 	        }).open();
 	    }
+	      document.querySelector('.backto').addEventListener('click', () => {
+	    	  console.log("back");
+	    	  location.href="list.bk"
+	    	});
 </script>
 </body>
 </html>
