@@ -220,14 +220,14 @@
 						         <div class="img2">
 						            <img id="img${i+2}" src="${ list[i].filePath }">
 						         </div>
-						         <input type="hidden" name="fileNo" value="${ list[i].fileNo }">
-						         <input type="hidden" name="filePath" value="${ list[i].filePath }">
-						         <input type="hidden" name="status" value="${ list[i].status }">
+						         <input type="hidden" name="atlist[${i}].fileNo" value="${ list[i].fileNo }">
+						         <input type="hidden" name="atlist[${i}].filePath" value="${ list[i].filePath }">
+						         <input type="hidden" name="atlist[${i}].status" value="${ list[i].status }">
 						      </c:when>
 						      <c:otherwise>
 						         <div class="img2">
-						            <img id="img${i+2}"><input type="hidden" name="filePath" value="">
-						            <input type="hidden" name="fileNo" value="">
+						            <img id="img${i+2}"><input type="hidden" name="atlist[${i}].filePath" value="0">
+						            <input type="hidden" name="atlist[${i}].fileNo" value="0">
 						         </div>
 						      </c:otherwise>
 						    </c:choose>        
@@ -276,7 +276,6 @@
                         </ul>    
                     </div>
                     <div class="line2">
-                    <%-- 지점 어떻게 해? --%>
                         <ul>
                             <li>지점</li>
                             <li><input type="text" name="branch" value="${ o.branch }"></li>
@@ -347,13 +346,19 @@
                 <hr>
                 <div class="button-box">
                     <button type="submit">수정하기</button>
-                    <button type="button"><a href="deleteOffice.bk?ono=${ o.officeNo }">삭제하기</a></button>
+                    <button type="button" onclick="deleteOf();">삭제하기</button>
                 </div>
             </form>
         </div>
     </div>
 <jsp:include page="../common/footer.jsp"/>
 <script>
+	function deleteOf(){
+		console.log("!!");
+		$("form").attr("action", "deleteOffice.bk").submit();
+		
+	}
+	
 	$(function(){
 		$("#file-area").hide();
 		

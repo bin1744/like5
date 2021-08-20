@@ -86,8 +86,8 @@ public class BookingController {
 		ArrayList<Attachment> list = bService.selectOfficeAtt(officeNo);
 		System.out.println(list);
 		if(o != null) {
-			session.setAttribute("ott", o);
-			session.setAttribute("alist", list);
+			//session.setAttribute("ott", o);
+			//session.setAttribute("alist", list);
 			mv.addObject("o", o).setViewName("booking/aOfficeDetailView");
 			mv.addObject("list", list).setViewName("booking/aOfficeDetailView");
 		} else {
@@ -126,11 +126,10 @@ public class BookingController {
 				}
 			}
 		}
-		//System.out.println(o);
-		//System.out.println(list);
+
 		int result = bService.insertOffice(o, list);
 		
-		if(result > 0) {//오피스만 수정했을때 업로드 성공했는데 실패 페이지가 뜸 왜죠?
+		if(result > 0) {
 			session.setAttribute("alertMsg", "업로드 성공");
 			return "redirect:list.bk";
 		} else {
@@ -160,7 +159,7 @@ public class BookingController {
 	}
 	
 	@RequestMapping("updateOf.bk")
-	public String updateOffice(Office o, HttpServletRequest request, HttpSession session, MultipartFile refileTop, MultipartFile[] refile, Model model) {
+	public String updateOffice(Office o, Attachment att, HttpServletRequest request, HttpSession session, MultipartFile refileTop, MultipartFile[] refile, Model model) {
 		//facility 부분 가져오기
 		String[] facilityArr = request.getParameterValues("facility");
 		String facility ="";
@@ -175,7 +174,9 @@ public class BookingController {
 			String changeName = saveFile(refileTop, session);
 			o.setOffImgPath("resources/images/" + changeName);
 		}
-
+		
+		ArrayList<Attachment> atlist = att.getAtlist();
+		/*
 		String[] path = request.getParameterValues("filePath");
 		String[] num = request.getParameterValues("fileNo");
 		
@@ -186,24 +187,24 @@ public class BookingController {
 			System.out.println("arr: " + fnum[i]);
 			}
 		}
-
+*/
 		ArrayList<Attachment> list = new ArrayList<>();
 		
 		for(int i=0; i<refile.length; i++) {
 			//새 첨부파일
 			if(!refile[i].getOriginalFilename().equals("")) {
-				Attachment att = new Attachment();
+				//Attachment att = new Attachment();
 
 				//기존 파일이 존재
-				if(!path[i].equals("")) {
-					System.out.println("p: " + path[i]);
-					System.out.println("fnum: "+fnum[i]);
-					new File(session.getServletContext().getRealPath(path[i])).delete();
+				if(!atlist.isEmpty() && atlist.get(i).getFileNo()!=0) {
+					//System.out.println("p: " + path[i]);
+					//System.out.println("fnum: "+fnum[i]);
+					new File(session.getServletContext().getRealPath(atlist.get(i).getFilePath())).delete();
 					String changeName = saveFile(refile[i], session);
 					//att에 저장
 					att.setFilePath("resources/images/" + changeName);
 					att.setRefFno(o.getOfficeNo());
-					att.setFileNo(fnum[i]);
+					att.setFileNo(atlist.get(i).getFileNo());
 				} else {
 					//기존 변경 없이 새파일을가져왔을경우
 					String changeName = saveFile(refile[i], session);
@@ -225,7 +226,42 @@ public class BookingController {
 			return "common/errorPage";
 		}
 	}
-	
+	@RequestMapping("deleteOffice.bk")
+	public String deleteOffice(Office o, Attachment att, HttpSession session , HttpServletRequest request, Model model) {
+		ArrayList<Attachment> atlist = att.getAtlist();
+		//오피스 단독만 삭제
+		if(!atlist.isEmpty()) {
+			int result = bService.deleteOffice(o.getOfficeNo());
+			
+			if(result > 0) {
+				
+				new File(session.getServletContext().getRealPath(o.getOffImgPath())).delete();
+				session.setAttribute("alertMsg", "삭제 성공");
+				return "redirect:/list.bk";
+				
+			} else {
+				session.setAttribute("errorMsg", "삭제 실패");
+				return "common/errorPage";
+			}
+			//첨부파일이 있을경우에 같이 삭제
+		} else {
+			int result = bService.deleteOfficeWithAtt(o.getOfficeNo());
+			
+			if(result > 0) {
+				new File(session.getServletContext().getRealPath(o.getOffImgPath())).delete();
+				for(int i=0; i<atlist.size(); i++) {
+					new File(session.getServletContext().getRealPath(atlist.get(i).getFilePath())).delete();
+				}
+				session.setAttribute("alertMsg", "삭제 성공");
+				return "redirect:/list.bk";
+			} else {
+				session.setAttribute("errorMsg", "삭제 실패");
+				return "common/errorPage";
+			}
+		}
+		
+	}
+	/*
 	@RequestMapping("deleteOffice.bk")
 	public String deleteOffice(int ono, HttpSession session , HttpServletRequest request, Model model) {
 		//int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
@@ -264,7 +300,7 @@ public class BookingController {
 		}
 		
 	}
-
+*/
 	@RequestMapping("deleteOffices.bk")
 	public String deleteOffices(HttpSession session , HttpServletRequest request, Model model,@RequestParam(value="currentPage", defaultValue="1") int currentPage) {
 		//officeNos 부분 가져오기
