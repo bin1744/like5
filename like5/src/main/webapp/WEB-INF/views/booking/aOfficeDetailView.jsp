@@ -213,77 +213,25 @@
                         <input type="hidden" name="offImgPath" value="${ o.offImgPath }">
                     </div>
                     <div class="below-imgs">
-                    <c:choose>
-                    	<%--리스트에 사진이 없을때 --%>
-                    	<c:when test="${ list.isEmpty() }">
-                    		<div class="img2">
-                    		<img id="img2">
-                    		<input type="hidden" name="filePath" value="${ att.filePath }">
-                    		<input type="hidden" name="fileNo" value="${ att.fileNo }">
-                    		</div>
-                    		<div class="img2">
-                    		<img id="img3">
-                    		<input type="hidden" name="filePath" value="${ att.filePath }">
-                    		<input type="hidden" name="fileNo" value="${ att.fileNo }">
-                    		</div>
-                    		<div class="img2">
-                    		<img id="img4">
-                    		<input type="hidden" name="filePath" value="${ att.filePath }">
-                    		<input type="hidden" name="fileNo" value="${ att.fileNo }">
-                    		</div>
-                    		<div class="img2">
-                    		<img id="img5"><input type="hidden" name="filePath" value="${ att.filePath }">
-                    		<input type="hidden" name="fileNo" value="${ att.fileNo }">
-                    		</div>
-                    	</c:when>
-                    	<%--리스트에 사진이 1개일때--%>
-                    	<c:when test="${fn:length(list) == 1}">
-                    		<c:forEach var="att" items="${ list }" varStatus="status">
-                    			<div class="img2"><img id="img${ status.count+1 }" src="${ att.filePath }"></div>
-                    			<input type="hidden" name="fileNo" value="${ att.fileNo }">
-                    			<input type="hidden" name="filePath" value="${ att.filePath }">
-                    			<input type="hidden" name="status" value="${att.status }">
-                    		</c:forEach>  
-                    		<%--
-                    		<div class="img2"><img id="img2" src="${list[0].filePath }"></div>
-                    		<input type="hidden" name="fileNo" value="${ list[0].fileNo }">
-                    		<input type="hidden" name="filePath" value="${ list[0].filePath }">--%>
-                    		
-                    	    <div class="img2"><img id="img3"><input type="hidden" name="filePath" value="${ att.filePath }"></div>
-                    		<div class="img2"><img id="img4"><input type="hidden" name="filePath" value="${ att.filePath }"></div>
-                    		<div class="img2"><img id="img5"><input type="hidden" name="filePath" value="${ att.filePath }"></div>
-                    	</c:when>
-                    	
-                    	<c:when test="${ fn:length(list) == 2 }">
-                    	<c:forEach var="att" items="${ list }" varStatus="status">
-                    		<div class="img2"><img id="img${ status.count+1 }" src="${ att.filePath }"></div>
-                    		<input type="hidden" name="fileNo" value="${ att.fileNo }">
-                    		<input type="hidden" name="filePath" value="${ att.filePath }">
-                    		<input type="hidden" name="status" value="${att.status }">
-                    	</c:forEach>
-                    	    <div class="img2"><img id="img4"><input type="hidden" name="filePath" value="${ att.filePath }"></div>
-                    		<div class="img2"><img id="img5"><input type="hidden" name="filePath" value="${ att.filePath }"></div>
-                    	</c:when>
-                    	
-                    	<c:when test="${ fn:length(list) == 3}">
-                    	<c:forEach var="att" items="${ list }" varStatus="status">
-                    		<div class="img2"><img id="img${ status.count+1 }" src="${ att.filePath }"></div>
-                    		<input type="hidden" name="fileNo" value="${ att.fileNo }">
-                    		<input type="hidden" name="filePath" value="${ att.filePath }">
-                    		<input type="hidden" name="status" value="${att.status }">
-                    	</c:forEach>
-                    		<div class="img2"><img id="img5"><input type="hidden" name="filePath" value="${ att.filePath }"></div>
-                    	</c:when>
-                    	
-                    	<c:when test="${fn:length(list) == 4}">
-                    	<c:forEach var="att" items="${ list }" varStatus="status">
-                    		<div class="img2"><img id="img${ status.count+1 }" src="${ att.filePath }"></div>
-                    		<input type="hidden" name="fileNo" value="${ att.fileNo }">
-                    		<input type="hidden" name="filePath" value="${ att.filePath }">
-                    		<input type="hidden" name="status" value="${att.status }">
-                    	</c:forEach>
-                    	</c:when>
-                    </c:choose>
+
+						<c:forEach var="i" begin="0" end="3">
+							<c:choose>
+						      <c:when test="${ i<fn:length(list) }">
+						         <div class="img2">
+						            <img id="img${i+2}" src="${ list[i].filePath }">
+						         </div>
+						         <input type="hidden" name="fileNo" value="${ list[i].fileNo }">
+						         <input type="hidden" name="filePath" value="${ list[i].filePath }">
+						         <input type="hidden" name="status" value="${ list[i].status }">
+						      </c:when>
+						      <c:otherwise>
+						         <div class="img2">
+						            <img id="img${i+2}"><input type="hidden" name="filePath" value="">
+						            <input type="hidden" name="fileNo" value="">
+						         </div>
+						      </c:otherwise>
+						    </c:choose>        
+						 </c:forEach>
                     </div>    
                 </div>
 
