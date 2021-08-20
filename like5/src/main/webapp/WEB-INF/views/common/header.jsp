@@ -98,7 +98,7 @@ tr, td{border:1px solid blue !important;}*/
 	<div class="header" id="header">
 		<!-- 로고 -->
 		<div id="header_logo" align=center>
-			<br><a href="index.jsp"><img src="https://i.imgur.com/vhEZ5DJ.png" class="headerImg"></a>
+			<br><a href="${ pageContext.request.contextPath }"><img src="https://i.imgur.com/vhEZ5DJ.png" class="headerImg"></a>
 		</div>
 
 		<!-- 메뉴 -->
