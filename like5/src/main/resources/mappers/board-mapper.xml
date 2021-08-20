@@ -1060,7 +1060,7 @@
 				   , boa_img_path
 		        from board b
 		       order by boa_No desc
-		      )where boa_category = 'IT트렌드' or boa_category = '컨퍼런스'
+		      )where (boa_category = 'IT트렌드' or boa_category = '컨퍼런스')
 			 	 and boa_status = 'Y'
 	</select>
 	

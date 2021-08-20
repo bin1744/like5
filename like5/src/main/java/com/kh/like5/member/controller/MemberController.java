@@ -92,10 +92,11 @@ public class MemberController {
 	@RequestMapping("insertcalculate.me")
 	public ModelAndView insertcalculate(HttpSession session, Calculate c, ModelAndView mv) {
 		
-		int insertcalculate = mService.insertcalculate(c);
+		
 		int memNo = c.getMemNo();
 		
 		if(c.getCalPrice() > 9999) { // 로그인 실패 => 에러페이지
+			int insertcalculate = mService.insertcalculate(c);
 			mv.setViewName("redirect:myPage.me?memNo=" + memNo);
 		}else { // 로그인 성공 => 메인페이지
 			mv.addObject("errorMsg", "10,000원이상 정산신청해주세요!");
