@@ -316,7 +316,7 @@
 			
 			
 			<!-- 답변 갯수 안내 -->
-			<div class="replyGuide"><b><span id="rcount"></span>개의 답변</b></div>
+			<div class="replyGuide"><b>${ b.reply }개의 답변</b></div>
 			<!-- 페이지 하단 댓글 디테일 영역 -->
 			<div class="qnaBottom" id="qnaBottom">
 			</div><!-- 페이지 하단 댓글 디테일 영역 끝 -->
@@ -328,119 +328,134 @@
 				selectReplyList();
 			})
 			
+			
 			<%-- 댓글 리스트 --%>
-			function selectReplyList(){
-				
-				var repNo = [];
-				
-				$.ajax({
-					url: "rlist.bo",
-					data: {
-						bno: ${ b.bno },
-					},
-					// 댓글 리스트 조회 성공 시
-					success: function(list){
-						console.log(list);
-						
-						// 배열의 길이로 댓글 갯수 알아내기
-						$("#rcount").text(list.length);
-						
-						// value에 담긴 값 초기화
-						var value = "";
-						
-						for(var i in list){
-								// 원댓글 html
-								value += 
-								'<div class="replyLv1">'
-								+	'<!-- 답변자 정보 영역 -->'
-								+	'<!-- 채택된 답변일 경우, 내가 작성한 댓글일 경우 → .replyInfo 배경색 변경 -->'
-								+	'<div class="replyInfo">'
-								+		'<table>'
-								+			'<tr class="replyInfo1" style="color:red;">'
-								+			'<tr class="replyInfo1" style="color:red;">'
-								+				'<td class="tableBlank" rowspan="2"></td>'
-								+				'<td class="replyUser1" rowspan="2"><i class="far fa-user-circle"></i></td>'
-								+				'<td class="replyUser2">' + list[i].nickname + '</td>'
-								+				'<td class="replyAdoption" rowspan="2" colspan="2">'
-								+					'<!-- 글 작성자와 로그인한 회원이 일치할 경우 채택하기 버튼 보여짐 -->'
-													<c:if test="${loginUser.memNo eq b.mno}">
-								+						'<input type="hidden" value="' + list[i].repNo + '">'								
-								+						'<button type="button" class="btn text-muted btn-lg" id="adopModal" data-toggle="modal" data-target="#adoption-modal">'
-								+							'<i class="far fa-check-square text-muted"></i>&nbsp;&nbsp;&nbsp;채택하기'
-								+						'</button>'
-													</c:if>
-								+				'</td>'
-								+				'<td class="tableBlank" rowspan="2"></td>'
-								+			'</tr>'
-								+			'<tr class="replyInfo2">'
-								+				'<td class="replyUser3">' + list[i].repEnrollDate + '</td>'
-								+			'</tr>'
-								+		'</table>'
-								+	'</div><!-- 답변자 정보 영역 끝 -->'
-								
-								+	'<!-- 답변 상세 영역 -->'
-								+	'<div class="replyDetail">'
-								+		'<!-- 좌측 답변 본문 -->'
-								+		'<div class="replyContent">'
-								+			'<div class="replyContentData">'
-							    +                    list[i].repContent 
-								+			'</div>'
-								+           '<div class="viewer3">'+'</div>'
-								+		'</div><!-- 좌측 답변 본문 끝 -->'
-								
-								+		'<!-- 우측 아이콘 옵션 -->'
-								+		'<div class="replyIcon">'
-								+					'<table>'
-								+						'<tr><td class="rIcon"></td></tr>'
-														<c:choose>
-															<c:when test="${!empty loginUser}">
-																<c:choose>
-																	<c:when test="${loginUser.memNo eq list[i].memNo}">
-								+										'<!-- 로그인 유저의 회원번호와 댓글 작성자의 회원번호가 일치할 때 -->'
-								+	                					//'<table>'
-								+		                					'<tr><td class="rIcon"><i class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></i></td></tr>'
-								+		                					'<tr><td class="rIconName">삭제하기</td></tr>'
-								+	                					//'</table>'
-																	</c:when>
-																	<c:otherwise>
-								+										'<!-- 로그인 유저가 작성한 댓글이 아닐 때 -->'
-								+										'<tr>'
-								+											'<td class="rIcon"><i class="far fa-heart" data-toggle="modal" data-target="#sponsorship-modal"></i></td>'
-								+										'</tr>'
-								+										'<tr><td class="rIconName">후원하기</td></tr>'
-								+										'<tr>'
-								+											'<td class="rIcon"><i class="far fa-thumbs-down" data-toggle="modal" data-target="#report-modal"></i></td>'
-								+										'</tr>'
-								+										'<tr><td class="rIconName">신고하기</td></tr>'
-																	</c:otherwise>
-																</c:choose>
-															</c:when>
-															<c:otherwise>
-								+								'<!-- 로그인 값이 없을 경우 -->'
-								+								'<tr onClick="loginAlert()"><td class="rIcon"><i class="far fa-heart"></i></td></tr>'
-								+								'<tr><td class="rIconName">후원하기</td></tr>'
-								+								'<tr onClick="loginAlert()"><td class="rIcon"><i class="far fa-thumbs-down"></i></td></tr>'
-								+								'<tr><td class="rIconName">신고하기</td></tr>'
-															</c:otherwise>
-														</c:choose>
-								+						'<tr><td></td></tr>'
-								+					'</table>'
-								+		'</div><!-- 우측 아이콘 옵션 끝 -->'
-								+	'</div><!-- 답변 상세 영역 끝 -->'
-								+'</div><!-- 원댓글 영역 끝 -->'
-								// [Array.prototype.push()] 배열의 끝에 하나 이상의 요소를 추가하고, 새로운 배열 길이 반환
-								repNo.push(list[i].repNo);
+	         function selectReplyList(){
+	            
+	            var repNo = [];
+	            
+	            $.ajax({
+	               url: "rlist.bo",
+	               data: {
+	                  bno: ${ b.bno },
+	               },
+	               // 댓글 리스트 조회 성공 시
+	               success: function(list){
+	                  console.log(list);
+	                  
+	                  // 배열의 길이로 댓글 갯수 알아내기
+	                  $("#rcount").text(list.length);
+	                  
+	                  // value에 담긴 값 초기화
+	                  var value = "";
+	                  /*
+	                  var tt = list[0].repContent;
+	                  
+	                  const Editor3 = toastui.Editor;
+	                  const viewer = Editor3.factory({
+	                     el:document.querySelector("#test"),
+	                     viewer:true,
+	                     height:"300px",
+	                     initialValue:tt
+	                  })*/
+	                  
+	                  for(var i in list){
+	                     const Editor3 = toastui.Editor;
+	                     /*
+	                      const editor3 = new Editor3({
+	                           el: document.querySelector("#test"),
+	                           height: '500px',
+	                           previewStyle: 'vertical',
+	                           language: 'ko',
+	                           initialValue:  list[i].repContent
+	                       });
+	                      var content = editor3.getHTML();
+	                     */
 
-								// html 메소드를 이용해 id가 해당 값인 요소 안에 리스트 출력
-								$("#qnaBottom").html(value);
-						}
-					},error: function(){
-						// 리스트 조회 실패 시
-						console.log(" 댓글 리스트 조회용 ajax 통신 실패 ");
-					}
-			})
-			}
+	                     // 원댓글 html
+	                     value += 
+	                        '<div class="replyLv1">'
+	                        +   '<div class="replyInfo">'
+	                        +      '<table>'
+	                        +         '<tr class="replyInfo1" style="color:red;">'
+	                        +         '<tr class="replyInfo1" style="color:red;">'
+	                        +            '<td class="tableBlank" rowspan="2"></td>'
+	                        +            '<td class="replyUser1" rowspan="2"><i class="far fa-user-circle"></i></td>'
+	                        +            '<td class="replyUser2">' + list[i].nickname + '</td>'
+	                        +            '<td class="replyAdoption" rowspan="2" colspan="2">';
+	                        
+	                     if(${loginUser.memNo} == ${b.mno}) {
+	                        value +=      '<input type="hidden" value="' + list[i].repNo + '">'                        
+	                              +            '<button type="button" class="btn text-muted btn-lg" id="adopModal" data-toggle="modal" data-target="#adoption-modal">'
+	                              +                     '<i class="far fa-check-square text-muted"></i>&nbsp;&nbsp;&nbsp;채택하기'
+	                              +             '</button>';
+	                     }
+	                        
+	                     value +=         '</td>'
+	                           +            '<td class="tableBlank" rowspan="2"></td>'
+	                           +         '</tr>'
+	                           +         '<tr class="replyInfo2">'
+	                           +            '<td class="replyUser3">' + list[i].repEnrollDate + '</td>'
+	                           +         '</tr>'
+	                           +      '</table>'
+	                           +   '</div>'
+	                           +   '<div class="replyDetail">'
+	                           +      '<div class="replyContent">'
+	                           +         '<div class="replyContentData editor3">'
+	                           +                    list[i].repContent
+	                           +         '</div>'
+	                           +      '</div>'
+	                           +      '<div class="replyIcon">'
+	                           +               '<table>'
+	                           +                  '<tr><td class="rIcon"></td></tr>';
+	                        
+	                     if("${loginUser.memNo}" != "" )   {
+	                        if(${loginUser.memNo} == list[i].memNo){
+	                           value += '<tr><td class="rIcon"><i class="far fa-trash-alt" data-toggle="modal" data-target="#delete-modal"></i></td></tr>'
+	                                 +                                     '<tr><td class="rIconName">삭제하기</td></tr>';
+	                        }else{
+	                           value += '<tr>'
+	                                 +                                 '<td class="rIcon"><i class="far fa-heart" data-toggle="modal" data-target="#sponsorship-modal"></i></td>'
+	                                 +                              '</tr>'
+	                                 +                              '<tr><td class="rIconName">후원하기</td></tr>'
+	                                 +                              '<tr>'
+	                                 +                                 '<td class="rIcon"><i class="far fa-thumbs-down" data-toggle="modal" data-target="#report-modal"></i></td>'
+	                                 +                              '</tr>'
+	                                 +                              '<tr><td class="rIconName">신고하기</td></tr>';
+	                        }
+	                        
+	                     }else{
+	                        value += '<tr onClick="loginAlert()"><td class="rIcon"><i class="far fa-heart"></i></td></tr>'
+	                              +                        '<tr><td class="rIconName">후원하기</td></tr>'
+	                              +                        '<tr onClick="loginAlert()"><td class="rIcon"><i class="far fa-thumbs-down"></i></td></tr>'
+	                              +                        '<tr><td class="rIconName">신고하기</td></tr>';
+	                     }
+	                        
+	                     value += '<tr><td></td></tr>'
+	                           +               '</table>'
+	                           +      '</div><!-- 우측 아이콘 옵션 끝 -->'
+	                           +   '</div><!-- 답변 상세 영역 끝 -->'
+	                           +'</div><!-- 원댓글 영역 끝 -->';
+	                     
+	                        // [Array.prototype.push()] 배열의 끝에 하나 이상의 요소를 추가하고, 새로운 배열 길이 반환
+	                        repNo.push(list[i].repNo);
+	                  }
+	                  
+	                  // html 메소드를 이용해 id가 해당 값인 요소 안에 리스트 출력
+	                  $("#qnaBottom").html(value);
+	                    //ToView2();
+	               },error: function(){
+	                  // 리스트 조회 실패 시
+	                  console.log(" 댓글 리스트 조회용 ajax 통신 실패 ");
+	               }
+	            })
+	         }
+
+	         function ToView2(){
+	              viewer3.setMarkdown(editor3.getHTML());
+	           }
 			</script><!-- 댓글 js 끝 -->
+
 
 			<!-- 답변을 작성할 수 있는 영역(항상 보여짐) -->
 			<div class="writeReply">
@@ -487,7 +502,6 @@
 							<div>
 								<!-- api 구현 끝나면 style 지우기 -->
 								<div id="editor2"></div>
-								<!-- <textarea rows="5" style="width:100%;" ></textarea> -->
 							</div>
 						</c:when>
 						<c:otherwise>
@@ -503,7 +517,7 @@
 				            el: document.querySelector('#editor2'),
 				            height: '400px',
 				            previewStyle: 'vertical',
-				            initialValue: '소중한 답변 감사합니다 😁',
+				            initialValue: '소중한 답변 감사합니다 😁 \n답변 작성 후 수정이 불가능하니 유의사항을 꼭 확인해주세요!',
 				            language: 'ko',
 				        });
 					</script>
@@ -540,6 +554,7 @@
 	                     editor2.setHTML("소중한 답변 감사합니다 😁");
 	                  }
 	               }, error: function(){
+	            	  alert(" 댓글 내용 작성 후 등록을 요청해주세요. ");
 	                  console.log(" 원댓글 작성용 ajax 통신 실패  ");
 	               }
 	            })
