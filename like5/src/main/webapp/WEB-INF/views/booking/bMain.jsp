@@ -45,7 +45,8 @@
         position: relative;
         background: linear-gradient(rgba(255,255,255, 0.5), rgba(255, 255, 255, 0.5)), url(resources/images/bg-1.jpg) center/cover no-repeat fixed;
         z-index: 0.8;
-        height: 100vh;
+        height: 90vh;
+        background-attachment:scroll;
     }
     /* .innerbox{
         position: absolute;
